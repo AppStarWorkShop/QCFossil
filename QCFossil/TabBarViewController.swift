@@ -105,39 +105,65 @@ class TabBarViewController: UITabBarController {
     
     func setLeftBarItem(_ title:String, actionName:String) {
         
-        let leftButton=UIBarButtonItem()
-        leftButton.title=title
+        let leftButton = UIBarButtonItem()
+        leftButton.title = title
         leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-        leftButton.style=UIBarButtonItem.Style.plain
-        leftButton.target=self
-        leftButton.action=Selector(actionName)
-        self.navigationItem.leftBarButtonItem=leftButton
+        leftButton.style = UIBarButtonItem.Style.plain
+        leftButton.target = self
+        
+        switch actionName {
+        case "backToTaskDetail":
+            leftButton.action = #selector(backToTaskDetail)
+        case "backToTaskDetailFromPADF":
+            leftButton.action = #selector(backToTaskDetailFromPADF)
+        case "backTaskSearch:":
+            leftButton.action = #selector(backTaskSearch)
+        case "backToTaskDetailFromSignOffPage":
+            leftButton.action = #selector(backToTaskDetailFromSignOffPage)
+        default:
+            leftButton.action = nil
+        }
+        
+        self.navigationItem.leftBarButtonItem = leftButton
     }
     
     func setRightBarItem(_ title:String, actionName:String) {
-        let rightButton=UIBarButtonItem()
-        rightButton.title=title
+        let rightButton = UIBarButtonItem()
+        rightButton.title = title
         rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-        rightButton.style=UIBarButtonItem.Style.plain
-        rightButton.target=self
-        rightButton.action=Selector(actionName)
-        self.navigationItem.rightBarButtonItem=rightButton
+        rightButton.style = UIBarButtonItem.Style.plain
+        rightButton.target = self
+        
+        switch actionName {
+        case "confirmTask":
+            rightButton.action = #selector(confirmTask)
+        case "updateTask:":
+            rightButton.action = #selector(updateTask)
+        default:
+            rightButton.action = nil
+        }
+
+        self.navigationItem.rightBarButtonItem = rightButton
     }
     
     func setRightBarItemWithHandler(_ title:String, actionName:String, handler:(()->(Bool))?) {
-        let rightButton=UIBarButtonItem()
-        rightButton.title=title
+        let rightButton = UIBarButtonItem()
+        rightButton.title = title
         rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-        rightButton.style=UIBarButtonItem.Style.plain
-        rightButton.target=self
-        rightButton.action=Selector(actionName)
-        self.navigationItem.rightBarButtonItem=rightButton
+        rightButton.style = UIBarButtonItem.Style.plain
+        rightButton.target = self
+        
+        switch actionName {
+        case "confirmTask":
+            rightButton.action = #selector(confirmTask)
+        case "updateTask:":
+            rightButton.action = #selector(updateTask)
+        default:
+            rightButton.action = nil
+        }
+        
+        self.navigationItem.rightBarButtonItem = rightButton
         self.handler = handler
-    }
-    
-    func updateRightBarItem(_ title:String, actionName:String) {
-        self.navigationItem.rightBarButtonItem?.title = title
-        self.navigationItem.rightBarButtonItem?.action = Selector(actionName)
     }
     
     func startInspectionCategory() {
@@ -152,7 +178,7 @@ class TabBarViewController: UITabBarController {
         var icItemDatas = [TaskInspDataRecord]()
         var dppDatas = [TaskInspPosinPoint]()
         let currentDate = self.view.getCurrentDateTime()
-        
+
         if icSecs?.count > 0 {
             
             for idx in 0...(icSecs?.count)!-1 {
@@ -164,7 +190,8 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.inptItemInput.text == "") && needValidate {
+                    
+                        if ((icElm.resultValueId < 1 || icElm.inptItemInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
@@ -186,7 +213,7 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.dpInput.text == "" || icElm.cellDPPInput.text == "") && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.dpInput.text == "" || icElm.cellDPPInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
@@ -220,7 +247,7 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.iiInput.text == "") && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.iiInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
@@ -239,7 +266,7 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.inspectionAreaLabel.text == "" || icElm.inspectionItemLabel.text == "") && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.inspectionAreaLabel.text == "" || icElm.inspectionItemLabel.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
@@ -278,11 +305,11 @@ class TabBarViewController: UITabBarController {
         return true
     }
     
-    func backToTaskDetailFromSignOffPage() {
+    @objc func backToTaskDetailFromSignOffPage() {
         self.taskDetalViewContorller!.navigationController?.popViewController(animated: true)
     }
     
-    func backToTaskDetail() {
+    @objc func backToTaskDetail() {
         print("Back to task detail")
         
         self.taskDetalViewContorller!.displaySubViewTag = _TASKDETAILVIEWTAG
@@ -302,7 +329,7 @@ class TabBarViewController: UITabBarController {
         
     }
     
-    func backToTaskDetailFromPADF() {
+    @objc func backToTaskDetailFromPADF() {
         
         DispatchQueue.main.async(execute: {
         
@@ -351,7 +378,7 @@ class TabBarViewController: UITabBarController {
         return true
     }
     
-    func updateTask(_ taskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue) {
+    @objc func updateTask(_ taskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue) {
         
         if let handler = self.handler {
             if !handler() {
@@ -443,7 +470,7 @@ class TabBarViewController: UITabBarController {
         return false
     }
     
-    func confirmTask() {
+    @objc func confirmTask() {
         print("Confirm Task")
         DispatchQueue.main.async(execute: {
             self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
@@ -504,7 +531,7 @@ class TabBarViewController: UITabBarController {
         })
     }
     
-    func backTaskSearch(_ alert: UIAlertAction! = nil) {
+    @objc func backTaskSearch(_ alert: UIAlertAction! = nil) {
         
         if Cache_Task_On?.didModify == true && (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Draft").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Pending").rawValue) {
             

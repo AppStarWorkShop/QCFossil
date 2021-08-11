@@ -256,26 +256,28 @@ class InputMode04DefectCellView: InputModeDFMaster2, UIActionSheetDelegate, UIIm
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         NSLog("Image Pick")
         
         picker.dismiss(animated: true, completion: {
-            let widthRatio = _RESIZEIMAGEWIDTH / image.size.width
-            let heightRatio = _RESIZEIMAGEHEIGHT / image.size.height
-            let scale = min(widthRatio, heightRatio)
-            let newWidth = scale * image.size.width
-            let newHeight = scale * image.size.height
-            
-            UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-            image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            
-            UIGraphicsEndImageContext()
-            
-            
-            let imageView = UIImageView.init(image: image)
-            let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
-            self.setSelectedPhoto(photo!)
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                let widthRatio = _RESIZEIMAGEWIDTH / image.size.width
+                let heightRatio = _RESIZEIMAGEHEIGHT / image.size.height
+                let scale = min(widthRatio, heightRatio)
+                let newWidth = scale * image.size.width
+                let newHeight = scale * image.size.height
+                
+                UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+                image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                
+                UIGraphicsEndImageContext()
+                
+                
+                let imageView = UIImageView.init(image: image)
+                let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
+                self.setSelectedPhoto(photo!)
+            }
         })
     }
     

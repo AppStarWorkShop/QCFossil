@@ -399,41 +399,50 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         self.photoTableView?.reloadData()
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        //UIImagePickerControllerOriginalImage  原始影象
+        //UIImagePickerControllerEditedImage    編輯後的圖片(開啟編輯該物件才存在)
+
         picker.dismiss(animated: true, completion: {
-        
-            if self.dataType == PhotoDataType(caseId: "INSPECT").rawValue {
-                
-                if self.inspElmt == nil {
-                    print("InspElmt is Nil, Return")
-                    return
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                if self.dataType == PhotoDataType(caseId: "INSPECT").rawValue {
+                    
+                    if self.inspElmt == nil {
+                        print("InspElmt is Nil, Return")
+                        return
+                    }
+                    
+                    let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.dataRecordId, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(), originFileName: "originFileName")
+                    
+                    photo.inspCatName = self.inspElmt?.inspReqCatText
+                    photo.inspAreaName = self.inspElmt?.inspAreaText
+                    photo.inspItemName = self.inspElmt?.inspItemText
+                    photo.inspElmt = self.inspElmt
+                    
+                    self.inspElmt?.inspPhotos.append(photo)
+                    Cache_Task_On!.myPhotos.append(photo)
+                    
+                    if let vc = self.inspElmt?.parentVC as? TaskDetailsViewController {
+                        vc.refreshCameraIcon()
+                    }
+                    
+                }else{
+                    let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: nil, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(),originFileName: "originFileName")
+                    
+                    Cache_Task_On!.myPhotos.append(photo)
                 }
                 
-                let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.dataRecordId, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(), originFileName: "originFileName")
+                self.dataType = Int(PhotoDataType(caseId: "TASK").rawValue)
                 
-                photo.inspCatName = self.inspElmt?.inspReqCatText
-                photo.inspAreaName = self.inspElmt?.inspAreaText
-                photo.inspItemName = self.inspElmt?.inspItemText
-                photo.inspElmt = self.inspElmt
-                
-                self.inspElmt?.inspPhotos.append(photo)
-                Cache_Task_On!.myPhotos.append(photo)
-                
-                if let vc = self.inspElmt?.parentVC as? TaskDetailsViewController {
-                    vc.refreshCameraIcon()
+                DispatchQueue.main.async {
+                    self.photoTableView.reloadData()
+                    DispatchQueue.main.async {
+                        self.photoTableView.reloadData()
+                    }
                 }
-                
-            }else{
-                let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: nil, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(),originFileName: "originFileName")
-                
-                Cache_Task_On!.myPhotos.append(photo)
             }
-            
-            self.dataType = Int(PhotoDataType(caseId: "TASK").rawValue)
-            self.photoTableView.reloadData()
         })
-        
     }
     
     func getImageNamesFromLocal(_ dataType:Int=2) ->[Photo] {
@@ -668,12 +677,12 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         let selectedSegment = sender.selectedSegmentIndex
         
         switch selectedSegment {
-        case 0: Cache_Task_On!.myPhotos.sort(){$0.photoFile>$1.photoFile}; break
-        case 1: Cache_Task_On!.myPhotos.sort(){$0.inspCatName<$1.inspCatName}; break
-        case 2: Cache_Task_On!.myPhotos.sort(){$0.inspAreaName<$1.inspAreaName}; break
-        case 3: Cache_Task_On!.myPhotos.sort(){$0.inspItemName<$1.inspItemName}; break
+        case 0: Cache_Task_On!.myPhotos.sort(){$0.photoFile>$1.photoFile};
+        case 1: Cache_Task_On!.myPhotos.sort(){$0.inspCatName<$1.inspCatName};
+        case 2: Cache_Task_On!.myPhotos.sort(){$0.inspAreaName<$1.inspAreaName};
+        case 3: Cache_Task_On!.myPhotos.sort(){$0.inspItemName<$1.inspItemName};
             
-        default: Cache_Task_On!.myPhotos.sort(){$0.photoFile>$1.photoFile}; break
+        default: Cache_Task_On!.myPhotos.sort(){$0.photoFile>$1.photoFile};
         }
         
         self.photoTableView.reloadData()

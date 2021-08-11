@@ -29,7 +29,6 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 
         // Do any additional setup after loading the view.
         self.ScrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: 768, height: 1024))
-        
         self.ScrollView.contentSize = CGSize.init(width: 768, height: 1400)
         self.ScrollView.delegate = self
         
@@ -170,6 +169,8 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 taskDetailView.tag = _TASKDETAILVIEWTAG
                 
                 self.ScrollView.addSubview(taskDetailView)
+                taskDetailView.frame = CGRect.init(x: 0, y: -80, width: taskDetailView.frame.width, height: taskDetailView.frame.height)
+                
                 self.view.removeActivityIndicator()
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil, userInfo: nil)

@@ -1,64 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "5BB41AA9-C9E3-4B6F-9F07-36F7DF44DF40"
    type = "1"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumCellTableViewCell.swift"
-            timestampString = "646331527.214054"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "PhotoAlbumCellTableViewCell"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "08B9650A-3D96-4BC1-B136-0B26431F0276"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.21413"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.214618"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.214977"
+            timestampString = "650367628.930285"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "156"
@@ -70,6 +24,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "15DD9842-B011-4F3F-B592-AC98C4626C9A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -86,6 +41,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "DF8C0F7C-42A8-4B4E-9B95-785BD3A22077"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -102,6 +58,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "71CCBB2A-D697-497B-A52A-E7633046D248"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -118,6 +75,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "28EDC80A-8141-4D3B-B294-0CA48EC6BF71"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -134,6 +92,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "D8DF9DB9-5210-4F9A-905C-C05998DBC959"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -150,6 +109,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "0977C3C5-2EE1-4F10-B685-E943DA167DCD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -166,6 +126,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "0A7DFF13-29AE-4692-BAA8-1C7BADA0121B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -182,11 +143,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "9A4C982B-F866-4A51-9485-BBA0AD99B987"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.701045"
+            timestampString = "650367628.930474"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "54"
@@ -198,15 +160,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "8D78DAC2-EBA1-4E11-B02B-604FB811DE2F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.701126"
+            timestampString = "650367628.930522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -214,29 +177,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "7720ABD4-88F7-48F7-A0CC-F1FC860C8AB9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04DefectCellView.swift"
-            timestampString = "476093069.273016"
+            timestampString = "650367628.930562"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "141"
-            endingLineNumber = "141">
+            endingLineNumber = "141"
+            landmarkName = "actionSheet(_:clickedButtonAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "D1D18C4F-2CC6-467A-9256-21BE140A2A3F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.70121"
+            timestampString = "650367628.930601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "didMoveToSuperview()"
             landmarkType = "7">
          </BreakpointContent>
@@ -244,11 +211,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "6308ACB5-FF4C-4429-AF3E-F811D860077F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode03DefectCellView.swift"
-            timestampString = "476093069.273016"
+            timestampString = "650367628.930639"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "151"
@@ -260,11 +228,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "8E16F8C7-CA72-43FE-B953-7FE3BE4BDC21"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode01DefectCellView.swift"
-            timestampString = "476088544.12777"
+            timestampString = "650367628.930676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
@@ -273,6 +242,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "8E16F8C7-CA72-43FE-B953-7FE3BE4BDC21 - 9baac61e85fbb66b"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -288,6 +258,7 @@
                   offsetFromSymbolStart = "4597">
                </Location>
                <Location
+                  uuid = "8E16F8C7-CA72-43FE-B953-7FE3BE4BDC21 - 66afc9337376dc84"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -308,29 +279,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/CacheData.swift"
-            timestampString = "498969356.164036"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "8AA6096D-F993-42AE-A4D8-A21DAC139614"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.701341"
+            timestampString = "650367628.9307131"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "didMoveToSuperview()"
             landmarkType = "7">
          </BreakpointContent>
@@ -338,11 +296,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "3527E64C-27CD-496E-B88D-A17383106F9B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.7013969"
+            timestampString = "650367628.930748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
@@ -354,22 +313,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/InputMode03View.swift"
-            timestampString = "646310187.701454"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "didMoveToSuperview()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "A557151A-5D44-417C-8208-1EB3A1DA9515"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -378,28 +322,15 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
-            endingLineNumber = "117">
+            endingLineNumber = "117"
+            landmarkName = "InputMode04CellView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
-            landmarkName = "imagePickerController(_:didFinishPickingImage:editingInfo:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "8C87EC4D-1B2C-40FD-9F09-ADC4C8B3D202"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -416,11 +347,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "46EB008B-6A0F-4FCB-9006-3A879F36AF16"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskDataHelper.swift"
-            timestampString = "635486263.847008"
+            timestampString = "647366991.7219419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "356"
@@ -432,6 +364,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "420F4D4C-8DA6-4F56-A113-7E97529FDFD9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -440,33 +373,20 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
-            endingLineNumber = "191">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
-            landmarkName = "imagePickerController(_:didFinishPickingImage:editingInfo:)"
+            endingLineNumber = "191"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "9AC71BDC-6FEB-4ECB-86F5-F390CAB09922"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.930846"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "470"
@@ -478,11 +398,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "EF58AA75-EA2C-4FF7-B40F-D3180B2BF4B4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.930889"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "280"
@@ -491,6 +412,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "EF58AA75-EA2C-4FF7-B40F-D3180B2BF4B4 - f1866bb95e1f5d32"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -506,6 +428,7 @@
                   offsetFromSymbolStart = "1424">
                </Location>
                <Location
+                  uuid = "EF58AA75-EA2C-4FF7-B40F-D3180B2BF4B4 - c7c928b1650aa486"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -526,11 +449,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A691E541-A635-4644-AF5D-03AFB31821B7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.930925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "303"
@@ -539,6 +463,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "A691E541-A635-4644-AF5D-03AFB31821B7 - 2311ee8b60c2887"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -554,6 +479,7 @@
                   offsetFromSymbolStart = "28">
                </Location>
                <Location
+                  uuid = "A691E541-A635-4644-AF5D-03AFB31821B7 - b1d20cd6ff552d17"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -574,11 +500,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "DB389200-9361-48D9-BAD5-FDEA571C093C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.9309601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "304"
@@ -590,6 +517,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "74025D0F-6131-4F39-94B5-5E7DD5159737"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -598,9 +526,12 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
-            endingLineNumber = "205">
+            endingLineNumber = "205"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "74025D0F-6131-4F39-94B5-5E7DD5159737 - 3d1e2418a028ad18"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -616,6 +547,7 @@
                   offsetFromSymbolStart = "5249">
                </Location>
                <Location
+                  uuid = "74025D0F-6131-4F39-94B5-5E7DD5159737 - 3d1e2418a028ad18"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -636,11 +568,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "24F952F3-CF67-4F28-8BE8-3C405B08AE4E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.931012"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "516"
@@ -652,11 +585,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A260A164-2967-4554-A0AE-F4213F748F88"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.931048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "469"
@@ -668,11 +602,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A64DF941-1035-4417-BBF7-D1CCA9CD90A2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.931083"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "281"
@@ -681,6 +616,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "A64DF941-1035-4417-BBF7-D1CCA9CD90A2 - f1866bb95e1f5d5d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -696,6 +632,7 @@
                   offsetFromSymbolStart = "1816">
                </Location>
                <Location
+                  uuid = "A64DF941-1035-4417-BBF7-D1CCA9CD90A2 - f1866bb95e1f5d5d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -716,6 +653,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "9F232D19-37D6-41B9-84AB-129C083D9BF7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -732,6 +670,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "213966E6-11D7-4CAF-80E9-90DFC8544BC0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -748,6 +687,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "CE051043-F7CA-40D1-9568-4DCD4603F825"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -764,6 +704,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "7E7FC9A8-55B7-48BA-912D-DEF741EF73CF"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -780,6 +721,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "3C7D2B6F-A9D4-4880-B472-D496E64B4E24"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -793,6 +735,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "3C7D2B6F-A9D4-4880-B472-D496E64B4E24 - 3bd007d33ecf4379"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -808,6 +751,7 @@
                   offsetFromSymbolStart = "2897">
                </Location>
                <Location
+                  uuid = "3C7D2B6F-A9D4-4880-B472-D496E64B4E24 - 3bd007d33ecf4379"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -828,6 +772,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "43FF61E0-8AF7-4CEA-B5CF-34A12895F067"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -844,6 +789,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "98C28BB5-6251-430C-B174-FBDD4E95868B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -860,22 +806,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/SignoffViewController.swift"
-            timestampString = "503463854.355857"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "3B2BA6F0-9FD2-409D-91DA-54C28453EAB1"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -889,6 +820,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "3B2BA6F0-9FD2-409D-91DA-54C28453EAB1 - 290c9b5d3c3942d7"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -904,6 +836,7 @@
                   offsetFromSymbolStart = "193">
                </Location>
                <Location
+                  uuid = "3B2BA6F0-9FD2-409D-91DA-54C28453EAB1 - 30baa5d76eb4914a"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -924,17 +857,21 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "4BA55892-82F7-43C8-A025-70E0CDA4C196"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "589392431.3539799"
+            timestampString = "650367628.931301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
-            endingLineNumber = "152">
+            endingLineNumber = "152"
+            landmarkName = "previewTapOnClick(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "4BA55892-82F7-43C8-A025-70E0CDA4C196 - 7e552c3effc5f6d1"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -950,6 +887,7 @@
                   offsetFromSymbolStart = "1756">
                </Location>
                <Location
+                  uuid = "4BA55892-82F7-43C8-A025-70E0CDA4C196 - 9f9697d6959568e1"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -970,20 +908,24 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "DA8A0754-91F8-4919-99CB-35A336FD8EA5"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "589392431.3539799"
+            timestampString = "650367628.931372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
-            endingLineNumber = "147">
+            endingLineNumber = "147"
+            landmarkName = "previewTapOnClick(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "1AA280D6-6425-4F56-968D-BAAB0D243589"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -992,9 +934,12 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "169"
-            endingLineNumber = "169">
+            endingLineNumber = "169"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "1AA280D6-6425-4F56-968D-BAAB0D243589 - 6e323cea4547a72d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1010,6 +955,7 @@
                   offsetFromSymbolStart = "2462">
                </Location>
                <Location
+                  uuid = "1AA280D6-6425-4F56-968D-BAAB0D243589 - 6e323cea4547a72d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1030,6 +976,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "98E58D28-3B98-46AE-AB7A-7DEFADEF64D7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1043,6 +990,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "98E58D28-3B98-46AE-AB7A-7DEFADEF64D7 - 1bcbbfa5b92b4796"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1058,6 +1006,7 @@
                   offsetFromSymbolStart = "3040">
                </Location>
                <Location
+                  uuid = "98E58D28-3B98-46AE-AB7A-7DEFADEF64D7 - 1bcbbfa5b92b4796"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1078,27 +1027,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.2160341"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "0E912F6F-0208-4F01-AC97-FB9F7CA7DB5F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.9314801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "245"
@@ -1107,6 +1041,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "0E912F6F-0208-4F01-AC97-FB9F7CA7DB5F - dfc54f26debef3e8"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1122,6 +1057,7 @@
                   offsetFromSymbolStart = "32">
                </Location>
                <Location
+                  uuid = "0E912F6F-0208-4F01-AC97-FB9F7CA7DB5F - f07cf76706b6ec65"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1142,11 +1078,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "79C2D01D-7EF3-4EED-BFC5-7C9BB6E30FDE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCell.swift"
-            timestampString = "589567405.209331"
+            timestampString = "650367628.931536"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "245"
@@ -1158,6 +1095,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "DF25DCF5-CB51-4105-9829-739F6277F94C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1174,6 +1112,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "B7529529-6A69-45C9-AA9E-499F18E288C0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1190,6 +1129,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "3F8354F1-81B8-495B-8C34-260D2A9956D7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1206,6 +1146,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "1EA986B3-E853-49DE-BBA8-A1EC29F22E2A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1222,54 +1163,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.216508"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QCFossil_1103.PhotoAlbumViewController.didSelectedPhotos () -&gt; ()"
-                  moduleName = "QCFossil-1103"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pacmobile/Downloads/QCFossil/QCFossil/PhotoAlbumViewController.swift"
-                  timestampString = "499838871.442489"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "175"
-                  endingLineNumber = "175"
-                  offsetFromSymbolStart = "2382">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QCFossil_1103.PhotoAlbumViewController.(didSelectedPhotos () -&gt; ()).(closure #2)"
-                  moduleName = "QCFossil-1103"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pacmobile/Downloads/QCFossil/QCFossil/PhotoAlbumViewController.swift"
-                  timestampString = "499838871.442671"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "175"
-                  endingLineNumber = "175"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "4C843FBA-6C6B-40ED-AC62-1314621A35B8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1286,6 +1180,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "E6C2B478-279D-410A-87F0-EE2349645AAA"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1302,22 +1197,24 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "C5DDDB2C-0E62-4336-83A3-E39A3514B559"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InspectionDefectTableViewCellMode4.swift"
-            timestampString = "589391175.714475"
+            timestampString = "650367628.93174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
-            landmarkName = "imagePickerController(_:didFinishPickingImage:editingInfo:)"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
+            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "3729E775-DE15-4FE6-9363-DE0295AC6F1A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1326,12 +1223,15 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "207"
-            endingLineNumber = "207">
+            endingLineNumber = "207"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "760F98B2-DBD4-426C-AA7D-F08937DFF5E6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1340,17 +1240,20 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
-            endingLineNumber = "208">
+            endingLineNumber = "208"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "765B17F6-3870-4F56-9424-7EAE93F5C43C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InspectionDefectTableViewCellMode4.swift"
-            timestampString = "589391175.714475"
+            timestampString = "650367628.931861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "209"
@@ -1362,6 +1265,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "93CC81E9-FDE0-496C-B25F-086D7149CEB9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1378,6 +1282,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "CFA7537B-0FC0-4792-86A5-C36886721C50"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1394,6 +1299,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "11C69887-A089-4F50-89B8-1B2C333EBDC0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1410,70 +1316,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.217047"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QCFossil_1104.PhotoAlbumViewController.didSelectedPhotos () -&gt; ()"
-                  moduleName = "QCFossil-1104"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pacmobile/Downloads/QCFossil/QCFossil/PhotoAlbumViewController.swift"
-                  timestampString = "500199884.454405"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "173"
-                  endingLineNumber = "173"
-                  offsetFromSymbolStart = "1448">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QCFossil_1104.PhotoAlbumViewController.(didSelectedPhotos () -&gt; ()).(closure #2)"
-                  moduleName = "QCFossil-1104"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pacmobile/Downloads/QCFossil/QCFossil/PhotoAlbumViewController.swift"
-                  timestampString = "500199884.454643"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "173"
-                  endingLineNumber = "173"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.217429"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "7E89E618-D8F1-4C59-AEF8-906D01494CDE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1490,15 +1333,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "E977D955-3384-4982-BD72-4ABFC543365B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "558540048.155594"
+            timestampString = "647366991.723748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "827"
-            endingLineNumber = "827"
+            startingLineNumber = "811"
+            endingLineNumber = "811"
             landmarkName = "textFieldShouldBeginEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1506,27 +1350,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.217842"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "8DFD2451-037D-4266-A6C1-FD94D3A68D41"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InspectionDefectTableViewCellMode3.swift"
-            timestampString = "589391175.714475"
+            timestampString = "650367628.932053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "242"
@@ -1538,31 +1367,38 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "C1496627-F8AC-4A66-966A-AFC7A422B30A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "589392431.3539799"
+            timestampString = "650367628.932125"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
-            endingLineNumber = "100">
+            endingLineNumber = "100"
+            landmarkName = "awakeFromNib()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "5203014E-76CA-43B6-9219-B9A3B9BAB0A3"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "589392431.3539799"
+            timestampString = "650367628.932198"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412">
+            startingLineNumber = "414"
+            endingLineNumber = "414"
+            landmarkName = "elcImagePickerController(_:didFinishPickingMediaWithInfo:)"
+            landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "5203014E-76CA-43B6-9219-B9A3B9BAB0A3 - 2b381f056624a4c7"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1578,6 +1414,7 @@
                   offsetFromSymbolStart = "32">
                </Location>
                <Location
+                  uuid = "5203014E-76CA-43B6-9219-B9A3B9BAB0A3 - 2613e88f18962b97"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1598,25 +1435,29 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "34E91D3E-7E60-45E2-BA15-BB7402ECC034"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "589392431.3539799"
+            timestampString = "650367628.932264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414">
+            startingLineNumber = "416"
+            endingLineNumber = "416"
+            landmarkName = "elcImagePickerController(_:didFinishPickingMediaWithInfo:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "2ED53376-D221-4916-92F0-D801006EFF98"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "512152523.912352"
+            timestampString = "647366991.724285"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "268"
@@ -1625,6 +1466,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "2ED53376-D221-4916-92F0-D801006EFF98 - be3210916080a812"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1640,6 +1482,7 @@
                   offsetFromSymbolStart = "44">
                </Location>
                <Location
+                  uuid = "2ED53376-D221-4916-92F0-D801006EFF98 - c2186c99798542e2"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1660,6 +1503,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "351E394E-3131-447B-93C2-ADA4AD3FD408"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1676,11 +1520,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "2E17D084-0324-49B3-8202-182A09BC78CD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.2183239"
+            timestampString = "650367628.932393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
@@ -1692,15 +1537,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "0019FFBA-BCA0-4B12-889C-0068881A7F23"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.702618"
+            timestampString = "650367628.932489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "didMoveToSuperview()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1708,15 +1554,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "465C7209-DCC0-4386-9111-F0A9ECC0E344"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.70268"
+            timestampString = "650367628.932562"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1724,15 +1571,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "18386AC8-1ED7-4BCC-A8C0-CAB8A0EE2960"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.70272"
+            timestampString = "650367628.9326299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1740,15 +1588,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A605F611-917D-4F1B-82CD-639A05EE90A8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.702758"
+            timestampString = "650367628.9326971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1756,11 +1605,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "1182D362-1EB3-44FD-8067-D662A0045B37"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "512152523.912352"
+            timestampString = "647366991.724805"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "269"
@@ -1772,6 +1622,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "C7137350-A08E-4706-91BA-7EC255F7AEB2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1788,6 +1639,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "AE29AC63-FA82-4756-BFD4-A9AB91A01210"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1804,6 +1656,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "6376884B-E82D-4FE6-84C0-9A956CF3FA3D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1820,6 +1673,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "BBB40893-3CF6-451A-82F4-EC67246CDBDC"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1836,6 +1690,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F962A8A6-B9E5-4AC2-B92D-D4A88807C1E1"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1852,6 +1707,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "1479A70A-68C6-4AE1-9741-A2214E012EC9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1868,6 +1724,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F023D30F-8BF8-43C3-AD9B-70869C50E1F9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1884,15 +1741,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "873C7ED7-ADCD-4DD8-BABC-2647B0D8F5E8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "558540048.155594"
+            timestampString = "647366991.724968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "742"
-            endingLineNumber = "742"
+            startingLineNumber = "726"
+            endingLineNumber = "726"
             landmarkName = "clearOnClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1900,6 +1758,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A7826464-73BD-4045-993F-6EC057D375F2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1916,11 +1775,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "407991D7-9B8B-451D-9A33-DB4CAC986A15"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "512152523.912352"
+            timestampString = "647366991.7250431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "277"
@@ -1929,6 +1789,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "407991D7-9B8B-451D-9A33-DB4CAC986A15 - be3210916080af3d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1944,6 +1805,7 @@
                   offsetFromSymbolStart = "1192">
                </Location>
                <Location
+                  uuid = "407991D7-9B8B-451D-9A33-DB4CAC986A15 - c2186c9878854bcf"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1964,6 +1826,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "2C7447FD-37EC-4DED-84DA-A66013C0E39D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1978,6 +1841,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "D7380F49-8D95-499B-932D-AF14BDD4F835"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1994,6 +1858,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "E7BCE4B4-B208-4126-90A2-C77619F3D77A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2007,6 +1872,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "E7BCE4B4-B208-4126-90A2-C77619F3D77A - f5aa3b303dbcb798"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2022,6 +1888,7 @@
                   offsetFromSymbolStart = "40">
                </Location>
                <Location
+                  uuid = "E7BCE4B4-B208-4126-90A2-C77619F3D77A - c4ba5fad17af3a48"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2042,6 +1909,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "740F291E-AB02-4E20-BA42-70E4791117A9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2055,6 +1923,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "740F291E-AB02-4E20-BA42-70E4791117A9 - f5aa3b303dbcb798"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2070,6 +1939,7 @@
                   offsetFromSymbolStart = "40">
                </Location>
                <Location
+                  uuid = "740F291E-AB02-4E20-BA42-70E4791117A9 - c4ba5fad17af3a48"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2090,6 +1960,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "144212FC-60E2-457C-ABF7-7949970103F6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2106,6 +1977,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "4C8B25F0-1BD2-4D53-BBCF-A335FCB93811"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2122,22 +1994,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.219067"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "EF578D5C-A6FE-429C-A184-7BAB84593E88"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2151,6 +2008,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "EF578D5C-A6FE-429C-A184-7BAB84593E88 - b3620121337ea2fa"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2166,6 +2024,7 @@
                   offsetFromSymbolStart = "1900">
                </Location>
                <Location
+                  uuid = "EF578D5C-A6FE-429C-A184-7BAB84593E88 - 23f6fd00eb321d45"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2186,6 +2045,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "B4CC5EDF-9711-4158-879C-284770C5258D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2202,11 +2062,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F580CE88-7FE5-493B-905B-D48DE940A6F8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskDataHelper.swift"
-            timestampString = "639928514.686998"
+            timestampString = "647366991.725566"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2124"
@@ -2218,6 +2079,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "819B145B-59CE-423B-8301-DFFE230CEF7D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2226,12 +2088,15 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
-            endingLineNumber = "118">
+            endingLineNumber = "118"
+            landmarkName = "dropdownHandleFunc(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "6359BB69-1132-4C66-969A-3B016123C0B2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2240,12 +2105,15 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
-            endingLineNumber = "120">
+            endingLineNumber = "120"
+            landmarkName = "dropdownHandleFunc(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "397BD47D-BEBB-4682-B0C5-87BA743C9F63"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2254,12 +2122,15 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
-            endingLineNumber = "101">
+            endingLineNumber = "101"
+            landmarkName = "updateLocalizedString()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "20167A21-E327-4320-9396-35EB299B8BF9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2268,17 +2139,20 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
-            endingLineNumber = "140">
+            endingLineNumber = "140"
+            landmarkName = "dropdownHandleFunc(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "E0CE3E6E-BED0-4C80-90D0-52A9CC0EAF1A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskDataHelper.swift"
-            timestampString = "639928514.686998"
+            timestampString = "647366991.725686"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2147"
@@ -2290,11 +2164,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F53E8430-97B4-4C00-92DF-64F2E7854C71"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskDataHelper.swift"
-            timestampString = "639928514.686998"
+            timestampString = "647366991.72574"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2147"
@@ -2306,6 +2181,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "AC591B2F-0198-4E73-8722-BB02E678A7F7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2314,17 +2190,20 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
-            endingLineNumber = "41">
+            endingLineNumber = "41"
+            landmarkName = "InputMode04CellView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "3B87D2A2-E5A5-4FE9-B82D-CB17AD8F4D67"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "512152523.912352"
+            timestampString = "647366991.725808"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "251"
@@ -2336,11 +2215,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A19A0915-3883-444B-BAE4-595F23898A1B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.219607"
+            timestampString = "650367628.933648"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "69"
@@ -2352,11 +2232,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "82E45614-B672-4BD2-8B71-5828B0376519"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/PhotoAlbumViewController.swift"
-            timestampString = "646331527.2200511"
+            timestampString = "650367628.93378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "65"
@@ -2365,6 +2246,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "82E45614-B672-4BD2-8B71-5828B0376519 - 182718246e79790"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2380,6 +2262,7 @@
                   offsetFromSymbolStart = "252">
                </Location>
                <Location
+                  uuid = "82E45614-B672-4BD2-8B71-5828B0376519 - cb6cdeef2bdd37f2"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2400,31 +2283,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/POSearchViewController.swift"
-            timestampString = "502796495.655179"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "POSearchViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "D4CDF314-8CE6-4B80-A04F-4F54065919E2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "646310187.703249"
+            timestampString = "650367628.933874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "didMoveToSuperview()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2432,6 +2300,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "79CF9761-93C6-4952-8635-9F60E4CDFB6D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2446,11 +2315,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "0A8B1D09-A596-45F6-ADB4-C68081AE62AF"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/SignoffViewController.swift"
-            timestampString = "503810941.247796"
+            timestampString = "650366955.385558"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
@@ -2462,15 +2332,18 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "84260F3E-2B8F-4EFF-89E5-F0ADDCC98270"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QCFossil/InputMode02DefectCellView.swift"
-            timestampString = "574786969.031195"
+            timestampString = "650367628.9339989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
-            endingLineNumber = "93">
+            endingLineNumber = "93"
+            landmarkName = "awakeFromNib()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2479,13 +2352,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QCFossil/DataSyncViewController.swift"
-            timestampString = "646302542.320228"
+            filePath = "QCFossil/InputMode01CellView.swift"
+            timestampString = "647366859.930577"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1428"
-            endingLineNumber = "1428"
-            landmarkName = "urlSession(_:task:didCompleteWithError:)"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
+            landmarkName = "takePhotoFromCell(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

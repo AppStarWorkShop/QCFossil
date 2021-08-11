@@ -52,6 +52,8 @@ class InputMode04View: InputModeSCMaster{
             // a removeFromSuperview situation
             return
         }
+        self.apyToAllBtn.addTarget(self, action: #selector(applyRstToAll), for: UIControl.Event.touchUpInside)
+        
         updateLocalizedString()
         
         var idx = 1
@@ -97,7 +99,7 @@ class InputMode04View: InputModeSCMaster{
         self.resultLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Result")
     }
     
-    func applyRstToAll() {
+    @objc func applyRstToAll() {
         self.alertConfirmView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"))?",parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
             
             let taskDataHelper = TaskDataHelper()

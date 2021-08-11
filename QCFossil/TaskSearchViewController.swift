@@ -474,22 +474,6 @@ class TaskSearchViewController: PopoverMaster, UITableViewDelegate, UITableViewD
         print("Task Selected")
         
         Cache_Task_On = tasks[indexPath.row]
-        /*
-        let tmpTask = tasks[indexPath.row]
-        
-        if Cache_Task_On?.vdrSignName != "" && Cache_Task_On?.vdrLocationId == tmpTask.vdrLocationId {
-            tmpTask.vdrSignName = Cache_Task_On?.vdrSignName
-        }else{
-            let taskDataHelper = TaskDataHelper()
-            tmpTask.vdrSignName = taskDataHelper.getLastVdrConfirmerNameToday(tmpTask.vdrLocationId!)
-            
-            if tmpTask.vdrSignName == "" {
-                tmpTask.vdrSignName = taskDataHelper.getVdrConfirmerNameByTaskId(tmpTask.taskId!)
-            }
-        }
-        
-        Cache_Task_On = tmpTask
-        */
         self.performSegue(withIdentifier: "TaskDetailAfterSearchSegue", sender:self)
     }
     

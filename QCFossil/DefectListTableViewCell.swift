@@ -358,38 +358,38 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         self.pVC!.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         NSLog("Image Pick")
         
         picker.dismiss(animated: true, completion: {
-            
-            let imageView = UIImageView.init(image: image)
-            
-            let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
-            
-            let photoName = self.getNameBySaveDefectPhotoData(0, photo: photo!)
-            
-            let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
-            if defectItem?.count > 0 {
-                let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                let imageView = UIImageView.init(image: image)
                 
-                if defectCell.photoNames == nil {
-                    defectCell.photoNames = [String]()
+                let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
+                
+                let photoName = self.getNameBySaveDefectPhotoData(0, photo: photo!)
+                
+                let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
+                if defectItem?.count > 0 {
+                    let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
+                    
+                    if defectCell.photoNames == nil {
+                        defectCell.photoNames = [String]()
+                    }
+                    
+                    if defectCell.photoNames!.count<=5 {
+                        defectCell.photoNames!.append(photoName)
+                    }
                 }
                 
-                if defectCell.photoNames!.count<=5 {
-                    defectCell.photoNames!.append(photoName)
-                }
+                //Update InspItem PhotoAdded Status
+                self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
+                self.updatePhotoAddedStatus("yes")
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":photo!])
+                
+                self.pVC!.updateContentView()
             }
-            
-            //Update InspItem PhotoAdded Status
-            self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
-            self.updatePhotoAddedStatus("yes")
-            
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":photo!])
-            
-            self.pVC!.updateContentView()
-        
         })
     }
     

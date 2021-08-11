@@ -74,6 +74,8 @@ class InputMode02View: InputModeSCMaster {
             return
         }
         
+        self.applyToAllButton.addTarget(self, action: #selector(applyRstToAll), for: UIControl.Event.touchUpInside)
+        
         //Init Defect Position Items
         let dpDataHelper = DPDataHelper()
         self.defectPosits = dpDataHelper.getDefectPositions((inspSection?.sectionId)!)
@@ -107,7 +109,7 @@ class InputMode02View: InputModeSCMaster {
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.applyToAllButton)
     }
     
-    func applyRstToAll() {
+    @objc func applyRstToAll() {
         
         self.alertConfirmView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"))?",parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
 

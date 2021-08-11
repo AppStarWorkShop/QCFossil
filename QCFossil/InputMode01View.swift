@@ -51,6 +51,8 @@ class InputMode01View: InputModeSCMaster {
             return
         }
         
+        self.applyToAllButton.addTarget(self, action: #selector(applyRstToAll), for: UIControl.Event.touchUpInside)
+        
         let photoDataHelper = PhotoDataHelper()
         let taskDataHelper = TaskDataHelper()
         var idx = 1
@@ -91,7 +93,7 @@ class InputMode01View: InputModeSCMaster {
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.applyToAllButton)
     }
     
-    func applyRstToAll() {
+    @objc func applyRstToAll() {
         self.alertConfirmView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"))?",parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
 
             let taskDataHelper = TaskDataHelper()

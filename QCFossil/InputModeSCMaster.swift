@@ -59,7 +59,6 @@ class InputModeSCMaster:UIView {
                 self.addSubview(segmentedControl)
                 
                 apyToAllBtn.frame = CGRect(x: segmentedControl.frame.size.width+20, y: frame.minY + 24, width: 120, height: 30)
-                apyToAllBtn.addTarget(self, action: Selector("applyRstToAll"), for: UIControl.Event.touchUpInside)
                 self.addSubview(apyToAllBtn)
                 
                 apyToAllBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"), for: UIControl.State() )
