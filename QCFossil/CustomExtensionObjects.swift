@@ -617,8 +617,11 @@ extension UIViewController {
         localNotification.fireDate = Date(timeIntervalSinceNow: 0)
         localNotification.alertBody = MylocalizedString.sharedLocalizeManager.getLocalizedString(message)
         localNotification.timeZone = TimeZone.current
-        localNotification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
-        UIApplication.shared.presentLocalNotificationNow(localNotification)
+        
+        DispatchQueue.main.async(execute: {
+            localNotification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
+            UIApplication.shared.presentLocalNotificationNow(localNotification)
+        })
     }
 }
 

@@ -218,7 +218,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         self.uploadTaskStatusDetailButton.isHidden = true
     }
     
-    func menuButton(_ sender: UIBarButtonItem) {
+    @IBAction func menuButton(_ sender: UIBarButtonItem) {
         NSLog("Toggle Menu")
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "toggleMenu"), object: nil)
@@ -455,15 +455,16 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             
             for idx in 0...actionFields[data["tableName"]!]!.count-1 {
                 
-                let state = UIApplication.shared.applicationState
-                
-                if state != .active {
-                    updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
-                    updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                    updateDownloadTaskStatusDetailButton()
-                    return
-                }
+                DispatchQueue.main.async(execute: {
+                    let state = UIApplication.shared.applicationState
+                    if state != .active {
+                        self.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
+                        self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
+                        self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                        self.updateDownloadTaskStatusDetailButton()
+                        return
+                    }
+                })
                 
                 if var value = data[actionFields[data["tableName"]!]![idx]] {
                     value = value.replacingOccurrences(of: "\"", with: "\\\"")
