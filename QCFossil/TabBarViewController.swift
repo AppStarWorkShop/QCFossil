@@ -196,6 +196,11 @@ class TabBarViewController: UITabBarController {
                             return false
                         }
                         
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
+                            return false
+                        }
+                        
                         //if icElm.inptItemInput.text != "" && icElm.resultValueId > 0 {
                             let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInput.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
                         
@@ -215,6 +220,11 @@ class TabBarViewController: UITabBarController {
                     for icElm in icElms {
                         if ((icElm.resultValueId < 1 || icElm.dpInput.text == "" || icElm.cellDPPInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
+                            return false
+                        }
+                        
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
                             return false
                         }
                         
@@ -252,6 +262,11 @@ class TabBarViewController: UITabBarController {
                             return false
                         }
                         
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
+                            return false
+                        }
+                        
                         //if icElm.requestSectionId>0 && icElm.iiInput.text != "" {
                             let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.idInput.text!, inspectDetail: icElm.idInput.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: icElm.requestSectionId!, requestElementDesc: icElm.iiInput.text!, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
                             
@@ -268,6 +283,11 @@ class TabBarViewController: UITabBarController {
                     for icElm in icElms {
                         if ((icElm.resultValueId < 1 || icElm.inspectionAreaLabel.text == "" || icElm.inspectionItemLabel.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
+                            return false
+                        }
+                        
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
                             return false
                         }
                         

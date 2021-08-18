@@ -73,7 +73,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         
         photoTableView.delegate = self
         photoTableView.dataSource = self
-        
+
         if pVC != nil {
             self.addPhotoBtn.isHidden = true
             self.addPhotoFromCamera.isHidden = true
@@ -403,9 +403,10 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         
         //UIImagePickerControllerOriginalImage  原始影象
         //UIImagePickerControllerEditedImage    編輯後的圖片(開啟編輯該物件才存在)
-
-        picker.dismiss(animated: true, completion: {
+        picker.dismiss(animated: true) {
+        
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                var photo:Photo?
                 if self.dataType == PhotoDataType(caseId: "INSPECT").rawValue {
                     
                     if self.inspElmt == nil {
@@ -413,36 +414,40 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                         return
                     }
                     
-                    let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.dataRecordId, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(), originFileName: "originFileName")
+                    photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.dataRecordId, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(), originFileName: "originFileName")
                     
-                    photo.inspCatName = self.inspElmt?.inspReqCatText
-                    photo.inspAreaName = self.inspElmt?.inspAreaText
-                    photo.inspItemName = self.inspElmt?.inspItemText
-                    photo.inspElmt = self.inspElmt
+                    photo?.inspCatName = self.inspElmt?.inspReqCatText
+                    photo?.inspAreaName = self.inspElmt?.inspAreaText
+                    photo?.inspItemName = self.inspElmt?.inspItemText
+                    photo?.inspElmt = self.inspElmt
                     
-                    self.inspElmt?.inspPhotos.append(photo)
-                    Cache_Task_On!.myPhotos.append(photo)
+                    if let _photo = photo {
+                        self.inspElmt?.inspPhotos.append(_photo)
+                    }
                     
                     if let vc = self.inspElmt?.parentVC as? TaskDetailsViewController {
                         vc.refreshCameraIcon()
                     }
                     
-                }else{
-                    let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: nil, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(),originFileName: "originFileName")
-                    
-                    Cache_Task_On!.myPhotos.append(photo)
+                } else {
+                    photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: nil, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(),originFileName: "originFileName")
                 }
                 
                 self.dataType = Int(PhotoDataType(caseId: "TASK").rawValue)
-                
-                DispatchQueue.main.async {
-                    self.photoTableView.reloadData()
-                    DispatchQueue.main.async {
-                        self.photoTableView.reloadData()
-                    }
+            
+
+                if let _photo = photo {
+                    Cache_Task_On!.myPhotos.append(_photo)
                 }
+            
+                DispatchQueue.main.async(execute: {
+                    self.photoTableView.reloadData()
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        self.photoTableView.reloadData()
+//                    }
+                })
             }
-        })
+        }
     }
     
     func getImageNamesFromLocal(_ dataType:Int=2) ->[Photo] {
@@ -502,6 +507,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
     
     func tableView(_ photoTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = photoTableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoAlbumCellTableViewCell
+        cell.tag = indexPath.row
         
         if indexPath.row < Cache_Task_On!.myPhotos.count {
         
@@ -509,7 +515,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         
             cell.photo.sizeToFit()
             cell.photo.layer.masksToBounds = true
-        
+            
             cell.photoFilename.text = photo.photoFilename
             cell.photoDescription.text = photo.photoDesc
         
@@ -524,13 +530,12 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                 cell.photoDescription.isEditable = false
                 cell.photoDescription.backgroundColor = _TABLECELL_BG_COLOR1
             }
-        
-            if photo.photoFile != "" {
             
-                let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photo.photoFile
+            if photo.photoFilename != "" {
+                let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photo.photoFilename
                 cell.photo.image = UIImage(contentsOfFile: pathForImage)
             }
-        
+            
             if indexPath.row % 2 == 0 {
                 cell.backgroundColor = _TABLECELL_BG_COLOR2
             }else{

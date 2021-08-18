@@ -52,7 +52,9 @@ class InputModeICMaster:UIView {
     var inspItemText = ""
     
     func updatePhotoNeededStatus(_ resultValue:String) {
-        self.photoNeeded = Cache_NegativeResultValues.contains(resultValue)
+        let taskDataHelper = TaskDataHelper()
+        self.photoNeeded = taskDataHelper.isNeedAddPhotoForInspectItem(resultValue)
+//        self.photoNeeded = Cache_NegativeResultValues.contains(resultValue)
 //        if resultValue.lowercased().range(of: "c.a.") != nil || resultValue.lowercased().range(of: "fail") != nil || resultValue.lowercased().range(of: "hold") != nil || resultValue.lowercased().range(of: "有条件批准") != nil || resultValue.lowercased().range(of: "不合格") != nil || resultValue.lowercased().range(of: "保留") != nil {
 //            self.photoNeeded = true
 //        }else{

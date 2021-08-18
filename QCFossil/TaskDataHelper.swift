@@ -2556,4 +2556,28 @@ class TaskDataHelper:DataHelperMaster{
         }
         return result
     }
+    
+    func isNeedCompleteDefectPoint(_ resultValueId:Int) -> Bool {
+        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_id = ?"
+        var result = false
+        if db.open() {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueId]) {
+                result = rs.next() && Int(rs.int(forColumn: "defect_gen_flag")) > 0
+            }
+            db.close()
+        }
+        return result
+    }
+    
+    func isNeedAddPhotoForInspectItem(_ resultValue:String) -> Bool {
+        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_name_cn = ? OR value_name_en = ?"
+        var result = false
+        if db.open() {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValue, resultValue]) {
+                result = rs.next() && Int(rs.int(forColumn: "defect_gen_flag")) > 0
+            }
+            db.close()
+        }
+        return result
+    }
 }

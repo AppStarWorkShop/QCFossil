@@ -27,9 +27,11 @@ class PhotoAlbumCellTableViewCell: UITableViewCell, UITextViewDelegate {
         // Initialization code
         
         self.photoDescription.delegate = self
-        
-        
         updateLocalizeString()
+        
+        let photoObj = Cache_Task_On!.myPhotos[tag] as Photo
+        let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photoObj.photoFile
+        photo.image = UIImage(contentsOfFile: pathForImage)
     }
 
     func updateLocalizeString() {
