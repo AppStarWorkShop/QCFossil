@@ -284,24 +284,17 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         
         switch Cache_Inspector?.typeCode ?? "LEATHER" {
         case TypeCode.LEATHER.rawValue:
+            qcRemarkInput.removeFromSuperview()
+            qcRemarkLabel.removeFromSuperview()
+            qcRemarkDropdownIcon.removeFromSuperview()
+            additionalAdministrativeItemLabel.removeFromSuperview()
+            additionalAdministrativeItemInput.removeFromSuperview()
+            additionalAdministrativeItemDropdownIcon.removeFromSuperview()
             
-            qcRemarkInput.isHidden = true
-            qcRemarkLabel.isHidden = true
-            additionalAdministrativeItemLabel.isHidden = true
-            additionalAdministrativeItemInput.isHidden = true
-            qcRemarkDropdownIcon.isHidden = true
-            additionalAdministrativeItemDropdownIcon.isHidden = true
-            
-            inspResultBottomLabel.frame = CGRect(x: inspResultBottomLabel.frame.origin.x, y: inspResultBottomLabel.frame.origin.y - 100, width: inspResultBottomLabel.frame.size.width, height: inspResultBottomLabel.frame.size.height)
-            
-            if #available(iOS 9.0, *) {
-                inspResultBottomLabel.topAnchor.constraint(equalTo: self.commentWarpperView.topAnchor, constant: 185).isActive = true
-                inspResultBottomInput.topAnchor.constraint(equalTo: self.commentWarpperView.topAnchor, constant: 180).isActive = true
-                resultDropdownIcon.topAnchor.constraint(equalTo: self.commentWarpperView.topAnchor, constant: 185).isActive = true
-            } else {
-                // Fallback on earlier versions
-            }
-            
+            inspResultBottomLabel.frame = CGRect(x: inspResultBottomLabel.frame.origin.x, y: inspResultBottomLabel.frame.origin.y - 140, width: inspResultBottomLabel.frame.size.width, height: inspResultBottomLabel.frame.size.height)
+            inspResultBottomInput.frame = CGRect(x: inspResultBottomInput.frame.origin.x, y: inspResultBottomInput.frame.origin.y - 140, width: inspResultBottomInput.frame.size.width, height: inspResultBottomInput.frame.size.height)
+            resultDropdownIcon.frame = CGRect(x: resultDropdownIcon.frame.origin.x - 320, y: resultDropdownIcon.frame.origin.y - 12, width: resultDropdownIcon.frame.size.width, height: resultDropdownIcon.frame.size.height)
+
             break
         case TypeCode.WATCH.rawValue, TypeCode.JEWELRY.rawValue:
             break

@@ -169,7 +169,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 taskDetailView.tag = _TASKDETAILVIEWTAG
                 
                 self.ScrollView.addSubview(taskDetailView)
-                taskDetailView.frame = CGRect.init(x: 0, y: -80, width: taskDetailView.frame.width, height: taskDetailView.frame.height)
+                taskDetailView.frame = CGRect.init(x: 0, y: -80, width: taskDetailView.frame.width, height: taskDetailView.frame.height + 80)
                 
                 self.view.removeActivityIndicator()
                 

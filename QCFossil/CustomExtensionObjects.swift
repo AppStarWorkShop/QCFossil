@@ -1010,7 +1010,7 @@ extension UIView {
     
     //Get File in Preferences
     func getPreferencesFilePath() ->String? {
-        let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+        let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/Preferences"
         let url = URL(fileURLWithPath: path)
         
         do {
