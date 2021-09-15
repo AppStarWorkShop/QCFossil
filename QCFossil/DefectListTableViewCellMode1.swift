@@ -115,23 +115,23 @@ class DefectListTableViewCellMode1: InputModeDFMaster2, UIImagePickerControllerD
         
         updateLocalizedString()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCellMode3.previewTapOnClick(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto1.addGestureRecognizer(tap)
         defectPhoto1.isUserInteractionEnabled = true
         
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCellMode3.previewTapOnClick(_:)))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto2.addGestureRecognizer(tap2)
         defectPhoto2.isUserInteractionEnabled = true
         
-        let tap3 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCellMode3.previewTapOnClick(_:)))
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto3.addGestureRecognizer(tap3)
         defectPhoto3.isUserInteractionEnabled = true
         
-        let tap4 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCellMode3.previewTapOnClick(_:)))
+        let tap4 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto4.addGestureRecognizer(tap4)
         defectPhoto4.isUserInteractionEnabled = true
         
-        let tap5 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCellMode3.previewTapOnClick(_:)))
+        let tap5 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto5.addGestureRecognizer(tap5)
         defectPhoto5.isUserInteractionEnabled = true
         
@@ -163,7 +163,7 @@ class DefectListTableViewCellMode1: InputModeDFMaster2, UIImagePickerControllerD
         maskView?.removeFromSuperview()
     }
     
-    func previewTapOnClick(_ sender: UITapGestureRecognizer) {
+    @objc func previewTapOnClick(_ sender: UITapGestureRecognizer) {
         if (sender.view as! UIImageView).image != nil {
             let imageView = sender.view as! UIImageView
             

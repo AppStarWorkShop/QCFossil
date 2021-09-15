@@ -87,23 +87,23 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         
         updateLocalizedString()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto1.addGestureRecognizer(tap)
         defectPhoto1.isUserInteractionEnabled = true
         
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto2.addGestureRecognizer(tap2)
         defectPhoto2.isUserInteractionEnabled = true
         
-        let tap3 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto3.addGestureRecognizer(tap3)
         defectPhoto3.isUserInteractionEnabled = true
         
-        let tap4 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap4 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto4.addGestureRecognizer(tap4)
         defectPhoto4.isUserInteractionEnabled = true
         
-        let tap5 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap5 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto5.addGestureRecognizer(tap5)
         defectPhoto5.isUserInteractionEnabled = true
         
