@@ -117,28 +117,27 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     }
     
     func updateButtonsStatus(_ status:Bool) {
-        self.backupBtn.isEnabled = status
-        self.removeBtn.isEnabled = status
-        self.restoreBtn.isEnabled = status
-        self.restoreDataBtn.isEnabled = status
-        
         DispatchQueue.main.async(execute: {
+            self.backupBtn.isEnabled = status
+            self.removeBtn.isEnabled = status
+            self.restoreBtn.isEnabled = status
+            self.restoreDataBtn.isEnabled = status
             
-        if status {
-            self.backupBtn.backgroundColor = _FOSSILBLUECOLOR
-            self.removeBtn.backgroundColor = _FOSSILBLUECOLOR
-            self.restoreBtn.backgroundColor = _FOSSILBLUECOLOR
-            self.restoreDataBtn.backgroundColor = _FOSSILBLUECOLOR
-            
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
-        }else{
-            self.backupBtn.backgroundColor = UIColor.gray
-            self.removeBtn.backgroundColor = UIColor.gray
-            self.restoreBtn.backgroundColor = UIColor.gray
-            self.restoreDataBtn.backgroundColor = UIColor.gray
-            
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
-        }
+            if status {
+                self.backupBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.removeBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.restoreBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.restoreDataBtn.backgroundColor = _FOSSILBLUECOLOR
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+            }else{
+                self.backupBtn.backgroundColor = UIColor.gray
+                self.removeBtn.backgroundColor = UIColor.gray
+                self.restoreBtn.backgroundColor = UIColor.gray
+                self.restoreDataBtn.backgroundColor = UIColor.gray
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
+            }
             
         })
     }
@@ -885,8 +884,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 
                 if key == "service_token" {
                     param += "\"\(key)\":\"\(_DS_SERVICETOKEN)\","
-                }else if key == "backup_sync_id" {
-                    param += "\"\(key)\":\"\(backupFile?.backupSyncId)\","
+                }else if key == "backup_sync_id", let backupSyncId = backupFile?.backupSyncId {
+                    param += "\"\(key)\":\"\(backupSyncId)\","
                 }else{
                     param += "\"\(key)\":\"\(value)\","
                 }

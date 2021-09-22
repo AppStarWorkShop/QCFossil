@@ -153,7 +153,7 @@ class DefectListTableViewCellMode3: InputModeDFMaster2, UIImagePickerControllerD
                 button.setTitleColor(UIColor.white, for: UIControl.State())
                 button.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Tap Anywhere To Close"), for: UIControl.State())
                 button.contentEdgeInsets = UIEdgeInsets.init(top: 400 + (self.parentVC?.parent!.view.center.y)!-30, left: 0, bottom: 0, right: 0);
-                button.addTarget(self, action: #selector(DefectListTableViewCellMode3.closePreviewLayer), for: UIControl.Event.touchUpInside)
+                button.addTarget(self, action: #selector(closePreviewLayer), for: UIControl.Event.touchUpInside)
                 
                 container.addSubview(button)
                 

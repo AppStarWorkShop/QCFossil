@@ -205,7 +205,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
                 imageView.frame = CGRect(x: xPos[idx], y: 112, width: 40, height: 40)
                 imageView.tag = idx + 1
                 
-                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(InspectionDefectTableViewCellMode4.previewTapOnClick(_:)))
+                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(previewTapOnClick))
                 imageView.isUserInteractionEnabled = true
                 imageView.addGestureRecognizer(tapGestureRecognizer)
                 
@@ -215,7 +215,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
                 
                 let cBtn = CustomButton()
                 cBtn.frame = CGRect.init(x: xPosBtn[idx], y: 99, width: 20, height: 20)
-                cBtn.addTarget(self, action: #selector(InspectionDefectTableViewCellMode4.removeDefectPhotoOnIndex(_:)), for: UIControl.Event.touchUpInside)
+                cBtn.addTarget(self, action: #selector(removeDefectPhotoOnIndex), for: UIControl.Event.touchUpInside)
                 cBtn.tag = idx + 1
                 cBtn.setTitle("-", for: UIControl.State())
                 cBtn.backgroundColor = UIColor.red
@@ -240,7 +240,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
                 imageView?.frame = CGRect(x: xPos[idx], y: 35, width: 40, height: 40)
                 imageView?.tag = idx + 1
                 
-                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(InspectionDefectTableViewCellMode4.previewTapOnClick(_:)))
+                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(previewTapOnClick))
                 imageView?.isUserInteractionEnabled = true
                 imageView?.addGestureRecognizer(tapGestureRecognizer)
                 
@@ -250,7 +250,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
                 
                 let cBtn = CustomButton()
                 cBtn.frame = CGRect.init(x: xPosBtn[idx], y: 27, width: 15, height: 15)
-                cBtn.addTarget(self, action: #selector(InspectionDefectTableViewCellMode4.removeDefectPhotoOnIndex(_:)), for: UIControl.Event.touchUpInside)
+                cBtn.addTarget(self, action: #selector(removeDefectPhotoOnIndex), for: UIControl.Event.touchUpInside)
                 cBtn.tag = idx + 1
                 cBtn.setTitle("-", for: UIControl.State())
                 cBtn.backgroundColor = UIColor.red
@@ -263,7 +263,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
         }
     }
     
-    func removeDefectPhotoOnIndex(_ sender: CustomButton) {
+    @objc func removeDefectPhotoOnIndex(_ sender: CustomButton) {
         self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Photo?"),parentVC:self.pVC!, handlerFun: { (action:UIAlertAction!) in
             
             let defectsByItemId = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
@@ -407,7 +407,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
         (self.inspItem as! InputMode03CellView).updatePhotoAddediConStatus("",photoTakenIcon: (self.inspItem as! InputMode03CellView).photoTakenIcon)
     }
     
-    func previewTapOnClick(_ sender: UITapGestureRecognizer) {
+    @objc func previewTapOnClick(_ sender: UITapGestureRecognizer) {
         if (sender.view as! UIImageView).image != nil {
             let imageView = sender.view as! UIImageView
             

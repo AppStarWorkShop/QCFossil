@@ -207,7 +207,7 @@ class InspectionDefectTableViewCellMode4: InputModeDFMaster2, UIImagePickerContr
                 imageView.frame = CGRect(x: xPos[idx], y: 112, width: 40, height: 40)
                 imageView.tag = idx + 1
                 
-                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(InspectionDefectTableViewCellMode4.previewTapOnClick(_:)))
+                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(previewTapOnClick))
                 imageView.isUserInteractionEnabled = true
                 imageView.addGestureRecognizer(tapGestureRecognizer)
                 
@@ -217,7 +217,7 @@ class InspectionDefectTableViewCellMode4: InputModeDFMaster2, UIImagePickerContr
                 
                 let cBtn = CustomControlButton()
                 cBtn.frame = CGRect.init(x: xPosBtn[idx], y: 99, width: 20, height: 20)
-                cBtn.addTarget(self, action: #selector(InspectionDefectTableViewCellMode4.removeDefectPhotoOnIndex(_:)), for: UIControl.Event.touchUpInside)
+                cBtn.addTarget(self, action: #selector(removeDefectPhotoOnIndex), for: UIControl.Event.touchUpInside)
                 cBtn.tag = idx + 1
                 cBtn.setTitle("-", for: UIControl.State())
                 cBtn.backgroundColor = UIColor.red
@@ -242,7 +242,7 @@ class InspectionDefectTableViewCellMode4: InputModeDFMaster2, UIImagePickerContr
                 imageView?.frame = CGRect(x: xPos[idx], y: 35, width: 40, height: 40)
                 imageView?.tag = idx + 1
                 
-                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(InspectionDefectTableViewCellMode4.previewTapOnClick(_:)))
+                let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(previewTapOnClick))
                 imageView?.isUserInteractionEnabled = true
                 imageView?.addGestureRecognizer(tapGestureRecognizer)
                 
@@ -252,7 +252,7 @@ class InspectionDefectTableViewCellMode4: InputModeDFMaster2, UIImagePickerContr
             
                 let cBtn = CustomButton()
                 cBtn.frame = CGRect.init(x: xPosBtn[idx], y: 27, width: 15, height: 15)
-                cBtn.addTarget(self, action: #selector(InspectionDefectTableViewCellMode4.removeDefectPhotoOnIndex(_:)), for: UIControl.Event.touchUpInside)
+                cBtn.addTarget(self, action: #selector(removeDefectPhotoOnIndex), for: UIControl.Event.touchUpInside)
                 cBtn.tag = idx + 1
                 cBtn.setTitle("-", for: UIControl.State())
                 cBtn.backgroundColor = UIColor.red
