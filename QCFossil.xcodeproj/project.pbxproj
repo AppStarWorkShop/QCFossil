@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -112,6 +112,10 @@
 		BD095CF41C24274100F4F57F /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095CF31C24274100F4F57F /* CustomSegue.swift */; };
 		BD11D3291E2E0D7500888BDE /* BackupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD11D3281E2E0D7500888BDE /* BackupTableViewCell.swift */; };
 		BD272FB11C589B1900D48E70 /* InspSectionPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD272FB01C589B1900D48E70 /* InspSectionPosition.swift */; };
+		BD322F2926FE1FC600A5E2C7 /* BSImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD322F2726FE1FC500A5E2C7 /* BSImagePicker.framework */; platformFilter = ios; };
+		BD322F2A26FE1FD500A5E2C7 /* BSImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD322F2726FE1FC500A5E2C7 /* BSImagePicker.framework */; platformFilter = ios; };
+		BD322F2B26FE1FD500A5E2C7 /* BSImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD322F2726FE1FC500A5E2C7 /* BSImagePicker.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BD322F2E26FE23EF00A5E2C7 /* BSImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD322F2726FE1FC500A5E2C7 /* BSImagePicker.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BD38B8DD1DF7D9B300E29CEF /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD38B8DC1DF7D9B300E29CEF /* UserSettingViewController.swift */; };
 		BD429C901C29537200CCE726 /* SignoffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD429C8F1C29537200CCE726 /* SignoffView.swift */; };
 		BD4AD87222E1813A00CDC833 /* TaskQCInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4AD87122E1813A00CDC833 /* TaskQCInfoView.swift */; };
@@ -340,7 +344,6 @@
 		BDD1A3312123472B00AE391E /* POSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD5A0DAE1C44A9880056B077 /* POSearchView.xib */; };
 		BDD1A3322123472B00AE391E /* InputMode03DefectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C93B6461C4F567E00D7123A /* InputMode03DefectCell.xib */; };
 		BDD1A3332123472B00AE391E /* DropdownListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C93B64C1C4F94A600D7123A /* DropdownListView.xib */; };
-		BDD1A3342123472B00AE391E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9CD85A511D74147F004DD641 /* Info.plist */; };
 		BDD1A3352123472B00AE391E /* InputMode02Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C25B2F41C4CF95B005DCA11 /* InputMode02Cell.xib */; };
 		BDD1A3362123472B00AE391E /* TaskDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C96E4711C479FAB0052C486 /* TaskDetailView.xib */; };
 		BDD1A3372123472B00AE391E /* CustomCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CED09D61CA013AF00ABEEEE /* CustomCellView.xib */; };
@@ -416,6 +419,31 @@
 			remoteInfo = "QCFossil UAT";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BD322F2C26FE1FD500A5E2C7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BD322F2B26FE1FD500A5E2C7 /* BSImagePicker.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD322F2D26FE23E100A5E2C7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BD322F2E26FE23EF00A5E2C7 /* BSImagePicker.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
@@ -554,6 +582,7 @@
 		BD095CF31C24274100F4F57F /* CustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		BD11D3281E2E0D7500888BDE /* BackupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupTableViewCell.swift; sourceTree = "<group>"; };
 		BD272FB01C589B1900D48E70 /* InspSectionPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSectionPosition.swift; sourceTree = "<group>"; };
+		BD322F2726FE1FC500A5E2C7 /* BSImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BSImagePicker.framework; sourceTree = "<group>"; };
 		BD38B8DC1DF7D9B300E29CEF /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		BD429C8F1C29537200CCE726 /* SignoffView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignoffView.swift; sourceTree = "<group>"; };
 		BD4AD87122E1813A00CDC833 /* TaskQCInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskQCInfoView.swift; sourceTree = "<group>"; };
@@ -665,6 +694,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CD84C4A1D73F9CA004DD641 /* libz.tbd in Frameworks */,
+				BD322F2A26FE1FD500A5E2C7 /* BSImagePicker.framework in Frameworks */,
 				BDCC90421C5624B7009A5AB7 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -688,6 +718,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD1A3202123472B00AE391E /* libz.tbd in Frameworks */,
+				BD322F2926FE1FC600A5E2C7 /* BSImagePicker.framework in Frameworks */,
 				BDD1A3212123472B00AE391E /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -703,6 +734,7 @@
 				9C0C36CD1C1E6F7800CF48ED /* QCFossil */,
 				9C0C36E21C1E6F7800CF48ED /* QCFossilTests */,
 				9C0C36ED1C1E6F7800CF48ED /* QCFossilUITests */,
+				BD322F2626FE1F9100A5E2C7 /* Frameworks */,
 				9C0C36CC1C1E6F7800CF48ED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1093,6 +1125,14 @@
 			name = DOWNSCALING;
 			sourceTree = "<group>";
 		};
+		BD322F2626FE1F9100A5E2C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD322F2726FE1FC500A5E2C7 /* BSImagePicker.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		BD4AD87022E180F800CDC833 /* QCInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1220,6 +1260,7 @@
 				9C0C36C71C1E6F7800CF48ED /* Sources */,
 				9C0C36C81C1E6F7800CF48ED /* Frameworks */,
 				9C0C36C91C1E6F7800CF48ED /* Resources */,
+				BD322F2C26FE1FD500A5E2C7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1275,6 +1316,7 @@
 				BDD1A29A2123472B00AE391E /* Sources */,
 				BDD1A31F2123472B00AE391E /* Frameworks */,
 				BDD1A3222123472B00AE391E /* Resources */,
+				BD322F2D26FE23E100A5E2C7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1331,6 +1373,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -1438,7 +1481,6 @@
 				BDD1A3312123472B00AE391E /* POSearchView.xib in Resources */,
 				BDD1A3322123472B00AE391E /* InputMode03DefectCell.xib in Resources */,
 				BDD1A3332123472B00AE391E /* DropdownListView.xib in Resources */,
-				BDD1A3342123472B00AE391E /* Info.plist in Resources */,
 				BDD1A3352123472B00AE391E /* InputMode02Cell.xib in Resources */,
 				BDD1A3362123472B00AE391E /* TaskDetailView.xib in Resources */,
 				BDD1A3372123472B00AE391E /* CustomCellView.xib in Resources */,
@@ -1929,6 +1971,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1936,7 +1982,10 @@
 				);
 				INFOPLIST_FILE = QCFossil/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
 				PRODUCT_NAME = QC210919P;
@@ -1956,10 +2005,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "DEVELOPMENT=0";
 				INFOPLIST_FILE = QCFossil/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
 				PRODUCT_NAME = QC210919P;
@@ -1976,7 +2032,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = QCFossilTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dragonmobile.QCFossilTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -1989,7 +2049,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = QCFossilTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dragonmobile.QCFossilTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -2001,7 +2065,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = QCFossilUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dragonmobile.QCFossilUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
@@ -2015,7 +2083,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = QCFossilUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dragonmobile.QCFossilUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
@@ -2032,14 +2104,21 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 					"DEVELOPMENT=1",
 				);
 				INFOPLIST_FILE = "QCFossil-UAT-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
 				PRODUCT_NAME = QC210919U;
@@ -2060,10 +2139,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "DEVELOPMENT=1";
 				INFOPLIST_FILE = "QCFossil-UAT-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
 				PRODUCT_NAME = QC210919U;

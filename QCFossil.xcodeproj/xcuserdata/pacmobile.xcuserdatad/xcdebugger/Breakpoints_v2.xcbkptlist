@@ -160,23 +160,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7720ABD4-88F7-48F7-A0CC-F1FC860C8AB9"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/InputMode04DefectCellView.swift"
-            timestampString = "650540840.562523"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "actionSheet(_:clickedButtonAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D1D18C4F-2CC6-467A-9256-21BE140A2A3F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -372,8 +355,8 @@
             timestampString = "653642306.728664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "470"
-            endingLineNumber = "470"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
             landmarkName = "getNameBySaveDefectPhotoData(_:photo:needSave:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -389,8 +372,8 @@
             timestampString = "653642306.728726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "dismissDfPhotoButton(_:)"
             landmarkType = "7">
             <Locations>
@@ -440,8 +423,8 @@
             timestampString = "653642306.728773"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "addDefectCellButton(_:)"
             landmarkType = "7">
             <Locations>
@@ -491,8 +474,8 @@
             timestampString = "653642306.728814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
             landmarkName = "addDefectCellButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -559,8 +542,8 @@
             timestampString = "653642306.728865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
+            startingLineNumber = "549"
+            endingLineNumber = "549"
             landmarkName = "updateDefectPhotoData(_:photo:needSave:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -576,8 +559,8 @@
             timestampString = "653642306.728906"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
+            startingLineNumber = "502"
+            endingLineNumber = "502"
             landmarkName = "getNameBySaveDefectPhotoData(_:photo:needSave:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -593,8 +576,8 @@
             timestampString = "653642306.728945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "dismissDfPhotoButton(_:)"
             landmarkType = "7">
             <Locations>
@@ -950,8 +933,8 @@
             timestampString = "653642306.729082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "addDefectPhotoFromCamera(_:)"
             landmarkType = "7">
             <Locations>
@@ -1001,8 +984,8 @@
             timestampString = "653642306.729121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "addDefectPhotoFromCamera(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1239,77 +1222,9 @@
             timestampString = "653642306.729283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "awakeFromNib()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5203014E-76CA-43B6-9219-B9A3B9BAB0A3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "653642306.729322"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
-            landmarkName = "elcImagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "5203014E-76CA-43B6-9219-B9A3B9BAB0A3 - 2b381f056624a4c7"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QCFossil_1108.DefectListTableViewCellMode3.(dismissDfPhotoButton (QCFossil_1108.CustomButton) -&gt; ()).(closure #1)"
-                  moduleName = "QCFossil-1108"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pacmobile/Downloads/QCFossil/QCFossil/DefectListTableViewCellMode3.swift"
-                  timestampString = "500293887.606131"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "279"
-                  endingLineNumber = "279"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "5203014E-76CA-43B6-9219-B9A3B9BAB0A3 - 2613e88f18962b97"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QCFossil_1108.DefectListTableViewCellMode3.(dismissDfPhotoButton (QCFossil_1108.CustomButton) -&gt; ()).(closure #1).(closure #1)"
-                  moduleName = "QCFossil-1108"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pacmobile/Downloads/QCFossil/QCFossil/DefectListTableViewCellMode3.swift"
-                  timestampString = "500293887.606256"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "279"
-                  endingLineNumber = "279"
-                  offsetFromSymbolStart = "23">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "34E91D3E-7E60-45E2-BA15-BB7402ECC034"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/DefectListTableViewCellMode3.swift"
-            timestampString = "653642306.729358"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "416"
-            endingLineNumber = "416"
-            landmarkName = "elcImagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

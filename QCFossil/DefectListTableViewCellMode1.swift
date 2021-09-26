@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import BSImagePicker
+import Photos
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -390,7 +392,6 @@ class DefectListTableViewCellMode1: InputModeDFMaster2, UIImagePickerControllerD
      * @param info An NSArray containing dictionary's with the key UIImagePickerControllerOriginalImage, which is a rotated, and sized for the screen 'default representation' of the image selected. If you want to get the original image, use the UIImagePickerControllerReferenceURL key.
      */
     func elcImagePickerController(_ picker: ELCImagePickerController!, didFinishPickingMediaWithInfo info: [Any]!) {
-        let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
         var photos = [Photo]()
         
         for object in info {
@@ -409,42 +410,7 @@ class DefectListTableViewCellMode1: InputModeDFMaster2, UIImagePickerControllerD
                 }
             }
         }
-        
-        //Update InspItem PhotoAdded Status
-        self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
-        self.updatePhotoAddedStatus("yes")
-        
-        self.parentVC?.dismiss(animated: true, completion: {
-            self.activityIndicator.isHidden = false
-            self.activityIndicator.startAnimating()
-            DispatchQueue.global(qos: .userInitiated).async {
-                let photoNames = self.getNamesBySaveDefectPhotos(photos)
-                
-                DispatchQueue.main.async(execute: {
-                    
-                    if defectItem?.count > 0 {
-                        let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
-                        
-                        if defectCell.photoNames == nil {
-                            defectCell.photoNames = [String]()
-                        }
-                        
-                        photoNames.forEach({
-                            defectCell.photoNames?.append(String($0))
-                        })
-                        
-                    }
-                    
-                    photos.forEach({
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":$0])
-                    })
-                    
-                    self.pVC?.updateContentView()
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                })
-            }
-        })
+        updateInspItemPhotoStatus(photos: photos)
     }
     
     func elcImagePickerControllerDidCancel(_ picker: ELCImagePickerController!) {
@@ -496,14 +462,86 @@ class DefectListTableViewCellMode1: InputModeDFMaster2, UIImagePickerControllerD
         
         let availableCount = self.photoNameAtIndex.filter({$0 == ""})
         
-        let imagePicker = ELCImagePickerController(imagePicker: ())
-        imagePicker?.maximumImagesCount = availableCount.count
-        imagePicker?.returnsOriginalImage = false
-        imagePicker?.returnsImage = true
-        imagePicker?.onOrder = true
+//        let imagePicker = ELCImagePickerController(imagePicker: ())
+//        imagePicker?.maximumImagesCount = availableCount.count
+//        imagePicker?.returnsOriginalImage = false
+//        imagePicker?.returnsImage = true
+//        imagePicker?.onOrder = true
+//
+//        imagePicker?.imagePickerDelegate = self
+//        self.pVC?.present(imagePicker!, animated: true, completion: nil)
         
-        imagePicker?.imagePickerDelegate = self
-        self.pVC?.present(imagePicker!, animated: true, completion: nil)
+        let imagePicker = ImagePickerController()
+        imagePicker.settings.selection.max = availableCount.count
+        imagePicker.settings.theme.selectionStyle = .numbered
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
+        imagePicker.settings.selection.unselectOnReachingMax = true
+
+        self.parentVC?.presentImagePicker(imagePicker, select: nil, deselect: nil, cancel: nil, finish: { (assets) in
+            self.setAllImages(selectedAssets: assets)
+        }, completion: nil)
+    }
+
+    func setAllImages(selectedAssets: [PHAsset]) -> Void {
+        if selectedAssets.count != 0{
+            var photos = [Photo]()
+            for i in 0..<selectedAssets.count{
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var image = UIImage()
+                option.isSynchronous = true
+                manager.requestImage(for: selectedAssets[i], targetSize: CGSize(width: _RESIZEIMAGEWIDTH, height: _RESIZEIMAGEHEIGHT), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                    image = result!
+                })
+                
+                let imageView = UIImageView.init(image: image)
+                if let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "") {
+                    photos.append(photo)
+                }
+            }
+            
+            updateInspItemPhotoStatus(photos: photos)
+        }
+    }
+    
+    func updateInspItemPhotoStatus(photos: [Photo]) {
+        let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
+        
+        //Update InspItem PhotoAdded Status
+        self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
+        self.updatePhotoAddedStatus("yes")
+        
+        self.parentVC?.dismiss(animated: true, completion: {
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+            DispatchQueue.global(qos: .userInitiated).async {
+                let photoNames = self.getNamesBySaveDefectPhotos(photos)
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    if defectItem?.count > 0 {
+                        let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
+                        
+                        if defectCell.photoNames == nil {
+                            defectCell.photoNames = [String]()
+                        }
+                        
+                        photoNames.forEach({
+                            defectCell.photoNames?.append(String($0))
+                        })
+                        
+                    }
+                    
+                    photos.forEach({
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":$0])
+                    })
+                    
+                    self.pVC?.updateContentView()
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                })
+            }
+        })
     }
     
     @IBAction func addDefectPhotoFromCamera(_ sender: CustomControlButton) {

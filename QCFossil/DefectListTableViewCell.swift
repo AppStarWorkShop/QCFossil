@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import BSImagePicker
+import Photos
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -134,7 +136,6 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
      * @param info An NSArray containing dictionary's with the key UIImagePickerControllerOriginalImage, which is a rotated, and sized for the screen 'default representation' of the image selected. If you want to get the original image, use the UIImagePickerControllerReferenceURL key.
      */
     func elcImagePickerController(_ picker: ELCImagePickerController!, didFinishPickingMediaWithInfo info: [Any]!) {
-        let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
         var photos = [Photo]()
         
         for object in info {
@@ -153,6 +154,72 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
                 }
             }
         }
+        
+        updateInspItemPhotoStatus(photos: photos)
+    }
+    
+    func elcImagePickerControllerDidCancel(_ picker: ELCImagePickerController!) {
+        self.parentVC?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addDefectPhotoButton(_ sender: CustomButton) {
+        print("add Cell photo")
+        NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        if self.defectPhoto1.image != nil && self.defectPhoto2.image != nil && self.defectPhoto3.image != nil && self.defectPhoto4.image != nil && self.defectPhoto5.image != nil {
+            
+            self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Maximun 5 Defect Photos!"))
+            return
+        }
+        
+        self.dfDescInput.resignFirstResponder()
+        self.dfQtyInput.resignFirstResponder()
+        
+        let availableCount = self.photoNameAtIndex.filter({$0 == ""})
+        
+//        let imagePicker = ELCImagePickerController(imagePicker: ())
+//        imagePicker?.maximumImagesCount = availableCount.count
+//        imagePicker?.returnsOriginalImage = true
+//        imagePicker?.returnsImage = true
+//        imagePicker?.onOrder = true
+//        imagePicker?.imagePickerDelegate = self
+//        self.parentVC?.present(imagePicker!, animated: true, completion: nil)
+        
+        let imagePicker = ImagePickerController()
+        imagePicker.settings.selection.max = availableCount.count
+        imagePicker.settings.theme.selectionStyle = .numbered
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
+        imagePicker.settings.selection.unselectOnReachingMax = true
+
+        self.parentVC?.presentImagePicker(imagePicker, select: nil, deselect: nil, cancel: nil, finish: { (assets) in
+            self.setAllImages(selectedAssets: assets)
+        }, completion: nil)
+    }
+    
+    func setAllImages(selectedAssets: [PHAsset]) -> Void {
+        if selectedAssets.count != 0{
+            var photos = [Photo]()
+            for i in 0..<selectedAssets.count{
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var image = UIImage()
+                option.isSynchronous = true
+                manager.requestImage(for: selectedAssets[i], targetSize: CGSize(width: _RESIZEIMAGEWIDTH, height: _RESIZEIMAGEHEIGHT), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                    image = result!
+                })
+                
+                let imageView = UIImageView.init(image: image)
+                if let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "") {
+                    photos.append(photo)
+                }
+            }
+            
+            updateInspItemPhotoStatus(photos: photos)
+        }
+    }
+    
+    func updateInspItemPhotoStatus(photos: [Photo]) {
+        let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
         
         //Update InspItem PhotoAdded Status
         self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
@@ -189,40 +256,6 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
                 })
             }
         })
-    }
-    
-    func elcImagePickerControllerDidCancel(_ picker: ELCImagePickerController!) {
-        self.parentVC?.dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func addDefectPhotoButton(_ sender: CustomButton) {
-        print("add Cell photo")
-        NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        if self.defectPhoto1.image != nil && self.defectPhoto2.image != nil && self.defectPhoto3.image != nil && self.defectPhoto4.image != nil && self.defectPhoto5.image != nil {
-            
-            self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Maximun 5 Defect Photos!"))
-            return
-        }
-        
-        self.dfDescInput.resignFirstResponder()
-        self.dfQtyInput.resignFirstResponder()
-        
-        let availableCount = self.photoNameAtIndex.filter({$0 == ""})
-        
-        let imagePicker = ELCImagePickerController(imagePicker: ())
-        imagePicker?.maximumImagesCount = availableCount.count
-        imagePicker?.returnsOriginalImage = true
-        imagePicker?.returnsImage = true
-        imagePicker?.onOrder = true
-//        imagePicker.title1 = MylocalizedString.sharedLocalizeManager.getLocalizedString("Only x photos please!")
-//        imagePicker.detailTitle = MylocalizedString.sharedLocalizeManager.getLocalizedString("You can only send 5 photos at a time.")
-//        imagePicker.okButtonTittle = MylocalizedString.sharedLocalizeManager.getLocalizedString("Okay")
-//        imagePicker.title2 = MylocalizedString.sharedLocalizeManager.getLocalizedString("Select an Album")
-//        imagePicker.title3 = MylocalizedString.sharedLocalizeManager.getLocalizedString("Pick Photos")
-        
-        imagePicker?.imagePickerDelegate = self
-        self.parentVC?.present(imagePicker!, animated: true, completion: nil)
     }
     
     @IBAction func addDefectPhotoFromCamera(_ sender: UIButton) {
