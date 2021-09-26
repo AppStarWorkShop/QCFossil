@@ -79,7 +79,6 @@
 		9CD85A671D74147F004DD641 /* prng.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CD85A4B1D74147F004DD641 /* prng.c */; };
 		9CD85A681D74147F004DD641 /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CD85A4D1D74147F004DD641 /* pwd2key.c */; };
 		9CD85A691D74147F004DD641 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CD85A4F1D74147F004DD641 /* sha1.c */; };
-		9CD85A6A1D74147F004DD641 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9CD85A511D74147F004DD641 /* Info.plist */; };
 		9CD85A6B1D74147F004DD641 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CD85A541D74147F004DD641 /* ioapi.c */; };
 		9CD85A6C1D74147F004DD641 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CD85A561D74147F004DD641 /* mztools.c */; };
 		9CD85A6D1D74147F004DD641 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CD85A581D74147F004DD641 /* unzip.c */; };
@@ -449,7 +448,7 @@
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
 		9C0848861C61E08500CAAD88 /* POCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POCellView.xib; sourceTree = "<group>"; };
 		9C0848881C61E0FA00CAAD88 /* POCellViewInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POCellViewInput.swift; sourceTree = "<group>"; };
-		9C0C36CB1C1E6F7800CF48ED /* QC210919P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC210919P.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0C36CB1C1E6F7800CF48ED /* QC210926P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC210926P.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0C36D01C1E6F7800CF48ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C0C36D31C1E6F7800CF48ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -658,7 +657,7 @@
 		BDCF870E1C576D0F000B0C38 /* PoDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoDataHelper.swift; sourceTree = "<group>"; };
 		BDCF87101C57886D000B0C38 /* InspSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSection.swift; sourceTree = "<group>"; };
 		BDCFCCE01DB4835D00414027 /* InputModeDFMaster2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeDFMaster2.swift; sourceTree = "<group>"; };
-		BDD1A3472123472B00AE391E /* QC210919U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC210919U.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDD1A3472123472B00AE391E /* QC210926U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC210926U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD2E0C11C45048C00CB0C40 /* TaskTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTypeViewController.swift; sourceTree = "<group>"; };
 		BDD51C4E1C3E442000A6E656 /* InputMode04DefectCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04DefectCellView.swift; sourceTree = "<group>"; };
 		BDD51C501C3E443C00A6E656 /* InputMode04DefectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04DefectCell.xib; sourceTree = "<group>"; };
@@ -742,10 +741,10 @@
 		9C0C36CC1C1E6F7800CF48ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0C36CB1C1E6F7800CF48ED /* QC210919P.app */,
+				9C0C36CB1C1E6F7800CF48ED /* QC210926P.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
-				BDD1A3472123472B00AE391E /* QC210919U.app */,
+				BDD1A3472123472B00AE391E /* QC210926U.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1268,7 +1267,7 @@
 			);
 			name = "QCFossil PRD";
 			productName = QCFossil;
-			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC210919P.app */;
+			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC210926P.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9C0C36DE1C1E6F7800CF48ED /* QCFossilTests */ = {
@@ -1324,7 +1323,7 @@
 			);
 			name = "QCFossil UAT";
 			productName = QCFossil;
-			productReference = BDD1A3472123472B00AE391E /* QC210919U.app */;
+			productReference = BDD1A3472123472B00AE391E /* QC210926U.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1416,7 +1415,6 @@
 				BDA1B5C3212AFF6F001C3C5D /* QCFossil-UAT-Info.plist in Resources */,
 				9C93B6471C4F567E00D7123A /* InputMode03DefectCell.xib in Resources */,
 				9C93B64D1C4F94A600D7123A /* DropdownListView.xib in Resources */,
-				9CD85A6A1D74147F004DD641 /* Info.plist in Resources */,
 				BD5572D3231D3B66008E06A5 /* Overlay@2x.png in Resources */,
 				9C25B2F51C4CF95B005DCA11 /* InputMode02Cell.xib in Resources */,
 				9C96E4721C479FAB0052C486 /* TaskDetailView.xib in Resources */,
@@ -1971,6 +1969,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -1981,14 +1980,14 @@
 					"DEVELOPMENT=0",
 				);
 				INFOPLIST_FILE = QCFossil/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
-				PRODUCT_NAME = QC210919P;
+				PRODUCT_NAME = QC210926P;
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC PRD Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2005,20 +2004,21 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = "DEVELOPMENT=0";
 				INFOPLIST_FILE = QCFossil/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
-				PRODUCT_NAME = QC210919P;
+				PRODUCT_NAME = QC210926P;
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC PRD Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2104,6 +2104,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -2121,7 +2122,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
-				PRODUCT_NAME = QC210919U;
+				PRODUCT_NAME = QC210926U;
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC TEST Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2139,6 +2140,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hon Kit Tam (9FH5QH3L9P)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -2152,7 +2154,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
-				PRODUCT_NAME = QC210919U;
+				PRODUCT_NAME = QC210926U;
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC TEST Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
