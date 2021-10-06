@@ -442,9 +442,15 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
     @IBAction func signoffViewButton(_ sender: UIButton) {
         
         if validateBeforeSignoff() {
-            let myParentTabVC = self.pVC!.parent?.parent as! TabBarViewController
-            if myParentTabVC.saveTask(GetTaskStatusId(caseId: "Draft").rawValue, needValidate: true) {
-                self.pVC!.performSegue(withIdentifier: "ToSignoffSegue", sender: sender)
+            var myParentTabVC:TabBarViewController?
+            self.pVC?.navigationController?.viewControllers.forEach({ vc in
+                if let parentVC = vc as? TabBarViewController {
+                    myParentTabVC = parentVC
+                }
+            })
+            
+            if let result = myParentTabVC?.saveTask(GetTaskStatusId(caseId: "Draft").rawValue, needValidate: true), result == true {
+                self.pVC?.performSegue(withIdentifier: "ToSignoffSegue", sender: sender)
             }
         }
     }

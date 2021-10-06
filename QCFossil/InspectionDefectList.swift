@@ -172,11 +172,10 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        navigationItem.hidesBackButton = true
         updateContentView()
         
-        let myParentTabVC = self.parent?.parent as! TabBarViewController
-        myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("\((inspItem?.cellCatName)!)")
+        self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("\((inspItem?.cellCatName)!)")
         
         let leftButton=UIBarButtonItem()
         leftButton.title="< "+MylocalizedString.sharedLocalizeManager.getLocalizedString("Back")
@@ -184,23 +183,34 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         leftButton.style=UIBarButtonItem.Style.plain
         leftButton.target=self
         leftButton.action=#selector(InspectionDefectList.clearDefectItemsBeforeGOBack)
-        myParentTabVC.navigationItem.leftBarButtonItem=leftButton
+        self.navigationItem.leftBarButtonItem=leftButton
         
         //myParentTabVC.setLeftBarItem("< "+MylocalizedString.sharedLocalizeManager.getLocalizedString("Back"),actionName: "backToTaskDetailFromSignOffPage")
         
         if (Cache_Task_On?.taskStatus != GetTaskStatusId(caseId: "Confirmed").rawValue && Cache_Task_On?.taskStatus != GetTaskStatusId(caseId: "Cancelled").rawValue) || _DEBUG_MODE {
             
-            let handler:(()->(Bool)) = { [weak self] in
-                guard let strongSelf = self else {return false}
-                return strongSelf.validation()
-            }
-            
-            myParentTabVC.setRightBarItemWithHandler(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), actionName: "updateTask:", handler: handler)
+            let rightButton = UIBarButtonItem()
+            rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Save")
+            rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+            rightButton.style = UIBarButtonItem.Style.plain
+            rightButton.target = self
+            rightButton.action=#selector(updateTask)
+            self.navigationItem.rightBarButtonItem = rightButton
         }
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
     }
     
+    @objc func updateTask() {
+        self.navigationController?.viewControllers.forEach({ vc in
+            if let parentVC = vc as? TabBarViewController {
+                parentVC.updateTask()
+            }
+        })
+        validation()
+    }
+    
+    @discardableResult
     func validation() ->Bool {
         self.validateNow = true
         self.passValidation = true
@@ -232,8 +242,14 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
             return
         }
         
-        let myParentTabVC = self.parent?.parent as! TabBarViewController
-        myParentTabVC.handler = nil
+        var myParentTabVC:TabBarViewController?
+        self.navigationController?.viewControllers.forEach({ vc in
+            if let parentVC = vc as? TabBarViewController {
+                myParentTabVC = parentVC
+            }
+        })
+
+        myParentTabVC?.handler = nil
         
         let defectDataHelper = DefectDataHelper()
         let defectItemArray = (Cache_Task_On?.defectItems.filter({ $0.inspElmt.cellCatIdx == self.inspItem!.cellCatIdx && $0.inspElmt.cellIdx == self.inspItem!.cellIdx }))!
@@ -643,6 +659,15 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            nav.navigationBar.standardAppearance = navBarAppearance
+            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster

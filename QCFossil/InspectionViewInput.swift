@@ -188,12 +188,9 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
     }
     
     func updateSectionHeader(_ currentPage:Int = 0) {
-        let myParentTabVC = self.parentVC?.parent?.parent as! TabBarViewController
-        
-        if currentPage < Cache_Task_On?.inspSections.count {
-            myParentTabVC.navigationItem.title = _ENGLISH ? Cache_Task_On?.inspSections[currentPage].sectionNameEn : Cache_Task_On?.inspSections[currentPage].sectionNameCn
-        
-            (self.pVC! as TaskDetailsViewController).inspCatText = (_ENGLISH ? Cache_Task_On?.inspSections[currentPage].sectionNameEn : Cache_Task_On?.inspSections[currentPage].sectionNameCn)!
+        if currentPage < Cache_Task_On?.inspSections.count, let title = _ENGLISH ? Cache_Task_On?.inspSections[currentPage].sectionNameEn : Cache_Task_On?.inspSections[currentPage].sectionNameCn {
+            self.pVC.updateNavigationTitle(title: title)
+            (self.pVC! as TaskDetailsViewController).inspCatText = title
         }
     }
 
@@ -238,7 +235,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
     }
     
     @IBAction func backBarBtnOnClick(_ sender: UIBarButtonItem) {
-        self.parentVC!.navigationController?.popViewController(animated: false)
+        self.parentVC?.navigationController?.popViewController(animated: false)
     }
     
     

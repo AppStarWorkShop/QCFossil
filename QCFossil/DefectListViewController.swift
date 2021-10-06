@@ -219,17 +219,24 @@ class DefectListViewController: UIViewController, UITableViewDelegate,  UITableV
     override func viewWillAppear(_ animated: Bool) {
         
         updateContentView()
-        
-        let myParentTabVC = self.parent?.parent as! TabBarViewController
-        myParentTabVC.setLeftBarItem("< "+MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
-        
-        if !self.view.disableFuns(self.view) {
-            myParentTabVC.setRightBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), actionName: "updateTask:")
-        }else{
-            myParentTabVC.setRightBarItem("", actionName: "noAction")
+        var myParentTabVC:TabBarViewController?
+        if let vcList = self.navigationController?.viewControllers {
+            for vc in vcList {
+                if let tabBarVC = vc as? TabBarViewController {
+                    myParentTabVC = tabBarVC
+                }
+            }
         }
         
-        myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Findings")
+        myParentTabVC?.setLeftBarItem("< "+MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
+        
+        if !self.view.disableFuns(self.view) {
+            myParentTabVC?.setRightBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), actionName: "updateTask:")
+        }else{
+            myParentTabVC?.setRightBarItem("", actionName: "noAction")
+        }
+        
+        myParentTabVC?.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Findings")
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
     }

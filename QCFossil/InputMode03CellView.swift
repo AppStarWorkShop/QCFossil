@@ -182,8 +182,14 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         //Save self to DB to get the taskDataRecordId
         //self.saveMyselfToGetId()
         
-        let myParentTabVC = self.parentVC!.parent?.parent as! TabBarViewController
-        let defectListVC = myParentTabVC.defectListViewController
+        var myParentTabVC:TabBarViewController?
+        self.parentVC?.navigationController?.viewControllers.forEach({ vc in
+            if let parentVC = vc as? TabBarViewController {
+                myParentTabVC = parentVC
+            }
+        })
+        
+        let defectListVC = myParentTabVC?.defectListViewController
         
         //add section header if not in headerList
   

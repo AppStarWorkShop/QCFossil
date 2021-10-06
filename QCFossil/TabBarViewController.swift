@@ -53,23 +53,27 @@ class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TabBarViewController.switchTabViewToDL), name: "switchTabViewToDL", object: nil)
         
+//        vc is: TaskDetailsViewController
+//        vc is: DefectListViewController
+//        vc is: PhotoAlbumViewController
+//        vc is: QCInfoViewController
+        
         //selected index 2: DefectListViewController
-        defectListViewController = self.children[2].children[0] as? DefectListViewController
+        defectListViewController = self.viewControllers?[2] as? DefectListViewController
         defectListViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Findings")
         
         //selected index 1: photoAlbumViewController
-        photoAlbumViewController = self.children[1].children[0] as? PhotoAlbumViewController
+        photoAlbumViewController = self.viewControllers?[1] as? PhotoAlbumViewController
         photoAlbumViewController?.initPhotoTakerNotification()
         photoAlbumViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
         
         let taskDataHelper = TaskDataHelper()
         let isShowQCInfoPage = taskDataHelper.isNeedShowQCInfoPage(Cache_Task_On?.refTaskId ?? 0)
         if isShowQCInfoPage {
-            qcInfoViewController = self.children[3].children[0] as? QCInfoViewController
+            qcInfoViewController = self.viewControllers?[3] as? QCInfoViewController
             qcInfoViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("QC Info")
         } else {
             self.children[3].removeFromParent()

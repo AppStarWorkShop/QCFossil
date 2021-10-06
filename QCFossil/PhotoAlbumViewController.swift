@@ -63,8 +63,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if self.parent?.parent?.classForCoder == TabBarViewController.self {
-            let parentVC = self.parent?.parent as! TabBarViewController
+        if let parentVC = self.parent as? TabBarViewController {
             parentVC.photoAlbumViewController = self
         }
                 
@@ -121,7 +120,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         
         DispatchQueue.main.async(execute: {
             self.loadPhotos()
-            self.parent?.parent!.view.removeActivityIndicator()
+            self.parent?.view.removeActivityIndicator()
         })
         
         NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -168,49 +167,49 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let myParentTabVC = self.parent?.parent as! TabBarViewController
-        
-        if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
-            myParentTabVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
-        }else{
-            myParentTabVC.navigationItem.leftBarButtonItem = self.navigationItem.leftBarButtonItem
-        }
-        
-        myParentTabVC.navigationItem.rightBarButtonItem = nil
-        myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
-        self.view.setButtonCornerRadius(self.addPhotoBtn)
-        self.view.setButtonCornerRadius(self.addPhotoFromCamera)
-        
-        if self.pVC != nil {
-            self.photosSelected = [Photo]()
+        if let myParentTabVC = self.parent as? TabBarViewController {
+            if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
+                myParentTabVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
+            }else{
+                myParentTabVC.navigationItem.leftBarButtonItem = self.navigationItem.leftBarButtonItem
+            }
             
-            let leftButton = UIBarButtonItem()
-            leftButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
-            leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-            leftButton.style = UIBarButtonItem.Style.plain
-            leftButton.target = self
-            leftButton.action = #selector(PhotoAlbumViewController.cancelSelectedPhotos)
-            myParentTabVC.navigationItem.leftBarButtonItem = leftButton
+            myParentTabVC.navigationItem.rightBarButtonItem = nil
+            myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
+            self.view.setButtonCornerRadius(self.addPhotoBtn)
+            self.view.setButtonCornerRadius(self.addPhotoFromCamera)
             
-            let rightButton = UIBarButtonItem()
-            rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
-            rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-            rightButton.style = UIBarButtonItem.Style.plain
-            rightButton.target = self
-            rightButton.action = #selector(PhotoAlbumViewController.didSelectedPhotos)
-            myParentTabVC.navigationItem.rightBarButtonItem = rightButton
+            if self.pVC != nil {
+                self.photosSelected = [Photo]()
+                
+                let leftButton = UIBarButtonItem()
+                leftButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
+                leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+                leftButton.style = UIBarButtonItem.Style.plain
+                leftButton.target = self
+                leftButton.action = #selector(PhotoAlbumViewController.cancelSelectedPhotos)
+                myParentTabVC.navigationItem.leftBarButtonItem = leftButton
+                
+                let rightButton = UIBarButtonItem()
+                rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
+                rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+                rightButton.style = UIBarButtonItem.Style.plain
+                rightButton.target = self
+                rightButton.action = #selector(PhotoAlbumViewController.didSelectedPhotos)
+                myParentTabVC.navigationItem.rightBarButtonItem = rightButton
 
-            self.photoTableView.allowsMultipleSelection = true
-        }else{
-            self.photoTableView.allowsSelection = false
+                self.photoTableView.allowsMultipleSelection = true
+            }else{
+                self.photoTableView.allowsSelection = false
+            }
+
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
         }
-
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
     }
     
     @objc func cancelSelectedPhotos() {
         print("Cancel Select Photos")
-        weak var maskView = self.parent!.view.viewWithTag(_MASKVIEWTAG)
+        weak var maskView = self.parent?.view.viewWithTag(_MASKVIEWTAG)
         maskView?.removeFromSuperview()
         
         self.navigationController?.popViewController(animated: true)
@@ -221,7 +220,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         
         if self.photosSelected.count < 1{
             self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("No Photo Selected, OK?"), parentVC:self, handlerFun: { (action:UIAlertAction!) in
-                weak var maskView = self.parent!.view.viewWithTag(_MASKVIEWTAG)
+                weak var maskView = self.parent?.view.viewWithTag(_MASKVIEWTAG)
                 maskView?.removeFromSuperview()
                 
                 self.navigationController?.popViewController(animated: true)
@@ -270,7 +269,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                 }
             }
             
-            let maskView = self.parent!.view.viewWithTag(_MASKVIEWTAG)
+            let maskView = self.parent?.view.viewWithTag(_MASKVIEWTAG)
             maskView?.removeFromSuperview()
         
             //Update Photo Album

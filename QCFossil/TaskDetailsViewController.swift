@@ -21,16 +21,14 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.parent?.parent?.classForCoder == TabBarViewController.self {
-            let parentVC = self.parent!.parent as! TabBarViewController
+        if let parentVC = self.parent as? TabBarViewController {
             parentVC.taskDetalViewContorller = self
         }
-                
+         
         // Do any additional setup after loading the view.
-        self.ScrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: 768, height: 1024))
-        self.ScrollView.contentSize = CGSize.init(width: 768, height: 1400)
-        self.ScrollView.delegate = self
+        ScrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: 768, height: 1024))
+        ScrollView.contentSize = CGSize.init(width: 768, height: 1200)
+        ScrollView.delegate = self
         
         self.view.addSubview(self.ScrollView)
         
@@ -39,7 +37,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.async(execute: {
-            self.self.parent!.parent!.view.removeActivityIndicator()
+            self.self.parent?.view.removeActivityIndicator()
         })
         
         self.view.disableAllFunsForView(self.view)
@@ -47,7 +45,6 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         refreshCameraIcon()
-        
         self.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
         if displaySubViewTag == _TASKINSPCATVIEWTAG {
             self.updateNaviBarMenu(backBtnText, leftBarActionName: "backToTaskDetail", rightBarTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), rightBarActionName: "updateTask:")
@@ -59,7 +56,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     }
     
     func updateNaviBarMenu(_ leftBarTitle:String = "Task Search", leftBarActionName:String = "backTaskSearch:", rightBarTitle:String, rightBarActionName:String) {
-        if let myParentTabVC = self.parent?.parent as? TabBarViewController {
+        if let myParentTabVC = self.parent as? TabBarViewController {
         
         if leftBarTitle == "Task Search" {
             //myParentTabVC.navigationItem.leftBarButtonItem = myParentTabVC.navigationItem.backBarButtonItem
@@ -73,6 +70,12 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
         if !self.view.disableFuns(self.view) {
             myParentTabVC.setRightBarItem(rightBarTitle, actionName: rightBarActionName)
         }
+        }
+    }
+    
+    func updateNavigationTitle(title: String) {
+        if let myParentTabVC = self.parent as? TabBarViewController {
+            myParentTabVC.navigationItem.title = title
         }
     }
 
@@ -160,7 +163,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                     Cache_Thumb_Path = Cache_Task_Path!+"/"+_THUMBSPHYSICALNAME
                 }else{
                     print("No Inspection Category In Selected Task!")
-                    self.parent?.navigationController!.popViewController(animated: true)
+                    self.navigationController!.popViewController(animated: true)
                 }
                 
                 //Init sub view TaskDetail
@@ -169,7 +172,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 taskDetailView.tag = _TASKDETAILVIEWTAG
                 
                 self.ScrollView.addSubview(taskDetailView)
-                taskDetailView.frame = CGRect.init(x: 0, y: -80, width: taskDetailView.frame.width, height: taskDetailView.frame.height + 80)
+                taskDetailView.frame = CGRect.init(x: 0, y: -40, width: taskDetailView.frame.width, height: taskDetailView.frame.height + 80)
                 
                 self.view.removeActivityIndicator()
                 

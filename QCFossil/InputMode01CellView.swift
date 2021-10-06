@@ -137,8 +137,14 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             }
         }
         
-        let myParentTabVC = self.parentVC!.parent?.parent as! TabBarViewController
-        let defectListVC = myParentTabVC.defectListViewController
+        var myParentTabVC:TabBarViewController?
+        self.parentVC?.navigationController?.viewControllers.forEach({ vc in
+            if let parentVC = vc as? TabBarViewController {
+                myParentTabVC = parentVC
+            }
+        })
+        
+        let defectListVC = myParentTabVC?.defectListViewController
         
         //add defect cell
         if !isDefectItemAdded(defectListVC!) {
@@ -162,7 +168,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             }
         }
         
-        self.parentVC!.performSegue(withIdentifier: "DefectListFromInspectItemSegue", sender:self)
+        self.parentVC?.performSegue(withIdentifier: "DefectListFromInspectItemSegue", sender:self)
     }
     
     @IBAction func dismissBtnOnClick(_ sender: UIButton) {

@@ -117,13 +117,27 @@ class SignoffViewController: UIViewController, UITextFieldDelegate {
         self.view.setButtonCornerRadius(self.inspectorSignClearBtn)
         self.view.setButtonCornerRadius(self.vendorSignClearBtn)
         
-        let myParentTabVC = self.parent?.parent as! TabBarViewController
-        myParentTabVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"),actionName: "backToTaskDetailFromSignOffPage")
-        myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
+        self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sign-off & Confirm")
         
         if (Cache_Task_On?.taskStatus != GetTaskStatusId(caseId: "Confirmed").rawValue && Cache_Task_On?.taskStatus != GetTaskStatusId(caseId: "Cancelled").rawValue) || _DEBUG_MODE {
-            myParentTabVC.setRightBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save & Confirm"), actionName: "confirmTask")
+            
+            let rightButton = UIBarButtonItem()
+            rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Save & Confirm")
+            rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+            rightButton.style = UIBarButtonItem.Style.plain
+            rightButton.target = self
+            rightButton.action=#selector(confirmTask)
+            self.navigationItem.rightBarButtonItem = rightButton
         }
+    }
+    
+    @objc func confirmTask() {
+        var myParentTabVC:TabBarViewController?
+        self.navigationController?.viewControllers.forEach({ vc in
+            if let parentVC = vc as? TabBarViewController {
+                parentVC.confirmTask()
+            }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -124,6 +124,14 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
     
     @IBAction func defectBtnOnClick(_ sender: UIButton) {
         
+        
+        var myParentTabVC:TabBarViewController?
+        self.parentVC?.navigationController?.viewControllers.forEach({ vc in
+            if let parentVC = vc as? TabBarViewController {
+                myParentTabVC = parentVC
+            }
+        })
+        
         //check if defect input and defect position points nil, then return
         if let defectDPPInput = cellDPPInput.text {
             if defectDPPInput == "" || defectDPPInput.isEmpty {
@@ -134,8 +142,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             }
         }
         
-        let myParentTabVC = self.parentVC!.parent?.parent as! TabBarViewController
-        let defectListVC = myParentTabVC.defectListViewController
+        let defectListVC = myParentTabVC?.defectListViewController
         
         //add defect cell
         if !isDefectItemAdded(defectListVC!) {
@@ -160,6 +167,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         }
         
         self.parentVC!.performSegue(withIdentifier: "DefectListFromInspectItemSegue", sender:self)
+    
     }
     
     func dropdownHandleFunc(_ textField: UITextField) {

@@ -67,6 +67,15 @@ class POInfoView: UIView {
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            nav.navigationBar.standardAppearance = navBarAppearance
+            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster

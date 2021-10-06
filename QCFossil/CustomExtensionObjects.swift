@@ -1775,6 +1775,15 @@ extension UITextField {
         nav.modalPresentationStyle = .popover
         nav.view.translatesAutoresizingMaskIntoConstraints = false
         nav.navigationBar.barTintColor = .black
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            nav.navigationBar.standardAppearance = navBarAppearance
+            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster

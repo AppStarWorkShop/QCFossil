@@ -2051,8 +2051,8 @@
             timestampString = "647366859.930577"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "takePhotoFromCell(_:)"
             landmarkType = "7">
          </BreakpointContent>
