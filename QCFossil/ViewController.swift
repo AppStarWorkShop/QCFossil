@@ -55,6 +55,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
     @IBOutlet weak var versionCode: UILabel!
     @IBOutlet weak var databaseUsingCode: UILabel!
     
+    @IBOutlet weak var logoImage: UIImageView!
+    
     var newPwInput:UITextField!
     var confirmPwInput:UITextField!
     var validateStatus:Bool = false
@@ -140,6 +142,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
             defaults.set(dataSyncPrdServer, forKey: "webServiceUrl_preference")
         #endif
         
+        setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
@@ -936,5 +939,16 @@ extension ViewController {
         
         super.prepare(for: segue, sender: sender)
         segue.destination.modalPresentationStyle = .overFullScreen// .fullScreen
+    }
+}
+
+extension ViewController {
+    func setupView() {
+//        logoImage.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        NSLayoutConstraint.activate([
+//            logoImage.widthAnchor.constraint(equalToConstant: 700),
+//            logoImage.heightAnchor.constraint(equalToConstant: 500),
+//        ])
     }
 }
