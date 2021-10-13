@@ -117,19 +117,10 @@ class TaskTableViewCell: UITableViewCell {
         popoverContent.dataType = _POPOVERPOITEMTYPE
         popoverContent.selectedValue = poListText.text!//"hello world,new world,"
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
@@ -146,19 +137,10 @@ class TaskTableViewCell: UITableViewCell {
         popoverContent.dataType = _POPOVERPOITEMTYPESHIPWIN
         popoverContent.selectedValue = shipWinText.text!
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
@@ -213,19 +195,10 @@ class TaskTableViewCell: UITableViewCell {
         popoverContent.dataType = _POPOVERTASKSTATUSDESC
         popoverContent.selectedValue = dataRefuseDesc//(Cache_Task_On?.dataRefuseDesc)!
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
@@ -243,19 +216,10 @@ class TaskTableViewCell: UITableViewCell {
         popoverContent.dataType = _POPOVERPRODDESC
         popoverContent.selectedValue = prodDesc
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
@@ -272,19 +236,10 @@ class TaskTableViewCell: UITableViewCell {
         popoverContent.dataType = _POPOVERPOPDRSD
         popoverContent.selectedValue = vendorLocationText.text!
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.white
         nav.navigationBar.tintColor = UIColor.black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster

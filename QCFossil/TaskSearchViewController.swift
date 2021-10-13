@@ -342,6 +342,17 @@ class TaskSearchViewController: PopoverMaster, UITableViewDelegate, UITableViewD
         
         //NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
         //self.reloadTaskSearchTableView()
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = .white
+        }
     }
     
     override func didReceiveMemoryWarning() {
