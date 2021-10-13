@@ -28,7 +28,7 @@ class PopoverViewController: UIViewController {
 
         if dataType == _POPOVERDATETPYE {
             calenderview = CalenderPickerViewInput.loadFromNibNamed("CalenderPickerView")!
-            calenderview.frame = CGRect(x: 0, y: _NAVIBARHEIGHT, width: 325, height: 350+_NAVIBARHEIGHT)
+            calenderview.frame = CGRect(x: 0, y: _NAVIBARHEIGHT + 20, width: 325, height: 350+_NAVIBARHEIGHT+20)
             
             self.view.addSubview(calenderview)
  
