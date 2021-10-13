@@ -152,18 +152,9 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
             
         }
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = .popover
         nav.navigationBar.barTintColor = .black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = self
@@ -187,18 +178,9 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         popoverContent.parentTextFieldView = sender
         popoverContent.sourceType = _TMPLTYPE
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         nav.navigationBar.barTintColor = UIColor.black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
         
         let popover = nav.popoverPresentationController
         popover!.delegate = self

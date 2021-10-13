@@ -1771,20 +1771,11 @@ extension UITextField {
         popoverContent.sourceType = _BOOKINGDATEFROMDATETYPE
         popoverContent.dataType = _POPOVERDATETPYE
         
-        let nav = UINavigationController(rootViewController: popoverContent)
+        let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = .popover
         nav.view.translatesAutoresizingMaskIntoConstraints = false
         nav.navigationBar.barTintColor = .black
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            navBarAppearance.backgroundColor = .black
-            nav.navigationBar.standardAppearance = navBarAppearance
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
-        
+
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender.parentVC?.view

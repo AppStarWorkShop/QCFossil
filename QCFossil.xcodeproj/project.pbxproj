@@ -367,6 +367,8 @@
 		BDD6669D1C60BA9F00635981 /* InputModeICMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD6669C1C60BA9F00635981 /* InputModeICMaster.swift */; };
 		BDD6669F1C610D1400635981 /* InputModeSCMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD6669E1C610D1400635981 /* InputModeSCMaster.swift */; };
 		BDD83F321C291958005806D7 /* SignoffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD83F311C291958005806D7 /* SignoffViewController.swift */; };
+		BDD918F12715B60D00ED441B /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD918F02715B60D00ED441B /* CustomNavigationController.swift */; };
+		BDD918F22715B60D00ED441B /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD918F02715B60D00ED441B /* CustomNavigationController.swift */; };
 		BDD96F401DBF335200806719 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD96F3F1DBF335200806719 /* Brand.swift */; };
 		BDD96F421DC0B23A00806719 /* KeyValueDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD96F411DC0B23A00806719 /* KeyValueDataHelper.swift */; };
 		BDDAA71B1C2A890E006A5D40 /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDAA71A1C2A890E006A5D40 /* PhotoAlbumViewController.swift */; };
@@ -448,7 +450,7 @@
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
 		9C0848861C61E08500CAAD88 /* POCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POCellView.xib; sourceTree = "<group>"; };
 		9C0848881C61E0FA00CAAD88 /* POCellViewInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POCellViewInput.swift; sourceTree = "<group>"; };
-		9C0C36CB1C1E6F7800CF48ED /* QC211010P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211010P.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0C36CB1C1E6F7800CF48ED /* QC211012P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211012P.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0C36D01C1E6F7800CF48ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C0C36D31C1E6F7800CF48ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -657,7 +659,7 @@
 		BDCF870E1C576D0F000B0C38 /* PoDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoDataHelper.swift; sourceTree = "<group>"; };
 		BDCF87101C57886D000B0C38 /* InspSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSection.swift; sourceTree = "<group>"; };
 		BDCFCCE01DB4835D00414027 /* InputModeDFMaster2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeDFMaster2.swift; sourceTree = "<group>"; };
-		BDD1A3472123472B00AE391E /* QC211010U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211010U.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDD1A3472123472B00AE391E /* QC211012U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211012U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD2E0C11C45048C00CB0C40 /* TaskTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTypeViewController.swift; sourceTree = "<group>"; };
 		BDD51C4E1C3E442000A6E656 /* InputMode04DefectCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04DefectCellView.swift; sourceTree = "<group>"; };
 		BDD51C501C3E443C00A6E656 /* InputMode04DefectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04DefectCell.xib; sourceTree = "<group>"; };
@@ -667,6 +669,7 @@
 		BDD6669C1C60BA9F00635981 /* InputModeICMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeICMaster.swift; sourceTree = "<group>"; };
 		BDD6669E1C610D1400635981 /* InputModeSCMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeSCMaster.swift; sourceTree = "<group>"; };
 		BDD83F311C291958005806D7 /* SignoffViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignoffViewController.swift; sourceTree = "<group>"; };
+		BDD918F02715B60D00ED441B /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		BDD96F3F1DBF335200806719 /* Brand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		BDD96F411DC0B23A00806719 /* KeyValueDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueDataHelper.swift; sourceTree = "<group>"; };
 		BDDAA71A1C2A890E006A5D40 /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
@@ -741,10 +744,10 @@
 		9C0C36CC1C1E6F7800CF48ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0C36CB1C1E6F7800CF48ED /* QC211010P.app */,
+				9C0C36CB1C1E6F7800CF48ED /* QC211012P.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
-				BDD1A3472123472B00AE391E /* QC211010U.app */,
+				BDD1A3472123472B00AE391E /* QC211012U.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -925,6 +928,7 @@
 				BD095CF31C24274100F4F57F /* CustomSegue.swift */,
 				9C0DB6041C99504D00C347DB /* CustomButton.swift */,
 				BDF47A861DD5ABFA00F2EA78 /* CustomControlButton.swift */,
+				BDD918F02715B60D00ED441B /* CustomNavigationController.swift */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -1267,7 +1271,7 @@
 			);
 			name = "QCFossil PRD";
 			productName = QCFossil;
-			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC211010P.app */;
+			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC211012P.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9C0C36DE1C1E6F7800CF48ED /* QCFossilTests */ = {
@@ -1323,7 +1327,7 @@
 			);
 			name = "QCFossil UAT";
 			productName = QCFossil;
-			productReference = BDD1A3472123472B00AE391E /* QC211010U.app */;
+			productReference = BDD1A3472123472B00AE391E /* QC211012U.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1627,6 +1631,7 @@
 				9CED09D51C9FEE4C00ABEEEE /* DPDataHelper.swift in Sources */,
 				9C0DB6051C99504D00C347DB /* CustomButton.swift in Sources */,
 				9CD85A611D74147F004DD641 /* aescrypt.c in Sources */,
+				BDD918F12715B60D00ED441B /* CustomNavigationController.swift in Sources */,
 				9C25B2EF1C4CEA96005DCA11 /* InputMode01DefectCellView.swift in Sources */,
 				BDE238BA1C27AF8C00325740 /* LeftMenuViewController.swift in Sources */,
 				9CD5A02C1C62F8C900F52C78 /* Inspector.swift in Sources */,
@@ -1795,6 +1800,7 @@
 				BDD1A3062123472B00AE391E /* InspectorDataHelper.swift in Sources */,
 				BDD1A3072123472B00AE391E /* DPDataHelper.swift in Sources */,
 				BDD1A3082123472B00AE391E /* CustomButton.swift in Sources */,
+				BDD918F22715B60D00ED441B /* CustomNavigationController.swift in Sources */,
 				BDD1A3092123472B00AE391E /* aescrypt.c in Sources */,
 				BDD1A30A2123472B00AE391E /* InputMode01DefectCellView.swift in Sources */,
 				BDD1A30B2123472B00AE391E /* LeftMenuViewController.swift in Sources */,
@@ -1987,7 +1993,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
-				PRODUCT_NAME = QC211010P;
+				PRODUCT_NAME = QC211012P;
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC PRD Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2018,7 +2024,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
-				PRODUCT_NAME = QC211010P;
+				PRODUCT_NAME = QC211012P;
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC PRD Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2122,7 +2128,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
-				PRODUCT_NAME = QC211010U;
+				PRODUCT_NAME = QC211012U;
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC TEST Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2154,7 +2160,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
-				PRODUCT_NAME = QC211010U;
+				PRODUCT_NAME = QC211012U;
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC TEST Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
