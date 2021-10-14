@@ -1778,9 +1778,9 @@ extension UITextField {
 
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
-        popover!.sourceView = sender.parentVC?.view
-        popover!.sourceRect = CGRect(x: sender.frame.midX,y: sender.frame.minY,width: sender.frame.size.width,height: sender.frame.size.height)
-        
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
+
         sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     

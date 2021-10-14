@@ -53,7 +53,7 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
             let popover = nav.popoverPresentationController
             popover?.delegate = nil
             popover?.sourceView = sender.view
-            popover?.sourceRect = CGRect(x: 0,y: (sender.view?.parentVC?.view.frame.origin.y)!,width: sender.view!.frame.size.width,height: sender.view!.frame.size.height)
+            popover?.sourceRect = sender.view?.bounds ?? CGRect(x: 0,y: (sender.view?.parentVC?.view.frame.origin.y)!,width: sender.view!.frame.size.width,height: sender.view!.frame.size.height)
             
             sender.view?.parentVC!.present(nav, animated: true, completion: nil)
         }

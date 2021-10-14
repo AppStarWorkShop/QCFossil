@@ -158,8 +158,8 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         
         let popover = nav.popoverPresentationController
         popover!.delegate = self
-        popover!.sourceView = self.view
-        popover!.sourceRect = CGRect(x: sender.frame.midX,y: sender.frame.minY,width: sender.frame.size.width,height: sender.frame.size.height)
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
         
         self.present(nav, animated: true, completion: nil)
     }
@@ -184,8 +184,8 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         
         let popover = nav.popoverPresentationController
         popover!.delegate = self
-        popover!.sourceView = self.view
-        popover!.sourceRect = CGRect(x: sender.frame.midX,y: sender.frame.minY,width: sender.frame.size.width,height: sender.frame.size.height)
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
         
         self.present(nav, animated: true, completion: nil)
     }

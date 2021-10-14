@@ -663,7 +663,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRect(x: 0,y: sender.frame.minY,width: sender.frame.size.width,height: sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
         sender.parentVC!.present(nav, animated: true, completion: nil)
     }

@@ -193,7 +193,7 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate, UI
             let popover = nav.popoverPresentationController
             popover!.delegate = self
             popover!.sourceView = sender //sender.parentVC?.view
-            popover!.sourceRect = CGRect(x: sender.frame.minX,y: sender.frame.minY,width: sender.frame.size.width,height: sender.frame.size.height)
+            popover!.sourceRect = sender.bounds
             
             sender.parentVC!.present(nav, animated: true, completion: nil)
             
