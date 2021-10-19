@@ -78,34 +78,16 @@ class TabBarViewController: UITabBarController {
         } else {
             self.children[3].removeFromParent()
         }
-        
-//        switch Cache_Inspector?.typeCode ?? "LEATHER" {
-//        case TypeCode.LEATHER.rawValue, TypeCode.PACKAGING.rawValue:
-//            self.childViewControllers[3].removeFromParentViewController()
-//            break
-//        case TypeCode.WATCH.rawValue, TypeCode.JEWELRY.rawValue:
-//            qcInfoViewController = self.childViewControllers[3].childViewControllers[0] as? QCInfoViewController
-//            qcInfoViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("QC Info")
-//            break
-//        default:
-//            break
-//        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     deinit{
         print("TabBarViewController deinit.")
     }
-    
-    /*
-    func switchTabViewToDL() {
-        defectListViewController?.updateContentView()
-        self.selectedIndex = 2
-    }*/
     
     func setLeftBarItem(_ title:String, actionName:String) {
         

@@ -26,13 +26,20 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
         }
          
         // Do any additional setup after loading the view.
-        ScrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: 768, height: 1024))
+        ScrollView.translatesAutoresizingMaskIntoConstraints = false
         ScrollView.contentSize = CGSize.init(width: 768, height: 1200)
         ScrollView.delegate = self
         
         self.view.addSubview(self.ScrollView)
         
         initTask()
+        
+        NSLayoutConstraint.activate([
+            ScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            ScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            ScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            ScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     override func viewDidAppear(_ animated: Bool) {

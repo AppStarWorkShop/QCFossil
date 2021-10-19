@@ -24,7 +24,6 @@ class EmbedContainerController: UIViewController {
         self.performSegue(withIdentifier: self.currentSegueIdentifier, sender: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(EmbedContainerController.switchToTaskSearch), name: NSNotification.Name(rawValue: "switchToTaskSearch"), object: nil)
-        
         //addClearDropdownListTapGesture()
     }
     
@@ -89,12 +88,19 @@ class EmbedContainerController: UIViewController {
         if !added {
             self.addChild(segue.destination)
                 
-            let destView = segue.destination.view
-            destView?.autoresizingMask = UIView.AutoresizingMask.flexibleWidth
-            destView?.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-            self.view.addSubview(destView!)
-            segue.destination.didMove(toParent: self)
+            if let destView = segue.destination.view {
+                destView.autoresizingMask = UIView.AutoresizingMask.flexibleWidth
+                destView.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview(destView)
+                NSLayoutConstraint.activate([
+                    destView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    destView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    destView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
+                    destView.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
+                ])
                 
+                segue.destination.didMove(toParent: self)
+            }
         }else{
             for childVC in self.children {
                 let childChildVC = childVC.children[0]
