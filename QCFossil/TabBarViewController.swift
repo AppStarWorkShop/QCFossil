@@ -84,10 +84,6 @@ class TabBarViewController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    deinit{
-        print("TabBarViewController deinit.")
-    }
     
     func setLeftBarItem(_ title:String, actionName:String) {
         
