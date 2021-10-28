@@ -1675,11 +1675,6 @@ extension Date {
 
 extension UITextField {
     
-//    override public func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
-//        // Default
-//        return false
-//    }
-    
     func showListData(_ sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=250, height:CGFloat=250, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
         
         if listData.count > 0 {
@@ -1692,28 +1687,33 @@ extension UITextField {
             
             Cache_Dropdown_Instance!.dropdownData = listData as! [String]
             
+            // for fix auto layout position in stackview
+            let frame = sender.superview?.convert(sender.frame, to: parent)
+            
             let actualHeight = CGFloat(listData.count*50)
             let adjustheight = actualHeight < height ? actualHeight : height
-            var actualMinX = sender.frame.minX
+            var actualMinX = frame?.origin.x ?? 0
             
-            if actualMinX + width > 768 {
-                actualMinX = 768 - width
+            if actualMinX + width > UIScreen.main.bounds.size.width {
+                actualMinX = UIScreen.main.bounds.size.width - width
             }
             
-            var minY = sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+//            var minY = sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+            var minY = (frame?.origin.y ?? 0) + (frame?.size.height ?? 0)
             
             if String(describing: sender.superview!.classForCoder) != nil {
                 let classCode = String(describing: sender.superview!.classForCoder)
                 
                 if classCode == "UITableViewCellContentView" {
-                    minY = sender.superview!.superview!.frame.minY+sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+//                    minY = sender.superview!.superview!.frame.minY+sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+                    minY = sender.superview!.superview!.frame.minY+minY
                 }
             }
             
             let absolutePoint = sender.convert(sender.bounds, to: nil)
             let adjustMinY = absolutePoint.origin.y + 50 + sender.frame.size.height + adjustheight
-            if adjustMinY > 1024 {
-                minY -= adjustMinY - 1024
+            if adjustMinY > UIScreen.main.bounds.size.height {
+                minY -= adjustMinY - UIScreen.main.bounds.size.height
             }
 
             Cache_Dropdown_Instance!.frame = CGRect.init(x: actualMinX, y: minY, width: width, height: adjustheight)
@@ -1765,8 +1765,7 @@ extension UITextField {
     
     func showDatePicker(_ sender: UITextField) {
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSize(width: 320, height: 350 + _NAVIBARHEIGHT+20)// CGSizeMake(320,350 + _NAVIBARHEIGHT)
-//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
+        popoverContent.preferredContentSize = CGSize(width: 365, height: 350 + _NAVIBARHEIGHT+20)// CGSizeMake(320,350 + _NAVIBARHEIGHT)
         popoverContent.parentTextFieldView = sender
         popoverContent.sourceType = _BOOKINGDATEFROMDATETYPE
         popoverContent.dataType = _POPOVERDATETPYE
@@ -1780,7 +1779,7 @@ extension UITextField {
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
         popover!.sourceRect = sender.bounds
-
+        
         sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     

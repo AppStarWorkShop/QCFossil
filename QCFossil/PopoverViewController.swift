@@ -28,10 +28,9 @@ class PopoverViewController: UIViewController {
 
         if dataType == _POPOVERDATETPYE {
             calenderview = CalenderPickerViewInput.loadFromNibNamed("CalenderPickerView")!
-            calenderview.frame = CGRect(x: 0, y: _NAVIBARHEIGHT + 20, width: 325, height: 350+_NAVIBARHEIGHT+20)
-            
+            calenderview.translatesAutoresizingMaskIntoConstraints = false
+            calenderview.frame = CGRect(x: 20, y: _NAVIBARHEIGHT + 20, width: 325, height: 350+_NAVIBARHEIGHT+20)
             self.view.addSubview(calenderview)
- 
             
         }else if dataType == _POPOVERPRODDESC {
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Prod Desc")
