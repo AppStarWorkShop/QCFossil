@@ -22,8 +22,8 @@ var _NEEDRESIZEIMAGE = true
 var _ENGLISH = false
 
 //Device
-let _DEVICE_WIDTH = 768
-let _DEVICE_HEIGHT = 1024
+let _DEVICE_WIDTH = UIScreen.main.bounds.width
+let _DEVICE_HEIGHT = UIScreen.main.bounds.height
 
 //Set background color, for displaying tableCell clearly
 let _TABLECELL_BG_COLOR1 = UIColor.init(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 1.0)

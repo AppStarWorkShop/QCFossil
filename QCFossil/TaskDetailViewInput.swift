@@ -83,7 +83,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
     
     weak var pVC:TaskDetailsViewController!
     var cellHeight:Int = 40
-    var poCellHeight:Int = 100
+    var poCellHeight:Int = 105
     
     var poItems = Cache_Task_On!.poItems
     var poCellItems = [POCellViewInput]()
@@ -228,7 +228,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         loadPoList()
         
         //init section cat buttons
-        self.inptCatWrapperView.frame = CGRect(x: self.inptCatWrapperView.frame.origin.x,y: CGFloat(420+(poItems.count-1)*poCellHeight),width: self.inptCatWrapperView.frame.size.width,height: CGFloat((categoryCount+2)*cellHeight))
+        self.inptCatWrapperView.frame = CGRect(x: self.inptCatWrapperView.frame.origin.x,y: CGFloat(420+(poItems.count-1)*poCellHeight),width: _DEVICE_WIDTH, height: CGFloat((categoryCount+2)*cellHeight))
         
         self.addSubview(self.inptCatWrapperView)
         
@@ -239,7 +239,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         //init categories
         for idx in 0...categoryCount-1 {
             let inputInptCatViewObj = InptCategoryCell.loadFromNibNamed("InptCategoryCellView")
-            inputInptCatViewObj?.frame = CGRect.init(x: 0, y: 80+cellHeight*idx, width: 768, height: cellHeight)
+            inputInptCatViewObj?.frame = CGRect.init(x: 0, y: 80+cellHeight*idx, width: Int(_DEVICE_WIDTH), height: cellHeight)
             inputInptCatViewObj?.inptCatButton.tag = idx
             
             let section = Cache_Task_On?.inspSections[idx]
@@ -260,11 +260,11 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             self.pVC!.categories.append(inputInptCatViewObj!)
         }
         
-        self.commentWarpperView.frame = CGRect(x: 0, y: self.inptCatWrapperView.frame.origin.y+self.inptCatWrapperView.frame.size.height+CGFloat(cellHeight), width: self.commentWarpperView.frame.size.width, height: 450)
+        self.commentWarpperView.frame = CGRect(x: 0, y: self.inptCatWrapperView.frame.origin.y+self.inptCatWrapperView.frame.size.height+CGFloat(cellHeight), width: _DEVICE_WIDTH, height: self.inptCatWrapperView.frame.size.height)
         
         self.addSubview(self.commentWarpperView)
         
-        self.frame.size = CGSize(width: 768, height: self.frame.size.height + 600)
+        self.frame.size = CGSize(width: _DEVICE_WIDTH, height: self.frame.size.height + 600)
         updateContentView(CGFloat((categoryCount-3)*cellHeight+(poItems.count-1)*poCellHeight))
         
         let qcRemarkValues = taskDataHelper.getQCRemarksOptionList(String(describing: Cache_Task_On?.inspectionResultValueId) ?? "0")
@@ -305,11 +305,11 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
     
     func getPoList(){
         if poItems.count > 0 {
-            self.poListWrapperView.frame = CGRect(x: 0,y: 309,width: 768,height: CGFloat(poItems.count*poCellHeight))
+            self.poListWrapperView.frame = CGRect(x: 0,y: 290,width: _DEVICE_WIDTH,height: CGFloat(poItems.count*poCellHeight))
             var idx = 0
             for poItem in poItems {
                 let poItemCellView = POCellViewInput.loadFromNibNamed("POCellView")
-                poItemCellView?.frame = CGRect(x: 20,y: CGFloat(idx*poCellHeight),width: 728,height: CGFloat(poCellHeight))
+                poItemCellView?.frame = CGRect(x: 16,y: CGFloat(idx*poCellHeight),width: _DEVICE_WIDTH - 32,height: CGFloat(poCellHeight))
                 poItemCellView?.backgroundColor = _TABLECELL_BG_COLOR1
                 poItemCellView?.poNoText.text = poItem.poNo
                 poItemCellView?.poLineNoText.text = poItem.poLineNo
@@ -396,7 +396,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         NSLog("update view position")
         
         //self.pVC!.ScrollView.contentSize.height += offSet
-        self.frame.size = CGSize(width: 768, height: self.frame.size.height + offSet)
+        self.frame.size = CGSize(width: _DEVICE_WIDTH, height: self.frame.size.height + offSet)
         self.pVC!.ScrollView.contentSize.height = self.frame.size.height
     }
     

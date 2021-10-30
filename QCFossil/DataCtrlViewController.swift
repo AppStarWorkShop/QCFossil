@@ -170,7 +170,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.view.setButtonCornerRadius(self.removeBtn)
         self.activityActor.isHidden = true
         
-        let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         zipPath5 = path + "/task.zip"
         filePath = filePath + "/\((Cache_Inspector?.appUserName?.lowercased())!)"
         
@@ -234,7 +234,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     //在Caches文件夹下随机创建一个文件夹，并返回路径
     func tempDestPath() -> String? {
-        var path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
+        var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         path += "/\(UUID().uuidString)"
         let url = URL(fileURLWithPath: path)
         

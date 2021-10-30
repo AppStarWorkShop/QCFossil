@@ -1694,8 +1694,8 @@ extension UITextField {
             let adjustheight = actualHeight < height ? actualHeight : height
             var actualMinX = frame?.origin.x ?? 0
             
-            if actualMinX + width > UIScreen.main.bounds.size.width {
-                actualMinX = UIScreen.main.bounds.size.width - width
+            if actualMinX + width > _DEVICE_WIDTH {
+                actualMinX = _DEVICE_WIDTH - width
             }
             
 //            var minY = sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
@@ -1712,8 +1712,8 @@ extension UITextField {
             
             let absolutePoint = sender.convert(sender.bounds, to: nil)
             let adjustMinY = absolutePoint.origin.y + 50 + sender.frame.size.height + adjustheight
-            if adjustMinY > UIScreen.main.bounds.size.height {
-                minY -= adjustMinY - UIScreen.main.bounds.size.height
+            if adjustMinY > _DEVICE_HEIGHT {
+                minY -= adjustMinY - _DEVICE_HEIGHT
             }
 
             Cache_Dropdown_Instance!.frame = CGRect.init(x: actualMinX, y: minY, width: width, height: adjustheight)

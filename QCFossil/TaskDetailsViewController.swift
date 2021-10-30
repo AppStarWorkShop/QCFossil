@@ -27,7 +27,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
          
         // Do any additional setup after loading the view.
         ScrollView.translatesAutoresizingMaskIntoConstraints = false
-        ScrollView.contentSize = CGSize.init(width: 768, height: 1200)
+        ScrollView.contentSize = CGSize.init(width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
         ScrollView.delegate = self
         
         self.view.addSubview(self.ScrollView)
@@ -179,7 +179,16 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 taskDetailView.tag = _TASKDETAILVIEWTAG
                 
                 self.ScrollView.addSubview(taskDetailView)
-                taskDetailView.frame = CGRect.init(x: 0, y: -40, width: taskDetailView.frame.width, height: taskDetailView.frame.height + 80)
+                self.ScrollView.translatesAutoresizingMaskIntoConstraints = false
+                taskDetailView.translatesAutoresizingMaskIntoConstraints = false
+                
+                let paddingBottom = self.ScrollView.contentSize.height - _DEVICE_HEIGHT
+                NSLayoutConstraint.activate([
+                    taskDetailView.topAnchor.constraint(equalTo: self.ScrollView.topAnchor, constant: -40),
+                    taskDetailView.heightAnchor.constraint(equalTo: self.ScrollView.heightAnchor, constant: paddingBottom > 0 ? paddingBottom : 0),
+                    taskDetailView.widthAnchor.constraint(equalTo: self.ScrollView.widthAnchor),
+                ])
+                
                 
                 self.view.removeActivityIndicator()
                 

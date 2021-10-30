@@ -212,9 +212,21 @@ class PopoverViewController: UIViewController {
         } else{
             inputview = PopoverViewsInput.loadFromNibNamed("PopoverViews")!
             inputview.initData(sourceType)
-            inputview.typeSelection.frame = CGRect(x: 0, y: _NAVIBARHEIGHT, width: _POPOVERVIEWSIZE_S.width, height: _POPOVERVIEWSIZE_S.height)
             inputview.addSubview((inputview.typeSelection)!)
             self.view.addSubview(inputview)
+            inputview.typeSelection.translatesAutoresizingMaskIntoConstraints = false
+            inputview.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                inputview.typeSelection.centerXAnchor.constraint(equalTo: inputview.centerXAnchor),
+                inputview.typeSelection.centerYAnchor.constraint(equalTo: inputview.centerYAnchor),
+                inputview.typeSelection.heightAnchor.constraint(equalTo: inputview.heightAnchor),
+                inputview.typeSelection.widthAnchor.constraint(equalTo: inputview.widthAnchor),
+
+                inputview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                inputview.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                inputview.topAnchor.constraint(equalTo: view.topAnchor),
+                inputview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
             
         }
         

@@ -49,42 +49,12 @@ class InptCategoryCell: UIView {
     }
     */
     override func awakeFromNib() {
-        let resultValueFrame1 = ResultValueFrame(xPos: marginX1, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame2 = ResultValueFrame(xPos: marginX2, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame3 = ResultValueFrame(xPos: marginX3, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame4 = ResultValueFrame(xPos: marginX4, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame5 = ResultValueFrame(xPos: marginX5, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame6 = ResultValueFrame(xPos: marginX6, yPos: frameTop, width: frameWidth, height: frameHeight)
-        
-        resultSetValueFrames.append(resultValueFrame1)
-        resultSetValueFrames.append(resultValueFrame2)
-        resultSetValueFrames.append(resultValueFrame3)
-        resultSetValueFrames.append(resultValueFrame4)
-        resultSetValueFrames.append(resultValueFrame5)
-        resultSetValueFrames.append(resultValueFrame6)
-        
-        resultValue1.frame = CGRect(x: marginX1, y: frameTop, width: frameWidth, height: frameHeight)
-        resultValue1.textAlignment = .center
+
         resultValueLabels.append(resultValue1)
-        
-        resultValue2.frame = CGRect(x: marginX2, y: frameTop, width: frameWidth, height: frameHeight)
-        resultValue2.textAlignment = .center
         resultValueLabels.append(resultValue2)
-        
-        resultValue3.frame = CGRect(x: marginX3, y: frameTop, width: frameWidth, height: frameHeight)
-        resultValue3.textAlignment = .center
         resultValueLabels.append(resultValue3)
-        
-        resultValue4.frame = CGRect(x: marginX4, y: frameTop, width: frameWidth, height: frameHeight)
-        resultValue4.textAlignment = .center
         resultValueLabels.append(resultValue4)
-        
-        resultValue5.frame = CGRect(x: marginX5, y: frameTop, width: frameWidth, height: frameHeight)
-        resultValue5.textAlignment = .center
         resultValueLabels.append(resultValue5)
-        
-        resultValueTotal.frame = CGRect(x: marginX6, y: frameTop, width: frameWidth, height: frameHeight)
-        resultValueTotal.textAlignment = .center
         resultValueLabels.append(resultValueTotal)
     }
     
@@ -98,32 +68,22 @@ class InptCategoryCell: UIView {
     }
     
     func updateSummaryResultValues(_ resultSetValues:[SummaryResultValue]) {
-        
         var totalCount = 0
         for idx in 0...resultSetValues.count {
             if idx < resultValueLabels.count {
-            let resultValueLabel = resultValueLabels[idx]
-            
-            resultValueLabel.font = resultValueTotal.font.withSize(14)
-            if idx == resultSetValues.count {
+                let resultValueLabel = resultValueLabels[idx]
                 
-                if resultSetValues.count < 5 {
-                    resultValueLabel.frame.origin.x = marginX6
+                resultValueLabel.font = resultValueTotal.font.withSize(14)
+                if idx == resultSetValues.count {
+                    resultValueLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Total"))(\(totalCount))"
+                }else{
+                    let resultSetValue = resultSetValues[idx]
+                    
+                    resultValueLabel.text = "\(resultSetValue.valueName)(\(resultSetValue.resultCount))"
+                    totalCount += resultSetValue.resultCount
                 }
-                
-                resultValueLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Total"))(\(totalCount))"
-                
-            }else{
-                let resultSetValue = resultSetValues[idx]
-                
-                resultValueLabel.text = "\(resultSetValue.valueName)(\(resultSetValue.resultCount))"
-                totalCount += resultSetValue.resultCount
-            }
-            
-            self.addSubview(resultValueLabel)
             }
         }
-        
     }
     
     @IBAction func inptCatButton(_ sender: UIButton) {
