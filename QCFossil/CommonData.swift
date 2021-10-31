@@ -87,7 +87,7 @@ let _DATEFORMATTER = "MM/dd/yyyy"
 let _DATEFORMATTER2 = "MM/dd/yy"
 
 //iPad default frame
-var _FULLSCRENNFRAME = CGRect(x: 0,y: 0,width: 768,height: 1024)
+var _FULLSCRENNFRAME = CGRect(x: 0,y: 0,width: _DEVICE_WIDTH,height: _DEVICE_HEIGHT)
 var _BRUSHSTYLE = ["red":255.0,"green":0.0,"blue":0.0,"brush":2.0]
 let _GREY_BACKGROUD = UIColor.init(red: 211/255, green: 211/255, blue: 211/255, alpha: 1.0)
 

@@ -20,7 +20,7 @@ class InputMode04View: InputModeSCMaster{
     
     
     var inputCells = [InputMode04CellView]()
-    let cellWidth = 768
+    let cellWidth = Int(_DEVICE_WIDTH)
     let cellHeight = 61
 
     /*
@@ -141,7 +141,7 @@ class InputMode04View: InputModeSCMaster{
         
         self.addCellButton.frame = CGRect.init(x: 25, y: inputCells.count*cellHeight+10, width: 42, height: 42)
         self.ScrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: 768, height: CGFloat(inputCells.count*cellHeight+500)))
+        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+500)))
     }
     
     func resizeScrollView(_ size:CGSize) {
@@ -177,7 +177,7 @@ class InputMode04View: InputModeSCMaster{
     func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, iaLabelText:String, iiLabelText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, displayDDList:Bool=false, resultValueId:Int=0, taskInspDataRecordId:Int=0, requiredElementFlag:Int=0, userInteractive:Bool=false, optionEnableFlag:Int=1) -> InputMode04CellView {
         
         let inputCellViewObj = InputMode04CellView.loadFromNibNamed("InputMode04Cell")
-        inputCellViewObj?.frame.size = CGSize(width: 768, height: 61)
+        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 61)
         inputCellViewObj?.parentView = self
         inputCellViewObj?.idxLabel.text = idxLabelText
         inputCellViewObj?.inspectionAreaLabel.text = iaLabelText

@@ -206,17 +206,16 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 DispatchQueue.main.async(execute: {
                     self.view.removeActivityIndicator()
                     
-                    let inspectionView = InspectionViewInput.loadFromNibNamed("InspectionView")
-                    inspectionView?.tag = _TASKINSPCATVIEWTAG
-                    inspectionView?.pVC = self
-                    
-                    self.ScrollView.addSubview(inspectionView!)
-                    
-                    self.inspCatAdded = true
-                    
-                    inspectionView?.updateSectionHeader(currentPage)
-                    inspectionView?.scrollToPosition(currentPage, animation: false)
-                    
+                    if let inspectionView = InspectionViewInput.loadFromNibNamed("InspectionView") {
+                        inspectionView.tag = _TASKINSPCATVIEWTAG
+                        inspectionView.pVC = self
+                        
+                        self.ScrollView.addSubview(inspectionView)
+                        self.inspCatAdded = true
+                        
+                        inspectionView.updateSectionHeader(currentPage)
+                        inspectionView.scrollToPosition(currentPage, animation: false)
+                    }
                     self.updateNaviBarMenu(self.backBtnText, leftBarActionName: "backToTaskDetail", rightBarTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), rightBarActionName: "updateTask:")
                     
                     self.ScrollView.contentOffset.y = 0

@@ -485,7 +485,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         self.commentWarpperView.frame = CGRect(x: self.commentWarpperView.frame.origin.x,y: self.commentWarpperView.frame.origin.y+offset,width: self.commentWarpperView.frame.size.width,height: self.commentWarpperView.frame.size.height)
         
         self.pVC!.ScrollView.contentSize.height += offset
-        self.frame.size = CGSize(width: 768, height: self.frame.size.height+offset)
+        self.frame.size = CGSize(width: _DEVICE_WIDTH, height: self.frame.size.height+offset)
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

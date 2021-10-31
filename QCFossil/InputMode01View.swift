@@ -16,7 +16,7 @@ class InputMode01View: InputModeSCMaster {
     @IBOutlet weak var addCellButton: UIButton!
     var inputCells = [InputMode01CellView]()
     let inputCellCount = 6
-    let cellWidth = 768
+    let cellWidth = Int(_DEVICE_WIDTH)
     let cellHeight = 160
 
     
@@ -50,7 +50,7 @@ class InputMode01View: InputModeSCMaster {
             
             return
         }
-        
+
         self.applyToAllButton.addTarget(self, action: #selector(applyRstToAll), for: UIControl.Event.touchUpInside)
         
         let photoDataHelper = PhotoDataHelper()
@@ -135,7 +135,7 @@ class InputMode01View: InputModeSCMaster {
         
         self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
         self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: 768, height: CGFloat(inputCells.count*cellHeight+800)))
+        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+800)))
     }
     
     func resizeScrollView(_ size:CGSize) {
@@ -145,7 +145,7 @@ class InputMode01View: InputModeSCMaster {
     func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=true, requiredElementFlag:Int=0, optionEnableFlag:Int=1) -> InputMode01CellView {
         
         let inputCellViewObj = InputMode01CellView.loadFromNibNamed("InputMode01Cell")
-        inputCellViewObj?.frame.size = CGSize(width: 768, height: 160)
+        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 160)
         inputCellViewObj?.parentView = self
         inputCellViewObj?.cellIndexLabel.text = idxLabelText
         inputCellViewObj?.cellCatIdx = sectionId

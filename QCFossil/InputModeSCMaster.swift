@@ -68,7 +68,7 @@ class InputModeSCMaster:UIView {
             if self.idx < 1 {
                 let moveRightBtn = CustomButton()
                 let moveRightIcon = UIImage.init(named: "arrow_icon_right")
-                moveRightBtn.frame = CGRect(x: 705, y: 0, width: 80, height: 80)
+                moveRightBtn.frame = CGRect(x: _DEVICE_WIDTH - 63, y: 0, width: 80, height: 80)
                 moveRightBtn.setImage(moveRightIcon, for: UIControl.State())
                 moveRightBtn.tintColor = _FOSSILBLUECOLOR
                 moveRightBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToRight(_:)), for: UIControl.Event.touchUpInside)
@@ -77,7 +77,7 @@ class InputModeSCMaster:UIView {
             }else if self.idx < (otherInspSec?.count ?? 1) - 1 {
                 let moveLeftBtn = CustomButton()
                 let moveLeftIcon = UIImage.init(named: "arrow_icon_left")
-                moveLeftBtn.frame = CGRect(x: 645, y: 0, width: 80, height: 80)
+                moveLeftBtn.frame = CGRect(x: _DEVICE_WIDTH - 123, y: 0, width: 80, height: 80)
                 moveLeftBtn.setImage(moveLeftIcon, for: UIControl.State())
                 moveLeftBtn.tintColor = _FOSSILBLUECOLOR
                 moveLeftBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToLeft(_:)), for: UIControl.Event.touchUpInside)
@@ -85,7 +85,7 @@ class InputModeSCMaster:UIView {
                 
                 let moveRightBtn = CustomButton()
                 let moveRightIcon = UIImage.init(named: "arrow_icon_right")
-                moveRightBtn.frame = CGRect(x: 705, y: 0, width: 80, height: 80)
+                moveRightBtn.frame = CGRect(x: _DEVICE_WIDTH - 63, y: 0, width: 80, height: 80)
                 moveRightBtn.setImage(moveRightIcon, for: UIControl.State())
                 moveRightBtn.tintColor = _FOSSILBLUECOLOR
                 moveRightBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToRight(_:)), for: UIControl.Event.touchUpInside)
@@ -94,7 +94,7 @@ class InputModeSCMaster:UIView {
             }else {
                 let moveLeftBtn = CustomButton()
                 let moveLeftIcon = UIImage.init(named: "arrow_icon_left")
-                moveLeftBtn.frame = CGRect(x: 645, y: 0, width: 80, height: 80)
+                moveLeftBtn.frame = CGRect(x: _DEVICE_WIDTH - 123, y: 0, width: 80, height: 80)
                 moveLeftBtn.setImage(moveLeftIcon, for: UIControl.State())
                 moveLeftBtn.tintColor = _FOSSILBLUECOLOR
                 moveLeftBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToLeft(_:)), for: UIControl.Event.touchUpInside)
