@@ -169,13 +169,16 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
     override func viewWillAppear(_ animated: Bool) {
         if let myParentTabVC = self.parent as? TabBarViewController {
             if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
-                myParentTabVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
+                if let mVC = myParentTabVC as? TabBarViewController {
+                    mVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
+                }
             }else{
                 myParentTabVC.navigationItem.leftBarButtonItem = self.navigationItem.leftBarButtonItem
             }
             
             myParentTabVC.navigationItem.rightBarButtonItem = nil
             myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
+        
             self.view.setButtonCornerRadius(self.addPhotoBtn)
             self.view.setButtonCornerRadius(self.addPhotoFromCamera)
             
@@ -203,6 +206,29 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                 self.photoTableView.allowsSelection = false
             }
 
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
+            
+        } else if let _ = self.pVC {
+            self.photosSelected = [Photo]()
+            
+            let leftButton = UIBarButtonItem()
+            leftButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
+            leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+            leftButton.style = UIBarButtonItem.Style.plain
+            leftButton.target = self
+            leftButton.action = #selector(PhotoAlbumViewController.cancelSelectedPhotos)
+            self.navigationItem.leftBarButtonItem = leftButton
+            
+            let rightButton = UIBarButtonItem()
+            rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
+            rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+            rightButton.style = UIBarButtonItem.Style.plain
+            rightButton.target = self
+            rightButton.action = #selector(PhotoAlbumViewController.didSelectedPhotos)
+            self.navigationItem.rightBarButtonItem = rightButton
+
+            self.photoTableView.allowsMultipleSelection = true
+            
             NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
         }
     }

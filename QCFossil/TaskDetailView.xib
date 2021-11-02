@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TaskDetailViewInput" customModule="QC211027P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TaskDetailViewInput" customModule="QC211031P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -191,62 +191,68 @@
                         <constraint firstItem="l5z-Vm-g4f" firstAttribute="width" secondItem="YEO-Vu-OOH" secondAttribute="width" id="tfz-We-GD2"/>
                     </constraints>
                 </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inspection Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ib-4f-fWE">
-                    <rect key="frame" x="20" y="251" width="196" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0c-Um-AhF">
-                    <rect key="frame" x="597" y="275" width="150" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Add PO Line(s)">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="addPOLinesButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="bs3-Ww-Tor"/>
-                    </connections>
-                </button>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZQ-1P-1Ll">
-                    <rect key="frame" x="20" y="252" width="21" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.98039215690000003" green="0.72156862749999995" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Refused Desc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jf-Pe-Ukf">
-                    <rect key="frame" x="49" y="252" width="698" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sOq-yP-dON">
+                    <rect key="frame" x="16" y="230" width="736" height="0.0"/>
+                    <subviews>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZQ-1P-1Ll">
+                            <rect key="frame" x="0.0" y="0.0" width="21" height="21"/>
+                            <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="PAG-IV-Yu5"/>
+                                <constraint firstAttribute="width" constant="21" id="dnh-Zm-XUS"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.98039215690000003" green="0.72156862749999995" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refused Desc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jf-Pe-Ukf">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="I56-cm-ed9">
+                    <rect key="frame" x="16" y="250" width="736" height="30"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inspection Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ib-4f-fWE">
+                            <rect key="frame" x="0.0" y="0.0" width="581" height="30"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0c-Um-AhF">
+                            <rect key="frame" x="586" y="0.0" width="150" height="30"/>
+                            <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="Hgt-wm-hWT"/>
+                                <constraint firstAttribute="width" constant="150" id="mz2-hv-Kul"/>
+                            </constraints>
+                            <state key="normal" title="Add PO Line(s)">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="addPOLinesButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="bs3-Ww-Tor"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="I56-cm-ed9" secondAttribute="trailing" constant="16" id="5VT-1O-Oza"/>
+                <constraint firstItem="I56-cm-ed9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="250" id="GFg-b1-XRh"/>
+                <constraint firstAttribute="trailing" secondItem="sOq-yP-dON" secondAttribute="trailing" constant="16" id="Jwq-8v-B8l"/>
                 <constraint firstItem="ycT-sM-MIn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="L3O-2e-Rea"/>
+                <constraint firstItem="I56-cm-ed9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="MgO-yH-6Sq"/>
+                <constraint firstItem="sOq-yP-dON" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="230" id="XTP-CY-qtm"/>
                 <constraint firstItem="l0J-Fy-w5E" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="ZDE-Zz-xS2"/>
                 <constraint firstItem="ycT-sM-MIn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="48" id="bsw-3B-5AA"/>
                 <constraint firstItem="l0J-Fy-w5E" firstAttribute="top" secondItem="ycT-sM-MIn" secondAttribute="bottom" constant="11.5" id="cdG-l8-fno"/>
                 <constraint firstAttribute="trailing" secondItem="l0J-Fy-w5E" secondAttribute="trailing" constant="16" id="reO-Br-xP2"/>
+                <constraint firstItem="sOq-yP-dON" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="teN-J1-pnh"/>
             </constraints>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="b0c-Um-AhF"/>
-                    <exclude reference="nZQ-1P-1Ll"/>
-                    <exclude reference="1jf-Pe-Ukf"/>
-                </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=regular">
-                <mask key="subviews">
-                    <include reference="b0c-Um-AhF"/>
-                    <include reference="nZQ-1P-1Ll"/>
-                    <include reference="1jf-Pe-Ukf"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="addPOLineBtn" destination="b0c-Um-AhF" id="GZC-po-mz2"/>
                 <outlet property="additionalAdministrativeItemDropdownIcon" destination="MRO-c7-wBC" id="0o5-yk-wYe"/>
@@ -312,7 +318,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zR6-CF-mmN" customClass="CustomTextView" customModule="QC211027P" customModuleProvider="target">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zR6-CF-mmN" customClass="CustomTextView" customModule="QC211031P" customModuleProvider="target">
                                     <rect key="frame" x="200" y="0.0" width="656" height="70"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="klY-XJ-PzL"/>
@@ -340,7 +346,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aW-nz-nlf" customClass="CustomTextView" customModule="QC211027P" customModuleProvider="target">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aW-nz-nlf" customClass="CustomTextView" customModule="QC211031P" customModuleProvider="target">
                                     <rect key="frame" x="200" y="0.0" width="656" height="70"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="cxZ-8y-rJa"/>

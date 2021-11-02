@@ -202,12 +202,13 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
     }
     
     @objc func updateTask() {
-        self.navigationController?.viewControllers.forEach({ vc in
-            if let parentVC = vc as? TabBarViewController {
-                parentVC.updateTask()
-            }
-        })
-        validation()
+        if validation() {
+            self.navigationController?.viewControllers.forEach({ vc in
+                if let parentVC = vc as? TabBarViewController {
+                    parentVC.updateTask()
+                }
+            })
+        }
     }
     
     @discardableResult

@@ -334,7 +334,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
                 poItemCellView?.shipWinInput.text = String(poItem.shipWin)
                 poItemCellView?.sampleQtyInput.text = poItem.samplingQty < 1 ? "":String(poItem.samplingQty)
                 poItemCellView?.opdRsdInput.text = poItem.opdRsd
-                poItemCellView?.bookingQtyInput.text = String(poItem.targetInspectQty!)//String(poItem.orderQty - poItem.samplingQty)
+                poItemCellView?.bookingQtyInput.text = String(poItem.targetInspectQty ?? "0")
                 poItemCellView?.sampleQtyDB = poItem.samplingQty
                 poItemCellView?.prodDesc = "\(poItem.dimen2!) / \(poItem.prodDesc!)"
 //                poItemCellView?.prodDesc = "\(poItem.styleNo!) / \(poItem.dimen1!)"
