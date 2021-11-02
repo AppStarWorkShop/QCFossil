@@ -57,7 +57,6 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
     @IBOutlet weak var PoSortingBar: UISegmentedControl!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var clearBtn: UIButton!
-    @IBOutlet weak var cancelBtn: UIButton!
     @IBOutlet weak var cancelBtnPopup: UIButton!
     @IBOutlet weak var poSearchTitlePopup: UILabel!
     @IBOutlet weak var brandLabel: UILabel!
@@ -77,6 +76,17 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = .white
+        }
         
         // Do any additional setup after loading the view.
         poTableView.delegate = self
@@ -291,7 +301,15 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
                 
                 if self.pVC?.classForCoder == CreateTaskViewController.classForCoder() || self.pVC?.classForCoder == TaskDetailsViewController.classForCoder() {
                     self.selectPOLineBtn.isHidden = false
-                    self.cancelBtn.isHidden = false
+                    let leftButton = UIBarButtonItem()
+                    leftButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
+                    leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+                    leftButton.style = UIBarButtonItem.Style.plain
+                    leftButton.target = self
+                    leftButton.action = #selector(self.closeButton)
+                    
+                    self.navigationItem.leftBarButtonItem = leftButton
+                    self.navigationItem.rightBarButtonItem = nil
                 }
                 
                 if self.vendorName != "" && self.vendorLocCode != "" && self.styleNo != "" {
@@ -836,7 +854,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
         }
     }
     
-    @IBAction func cancelBtn(_ sender: AnyObject) {
+    @objc func closeButton() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
         self.dismiss(animated: true, completion: nil)
     }

@@ -100,18 +100,19 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
         
         if segue.identifier == "CreateTaskSegueFromTaskForm" {
             
-            let destVC = segue.destination as! POSearchViewController
-            destVC.pVC = self
-            
-            let taskDetailView = self.view.viewWithTag(_TASKDETAILVIEWTAG) as! TaskDetailViewInput
-            destVC.vendorName = taskDetailView.vendorInput.text!
-            destVC.vendorLocCode = taskDetailView.vendorLocInput.text!
-            
-            if taskDetailView.poItems.count > 0 {
-                let poItem = taskDetailView.poItems[0]
-                destVC.styleNo = poItem.styleNo!
-                
-                destVC.poSelectedItems = taskDetailView.poItems
+            if let destVC = segue.destination.children.first as? POSearchViewController {
+                destVC.pVC = self
+
+                let taskDetailView = self.view.viewWithTag(_TASKDETAILVIEWTAG) as! TaskDetailViewInput
+                destVC.vendorName = taskDetailView.vendorInput.text!
+                destVC.vendorLocCode = taskDetailView.vendorLocInput.text!
+
+                if taskDetailView.poItems.count > 0 {
+                    let poItem = taskDetailView.poItems[0]
+                    destVC.styleNo = poItem.styleNo!
+
+                    destVC.poSelectedItems = taskDetailView.poItems
+                }
             }
         }else if segue.identifier == "DefectListFromInspectItemSegue" {
             
