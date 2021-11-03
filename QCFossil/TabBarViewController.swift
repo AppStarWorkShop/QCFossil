@@ -179,7 +179,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
-                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for")) \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
