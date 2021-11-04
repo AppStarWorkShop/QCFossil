@@ -3996,67 +3996,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-l8-qQg" customClass="SignoffView" customModule="QC211102P" customModuleProvider="target">
-                                <rect key="frame" x="18" y="227" width="362" height="228"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-l8-qQg" customClass="SignoffView" customModule="QC211102P" customModuleProvider="target">
+                                <rect key="frame" x="16" y="227" width="358" height="230"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="230" id="0fk-6e-Je4"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                         <integer key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aMr-ZO-TWY">
-                                <rect key="frame" x="550" y="133" width="200" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vendor Confirmer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge9-0G-CvO">
-                                <rect key="frame" x="388" y="137" width="136" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W0f-pE-dks">
-                                <rect key="frame" x="106" y="133" width="200" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inspector" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oau-Jx-fL7">
-                                <rect key="frame" x="18" y="137" width="80" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bNa-g3-ozn" customClass="SignoffView" customModule="QC211102P" customModuleProvider="target">
-                                <rect key="frame" x="389" y="227" width="362" height="228"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zXA-0z-m9s">
+                                <rect key="frame" x="16" y="137" width="736" height="34"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h4v-cr-jm8">
+                                        <rect key="frame" x="0.0" y="0.0" width="363" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inspector" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oau-Jx-fL7">
+                                                <rect key="frame" x="0.0" y="0.0" width="153.5" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W0f-pE-dks">
+                                                <rect key="frame" x="161.5" y="0.0" width="201.5" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="9yW-7z-76E">
+                                        <rect key="frame" x="373" y="0.0" width="363" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor Confirmer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge9-0G-CvO">
+                                                <rect key="frame" x="0.0" y="0.0" width="135.5" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aMr-ZO-TWY">
+                                                <rect key="frame" x="161.5" y="0.0" width="201.5" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="W0f-pE-dks" firstAttribute="width" secondItem="aMr-ZO-TWY" secondAttribute="width" id="nX6-rP-Z5F"/>
+                                </constraints>
+                            </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bNa-g3-ozn" customClass="SignoffView" customModule="QC211102P" customModuleProvider="target">
+                                <rect key="frame" x="394" y="227" width="358" height="230"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                         <integer key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Signature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rE3-S6-N38">
-                                <rect key="frame" x="389" y="192" width="74" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Signature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMa-Wj-hgg">
+                                <rect key="frame" x="394" y="198" width="362" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Signature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMa-Wj-hgg">
-                                <rect key="frame" x="18" y="193" width="74" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Signature" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rE3-S6-N38">
+                                <rect key="frame" x="16" y="198" width="363" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKU-C3-bif">
-                                <rect key="frame" x="18" y="227" width="361" height="228"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKU-C3-bif">
+                                <rect key="frame" x="16" y="227" width="358" height="230"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="Tap to Sign">
                                     <color key="titleColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4065,22 +4077,13 @@
                                     <action selector="inspectorSignTap:" destination="Twn-dU-IfP" eventType="touchUpInside" id="cGx-9u-be7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpL-wG-mWJ">
-                                <rect key="frame" x="280" y="463" width="100" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Q7-PM-FOk">
+                                <rect key="frame" x="567" y="472" width="185" height="35"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Clear">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="clearInspectorSign:" destination="Twn-dU-IfP" eventType="touchUpInside" id="Vsf-Cp-wCx"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Q7-PM-FOk">
-                                <rect key="frame" x="651" y="463" width="100" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="2w3-8K-OfF"/>
+                                    <constraint firstAttribute="width" constant="185" id="MKc-BW-hFB"/>
+                                </constraints>
                                 <state key="normal" title="Clear">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -4088,9 +4091,8 @@
                                     <action selector="clearVendorSign:" destination="Twn-dU-IfP" eventType="touchUpInside" id="MkF-y0-sO3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhI-dq-5d8">
-                                <rect key="frame" x="388" y="227" width="361" height="228"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhI-dq-5d8">
+                                <rect key="frame" x="394" y="227" width="358" height="230"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="Tap to Sign">
                                     <color key="titleColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4099,38 +4101,69 @@
                                     <action selector="vendorSignTap:" destination="Twn-dU-IfP" eventType="touchUpInside" id="A42-7H-b6N"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpL-wG-mWJ">
+                                <rect key="frame" x="189" y="472" width="185" height="35"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="DxY-dQ-8hw"/>
+                                    <constraint firstAttribute="width" constant="185" id="mDP-U3-JyP"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearInspectorSign:" destination="Twn-dU-IfP" eventType="touchUpInside" id="Vsf-Cp-wCx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="NMa-Wj-hgg" firstAttribute="leading" secondItem="bNa-g3-ozn" secondAttribute="leading" id="1tN-jG-QcR"/>
+                            <constraint firstItem="HhI-dq-5d8" firstAttribute="centerX" secondItem="bNa-g3-ozn" secondAttribute="centerX" id="4WI-uV-gJy"/>
+                            <constraint firstItem="dqb-l8-qQg" firstAttribute="leading" secondItem="dCS-WP-spS" secondAttribute="leading" constant="16" id="6ty-ya-OzX"/>
+                            <constraint firstItem="LKU-C3-bif" firstAttribute="centerY" secondItem="dqb-l8-qQg" secondAttribute="centerY" id="77X-uf-r26"/>
+                            <constraint firstItem="dqb-l8-qQg" firstAttribute="trailing" secondItem="bNa-g3-ozn" secondAttribute="leading" constant="-20" id="8Go-Mx-GV6"/>
+                            <constraint firstItem="zXA-0z-m9s" firstAttribute="top" secondItem="4ST-By-YPh" secondAttribute="bottom" constant="63" id="A0X-ol-zKR"/>
+                            <constraint firstItem="bNa-g3-ozn" firstAttribute="top" secondItem="NMa-Wj-hgg" secondAttribute="bottom" constant="8" symbolic="YES" id="AkO-fF-nDG"/>
+                            <constraint firstItem="HhI-dq-5d8" firstAttribute="centerY" secondItem="bNa-g3-ozn" secondAttribute="centerY" id="Be7-uK-gae"/>
+                            <constraint firstItem="HhI-dq-5d8" firstAttribute="height" secondItem="bNa-g3-ozn" secondAttribute="height" id="FVO-66-WER"/>
+                            <constraint firstItem="zXA-0z-m9s" firstAttribute="leading" secondItem="dCS-WP-spS" secondAttribute="leading" constant="16" id="Hgs-dc-xm9"/>
+                            <constraint firstItem="5Q7-PM-FOk" firstAttribute="trailing" secondItem="HhI-dq-5d8" secondAttribute="trailing" id="Hwh-ae-Nw1"/>
+                            <constraint firstItem="bNa-g3-ozn" firstAttribute="width" secondItem="dqb-l8-qQg" secondAttribute="width" id="S6R-fV-Ngn"/>
+                            <constraint firstItem="WpL-wG-mWJ" firstAttribute="top" secondItem="LKU-C3-bif" secondAttribute="bottom" constant="15" id="SwC-5f-85E"/>
+                            <constraint firstAttribute="trailing" secondItem="bNa-g3-ozn" secondAttribute="trailing" constant="16" id="T6Q-Wb-DOl"/>
+                            <constraint firstItem="WpL-wG-mWJ" firstAttribute="trailing" secondItem="LKU-C3-bif" secondAttribute="trailing" id="THZ-Vp-9eQ"/>
+                            <constraint firstItem="rE3-S6-N38" firstAttribute="leading" secondItem="dqb-l8-qQg" secondAttribute="leading" id="Tcr-HO-zhT"/>
+                            <constraint firstItem="bNa-g3-ozn" firstAttribute="height" secondItem="dqb-l8-qQg" secondAttribute="height" id="U6q-4T-gP9"/>
+                            <constraint firstAttribute="trailing" secondItem="zXA-0z-m9s" secondAttribute="trailing" constant="16" id="Vxy-Ow-sAX"/>
+                            <constraint firstItem="LKU-C3-bif" firstAttribute="width" secondItem="dqb-l8-qQg" secondAttribute="width" id="amc-pg-EKe"/>
+                            <constraint firstItem="dqb-l8-qQg" firstAttribute="top" secondItem="4ST-By-YPh" secondAttribute="bottom" constant="153" id="cWa-j0-zYb"/>
+                            <constraint firstItem="LKU-C3-bif" firstAttribute="centerX" secondItem="dqb-l8-qQg" secondAttribute="centerX" id="cxe-oa-Ary"/>
+                            <constraint firstItem="LKU-C3-bif" firstAttribute="height" secondItem="dqb-l8-qQg" secondAttribute="height" id="dhP-at-dNT"/>
+                            <constraint firstItem="bNa-g3-ozn" firstAttribute="top" secondItem="dqb-l8-qQg" secondAttribute="top" id="fF7-YG-qGd"/>
+                            <constraint firstItem="5Q7-PM-FOk" firstAttribute="top" secondItem="HhI-dq-5d8" secondAttribute="bottom" constant="15" id="mZv-z0-nnr"/>
+                            <constraint firstItem="dqb-l8-qQg" firstAttribute="top" secondItem="rE3-S6-N38" secondAttribute="bottom" constant="8" symbolic="YES" id="tsh-1a-ofY"/>
+                            <constraint firstItem="HhI-dq-5d8" firstAttribute="width" secondItem="bNa-g3-ozn" secondAttribute="width" id="uEm-8Q-lGW"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="dqb-l8-qQg"/>
-                                <exclude reference="aMr-ZO-TWY"/>
-                                <exclude reference="Ge9-0G-CvO"/>
-                                <exclude reference="W0f-pE-dks"/>
-                                <exclude reference="Oau-Jx-fL7"/>
                                 <exclude reference="bNa-g3-ozn"/>
-                                <exclude reference="rE3-S6-N38"/>
-                                <exclude reference="NMa-Wj-hgg"/>
                                 <exclude reference="LKU-C3-bif"/>
-                                <exclude reference="WpL-wG-mWJ"/>
                                 <exclude reference="5Q7-PM-FOk"/>
                                 <exclude reference="HhI-dq-5d8"/>
+                                <exclude reference="WpL-wG-mWJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="subviews">
                                 <include reference="dqb-l8-qQg"/>
-                                <include reference="aMr-ZO-TWY"/>
-                                <include reference="Ge9-0G-CvO"/>
-                                <include reference="W0f-pE-dks"/>
-                                <include reference="Oau-Jx-fL7"/>
                                 <include reference="bNa-g3-ozn"/>
-                                <include reference="rE3-S6-N38"/>
-                                <include reference="NMa-Wj-hgg"/>
                                 <include reference="LKU-C3-bif"/>
-                                <include reference="WpL-wG-mWJ"/>
                                 <include reference="5Q7-PM-FOk"/>
                                 <include reference="HhI-dq-5d8"/>
+                                <include reference="WpL-wG-mWJ"/>
                             </mask>
                         </variation>
                     </view>
@@ -4155,7 +4188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Wt-JK-v0B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4323" y="177"/>
+            <point key="canvasLocation" x="4322.9268292682927" y="176.9491525423729"/>
         </scene>
         <!--Inspection Defect List-->
         <scene sceneID="qhz-g3-GnA">

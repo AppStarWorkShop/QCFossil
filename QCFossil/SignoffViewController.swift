@@ -192,13 +192,13 @@ class SignoffViewController: UIViewController, UITextFieldDelegate {
         signInputView!.backgroundColor = UIColor.white
         signInputView!.isUserInteractionEnabled = true
         
-        let okBtn = UIButton(frame: CGRect(x: 600, y: 750, width: 100, height: 50))
+        let okBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 225, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         okBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         okBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm"), for: UIControl.State())
         okBtn.addTarget(self, action: #selector(SignoffViewController.confirmInspctorSign), for: UIControl.Event.touchUpInside)
         self.view.setButtonCornerRadius(okBtn)
         
-        let clearBtn = UIButton(frame: CGRect(x: 490, y: 750, width: 100, height: 50))
+        let clearBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 105, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         clearBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         clearBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear"), for: UIControl.State())
         clearBtn.addTarget(self, action: #selector(SignoffViewController.clearInspctorSign), for: UIControl.Event.touchUpInside)
@@ -286,13 +286,13 @@ class SignoffViewController: UIViewController, UITextFieldDelegate {
         signInputView!.backgroundColor = UIColor.white
         signInputView!.isUserInteractionEnabled = true
         
-        let okBtn = UIButton(frame: CGRect(x: 600, y: 750, width: 100, height: 50))
+        let okBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 225, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         okBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         okBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm"), for: UIControl.State())
         okBtn.addTarget(self, action: #selector(SignoffViewController.confirmVendorSign), for: UIControl.Event.touchUpInside)
         self.view.setButtonCornerRadius(okBtn)
         
-        let clearBtn = UIButton(frame: CGRect(x: 490, y: 750, width: 100, height: 50))
+        let clearBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 105, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         clearBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         clearBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear"), for: UIControl.State())
         clearBtn.addTarget(self, action: #selector(SignoffViewController.clearInspctorSign), for: UIControl.Event.touchUpInside)
