@@ -116,16 +116,17 @@ class CreateTaskViewController: UIViewController, UITableViewDelegate,  UITableV
             destVC.pVC = self
             
         }else if segue.identifier == "POSearchSegueFromCT" {
-            let destVC = segue.destination as! POSearchViewController
-            destVC.vendorName = self.vendorInput.text!
-            destVC.vendorLocCode = self.vdrLocationInput.text!
-            
-            if poItems.count > 0 {
-                destVC.styleNo = poItems[0].styleNo!
+            if let destVC = segue.destination.children.first as? POSearchViewController {
+                destVC.vendorName = self.vendorInput.text!
+                destVC.vendorLocCode = self.vdrLocationInput.text!
+                
+                if poItems.count > 0 {
+                    destVC.styleNo = poItems[0].styleNo!
+                }
+                
+                destVC.poSelectedItems = poItems
+                destVC.pVC = self
             }
-            
-            destVC.poSelectedItems = poItems
-            destVC.pVC = self
         }
     }
     
