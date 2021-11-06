@@ -1788,7 +1788,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="st8-qE-5yB">
-                                <rect key="frame" x="16" y="94" width="788" height="152"/>
+                                <rect key="frame" x="16" y="100" width="788" height="152"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="l2I-cB-qzA">
                                         <rect key="frame" x="0.0" y="0.0" width="788" height="35"/>
@@ -1964,7 +1964,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="75" translatesAutoresizingMaskIntoConstraints="NO" id="Thh-S1-ZoX">
-                                <rect key="frame" x="16" y="281" width="788" height="35"/>
+                                <rect key="frame" x="16" y="287" width="788" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inspection Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZW7-9I-ILw">
                                         <rect key="frame" x="0.0" y="0.0" width="195" height="35"/>
@@ -1993,7 +1993,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RMb-DJ-upS">
-                                <rect key="frame" x="16" y="326" width="788" height="834"/>
+                                <rect key="frame" x="16" y="332" width="788" height="828"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="poCellInCreateTaskVC" rowHeight="100" id="l8L-yX-ZNq" customClass="CreateTaskTableViewCell" customModule="QC211104P" customModuleProvider="target">
@@ -4292,27 +4292,50 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="788" height="170"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCc-Km-ogM">
-                                                            <rect key="frame" x="8" y="16" width="40" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cya-T8-EeY">
-                                                            <rect key="frame" x="8" y="50" width="63" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defect Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trA-dL-Szs">
-                                                            <rect key="frame" x="79" y="16" width="669" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oKG-hh-ESu">
+                                                            <rect key="frame" x="0.0" y="16" width="788" height="63.5"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="KrN-Ls-lgC">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="27" height="63.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCc-Km-ogM">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="27" height="28"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cya-T8-EeY">
+                                                                            <rect key="frame" x="0.0" y="43" width="27" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="27" id="aNb-kK-XKk"/>
+                                                                    </constraints>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Aa0-8q-rdK">
+                                                                    <rect key="frame" x="37" y="0.0" width="751" height="63.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defect Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trA-dL-Szs">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="751" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EZY-d0-ekO">
+                                                                            <rect key="frame" x="0.0" y="28.5" width="751" height="35"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="35" id="iDN-P1-Q4J"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <textInputTraits key="textInputTraits"/>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wR0-fO-otd" customClass="CustomControlButton" customModule="QC211104P" customModuleProvider="target">
                                                             <rect key="frame" x="8" y="112" width="40" height="40"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4337,66 +4360,64 @@
                                                                 <action selector="addDefectPhotoFromAlbum:" destination="wxj-MO-lua" eventType="touchUpInside" id="dNg-kp-7vV"/>
                                                             </connections>
                                                         </button>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ERt-qy-Hk2">
-                                                            <rect key="frame" x="572" y="117" width="97" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                                        </textField>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EZY-d0-ekO">
-                                                            <rect key="frame" x="79" y="45" width="669" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits"/>
-                                                        </textField>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defect Qty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZn-er-olE">
-                                                            <rect key="frame" x="572" y="88" width="181" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2e-1p-rRD">
-                                                            <rect key="frame" x="708" y="107" width="40" height="40"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal" title="Button" image="remove"/>
-                                                            <connections>
-                                                                <action selector="removeDefectCell:" destination="wxj-MO-lua" eventType="touchUpInside" id="rob-v9-e4K"/>
-                                                            </connections>
-                                                        </button>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sXG-ob-M0z">
-                                                            <rect key="frame" x="544" y="122" width="20" height="20"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </activityIndicatorView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9o2-Y6-Wwr">
+                                                            <rect key="frame" x="588" y="97" width="200" height="62.5"/>
+                                                            <subviews>
+                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sXG-ob-M0z">
+                                                                    <rect key="frame" x="0.0" y="42.5" width="20" height="20"/>
+                                                                </activityIndicatorView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aAC-Pj-nhV">
+                                                                    <rect key="frame" x="30" y="0.0" width="120" height="62.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defect Qty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZn-er-olE">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ERt-qy-Hk2">
+                                                                            <rect key="frame" x="0.0" y="28.5" width="120" height="34"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="120" id="O34-so-ZU6"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2e-1p-rRD">
+                                                                    <rect key="frame" x="160" y="22.5" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="Ghz-L3-YZy"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="tMp-fK-qiO"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Button" image="remove"/>
+                                                                    <connections>
+                                                                        <action selector="removeDefectCell:" destination="wxj-MO-lua" eventType="touchUpInside" id="rob-v9-e4K"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="oKG-hh-ESu" secondAttribute="trailing" id="9nL-Rt-Ffa"/>
+                                                        <constraint firstItem="9o2-Y6-Wwr" firstAttribute="top" secondItem="Ijz-vT-pkH" secondAttribute="top" constant="97" id="Q1f-C8-oau"/>
+                                                        <constraint firstAttribute="trailing" secondItem="9o2-Y6-Wwr" secondAttribute="trailing" id="bpk-ap-l1R"/>
+                                                        <constraint firstItem="oKG-hh-ESu" firstAttribute="top" secondItem="Ijz-vT-pkH" secondAttribute="top" constant="16" id="q5M-zn-1TX"/>
+                                                        <constraint firstItem="oKG-hh-ESu" firstAttribute="leading" secondItem="Ijz-vT-pkH" secondAttribute="leading" id="vd1-t1-BGA"/>
+                                                    </constraints>
                                                     <variation key="default">
                                                         <mask key="subviews">
-                                                            <exclude reference="nCc-Km-ogM"/>
-                                                            <exclude reference="cya-T8-EeY"/>
-                                                            <exclude reference="trA-dL-Szs"/>
                                                             <exclude reference="wR0-fO-otd"/>
                                                             <exclude reference="M32-pP-CNe"/>
                                                             <exclude reference="QUs-3G-rBT"/>
-                                                            <exclude reference="ERt-qy-Hk2"/>
-                                                            <exclude reference="EZY-d0-ekO"/>
-                                                            <exclude reference="LZn-er-olE"/>
-                                                            <exclude reference="L2e-1p-rRD"/>
-                                                            <exclude reference="sXG-ob-M0z"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=regular">
                                                         <mask key="subviews">
-                                                            <include reference="nCc-Km-ogM"/>
-                                                            <include reference="cya-T8-EeY"/>
-                                                            <include reference="trA-dL-Szs"/>
                                                             <include reference="wR0-fO-otd"/>
                                                             <include reference="M32-pP-CNe"/>
                                                             <include reference="QUs-3G-rBT"/>
-                                                            <include reference="ERt-qy-Hk2"/>
-                                                            <include reference="EZY-d0-ekO"/>
-                                                            <include reference="LZn-er-olE"/>
-                                                            <include reference="L2e-1p-rRD"/>
-                                                            <include reference="sXG-ob-M0z"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>
@@ -4416,27 +4437,47 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="788" height="170"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwL-Rw-6ae">
-                                                            <rect key="frame" x="8" y="16" width="40" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQg-Va-OOS">
-                                                            <rect key="frame" x="8" y="50" width="63" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defect Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Uc-yf-18K">
-                                                            <rect key="frame" x="79" y="16" width="669" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QpW-gw-8cI">
+                                                            <rect key="frame" x="0.0" y="16" width="788" height="62.5"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="w2q-T2-Baz">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="27" height="62.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwL-Rw-6ae">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQg-Va-OOS">
+                                                                            <rect key="frame" x="0.0" y="42" width="27" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="27" id="oli-yV-v8W"/>
+                                                                    </constraints>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zVI-E4-J3e">
+                                                                    <rect key="frame" x="37" y="0.0" width="751" height="62.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defect Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Uc-yf-18K">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="751" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F2C-WI-C5Z">
+                                                                            <rect key="frame" x="0.0" y="28.5" width="751" height="34"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <textInputTraits key="textInputTraits"/>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZJ-Di-9jU" customClass="CustomControlButton" customModule="QC211104P" customModuleProvider="target">
                                                             <rect key="frame" x="8" y="107" width="40" height="40"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4453,33 +4494,6 @@
                                                                 <action selector="addDefectPhotoFromCamera:" destination="Fcm-U3-dYb" eventType="touchUpInside" id="slh-Jj-Lb6"/>
                                                             </connections>
                                                         </button>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dw1-tp-1bY">
-                                                            <rect key="frame" x="572" y="117" width="97" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                                        </textField>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F2C-WI-C5Z">
-                                                            <rect key="frame" x="79" y="45" width="669" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits"/>
-                                                        </textField>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ln-Fa-j78">
-                                                            <rect key="frame" x="708" y="107" width="40" height="40"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal" title="Button" image="remove"/>
-                                                            <connections>
-                                                                <action selector="removeDefectCell:" destination="Fcm-U3-dYb" eventType="touchUpInside" id="GLo-Xm-bLp"/>
-                                                            </connections>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defect Qty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJ9-8n-h5Q">
-                                                            <rect key="frame" x="572" y="88" width="181" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="54m-KC-nQg" customClass="CustomControlButton" customModule="QC211104P" customModuleProvider="target">
                                                             <rect key="frame" x="124" y="112" width="40" height="40"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -4488,39 +4502,65 @@
                                                                 <action selector="addDefectPhotoFromAlbum:" destination="Fcm-U3-dYb" eventType="touchUpInside" id="uK6-Yn-ORV"/>
                                                             </connections>
                                                         </button>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Y17-7q-8Wl">
-                                                            <rect key="frame" x="544" y="122" width="20" height="20"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </activityIndicatorView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VHX-nP-2d2">
+                                                            <rect key="frame" x="588" y="96" width="200" height="63.5"/>
+                                                            <subviews>
+                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Y17-7q-8Wl">
+                                                                    <rect key="frame" x="0.0" y="43.5" width="20" height="20"/>
+                                                                </activityIndicatorView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7jG-eO-Uzf">
+                                                                    <rect key="frame" x="30" y="0.0" width="120" height="63.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defect Qty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJ9-8n-h5Q">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dw1-tp-1bY">
+                                                                            <rect key="frame" x="0.0" y="28.5" width="120" height="35"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="120" id="O5e-eS-FoK"/>
+                                                                                <constraint firstAttribute="height" constant="35" id="b6g-uq-Zm2"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ln-Fa-j78">
+                                                                    <rect key="frame" x="160" y="23.5" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="lFg-HN-nWd"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="pu6-85-jMW"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Button" image="remove"/>
+                                                                    <connections>
+                                                                        <action selector="removeDefectCell:" destination="Fcm-U3-dYb" eventType="touchUpInside" id="GLo-Xm-bLp"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="QpW-gw-8cI" firstAttribute="leading" secondItem="zqo-8d-gFZ" secondAttribute="leading" id="9x9-Fv-g3O"/>
+                                                        <constraint firstItem="QpW-gw-8cI" firstAttribute="top" secondItem="zqo-8d-gFZ" secondAttribute="top" constant="16" id="JMe-kx-a5x"/>
+                                                        <constraint firstItem="VHX-nP-2d2" firstAttribute="top" secondItem="zqo-8d-gFZ" secondAttribute="top" constant="96" id="O68-Se-LxJ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="QpW-gw-8cI" secondAttribute="trailing" id="T1A-xJ-XQc"/>
+                                                        <constraint firstAttribute="trailing" secondItem="VHX-nP-2d2" secondAttribute="trailing" id="pqW-1b-dKi"/>
+                                                    </constraints>
                                                     <variation key="default">
                                                         <mask key="subviews">
-                                                            <exclude reference="gwL-Rw-6ae"/>
-                                                            <exclude reference="VQg-Va-OOS"/>
-                                                            <exclude reference="3Uc-yf-18K"/>
                                                             <exclude reference="sZJ-Di-9jU"/>
                                                             <exclude reference="fGk-f4-e15"/>
-                                                            <exclude reference="Dw1-tp-1bY"/>
-                                                            <exclude reference="F2C-WI-C5Z"/>
-                                                            <exclude reference="1ln-Fa-j78"/>
-                                                            <exclude reference="wJ9-8n-h5Q"/>
                                                             <exclude reference="54m-KC-nQg"/>
-                                                            <exclude reference="Y17-7q-8Wl"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=regular">
                                                         <mask key="subviews">
-                                                            <include reference="gwL-Rw-6ae"/>
-                                                            <include reference="VQg-Va-OOS"/>
-                                                            <include reference="3Uc-yf-18K"/>
                                                             <include reference="sZJ-Di-9jU"/>
                                                             <include reference="fGk-f4-e15"/>
-                                                            <include reference="Dw1-tp-1bY"/>
-                                                            <include reference="F2C-WI-C5Z"/>
-                                                            <include reference="1ln-Fa-j78"/>
-                                                            <include reference="wJ9-8n-h5Q"/>
                                                             <include reference="54m-KC-nQg"/>
-                                                            <include reference="Y17-7q-8Wl"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>

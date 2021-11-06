@@ -360,7 +360,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         let defectItem = self.defectItems[indexPath.row]
         
         if defectItem.inputMode! == _INPUTMODE04 {
-            self.inspectDefectTableview.rowHeight = 250
+            self.inspectDefectTableview.rowHeight = 170
             let cellMode4 = tableView.dequeueReusableCell(withIdentifier: "InspDefectCellMode4", for: indexPath) as! InspectionDefectTableViewCellMode4
             
             cellMode4.pVC = self
