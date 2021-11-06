@@ -406,7 +406,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
             cellMode2.defectMinorQtyInput.text = defectItem.defectQtyMinor < 1 ? "0" : String(defectItem.defectQtyMinor)
             cellMode2.defectCriticalQtyInput.text = defectItem.defectQtyCritical < 1 ? "0" : String(defectItem.defectQtyCritical)
             cellMode2.defectTotalQtyInput.text = defectItem.defectQtyTotal < 1 ? "0" : String(defectItem.defectQtyTotal)
-            cellMode2.defectPPIInput.text = self.defectPositionPointsDesc
+//
             cellMode2.inspectElementId = defectItem.inspectElementId
 //            cellMode2.defectRemarkOptionList.text = defectItem.defectRemarksOptionList
             cellMode2.defectRemarksOptionList = defectItem.defectRemarksOptionList

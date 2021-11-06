@@ -49,10 +49,6 @@ class InspectionDefectTableViewCellMode2: InputModeDFMaster2, UIImagePickerContr
     @IBOutlet weak var defectTotalQtyInput: UITextField!
     @IBOutlet weak var defectTypeLabel: UILabel!
     @IBOutlet weak var defectTypeInput: UITextField!
-    @IBOutlet weak var defectPPILabel: UILabel!
-    @IBOutlet weak var defectPPIInput: UITextField!
-    @IBOutlet weak var defectPositLabel: UILabel!
-    @IBOutlet weak var defectPositInput: UITextField!
     @IBOutlet weak var defectDesc1Label: UILabel!
     @IBOutlet weak var defectDesc1Input: UITextField!
     @IBOutlet weak var defectDesc2Label: UILabel!
@@ -81,16 +77,12 @@ class InspectionDefectTableViewCellMode2: InputModeDFMaster2, UIImagePickerContr
         self.defectMinorQtyInput.delegate = self
         self.defectTotalQtyInput.delegate = self
         self.defectTypeInput.delegate = self
-        self.defectPPIInput.delegate = self
-        self.defectPositInput.delegate = self
         self.defectDesc1Input.delegate = self
         self.defectDesc2Input.delegate = self
         self.othersRemarkInput.delegate = self
         self.defectTotalQtyInput.isUserInteractionEnabled = false
         
         self.defectDescLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Description")
-        self.defectPositLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Position")
-        self.defectPPILabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Position Points & Info")
         self.defectTypeLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Type")
         self.defectCriticalQtyLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Critical")
         self.defectMajorQtyLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Major")
@@ -121,8 +113,6 @@ class InspectionDefectTableViewCellMode2: InputModeDFMaster2, UIImagePickerContr
         self.defectMajorQtyInput.resignFirstResponder()
         self.defectMinorQtyInput.resignFirstResponder()
         self.defectTotalQtyInput.resignFirstResponder()
-        self.defectPPIInput.resignFirstResponder()
-        self.defectPositInput.resignFirstResponder()
         
         let availableCount = self.photoNameAtIndex.filter({$0 == ""})
         
