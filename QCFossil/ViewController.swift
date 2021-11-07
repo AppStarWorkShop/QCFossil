@@ -192,6 +192,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         updateDisplayFromDefaults()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initLoginStatus()
+    }
+    
     func startLoginStatus(_ loginMsg:String = "", textColor:UIColor = _DEFAULTBUTTONTEXTCOLOR){
         self.loginIndicator.isHidden = false
         self.loginIndicator.startAnimating()
@@ -204,10 +209,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         self.loginIndicator.stopAnimating()
         self.loginStatusMsg.textColor = textColor
         self.loginStatusMsg.text = loginMsg
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        initLoginStatus()
     }
     
     @IBAction func changeLanguage(_ sender: UISegmentedControl) {
@@ -399,7 +400,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                     }else{
                                         self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-
                                 })
                             }else{
                                 
@@ -420,7 +420,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                     }else{
                                         self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-                                    
                                 }
                             }
                             //------------------------------------------------
@@ -494,7 +493,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                     }else{
                                         self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-                                    
                                     self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login success, Redirect..."), textColor: _DEFAULTBUTTONTEXTCOLOR)
                                     if Cache_Inspector?.chgPwdReqDate != "" && Cache_Inspector?.chgPwdReqDate != nil {
                                         self.handlePwChangeBeforeRedirect()
@@ -505,7 +503,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                     }else{
                                         self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-                                    
                                 }
                                 //------------------------------------------------
                                 
@@ -939,6 +936,11 @@ extension ViewController {
         
         super.prepare(for: segue, sender: sender)
         segue.destination.modalPresentationStyle = .overFullScreen// .fullScreen
+        if let vc = segue.destination as? ContainerViewController {
+            vc.resetLogonItems = {
+                self.initLoginStatus()
+            }
+        }
     }
 }
 

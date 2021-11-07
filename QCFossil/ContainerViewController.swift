@@ -13,6 +13,7 @@ class ContainerViewController: UIViewController{
     // This value matches the left menu's width in the Storyboard
     let leftMenuWidth:CGFloat = 180
     weak var embedContainerController:EmbedContainerController!
+    var resetLogonItems: (() -> Void)?
     
     @IBOutlet weak var containerScroll: UIScrollView!
     
@@ -31,11 +32,17 @@ class ContainerViewController: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         DispatchQueue.main.async {
             NSLog("Close Menu.")
             
             self.closeMenu(false)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        resetLogonItems?()
     }
     
     deinit {

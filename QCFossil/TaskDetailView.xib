@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TaskDetailViewInput" customModule="QC211101P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TaskDetailViewInput" customModule="QC211104P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -258,6 +258,7 @@
                 <outlet property="additionalAdministrativeItemDropdownIcon" destination="MRO-c7-wBC" id="0o5-yk-wYe"/>
                 <outlet property="additionalAdministrativeItemInput" destination="oZf-6T-Yik" id="a0i-hx-WEr"/>
                 <outlet property="additionalAdministrativeItemLabel" destination="kZB-rX-HUL" id="Axs-UN-gfz"/>
+                <outlet property="addtionalAdminItemStackView" destination="1fd-9r-dgU" id="DKy-Bb-sUF"/>
                 <outlet property="basicInfomationSectionLabel" destination="ycT-sM-MIn" id="35V-uV-Aw9"/>
                 <outlet property="bookingDateInput" destination="YEO-Vu-OOH" id="HS2-B8-Sl9"/>
                 <outlet property="bookingDateLabel" destination="Rrl-FN-ra7" id="9Yf-8z-xj4"/>
@@ -284,6 +285,7 @@
                 <outlet property="qcRemarkDropdownIcon" destination="4dZ-Jj-TGG" id="mKd-Up-87p"/>
                 <outlet property="qcRemarkInput" destination="rc3-Rd-wUm" id="cgR-lM-nr2"/>
                 <outlet property="qcRemarkLabel" destination="z9p-V5-Hoi" id="U64-Pg-VI0"/>
+                <outlet property="qcRemarkStackView" destination="YME-8W-uJZ" id="apn-8A-k3d"/>
                 <outlet property="resultDropdownIcon" destination="BhL-Ib-bwu" id="KVV-3o-nqo"/>
                 <outlet property="resultSummaryLabel" destination="hPc-Vg-wIy" id="jO8-Kc-Bno"/>
                 <outlet property="signoffConfirmBtn" destination="MZm-UP-He1" id="Air-M1-ccJ"/>
@@ -304,7 +306,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="hgy-St-DqH">
-                    <rect key="frame" x="16" y="8" width="856" height="521"/>
+                    <rect key="frame" x="16" y="8" width="856" height="501"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Kwn-e9-IA0">
                             <rect key="frame" x="0.0" y="0.0" width="856" height="70"/>
@@ -318,7 +320,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zR6-CF-mmN" customClass="CustomTextView" customModule="QC211101P" customModuleProvider="target">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zR6-CF-mmN" customClass="CustomTextView" customModule="QC211104P" customModuleProvider="target">
                                     <rect key="frame" x="200" y="0.0" width="656" height="70"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="klY-XJ-PzL"/>
@@ -346,7 +348,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aW-nz-nlf" customClass="CustomTextView" customModule="QC211101P" customModuleProvider="target">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aW-nz-nlf" customClass="CustomTextView" customModule="QC211104P" customModuleProvider="target">
                                     <rect key="frame" x="200" y="0.0" width="656" height="70"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="cxZ-8y-rJa"/>
@@ -452,18 +454,18 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6O-xe-QnT">
-                            <rect key="frame" x="0.0" y="386" width="856" height="80"/>
+                            <rect key="frame" x="0.0" y="386" width="856" height="60"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BgE-Uy-nDY">
-                                    <rect key="frame" x="0.0" y="0.0" width="856" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="856" height="60"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="80" id="r04-ae-iiN"/>
+                                        <constraint firstAttribute="height" constant="60" id="r04-ae-iiN"/>
                                     </constraints>
                                 </view>
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="392" translatesAutoresizingMaskIntoConstraints="NO" id="6FH-0c-3S6">
-                            <rect key="frame" x="0.0" y="491" width="856" height="30"/>
+                            <rect key="frame" x="0.0" y="471" width="856" height="30"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MZm-UP-He1">
                                     <rect key="frame" x="0.0" y="0.0" width="232" height="30"/>

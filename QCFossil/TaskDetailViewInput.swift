@@ -80,6 +80,8 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var qcRemarkDropdownIcon: UIImageView!
     @IBOutlet weak var additionalAdministrativeItemDropdownIcon: UIImageView!
     @IBOutlet weak var resultDropdownIcon: UIImageView!
+    @IBOutlet weak var qcRemarkStackView: UIStackView!
+    @IBOutlet weak var addtionalAdminItemStackView: UIStackView!
     
     weak var pVC:TaskDetailsViewController!
     var cellHeight:Int = 40
@@ -260,7 +262,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             self.pVC!.categories.append(inputInptCatViewObj!)
         }
         
-        self.commentWarpperView.frame = CGRect(x: 0, y: self.inptCatWrapperView.frame.origin.y+self.inptCatWrapperView.frame.size.height+CGFloat(cellHeight), width: _DEVICE_WIDTH, height: self.inptCatWrapperView.frame.size.height)
+        self.commentWarpperView.frame = CGRect(x: 0, y: self.inptCatWrapperView.frame.origin.y+self.inptCatWrapperView.frame.size.height+CGFloat(cellHeight), width: _DEVICE_WIDTH, height: self.commentWarpperView.frame.size.height)
         
         self.addSubview(self.commentWarpperView)
         
@@ -284,22 +286,9 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         
         switch Cache_Inspector?.typeCode ?? "LEATHER" {
         case TypeCode.LEATHER.rawValue:
-            qcRemarkInput.removeFromSuperview()
-            qcRemarkLabel.removeFromSuperview()
-            qcRemarkDropdownIcon.removeFromSuperview()
-            additionalAdministrativeItemLabel.removeFromSuperview()
-            additionalAdministrativeItemInput.removeFromSuperview()
-            additionalAdministrativeItemDropdownIcon.removeFromSuperview()
-            
-            inspResultBottomLabel.frame = CGRect(x: inspResultBottomLabel.frame.origin.x, y: inspResultBottomLabel.frame.origin.y - 140, width: inspResultBottomLabel.frame.size.width, height: inspResultBottomLabel.frame.size.height)
-            inspResultBottomInput.frame = CGRect(x: inspResultBottomInput.frame.origin.x, y: inspResultBottomInput.frame.origin.y - 140, width: inspResultBottomInput.frame.size.width, height: inspResultBottomInput.frame.size.height)
-            resultDropdownIcon.frame = CGRect(x: resultDropdownIcon.frame.origin.x - 320, y: resultDropdownIcon.frame.origin.y - 12, width: resultDropdownIcon.frame.size.width, height: resultDropdownIcon.frame.size.height)
-
-            break
-        case TypeCode.WATCH.rawValue, TypeCode.JEWELRY.rawValue:
-            break
-        default:
-            break
+            qcRemarkStackView.isHidden = true
+            addtionalAdminItemStackView.isHidden = true
+        default:break
         }
     }
     
@@ -397,7 +386,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         
         //self.pVC!.ScrollView.contentSize.height += offSet
         self.frame.size = CGSize(width: _DEVICE_WIDTH, height: self.frame.size.height + offSet)
-        self.pVC!.ScrollView.contentSize.height = self.frame.size.height
+        self.pVC?.ScrollView.contentSize.height = self.frame.size.height
     }
     
     func validateBeforeSignoff(_ taskStatus:Int=0) ->Bool {
@@ -480,11 +469,11 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
     
     func resizePoWrapperContent(_ offset:CGFloat) {
        
-        self.inptCatWrapperView.frame = CGRect(x: self.inptCatWrapperView.frame.origin.x,y: self.inptCatWrapperView.frame.origin.y+offset,width: self.inptCatWrapperView.frame.size.width,height: self.inptCatWrapperView.frame.size.height)
+//        self.inptCatWrapperView.frame = CGRect(x: self.inptCatWrapperView.frame.origin.x,y: self.inptCatWrapperView.frame.origin.y+offset,width: self.inptCatWrapperView.frame.size.width,height: self.inptCatWrapperView.frame.size.height)
+//
+//        self.commentWarpperView.frame = CGRect(x: self.commentWarpperView.frame.origin.x,y: self.commentWarpperView.frame.origin.y+offset,width: self.commentWarpperView.frame.size.width,height: self.commentWarpperView.frame.size.height)
         
-        self.commentWarpperView.frame = CGRect(x: self.commentWarpperView.frame.origin.x,y: self.commentWarpperView.frame.origin.y+offset,width: self.commentWarpperView.frame.size.width,height: self.commentWarpperView.frame.size.height)
-        
-        self.pVC!.ScrollView.contentSize.height += offset
+        self.pVC?.ScrollView.contentSize.height += offset
         self.frame.size = CGSize(width: _DEVICE_WIDTH, height: self.frame.size.height+offset)
     }
     
