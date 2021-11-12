@@ -51,7 +51,7 @@ class QCInfoViewController: PopoverMaster, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         self.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("QC Info")
-        self.view.frame = CGRect.init(x: 0, y: 12, width: 768, height: 1024)
+        self.view.frame = CGRect.init(x: 0, y: 12, width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
         
         let taskQCInfoView = TaskQCInfoView.loadFromNibNamed("TaskQCInfoView")!
         
@@ -117,7 +117,7 @@ class QCInfoViewController: PopoverMaster, UIScrollViewDelegate {
 //                    }
 //                }
                 
-                poInfoView.frame = CGRect(x: 0, y: CGFloat(105 * index), width: poInfoView.frame.size.width, height: 105)
+                poInfoView.frame = CGRect(x: 0, y: CGFloat(105 * index), width: self.view.frame.size.width, height: 105)
                 taskQCInfoView.poView.addSubview(poInfoView)
                 
                 index += 1
@@ -142,8 +142,8 @@ class QCInfoViewController: PopoverMaster, UIScrollViewDelegate {
             taskQCInfoView.frame = CGRect(x: taskQCInfoView.frame.origin.x, y: taskQCInfoView.frame.origin.y, width: taskQCInfoView.frame.size.width, height: newHeight)
         }
         
-        self.ScrollView.contentSize = CGSize.init(width: 768, height: 1900 + newHeight)
-        taskQCInfoView.frame.size = CGSize.init(width: 768, height: 1900 + newHeight)
+        self.ScrollView.contentSize = CGSize.init(width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT*2 - 100 + newHeight)
+        taskQCInfoView.frame.size = CGSize.init(width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT*2 - 100 + newHeight)
         
         let dpDataHelper = DPDataHelper()
         let taskQCInfo = dpDataHelper.getQCInfoByRefTaskId(Cache_Task_On?.refTaskId ?? 0)
