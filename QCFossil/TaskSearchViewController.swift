@@ -437,18 +437,18 @@ class TaskSearchViewController: PopoverMaster, UITableViewDelegate, UITableViewD
         
         if task.poNo?.range(of: ",") != nil {
             cell.showAllPOLines.isHidden = false
-            cell.showAllPOLines2.isHidden = false
+//            cell.showAllPOLines2.isHidden = false
         }else{
             cell.showAllPOLines.isHidden = true
-            cell.showAllPOLines2.isHidden = true
+//            cell.showAllPOLines2.isHidden = true
         }
         
         if task.shipWin?.range(of: ",") != nil {
             cell.showAllShipWinDates.isHidden = false
-            cell.showAllshipWinDatesLabel.isHidden = false
+//            cell.showAllshipWinDatesLabel.isHidden = false
         }else{
             cell.showAllShipWinDates.isHidden = true
-            cell.showAllshipWinDatesLabel.isHidden = true
+//            cell.showAllshipWinDatesLabel.isHidden = true
         }
         
         if task.opdRsd?.range(of: ",") != nil {
