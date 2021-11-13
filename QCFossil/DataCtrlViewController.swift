@@ -67,6 +67,18 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = .white
+        }
+        
         updateLocalizedString()
         
         //bgSession = backgroundSession
@@ -754,19 +766,16 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         }else if self.typeNow == self.typeBackup {
             
             do {
-                
                 if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
                     
                     if responseDictionary.count > 0 {
                         
                         if let result = responseDictionary["ul_result"] as? String {
-                            
                             if result == "OK" {
-                                let keyValueDataHelper = KeyValueDataHelper()
-                                _ = keyValueDataHelper.updateLastBackupDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
-                                self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
-                                
                                 DispatchQueue.main.async(execute: {
+                                    let keyValueDataHelper = KeyValueDataHelper()
+                                    _ = keyValueDataHelper.updateLastBackupDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+                                    self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
                                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Complete")
                                     self.progressBar.progress = 100
                                     self.updateButtonsStatus(true)
@@ -785,7 +794,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                         }
                     }
                 }
-                
             } catch {
                 DispatchQueue.main.async(execute: {
                     print(error)

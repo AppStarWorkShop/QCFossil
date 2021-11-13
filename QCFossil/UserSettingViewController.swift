@@ -57,6 +57,17 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = .white
+        }
         
         self.CPTitle.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Change Password") + " ?"
         self.currentPwTitle.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Current Password")
@@ -291,13 +302,13 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         signInputView!.backgroundColor = UIColor.white
         signInputView!.isUserInteractionEnabled = true
         
-        let okBtn = UIButton(frame: CGRect(x: 600, y: 750, width: 100, height: 50))
+        let okBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 225, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         okBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         okBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm"), for: UIControl.State())
         okBtn.addTarget(self, action: #selector(UserSettingViewController.confirmInspctorSign), for: UIControl.Event.touchUpInside)
         self.view.setButtonCornerRadius(okBtn)
         
-        let clearBtn = UIButton(frame: CGRect(x: 490, y: 750, width: 100, height: 50))
+        let clearBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 105, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         clearBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         clearBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear"), for: UIControl.State())
         clearBtn.addTarget(self, action: #selector(UserSettingViewController.clearInspctorSign), for: UIControl.Event.touchUpInside)
@@ -372,20 +383,20 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         signInputView!.backgroundColor = UIColor.white
         signInputView!.isUserInteractionEnabled = true
         
-        let okBtn = UIButton(frame: CGRect(x: 600, y: 750, width: 100, height: 50))
+        let okBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 225, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         okBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         okBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm"), for: UIControl.State())
         okBtn.addTarget(self, action: #selector(UserSettingViewController.confirmInspctorSign), for: UIControl.Event.touchUpInside)
         self.view.setButtonCornerRadius(okBtn)
         
-        let clearBtn = UIButton(frame: CGRect(x: 490, y: 750, width: 100, height: 50))
+        let clearBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 + 105, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
         clearBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
         clearBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear"), for: UIControl.State())
         clearBtn.addTarget(self, action: #selector(UserSettingViewController.clearInspctorSign), for: UIControl.Event.touchUpInside)
         self.view.setButtonCornerRadius(clearBtn)
         
         if self.inspectorSignatureInput.image != nil {
-            let cancelBtn = UIButton(frame: CGRect(x: 380, y: 750, width: 100, height: 50))
+            let cancelBtn = UIButton(frame: CGRect(x: _DEVICE_WIDTH/2 - 15, y: (signInputView?.frame.maxY ?? 800) + 10, width: 100, height: 50))
             cancelBtn.backgroundColor = _DEFAULTBUTTONTEXTCOLOR
             cancelBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), for: UIControl.State())
             cancelBtn.addTarget(self, action: #selector(UserSettingViewController.cancelInspctorSign), for: UIControl.Event.touchUpInside)
