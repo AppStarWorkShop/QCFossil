@@ -179,13 +179,13 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate, UI
         }else{
             
             let popoverContent = PopoverViewController()
-            popoverContent.preferredContentSize = CGSize(width: 320, height: 350 + _NAVIBARHEIGHT)//CGSizeMake(320,/*240 + _NAVIBARHEIGHT*/350 + _NAVIBARHEIGHT)
+            popoverContent.preferredContentSize = CGSize(width: 350, height: 350 + _NAVIBARHEIGHT)//CGSizeMake(320,/*240 + _NAVIBARHEIGHT*/350 + _NAVIBARHEIGHT)
 //            popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
             popoverContent.parentTextFieldView = nil
             popoverContent.sourceType = _SHAPEPREVIEWTYPE
             popoverContent.dataType = _SHAPEDATATYPE
             popoverContent.parentView = self
-            
+
             let nav = CustomNavigationController(rootViewController: popoverContent)
             nav.modalPresentationStyle = UIModalPresentationStyle.popover
             nav.navigationBar.barTintColor = UIColor.white

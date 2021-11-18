@@ -249,6 +249,9 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             
             let catBtnTitle = (_ENGLISH ? section?.sectionNameEn:section?.sectionNameCn)!+"(\(itemCount))"
             inputInptCatViewObj?.inptCatButton.setTitle(catBtnTitle, for: UIControl.State())
+            inputInptCatViewObj?.inptCatButton.titleLabel?.numberOfLines = 1
+            inputInptCatViewObj?.inptCatButton.titleLabel?.adjustsFontSizeToFitWidth = true
+            inputInptCatViewObj?.inptCatButton.titleLabel?.lineBreakMode = .byClipping
             inputInptCatViewObj?.parentView = self
             inputInptCatViewObj?.sectionId = section?.sectionId
             

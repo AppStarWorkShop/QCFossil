@@ -355,8 +355,8 @@
             timestampString = "653642306.728664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "503"
-            endingLineNumber = "503"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "getNameBySaveDefectPhotoData(_:photo:needSave:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -372,8 +372,8 @@
             timestampString = "653642306.728726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "dismissDfPhotoButton(_:)"
             landmarkType = "7">
             <Locations>
@@ -423,8 +423,8 @@
             timestampString = "653642306.728773"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "addDefectCellButton(_:)"
             landmarkType = "7">
             <Locations>
@@ -474,8 +474,8 @@
             timestampString = "653642306.728814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "addDefectCellButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -542,8 +542,8 @@
             timestampString = "653642306.728865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
             landmarkName = "updateDefectPhotoData(_:photo:needSave:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -559,8 +559,8 @@
             timestampString = "653642306.728906"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "502"
-            endingLineNumber = "502"
+            startingLineNumber = "498"
+            endingLineNumber = "498"
             landmarkName = "getNameBySaveDefectPhotoData(_:photo:needSave:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -576,8 +576,8 @@
             timestampString = "653642306.728945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
             landmarkName = "dismissDfPhotoButton(_:)"
             landmarkType = "7">
             <Locations>
@@ -738,23 +738,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "98C28BB5-6251-430C-B174-FBDD4E95868B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/POSearchTableViewCell.swift"
-            timestampString = "498981784.804167"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "updateLocalizedString()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "1AA280D6-6425-4F56-968D-BAAB0D243589"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -865,8 +848,8 @@
             timestampString = "653642306.729082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "addDefectPhotoFromCamera(_:)"
             landmarkType = "7">
             <Locations>
@@ -916,8 +899,8 @@
             timestampString = "653642306.729121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "addDefectPhotoFromCamera(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1341,8 +1324,8 @@
             timestampString = "653642306.729483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1620"
-            endingLineNumber = "1620"
+            startingLineNumber = "1622"
+            endingLineNumber = "1622"
             landmarkName = "equalToDate(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1358,8 +1341,8 @@
             timestampString = "653642306.729525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1638"
-            endingLineNumber = "1638"
+            startingLineNumber = "1640"
+            endingLineNumber = "1640"
             landmarkName = "addHours(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1426,8 +1409,8 @@
             timestampString = "653642306.729604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1622"
-            endingLineNumber = "1622"
+            startingLineNumber = "1624"
+            endingLineNumber = "1624"
             landmarkName = "equalToDate(_:)"
             landmarkType = "7">
          </BreakpointContent>

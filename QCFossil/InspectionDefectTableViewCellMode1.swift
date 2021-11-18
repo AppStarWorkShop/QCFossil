@@ -230,33 +230,29 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
         self.parentVC?.dismiss(animated: true, completion: {
             self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async(execute: {
                 let photoNames = self.getNamesBySaveDefectPhotos(photos)
-                
-                DispatchQueue.main.async(execute: {
+                if defectItem?.count > 0 {
+                    let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
                     
-                    if defectItem?.count > 0 {
-                        let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
-                        
-                        if defectCell.photoNames == nil {
-                            defectCell.photoNames = [String]()
-                        }
-                        
-                        photoNames.forEach({
-                            defectCell.photoNames?.append(String($0))
-                        })
-                        
+                    if defectCell.photoNames == nil {
+                        defectCell.photoNames = [String]()
                     }
                     
-                    photos.forEach({
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":$0])
+                    photoNames.forEach({
+                        defectCell.photoNames?.append(String($0))
                     })
                     
-                    self.pVC?.updateContentView()
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
+                }
+                
+                photos.forEach({
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":$0])
                 })
-            }
+                
+                self.pVC?.updateContentView()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            })
         })
     }
     

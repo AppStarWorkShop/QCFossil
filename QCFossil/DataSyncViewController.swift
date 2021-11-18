@@ -1077,23 +1077,22 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
     }
     //------------------------------------- end upload photo --------------------------------------------
     func makeDLPostRequest(_ dsData:AnyObject) {
-
-        let state = UIApplication.shared.applicationState
-        if state == .active {
-            
-            updateDLProcessLabel("Sending Request...")
-            
-            // foreground
-            sessionDownloadTask = fgSession?.downloadTask(with: createDLRequest(dsData))
-            sessionDownloadTask?.resume()
-            
-        }else{
-            
-            // background
-            updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
-            updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-            errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-            updateDownloadTaskStatusDetailButton()
+        DispatchQueue.main.async {
+            if UIApplication.shared.applicationState == .active {
+                self.updateDLProcessLabel("Sending Request...")
+                
+                // foreground
+                self.sessionDownloadTask = self.fgSession?.downloadTask(with: self.createDLRequest(dsData))
+                self.sessionDownloadTask?.resume()
+                
+            }else{
+                
+                // background
+                self.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
+                self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
+                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.updateDownloadTaskStatusDetailButton()
+            }
         }
     }
     
@@ -1139,23 +1138,24 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
     }
     
     func makeULACKPostRequest(_ dsData:AnyObject, coutDic:Dictionary<String,Int>) {
-        
-        let state = UIApplication.shared.applicationState
-        
-        if state == .active {
+        DispatchQueue.main.async(execute: {
+            let state = UIApplication.shared.applicationState
             
-            // foreground
-            sessionDownloadTask = fgSession?.downloadTask(with: createULACKRequest(dsData, coutDic: coutDic))
-            sessionDownloadTask?.resume()
-            
-        }else{
-            
-            // background
-            updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
-            updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-            errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-            updateDownloadTaskStatusDetailButton()
-        }
+            if state == .active {
+                
+                // foreground
+                self.sessionDownloadTask = self.fgSession?.downloadTask(with: self.createULACKRequest(dsData, coutDic: coutDic))
+                self.sessionDownloadTask?.resume()
+                
+            }else{
+                
+                // background
+                self.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
+                self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
+                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.updateDownloadTaskStatusDetailButton()
+            }
+        })
     }
     
     func createULACKRequest(_ dsData:AnyObject, coutDic:Dictionary<String,Int>) -> URLRequest {

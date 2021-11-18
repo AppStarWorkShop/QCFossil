@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01CellView" customModule="QC211027P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01CellView" customModule="QC211114P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="160"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -133,16 +133,9 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uf5-UR-9R7">
-                    <rect key="frame" x="733" y="37" width="24" height="24"/>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defect Position Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PJ-Lh-HW1">
+                    <rect key="frame" x="325" y="72" width="222.5" height="20.5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="select_icon"/>
-                    <connections>
-                        <action selector="showInptDetailVals:" destination="iN0-l3-epB" eventType="touchUpInside" id="B6f-X1-7pR"/>
-                    </connections>
-                </button>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defect Position Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PJ-Lh-HW1">
-                    <rect key="frame" x="325" y="67" width="222.5" height="20.5"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="0.98624604940414429" green="0.0071207880973815918" blue="0.02743418887257576" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -178,11 +171,27 @@
                                 </imageView>
                             </subviews>
                         </stackView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jno-9p-W9c">
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="-24" translatesAutoresizingMaskIntoConstraints="NO" id="7n8-FR-Yw9">
                             <rect key="frame" x="275" y="0.0" width="427" height="35"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jno-9p-W9c">
+                                    <rect key="frame" x="0.0" y="0.5" width="427" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uf5-UR-9R7">
+                                    <rect key="frame" x="0.0" y="5.5" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="oop-vF-QmW"/>
+                                        <constraint firstAttribute="width" constant="24" id="qBT-rU-Z1H"/>
+                                    </constraints>
+                                    <state key="normal" image="select_icon"/>
+                                    <connections>
+                                        <action selector="showInptDetailVals:" destination="iN0-l3-epB" eventType="touchUpInside" id="B6f-X1-7pR"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TaN-SO-RTb">
@@ -195,14 +204,12 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="wp8-o5-M5x" secondAttribute="trailing" constant="16" id="Fd6-fy-JNh"/>
-                <constraint firstItem="6PJ-Lh-HW1" firstAttribute="leading" secondItem="Jno-9p-W9c" secondAttribute="leading" id="LJa-WT-w1g"/>
                 <constraint firstItem="TaN-SO-RTb" firstAttribute="leading" secondItem="DhX-Fr-RMA" secondAttribute="leading" id="cDh-aa-xES"/>
                 <constraint firstItem="wp8-o5-M5x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="gqI-6r-5dP"/>
                 <constraint firstItem="wp8-o5-M5x" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="jXD-dZ-2Yq"/>
                 <constraint firstAttribute="trailing" secondItem="o3D-a8-yQP" secondAttribute="trailing" constant="16" id="kqL-in-kiL"/>
                 <constraint firstItem="DhX-Fr-RMA" firstAttribute="top" secondItem="TaN-SO-RTb" secondAttribute="bottom" constant="6.5" id="pHw-6e-mXq"/>
                 <constraint firstItem="o3D-a8-yQP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="110" id="u5c-G7-lvG"/>
-                <constraint firstItem="6PJ-Lh-HW1" firstAttribute="top" secondItem="Jno-9p-W9c" secondAttribute="bottom" constant="2" id="uuK-Du-kvX"/>
                 <constraint firstItem="o3D-a8-yQP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="uvs-Zm-Ypn"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

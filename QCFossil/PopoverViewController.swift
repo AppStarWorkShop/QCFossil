@@ -83,7 +83,7 @@ class PopoverViewController: UIViewController {
         }else if dataType == _POPOVERTASKSTATUSDESC {
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Refused")
             
-            let descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            let descView = UITextView.init(frame: CGRect(x: 0,y: _NAVIBARHEIGHT + 20,width: 325,height: 500))
             descView.text = selectedValue
             descView.isUserInteractionEnabled = false 
             
@@ -131,10 +131,9 @@ class PopoverViewController: UIViewController {
             return
         }else if dataType == _SHAPEDATATYPE {
             shapepreview = ShapePreviewViewInput.loadFromNibNamed("ShapePreviewView")!
-            shapepreview.frame = CGRect(x: 0, y: _NAVIBARHEIGHT, width: 330, /*220+_NAVIBARHEIGHT*/height: 330+_NAVIBARHEIGHT)
+            shapepreview.frame = CGRect(x: 10, y: _NAVIBARHEIGHT, width: 350, /*220+_NAVIBARHEIGHT*/height: 350+_NAVIBARHEIGHT)
             shapepreview.parentView = self.parentView
             self.view.addSubview(shapepreview)
-            
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Shape Types")
             
             let rightButton=UIBarButtonItem()
@@ -149,16 +148,9 @@ class PopoverViewController: UIViewController {
         }else if dataType == _DEFECTPPDESC {
         
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Position Point(s)")
-            
-            let descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
-            descView.text = selectedValue
-            descView.isUserInteractionEnabled = false
-            
-            self.view.addSubview(descView)
-            
             self.automaticallyAdjustsScrollViewInsets = false
             
-            let scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: _NAVIBARHEIGHT, width: 325, height: 150+_NAVIBARHEIGHT))
+            let scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: _NAVIBARHEIGHT+20, width: 325, height: 150+_NAVIBARHEIGHT))
             scrollView.contentSize = CGSize.init(width: 325, height: 150+_NAVIBARHEIGHT)
             
             self.view.addSubview(scrollView)

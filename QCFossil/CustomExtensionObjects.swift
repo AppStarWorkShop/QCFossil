@@ -1375,7 +1375,9 @@ extension UIImage {
         for sourceImage in sourceImages {
         
         //Resize Image
-        guard let imageOrigin = sourceImage.photo?.image else {return images}
+        guard let imageOrigin = sourceImage.photo?.image else {
+            return images
+        }
         var image = imageOrigin
         if _NEEDRESIZEIMAGE {
             image = resizeImage(imageOrigin)

@@ -49,7 +49,30 @@ class InptCategoryCell: UIView {
     }
     */
     override func awakeFromNib() {
-
+        resultValue1.numberOfLines = 1
+        resultValue1.adjustsFontSizeToFitWidth = true
+        resultValue1.lineBreakMode = .byClipping
+        
+        resultValue2.numberOfLines = 1
+        resultValue2.adjustsFontSizeToFitWidth = true
+        resultValue2.lineBreakMode = .byClipping
+        
+        resultValue3.numberOfLines = 1
+        resultValue3.adjustsFontSizeToFitWidth = true
+        resultValue3.lineBreakMode = .byClipping
+        
+        resultValue4.numberOfLines = 1
+        resultValue4.adjustsFontSizeToFitWidth = true
+        resultValue4.lineBreakMode = .byClipping
+        
+        resultValue5.numberOfLines = 1
+        resultValue5.adjustsFontSizeToFitWidth = true
+        resultValue5.lineBreakMode = .byClipping
+        
+        resultValueTotal.numberOfLines = 1
+        resultValueTotal.adjustsFontSizeToFitWidth = true
+        resultValueTotal.lineBreakMode = .byClipping
+        
         resultValueLabels.append(resultValue1)
         resultValueLabels.append(resultValue2)
         resultValueLabels.append(resultValue3)

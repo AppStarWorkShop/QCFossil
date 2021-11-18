@@ -38,37 +38,37 @@ class ShapePreviewViewInput: UIView {
         }
         
         let shapeView1 = ShapeView(origin: self.parentView.center, shapeType: 1, shapeSize: 105)
-        shapeView1.frame = CGRect(x: 0, y: 20, width: 110, height: 110)
+        shapeView1.frame = CGRect(x: 10, y: 20, width: 110, height: 110)
         shapeView1.isUserInteractionEnabled = false
         self.addSubview(shapeView1)
         
         let shapeView2 = ShapeView(origin: self.parentView.center, shapeType: 2, shapeSize: 105)
-        shapeView2.frame = CGRect(x: 110, y: 20, width: 110, height: 110)
+        shapeView2.frame = CGRect(x: 120, y: 20, width: 110, height: 110)
         shapeView2.isUserInteractionEnabled = false
         self.addSubview(shapeView2)
         
         let shapeView3 = ShapeView(origin: self.parentView.center, shapeType: 3, shapeSize: 105)
-        shapeView3.frame = CGRect(x: 220, y: 20, width: 110, height: 110)
+        shapeView3.frame = CGRect(x: 230, y: 20, width: 110, height: 110)
         shapeView3.isUserInteractionEnabled = false
         self.addSubview(shapeView3)
         
         let shapeView4 = ShapeView(origin: self.parentView.center, shapeType: 0, shapeSize: 105)
-        shapeView4.frame = CGRect(x: 0, y: 140, width: 110, height: 110)
+        shapeView4.frame = CGRect(x: 10, y: 140, width: 110, height: 110)
         shapeView4.isUserInteractionEnabled = false
         self.addSubview(shapeView4)
         
         let shapeView5 = ShapeView(origin: self.parentView.center, shapeType: 6, shapeSize: 105)
-        shapeView5.frame = CGRect(x: 110, y: 140, width: 110, height: 110)
+        shapeView5.frame = CGRect(x: 120, y: 140, width: 110, height: 110)
         shapeView5.isUserInteractionEnabled = false
         self.addSubview(shapeView5)
         
         let shapeView6 = ShapeView(origin: self.parentView.center, shapeType: 9, shapeSize: 105)
-        shapeView6.frame = CGRect(x: 220, y: 140, width: 110, height: 110)
+        shapeView6.frame = CGRect(x: 230, y: 140, width: 110, height: 110)
         shapeView6.isUserInteractionEnabled = false
         self.addSubview(shapeView6)
         
         let shapeView7 = ShapeView(origin: self.parentView.center, shapeType: 10, shapeSize: 105)
-        shapeView7.frame = CGRect(x: 0, y: 260, width: 110, height: 110)
+        shapeView7.frame = CGRect(x: 10, y: 260, width: 110, height: 110)
         shapeView7.isUserInteractionEnabled = false
         self.addSubview(shapeView7)
         /*
