@@ -90,6 +90,11 @@ class InputMode04View: InputModeSCMaster{
         self.updateOptionalInspElmts(inspElmNames)
         self.updateContentView()
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.apyToAllBtn)
+        
+        NSLayoutConstraint.activate([
+            ScrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            ScrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
     }
     
     func updateLocalizedString(){

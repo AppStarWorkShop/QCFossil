@@ -49,7 +49,13 @@ class InputMode02View: InputModeSCMaster {
         if inputCellCount<1 {
             return
         }
-        
+        scrollCellView.backgroundColor = .blue
+//        scrollCellView.frame = CGRect(x: scrollCellView.frame.origin.x, y: scrollCellView.frame.origin.y, width: 744, height: _DEVICE_HEIGHT)
+
+        NSLayoutConstraint.activate([
+            scrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)

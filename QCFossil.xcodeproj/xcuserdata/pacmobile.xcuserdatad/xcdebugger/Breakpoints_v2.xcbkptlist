@@ -151,26 +151,9 @@
             timestampString = "650540840.562469"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "updateContentView()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D1D18C4F-2CC6-467A-9256-21BE140A2A3F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/InputMode04View.swift"
-            timestampString = "650540840.562567"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "didMoveToSuperview()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1222,8 +1205,8 @@
             timestampString = "650540840.564237"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1239,8 +1222,8 @@
             timestampString = "650540840.564272"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1256,8 +1239,8 @@
             timestampString = "650540840.564307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "updateContentView()"
             landmarkType = "7">
          </BreakpointContent>
