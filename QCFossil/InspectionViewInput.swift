@@ -37,13 +37,9 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
     //add actived sub-page here
     var activedPageIds = [Int]()
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    override func draw(_ rect: CGRect) {
+        setupView()
     }
-    */
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
@@ -60,13 +56,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
         }
     }
     
-    override func didMoveToSuperview() {
-        if (self.parentVC == nil) {
-            // a removeFromSuperview situation
-            
-            return
-        }
-        
+    private func setupView() {
         let categoryCount = Cache_Task_On!.inspSections.count
         if categoryCount < 1 {
             self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("No Category Info in DB!"))
@@ -96,6 +86,9 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
             indexPoints.append(indexPoint)
             self.addSubview(indexPoint)
         }
+        
+        updateSectionHeader(currentPage)
+        scrollToPosition(currentPage, animation: false)
     }
     
     func initInspView(_ currentPage:Int=0) {
@@ -128,7 +121,6 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
     
     func initInspViewProcess(_ page:Int=0) {
         let idx = page
-        let deviceWidth = Int(_DEVICE_WIDTH)
         if page < Cache_Task_On!.inspSections.count && !self.activedPageIds.contains(idx) {
         
             let section = Cache_Task_On!.inspSections[idx]
@@ -143,7 +135,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect.init(x: idx*deviceWidth, y: 0, width: deviceWidth, height: Int((inputview.frame.size.height) + 500))
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height + 500)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             case _INPUTMODE02:
@@ -154,7 +146,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect.init(x: idx*deviceWidth, y: 0, width: deviceWidth, height: Int((inputview.frame.size.height) + 500))
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height + 500)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             case _INPUTMODE03:
@@ -165,7 +157,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect.init(x: idx*deviceWidth, y: 0, width: deviceWidth, height: Int((inputview.frame.size.height) + 500))
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height + 500)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             case _INPUTMODE04:
@@ -176,7 +168,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.inspSection = section
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect.init(x: idx*deviceWidth, y: 0, width: deviceWidth, height: Int((inputview.frame.size.height) + 500))
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height + 500)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             default:break

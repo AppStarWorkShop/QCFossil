@@ -43,14 +43,11 @@ class InputMode02View: InputModeSCMaster {
     }
     */
 
-    
     override func awakeFromNib() {
         
         if inputCellCount<1 {
             return
         }
-        scrollCellView.backgroundColor = .blue
-//        scrollCellView.frame = CGRect(x: scrollCellView.frame.origin.x, y: scrollCellView.frame.origin.y, width: 744, height: _DEVICE_HEIGHT)
 
         NSLayoutConstraint.activate([
             scrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
