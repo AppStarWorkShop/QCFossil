@@ -121,7 +121,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         self.view.setButtonCornerRadius(self.forgetPasswordButton)
         self.view.setButtonCornerRadius(self.forgetUserNameButton)
         self.versionCode.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Version")+" \(_VERSION)"
-        
+        _VERSIONCODE = MylocalizedString.sharedLocalizeManager.getLocalizedString("Version")+" \(_VERSION)"
         //self.username.text = "delicate01"
         //self.password.text = "g3271952"
         //self.username.text = "jy01"
@@ -132,15 +132,18 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         _RELEASE = releaseDate as String
         defaults.set(releaseDate, forKey: "release_preference")
         
+        var releaseCode = ""
         #if DEBUG
-            self.databaseUsingCode.text = "UAT " + releaseDate
+            releaseCode = "UAT " + releaseDate
             defaults.set("UAT", forKey: "serverEnv_preference")
             defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")
         #else
-            self.databaseUsingCode.text = "PRD " + releaseDate
+            releaseCode = "PRD " + releaseDate
             defaults.set("PRD", forKey: "serverEnv_preference")
             defaults.set(dataSyncPrdServer, forKey: "webServiceUrl_preference")
         #endif
+        _RELEASECODE = releaseCode
+        self.databaseUsingCode.text = releaseCode
         
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)

@@ -15,6 +15,8 @@ let _DEBUG_MODE = false
 //Version
 var _VERSION = "1.0"
 var _RELEASE = ""
+var _VERSIONCODE = ""
+var _RELEASECODE = ""
 var _NEEDDATAUPDATE = false
 var _NEEDRESIZEIMAGE = true
 

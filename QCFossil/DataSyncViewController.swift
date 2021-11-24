@@ -85,6 +85,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
     @IBOutlet weak var stylePhotoCleanStatus: UILabel!
     @IBOutlet weak var downloadTaskStatusDetailButton: UIButton!
     @IBOutlet weak var uploadTaskStatusDetailButton: UIButton!
+    @IBOutlet weak var releaseCode: UILabel!
+    @IBOutlet weak var versionCode: UILabel!
     
     var subCounter = 1
     var totalDLRecords:Int = 4
@@ -207,6 +209,9 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         self.lastUploadDatetime.text = keyValueDataHelper.getLastUploadDatetimeByUserId(String((Cache_Inspector?.inspectorId)!))
         self.lastUploadTasksCount.text = keyValueDataHelper.getLastUploadTasksCountByUserId(String((Cache_Inspector?.inspectorId)!))
         self.deviceIdLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Device ID:") + " \(UIDevice.current.identifierForVendor!.uuidString)"
+        
+        releaseCode.text = _RELEASECODE
+        versionCode.text = _VERSIONCODE
         
         self.downloadProcessBar.progress = 0.0
         self.uploadProcessBar.progress = 0.0
