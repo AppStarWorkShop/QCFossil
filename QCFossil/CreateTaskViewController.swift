@@ -37,6 +37,8 @@ class CreateTaskViewController: UIViewController, UITableViewDelegate,  UITableV
     var vendorName = ""
     var vendorLocCode = ""
     var tmplName = ""
+    var vendorId:String?
+    var vendorLocationCodeId:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +70,12 @@ class CreateTaskViewController: UIViewController, UITableViewDelegate,  UITableV
         self.createTaskTableview.rowHeight = poCellHeight
         self.createTaskTableview.delegate = self
         self.createTaskTableview.dataSource = self
+        
+//        let qcRemarkValues = taskDataHelper.getQCRemarksOptionList(String(describing: Cache_Task_On?.inspectionResultValueId) ?? "0")
+//        for value in qcRemarkValues {
+//            guard let nameEn = value.valueNameEn, let nameCn = value.valueNameCn else {continue}
+//            self.qcRemarksKeyValue[_ENGLISH ? nameEn : nameCn] = value.valueId
+//        }
     }
     
     func updateLocalizedString(){
@@ -164,10 +172,7 @@ class CreateTaskViewController: UIViewController, UITableViewDelegate,  UITableV
             return
         }
         
-        let vendorDataHelper = VendorDataHelper()
-        let vdrLocId = vendorDataHelper.getVdrLocationIdByCode (self.vdrLocationInput.text!)
-        
-        if vdrLocId < 1 {
+        guard let vdrLocIdString = vendorLocationCodeId, let vdrLocId = Int(vdrLocIdString) else {
             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please chose a Vendor & Vendor Location!"))
             return
         }

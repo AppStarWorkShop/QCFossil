@@ -90,7 +90,7 @@ class InputMode04View: InputModeSCMaster{
         self.updateOptionalInspElmts(inspElmNames)
         self.updateContentView()
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.apyToAllBtn)
-        
+
         NSLayoutConstraint.activate([
             ScrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             ScrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -123,6 +123,20 @@ class InputMode04View: InputModeSCMaster{
     }
     
     func updateContentView() {
+//        if let view = setupView() {
+//            view.translatesAutoresizingMaskIntoConstraints = false
+//            self.ScrollCellView.translatesAutoresizingMaskIntoConstraints = false
+//            self.ScrollCellView.addSubview(view)
+//
+//            NSLayoutConstraint.activate([
+//                view.topAnchor.constraint(equalTo: ScrollCellView.topAnchor),
+//                view.bottomAnchor.constraint(equalTo: ScrollCellView.bottomAnchor),
+//                view.leadingAnchor.constraint(equalTo: ScrollCellView.leadingAnchor),
+//                view.trailingAnchor.constraint(equalTo: ScrollCellView.trailingAnchor),
+//            ])
+//        }
+//        return
+        
         if inputCells.count < 1 {
             return
         }
@@ -146,7 +160,7 @@ class InputMode04View: InputModeSCMaster{
         
         self.addCellButton.frame = CGRect.init(x: 25, y: inputCells.count*cellHeight+10, width: 42, height: 42)
         self.ScrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+500)))
+        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+1000)))
     }
     
     func resizeScrollView(_ size:CGSize) {
@@ -244,5 +258,55 @@ class InputMode04View: InputModeSCMaster{
         }else{
             self.addCellButton.isHidden = false
         }
+    }
+    
+    private func setupView() -> UIView? {
+        if inputCells.count < 1 {
+            return nil
+        }
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
+        view.distribution = .fill
+        view.alignment = .fill
+        view.spacing = 0
+        
+        for index in 0...inputCells.count-1 {
+            let cell = inputCells[index]
+            cell.updateCellIndex(cell,index: index)
+            cell.idxLabel.text = String(cell.cellIdx)
+
+            if index % 2 == 0 {
+                cell.backgroundColor = _TABLECELL_BG_COLOR1
+            }else{
+                cell.backgroundColor = _TABLECELL_BG_COLOR2
+            }
+            
+            if cell.cellPhysicalIdx < inputCells.count {
+                let viewCell = inputCells[cell.cellPhysicalIdx]
+                viewCell.translatesAutoresizingMaskIntoConstraints = false
+                view.addArrangedSubview(viewCell)
+                NSLayoutConstraint.activate([
+                    viewCell.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    viewCell.widthAnchor.constraint(equalTo: view.widthAnchor),
+                    viewCell.heightAnchor.constraint(equalToConstant: 61)
+                ])
+            }
+        }
+        
+        view.addArrangedSubview(addCellButton)
+//        self.addCellButton.frame = CGRect.init(x: 25, y: inputCells.count*cellHeight+10, width: 42, height: 42)
+        
+        contentView.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        ])
+        return contentView
     }
 }

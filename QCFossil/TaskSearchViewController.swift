@@ -799,7 +799,7 @@ class TaskSearchViewController: PopoverMaster, UITableViewDelegate, UITableViewD
             textField.showListData(textField, parent: self.view, handle: handleFun, listData: vdrData as NSArray)
         }else if textField == self.vendorLocationInput{
             var vdrLocData = [String]()
-            var currVendorId = 0
+            var currVendorId = "0"
             
             if self.vendorInput.text != "" {
                 let vendorOnFilter = vendors.filter({ $0.displayName == self.vendorInput.text })
@@ -811,7 +811,7 @@ class TaskSearchViewController: PopoverMaster, UITableViewDelegate, UITableViewD
             }
             
             for vendorLoc in vendorLocs {
-                if vendorLoc.vdrId == currVendorId || currVendorId == 0 {
+                if vendorLoc.vdrId == currVendorId || currVendorId == "0" {
                     vdrLocData.append(vendorLoc.locationCode!)
                 }
             }

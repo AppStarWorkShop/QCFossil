@@ -73,7 +73,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
     var vendorLocCode = ""
     var styleNo = ""
     var showListData = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 13.0, *) {
@@ -460,6 +460,11 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
                 if vendorLocFilter.count > 0 {
                     let vendorLoc = vendorLocFilter[0]
                     self.vendorLocationInput.text = vendorLoc.locationCode
+                    
+                    if let vc = pVC as? CreateTaskViewController {
+                        vc.vendorId = vendorOn.vdrId
+                        vc.vendorLocationCodeId = vendorLoc.locationId
+                    }
                 }
             }
         }else if textField == self.vendorLocationInput {
@@ -472,6 +477,11 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
                 if vendorOnFilter.count > 0 {
                     let vendor = vendorOnFilter[0]
                     self.vendorInput.text = vendor.displayName
+                    
+                    if let vc = pVC as? CreateTaskViewController {
+                        vc.vendorId = vendor.vdrId
+                        vc.vendorLocationCodeId = vendorLocOn.locationId
+                    }
                 }
             }
         }
@@ -533,7 +543,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
             textField.showListData(textField, parent: self.view, handle: handleFun, listData: vdrData as NSArray, width: 269)
         }else if textField == self.vendorLocationInput {
             var vdrLocData = [String]()
-            var currVendorId = 0
+            var currVendorId = "0"
             
             if vendorLocs.count < 1 {
                 initData()
@@ -549,7 +559,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
             }
             
             for vendorLoc in vendorLocs {
-                if vendorLoc.vdrId == currVendorId || currVendorId == 0 {
+                if vendorLoc.vdrId == currVendorId || currVendorId == "0" {
                     vdrLocData.append(vendorLoc.locationCode!)
                 }
             }

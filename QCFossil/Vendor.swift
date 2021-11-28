@@ -10,10 +10,10 @@ import Foundation
 
 class Vendor {
     
-    var dataEnv:Int?
-    var vdrId:Int?
-    var vdrCode:Int?
-    var vdrName:Int?
+    var dataEnv:String?
+    var vdrId:String?
+    var vdrCode:String?
+    var vdrName:String?
     var displayName:String?
     var contactAddr:String?
     var contactPerson:String?
@@ -24,11 +24,11 @@ class Vendor {
     var createDate:String?
     var modifyUser:String?
     var modifyDate:String?
-    var deletedFlag:Int?
+    var deletedFlag:String?
     var deleteUser:String?
     var deleteDate:String?
     
-    init(dataEnv:Int?,vdrId:Int?,vdrCode:Int?,vdrName:Int?,displayName:String?,contactAddr:String?,contactPerson:String?,contactPhone:String?,contactEmail:String?,recStatus:String?,createUser:String?,createDate:String?,modifyUser:String?,modifyDate:String?,deletedFlag:Int?,deleteUser:String?,deleteDate:String?) {
+    init(dataEnv:String?,vdrId:String?,vdrCode:String?,vdrName:String?,displayName:String?,contactAddr:String?,contactPerson:String?,contactPhone:String?,contactEmail:String?,recStatus:String?,createUser:String?,createDate:String?,modifyUser:String?,modifyDate:String?,deletedFlag:String?,deleteUser:String?,deleteDate:String?) {
         
         self.dataEnv = dataEnv
         self.vdrId = vdrId

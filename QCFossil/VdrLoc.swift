@@ -10,9 +10,9 @@ import Foundation
 
 class VdrLoc {
     
-    var dataEnv:Int?
-    var locationId:Int?
-    var vdrId:Int?
+    var dataEnv:String?
+    var locationId:String?
+    var vdrId:String?
     var locationCode:String?
     var locationName:String?
     var recStatus:String?
@@ -20,11 +20,11 @@ class VdrLoc {
     var createDate:String?
     var modifyUser:String?
     var modifyDate:String?
-    var deletedFlag:Int?
+    var deletedFlag:String?
     var deleteUser:String?
     var deleteDate:String?
     
-    init(dataEnv:Int?,locationId:Int?,vdrId:Int?,locationCode:String?,locationName:String?,recStatus:String?,createUser:String?,createDate:String?,modifyUser:String?,modifyDate:String?,deletedFlag:Int?,deleteUser:String?,deleteDate:String?) {
+    init(dataEnv:String?,locationId:String?,vdrId:String?,locationCode:String?,locationName:String?,recStatus:String?,createUser:String?,createDate:String?,modifyUser:String?,modifyDate:String?,deletedFlag:String?,deleteUser:String?,deleteDate:String?) {
         
         self.dataEnv = dataEnv
         self.locationId = locationId

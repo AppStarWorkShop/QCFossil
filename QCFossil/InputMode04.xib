@@ -7,9 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputMode04View" customModule="QC211027P" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputMode04View" customModule="QC211124P" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode04View" customModule="QC211027P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode04View" customModule="QC211124P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -28,7 +28,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnJ-2h-UbQ">
-                    <rect key="frame" x="0.0" y="115" width="820" height="1180"/>
+                    <rect key="frame" x="0.0" y="115" width="820" height="1065"/>
                     <gestureRecognizers/>
                 </scrollView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sht-N8-cHV">
@@ -71,9 +71,9 @@
                 <constraint firstItem="cnJ-2h-UbQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="115" id="G8D-F1-V0n"/>
                 <constraint firstItem="sht-N8-cHV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="114" id="KcR-sW-8pn"/>
                 <constraint firstItem="cnJ-2h-UbQ" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="LXk-KO-gwN"/>
-                <constraint firstItem="cnJ-2h-UbQ" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="TfZ-TO-YIA"/>
                 <constraint firstItem="sht-N8-cHV" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="eVo-QR-7Ii"/>
                 <constraint firstItem="cnJ-2h-UbQ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="qQF-i4-csQ"/>
+                <constraint firstAttribute="bottom" secondItem="cnJ-2h-UbQ" secondAttribute="bottom" id="tVA-or-wMz"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">

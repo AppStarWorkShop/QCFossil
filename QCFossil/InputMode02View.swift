@@ -154,7 +154,7 @@ class InputMode02View: InputModeSCMaster {
         
         self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
         self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+500)))
+        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+600)))
     }
     
     func resizeScrollView(_ size:CGSize) {

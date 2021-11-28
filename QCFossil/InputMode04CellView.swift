@@ -100,24 +100,6 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         (self.parentView as! InputMode04View).updateOptionalInspElmts(usedInspItemNames)
     }
     
-    /*
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        
-        if textField == self.inspectionAreaLabel || textField == self.inspectionItemLabel {
-            /*print("input: \(textField.text!) input2: \(string)")
-            
-            if string == "" && textField.text?.characters.count<2 {
-                NSNotificationCenter.defaultCenter().postNotificationName("DropdownDataUpdate", object: nil, userInfo: ["ListData":""])
-            }else {
-                NSNotificationCenter.defaultCenter().postNotificationName("DropdownDataUpdate", object: nil, userInfo: ["ListData":textField.text!+string])
-            }*/
-            
-            return false
-        }
-        
-        return true
-    }*/
-    
     func dropdownHandleFunc(_ textField:UITextField) {
         if textField == subResultInput {
             

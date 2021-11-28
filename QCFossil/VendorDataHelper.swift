@@ -215,10 +215,10 @@ class VendorDataHelper:DataHelperMaster{
             
             while rs.next() {
                 
-                let dataEnv = Int(rs.int(forColumn: "data_env"))
-                let vdrId = Int(rs.int(forColumn: "vdr_id"))
-                let vdrCode = Int(rs.int(forColumn: "vdr_code"))
-                let vdrName = Int(rs.int(forColumn: "vdr_name"))
+                let dataEnv = rs.string(forColumn: "data_env")
+                let vdrId = rs.string(forColumn: "vdr_id")
+                let vdrCode = rs.string(forColumn: "vdr_code")
+                let vdrName = rs.string(forColumn: "vdr_name")
                 let displayName = rs.string(forColumn: "display_name")
                 let contactAddr = rs.string(forColumn: "contact_addr")
                 let contactPerson = rs.string(forColumn: "contact_person")
@@ -229,7 +229,7 @@ class VendorDataHelper:DataHelperMaster{
                 let createDate = rs.string(forColumn: "create_date")
                 let modifyUser = rs.string(forColumn: "modify_user")
                 let modifyDate = rs.string(forColumn: "modify_date")
-                let deletedFlag = Int(rs.int(forColumn: "deleted_flag"))
+                let deletedFlag = rs.string(forColumn: "deleted_flag")
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
@@ -257,9 +257,9 @@ class VendorDataHelper:DataHelperMaster{
             
             while rs.next() {
                 
-                let dataEnv = Int(rs.int(forColumn: "data_env"))
-                let locationId = Int(rs.int(forColumn: "location_id"))
-                let vdrId = Int(rs.int(forColumn: "vdr_id"))
+                let dataEnv = rs.string(forColumn: "data_env")
+                let locationId = rs.string(forColumn: "location_id")
+                let vdrId = rs.string(forColumn: "vdr_id")
                 let locationCode = rs.string(forColumn: "location_code")
                 let locationName = rs.string(forColumn: "location_name")
                 let recStatus = rs.string(forColumn: "rec_status")
@@ -267,7 +267,7 @@ class VendorDataHelper:DataHelperMaster{
                 let createDate = rs.string(forColumn: "create_date")
                 let modifyUser = rs.string(forColumn: "modify_user")
                 let modifyDate = rs.string(forColumn: "modify_date")
-                let deletedFlag = Int(rs.int(forColumn: "deleted_flag"))
+                let deletedFlag = rs.string(forColumn: "deleted_flag")
                 
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
@@ -296,10 +296,10 @@ class VendorDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    let dataEnv = Int(rs.int(forColumn: "data_env"))
-                    let vdrId = Int(rs.int(forColumn: "vdr_id"))
-                    let vdrCode = Int(rs.int(forColumn: "vdr_code"))
-                    let vdrName = Int(rs.int(forColumn: "vdr_name"))
+                    let dataEnv = rs.string(forColumn: "data_env")
+                    let vdrId = rs.string(forColumn: "vdr_id")
+                    let vdrCode = rs.string(forColumn: "vdr_code")
+                    let vdrName = rs.string(forColumn: "vdr_name")
                     let displayName = rs.string(forColumn: "display_name")
                     let contactAddr = rs.string(forColumn: "contact_addr")
                     let contactPerson = rs.string(forColumn: "contact_person")
@@ -310,7 +310,7 @@ class VendorDataHelper:DataHelperMaster{
                     let createDate = rs.string(forColumn: "create_date")
                     let modifyUser = rs.string(forColumn: "modify_user")
                     let modifyDate = rs.string(forColumn: "modify_date")
-                    let deletedFlag = Int(rs.int(forColumn: "deleted_flag"))
+                    let deletedFlag = rs.string(forColumn: "deleted_flag")
                     let deleteUser = rs.string(forColumn: "delete_user")
                     let deleteDate = rs.string(forColumn: "delete_date")
                     
@@ -337,9 +337,9 @@ class VendorDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    let dataEnv = Int(rs.int(forColumn: "data_env"))
-                    let locationId = Int(rs.int(forColumn: "location_id"))
-                    let vdrId = Int(rs.int(forColumn: "vdr_id"))
+                    let dataEnv = rs.string(forColumn: "data_env")
+                    let locationId = rs.string(forColumn: "location_id")
+                    let vdrId = rs.string(forColumn: "vdr_id")
                     let locationCode = rs.string(forColumn: "location_code")
                     let locationName = rs.string(forColumn: "location_name")
                     let recStatus = rs.string(forColumn: "rec_status")
@@ -347,7 +347,7 @@ class VendorDataHelper:DataHelperMaster{
                     let createDate = rs.string(forColumn: "create_date")
                     let modifyUser = rs.string(forColumn: "modify_user")
                     let modifyDate = rs.string(forColumn: "modify_date")
-                    let deletedFlag = Int(rs.int(forColumn: "deleted_flag"))
+                    let deletedFlag = rs.string(forColumn: "deleted_flag")
                     
                     let deleteUser = rs.string(forColumn: "delete_user")
                     let deleteDate = rs.string(forColumn: "delete_date")
@@ -377,10 +377,10 @@ class VendorDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    let dataEnv = Int(rs.int(forColumn: "data_env"))
-                    let vdrId = Int(rs.int(forColumn: "vdr_id"))
-                    let vdrCode = Int(rs.int(forColumn: "vdr_code"))
-                    let vdrName = Int(rs.int(forColumn: "vdr_name"))
+                    let dataEnv = rs.string(forColumn: "data_env")
+                    let vdrId = rs.string(forColumn: "vdr_id")
+                    let vdrCode = rs.string(forColumn: "vdr_code")
+                    let vdrName = rs.string(forColumn: "vdr_name")
                     let displayName = rs.string(forColumn: "display_name")
                     let contactAddr = rs.string(forColumn: "contact_addr")
                     let contactPerson = rs.string(forColumn: "contact_person")
@@ -391,7 +391,7 @@ class VendorDataHelper:DataHelperMaster{
                     let createDate = rs.string(forColumn: "create_date")
                     let modifyUser = rs.string(forColumn: "modify_user")
                     let modifyDate = rs.string(forColumn: "modify_date")
-                    let deletedFlag = Int(rs.int(forColumn: "deleted_flag"))
+                    let deletedFlag = rs.string(forColumn: "deleted_flag")
                     let deleteUser = rs.string(forColumn: "delete_user")
                     let deleteDate = rs.string(forColumn: "delete_date")
                     
@@ -419,9 +419,9 @@ class VendorDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    let dataEnv = Int(rs.int(forColumn: "data_env"))
-                    let locationId = Int(rs.int(forColumn: "location_id"))
-                    let vdrId = Int(rs.int(forColumn: "vdr_id"))
+                    let dataEnv = rs.string(forColumn: "data_env")
+                    let locationId = rs.string(forColumn: "location_id")
+                    let vdrId = rs.string(forColumn: "vdr_id")
                     let locationCode = rs.string(forColumn: "location_code")
                     let locationName = rs.string(forColumn: "location_name")
                     let recStatus = rs.string(forColumn: "rec_status")
@@ -429,7 +429,7 @@ class VendorDataHelper:DataHelperMaster{
                     let createDate = rs.string(forColumn: "create_date")
                     let modifyUser = rs.string(forColumn: "modify_user")
                     let modifyDate = rs.string(forColumn: "modify_date")
-                    let deletedFlag = Int(rs.int(forColumn: "deleted_flag"))
+                    let deletedFlag = rs.string(forColumn: "deleted_flag")
                     
                     let deleteUser = rs.string(forColumn: "delete_user")
                     let deleteDate = rs.string(forColumn: "delete_date")
@@ -463,6 +463,28 @@ class VendorDataHelper:DataHelperMaster{
                     
                     vdrs.append(vdr!)
                     
+                }
+            }
+            
+            db.close()
+        }
+        return vdrs
+    }
+    
+    func getAllVendorKeyValues(_ inputValue:String) ->[String: Int] {
+        let sql = "SELECT DISTINCT vm.* FROM vdr_mstr vm WHERE EXISTS (SELECT 1 FROM fgpo_line_item fli WHERE fli.ref_vdr_id = vm.vdr_id) AND vm.display_name LIKE ? ORDER BY display_name ASC"
+        
+        var vdrs = [String: Int]()
+        
+        if db.open() {
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn:["%"+inputValue+"%"]) {
+                
+                while rs.next() {
+                    
+                    if let vdr = rs.string(forColumn: "display_name"), let vdrId = Int(rs.string(forColumn: "vdr_id")) {
+                        vdrs[vdr] = vdrId
+                    }
                 }
             }
             
