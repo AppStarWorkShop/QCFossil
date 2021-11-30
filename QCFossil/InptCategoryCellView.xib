@@ -9,14 +9,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InptCategoryCell" customModule="QC211027P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InptCategoryCell" customModule="QC211129P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="1536" height="232"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7j-dZ-aDO">
                     <rect key="frame" x="16" y="5" width="1504" height="30"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blc-k9-6Eb" customClass="CustomButton" customModule="QC211027P" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blc-k9-6Eb" customClass="CustomButton" customModule="QC211129P" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="215" height="30"/>
                             <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
@@ -135,7 +135,7 @@
                                 </label>
                             </subviews>
                         </stackView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ResultTotal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndY-om-fAe">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndY-om-fAe">
                             <rect key="frame" x="1289" y="0.0" width="215" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -190,6 +190,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="inptCatButton" destination="Blc-k9-6Eb" id="mYO-fH-RLI"/>
+                <outlet property="result4Divider" destination="TC7-sz-t7u" id="hpm-Oy-gEo"/>
                 <outlet property="resultValue1" destination="Swa-tb-vdK" id="VaN-fi-Zon"/>
                 <outlet property="resultValue2" destination="adV-3T-1mV" id="4M9-Oa-4GO"/>
                 <outlet property="resultValue3" destination="ONK-oF-BVT" id="cIl-mm-FQq"/>

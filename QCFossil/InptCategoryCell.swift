@@ -17,6 +17,7 @@ class InptCategoryCell: UIView {
     @IBOutlet weak var resultValue5: UILabel!
     @IBOutlet weak var resultValueTotal: UILabel!
     
+    @IBOutlet weak var result4Divider: UILabel!
     @IBOutlet weak var inptCatButton: CustomButton!
     weak var parentView:TaskDetailViewInput!
     var resultSetValueFrames = [ResultValueFrame]()
@@ -79,6 +80,12 @@ class InptCategoryCell: UIView {
         resultValueLabels.append(resultValue4)
         resultValueLabels.append(resultValue5)
         resultValueLabels.append(resultValueTotal)
+        
+        if TypeCode.LEATHER.rawValue == Cache_Inspector?.typeCode || TypeCode.PACKAGING.rawValue == Cache_Inspector?.typeCode {
+            resultValueTotal.isHidden = true
+            resultValue5.superview?.isHidden = true
+            result4Divider.isHidden = true
+        }
     }
     
     override func didMoveToSuperview() {
