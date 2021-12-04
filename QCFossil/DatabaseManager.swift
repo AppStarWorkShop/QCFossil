@@ -29,6 +29,7 @@ class DatabaseManager {
         
         let foderPath = _TASKSPHYSICALPATHPREFIX + inspectorName
         let databasePath = dbDir + "/\(inspectorName)\(database)"
+        let databaseJourneyPath = "\(databasePath)-journal"
         
         if !filemgr.fileExists(atPath: databasePath) {
             print("Database File No Exist! Copy From Code")
@@ -41,6 +42,13 @@ class DatabaseManager {
                 try filemgr.copyItem(atPath: srcPath!, toPath: databasePath)
             } catch let error as NSError {
                 print("initDbObj: "+error.localizedDescription)
+            }
+        } else if filemgr.fileExists(atPath: databaseJourneyPath) {
+            do {
+                // remove dummy database
+                try filemgr.removeItem(atPath: databaseJourneyPath)
+            } catch let error as NSError {
+                print("initDbObj-removeItem: "+error.localizedDescription)
             }
         }
         
