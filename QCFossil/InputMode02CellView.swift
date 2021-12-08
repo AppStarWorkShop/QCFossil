@@ -53,6 +53,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
     @IBOutlet weak var defectZoneListIcon: UIButton!
     @IBOutlet weak var defectPositionPointIcon: UIButton!
     @IBOutlet weak var errorMessageLabel: UILabel!
+    @IBOutlet weak var showDefectPositionPointsButton: UIButton!
     
     var myDefectPositPoints = [PositPointObj]()
     var zoneValues:[DropdownValue]?
@@ -74,6 +75,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         self.defectZoneInput.delegate = self
         
         updateLocalizedString()
+
     }
     
     override func didMoveToSuperview() {
@@ -434,4 +436,22 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         self.parentView.clearDropdownviewForSubviews(self.parentView)
     }
     
+    @IBAction func showDefectPositionPoints(_ sender: UIButton) {
+        let popoverContent = PopoverViewController()
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
+        popoverContent.dataType = _POPOVERNOTITLE
+        popoverContent.selectedValue = self.cellDPPInput.text ?? ""
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
+        
+        let popover = nav.popoverPresentationController
+        popover!.delegate = sender.parentVC as! PopoverMaster
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
+        
+        sender.parentVC!.present(nav, animated: true, completion: nil)
+    }
 }

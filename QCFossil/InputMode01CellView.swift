@@ -51,10 +51,11 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     @IBOutlet weak var inptDetailItemList: UIButton!
     @IBOutlet weak var inptDetailItemsListBtn: UIButton!
     @IBOutlet weak var errorMessageLabel: UILabel!
-    
+    @IBOutlet weak var showInspectItemDetailButton: UIButton!
     
     var selectValues = [String]()
     var inspectItemKeyValues = [String:Int]()
+    var isTruncated: Bool = false
     //weak var parentView = InputMode01View()
     
     /*
@@ -111,6 +112,10 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         }
         
         fetchDetailSelectedValues()
+        
+        if isTruncated {
+            self.showInspectItemDetailButton.isHidden = false
+        }
     }
     
     func fetchDetailSelectedValues() {
@@ -315,11 +320,10 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             
             if self.ifExistingSubviewByViewTag(self.parentView, tag: _TAG5) {
                 clearDropdownviewForSubviews(self.parentView!)
-            }else{
+            } else if listData.count > 0 {
                 
                 textField.showListData(textField, parent: (self.parentView as! InputMode01View).scrollCellView, handle: handleFun, listData: self.sortStringArrayByName(listData) as NSArray, width: self.inptItemInput.frame.size.width*1.2, height:_DROPDOWNLISTHEIGHT, tag: _TAG5)
             }
-            
 
             return false
         }
@@ -357,6 +361,25 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             })
         })
         
+    }
+    
+    @IBAction func showInspectItemDetail(_ sender: UIButton) {
+        let popoverContent = PopoverViewController()
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
+        popoverContent.dataType = _POPOVERNOTITLE
+        popoverContent.selectedValue = self.inptItemInput.text ?? ""
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
+        
+        let popover = nav.popoverPresentationController
+        popover!.delegate = sender.parentVC as! PopoverMaster
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
+        
+        sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     
 }

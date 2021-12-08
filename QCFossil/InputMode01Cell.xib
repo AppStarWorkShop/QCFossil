@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01CellView" customModule="QC211114P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01CellView" customModule="QC211207P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="160"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -200,14 +200,24 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Est-uY-axK">
+                    <rect key="frame" x="198" y="8" width="125" height="21"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="+"/>
+                    <connections>
+                        <action selector="showInspectItemDetail:" destination="iN0-l3-epB" eventType="touchUpInside" id="iua-kc-bme"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="wp8-o5-M5x" secondAttribute="trailing" constant="16" id="Fd6-fy-JNh"/>
+                <constraint firstItem="IOK-7X-0R6" firstAttribute="top" secondItem="Est-uY-axK" secondAttribute="bottom" constant="1" id="L2x-Fa-RWh"/>
                 <constraint firstItem="TaN-SO-RTb" firstAttribute="leading" secondItem="DhX-Fr-RMA" secondAttribute="leading" id="cDh-aa-xES"/>
                 <constraint firstItem="wp8-o5-M5x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="gqI-6r-5dP"/>
                 <constraint firstItem="wp8-o5-M5x" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="jXD-dZ-2Yq"/>
                 <constraint firstAttribute="trailing" secondItem="o3D-a8-yQP" secondAttribute="trailing" constant="16" id="kqL-in-kiL"/>
+                <constraint firstItem="Est-uY-axK" firstAttribute="trailing" secondItem="IOK-7X-0R6" secondAttribute="trailing" id="l5M-ab-qC6"/>
                 <constraint firstItem="DhX-Fr-RMA" firstAttribute="top" secondItem="TaN-SO-RTb" secondAttribute="bottom" constant="6.5" id="pHw-6e-mXq"/>
                 <constraint firstItem="o3D-a8-yQP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="110" id="u5c-G7-lvG"/>
                 <constraint firstItem="o3D-a8-yQP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="uvs-Zm-Ypn"/>
@@ -231,9 +241,10 @@
                 <outlet property="inptItemInput" destination="IOK-7X-0R6" id="jcH-bn-daC"/>
                 <outlet property="inptItemLabel" destination="QcU-T4-cxM" id="ftB-ua-4hy"/>
                 <outlet property="photoAddedIcon" destination="32x-mB-UYV" id="buD-BW-de4"/>
+                <outlet property="showInspectItemDetailButton" destination="Est-uY-axK" id="EKF-Qh-6jC"/>
                 <outlet property="takePhotoIcon" destination="jeH-lm-jm4" id="gnf-jf-V6u"/>
             </connections>
-            <point key="canvasLocation" x="250" y="272"/>
+            <point key="canvasLocation" x="197.65625" y="294.7265625"/>
         </view>
     </objects>
     <resources>

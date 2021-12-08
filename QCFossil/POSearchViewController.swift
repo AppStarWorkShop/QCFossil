@@ -73,7 +73,9 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
     var vendorLocCode = ""
     var styleNo = ""
     var showListData = true
-
+    var vendorId:String?
+    var vendorLocationCodeId:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 13.0, *) {
@@ -359,6 +361,8 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
             let destVC = segue.destination as! CreateTaskViewController
             destVC.poItems = poSelectedItems
             destVC.pVC = self
+            destVC.vendorId = vendorId
+            destVC.vendorLocationCodeId = vendorLocationCodeId
             
             if poSelectedItems.count>0 {
                 let poSelectedItem = poSelectedItems[0]
@@ -464,6 +468,9 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
                     if let vc = pVC as? CreateTaskViewController {
                         vc.vendorId = vendorOn.vdrId
                         vc.vendorLocationCodeId = vendorLoc.locationId
+                    } else {
+                        vendorId = vendorOn.vdrId
+                        vendorLocationCodeId = vendorLoc.locationId
                     }
                 }
             }
@@ -481,6 +488,9 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
                     if let vc = pVC as? CreateTaskViewController {
                         vc.vendorId = vendor.vdrId
                         vc.vendorLocationCodeId = vendorLocOn.locationId
+                    } else {
+                        vendorId = vendor.vdrId
+                        vendorLocationCodeId = vendorLocOn.locationId
                     }
                 }
             }
@@ -489,8 +499,6 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.view.clearDropdownviewForSubviews(self.view)
-        
-        //self.view.alertView("showListData")
         
         if !showListData {
             showListData = true
