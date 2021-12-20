@@ -7,9 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputMode04View" customModule="QC211124P" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputMode04View" customModule="QC211209P" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode04View" customModule="QC211124P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode04View" customModule="QC211209P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -21,7 +21,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTc-Pi-Hk7">
-                    <rect key="frame" x="506" y="84" width="91" height="21"/>
+                    <rect key="frame" x="619" y="84" width="201" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -41,8 +41,15 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5G5-20-mbh">
+                    <rect key="frame" x="0.0" y="84" width="35" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inspection Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60Y-Wf-4Vw">
-                    <rect key="frame" x="278" y="84" width="220" height="21"/>
+                    <rect key="frame" x="300" y="84" width="311" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -53,13 +60,6 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5G5-20-mbh">
-                    <rect key="frame" x="0.0" y="84" width="35" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -81,9 +81,9 @@
                     <exclude reference="HTc-Pi-Hk7"/>
                     <exclude reference="cnJ-2h-UbQ"/>
                     <exclude reference="sht-N8-cHV"/>
+                    <exclude reference="5G5-20-mbh"/>
                     <exclude reference="60Y-Wf-4Vw"/>
                     <exclude reference="1Ps-Fa-3uP"/>
-                    <exclude reference="5G5-20-mbh"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=regular">
@@ -92,9 +92,9 @@
                     <include reference="HTc-Pi-Hk7"/>
                     <include reference="cnJ-2h-UbQ"/>
                     <include reference="sht-N8-cHV"/>
+                    <include reference="5G5-20-mbh"/>
                     <include reference="60Y-Wf-4Vw"/>
                     <exclude reference="1Ps-Fa-3uP"/>
-                    <include reference="5G5-20-mbh"/>
                 </mask>
             </variation>
             <connections>
@@ -105,7 +105,7 @@
                 <outlet property="inspItemLabel" destination="60Y-Wf-4Vw" id="h2o-B1-occ"/>
                 <outlet property="resultLabel" destination="HTc-Pi-Hk7" id="u9v-Wq-f5a"/>
             </connections>
-            <point key="canvasLocation" x="612" y="4"/>
+            <point key="canvasLocation" x="611.70731707317077" y="3.5593220338983054"/>
         </view>
         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XRQ-a8-V1E" userLabel="AddCellButton">
             <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>

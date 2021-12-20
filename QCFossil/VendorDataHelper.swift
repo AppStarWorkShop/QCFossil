@@ -10,9 +10,9 @@ import Foundation
 
 class VendorDataHelper:DataHelperMaster{
     
-    func getVdrNameByLocationId(_ locationId:Int) ->String {
+    func getVdrNameByLocationId(_ locationId:Int) -> String? {
         let sql = "SELECT display_name FROM vdr_mstr WHERE vdr_id = ?"
-        var vdrName:String = "null"
+        var vdrName:String? = "null"
         let vdrId = getVdrIdByLocationId(locationId)
         
         if db.open() {
@@ -30,9 +30,9 @@ class VendorDataHelper:DataHelperMaster{
         return vdrName
     }
     
-    func getVdrLocationById(_ locationId:Int) ->String {
+    func getVdrLocationById(_ locationId:Int) -> String? {
         let sql = "SELECT location_name FROM vdr_location_mstr WHERE location_id = ?"
-        var vdrLocation:String = "null"
+        var vdrLocation:String? = "null"
         
         if db.open() {
             
@@ -49,9 +49,9 @@ class VendorDataHelper:DataHelperMaster{
         return vdrLocation
     }
     
-    func getVdrLocationCodeById(_ locationId:Int) ->String {
+    func getVdrLocationCodeById(_ locationId:Int) -> String? {
         let sql = "SELECT location_code FROM vdr_location_mstr WHERE location_id = ?"
-        var vdrLocationCode:String = ""
+        var vdrLocationCode:String? = ""
         
         if db.open() {
             
@@ -147,7 +147,7 @@ class VendorDataHelper:DataHelperMaster{
     
     func getBrandNameByLocationId(_ locationId:Int) ->String {
         let sql = "SELECT brand_name FROM brand_mstr WHERE brand_id = ?"
-        var brandName:String = ""
+        var brandName:String? = ""
         let brandId = getBrandIdByLocationId(locationId)
         
         if db.open() {
@@ -162,7 +162,7 @@ class VendorDataHelper:DataHelperMaster{
             db.close()
         }
         
-        return brandName
+        return brandName ?? ""
     }
     
     func getVendorNameByvdrCode(_ vdrCode:Int) ->String {
@@ -174,7 +174,7 @@ class VendorDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [vdrCode]) {
 
                 if rs.next() {
-                    vendorName = rs.string(forColumn: "vdr_code")
+                    vendorName = rs.string(forColumn: "vdr_code") ?? ""
                 }
             }
             
@@ -193,7 +193,7 @@ class VendorDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [vdrId]) {
             
                 if rs.next() {
-                    vendorLocation = rs.string(forColumn: "vdr_id")
+                    vendorLocation = rs.string(forColumn: "vdr_id") ?? ""
                 }
             }
             
@@ -211,7 +211,7 @@ class VendorDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
             
             while rs.next() {
                 
@@ -253,7 +253,7 @@ class VendorDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
             
             while rs.next() {
                 
@@ -292,7 +292,7 @@ class VendorDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -333,7 +333,7 @@ class VendorDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -373,7 +373,7 @@ class VendorDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -415,7 +415,7 @@ class VendorDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -482,7 +482,7 @@ class VendorDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    if let vdr = rs.string(forColumn: "display_name"), let vdrId = Int(rs.string(forColumn: "vdr_id")) {
+                    if let vdr = rs.string(forColumn: "display_name"), let vdrId = Int(rs.string(forColumn: "vdr_id") ?? "0") {
                         vdrs[vdr] = vdrId
                     }
                 }
@@ -506,9 +506,9 @@ class VendorDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    let vdrLoc = rs.string(forColumn: "location_code")
+                    let vdrLoc = rs.string(forColumn: "location_code") ?? ""
                     
-                    vdrLocs.append(vdrLoc!)
+                    vdrLocs.append(vdrLoc)
                     
                 }
             }

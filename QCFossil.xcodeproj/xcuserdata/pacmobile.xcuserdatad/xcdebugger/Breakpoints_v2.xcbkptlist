@@ -460,7 +460,7 @@
             startingLineNumber = "239"
             endingLineNumber = "239"
             landmarkName = "getAllPoItems()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -477,7 +477,7 @@
             startingLineNumber = "227"
             endingLineNumber = "227"
             landmarkName = "getAllPoItems()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -494,7 +494,7 @@
             startingLineNumber = "338"
             endingLineNumber = "338"
             landmarkName = "getAllPoItems()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -630,7 +630,7 @@
             startingLineNumber = "91"
             endingLineNumber = "91"
             landmarkName = "getPoByTaskId(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -664,7 +664,7 @@
             startingLineNumber = "39"
             endingLineNumber = "39"
             landmarkName = "getLastLoginDatetimeByUserId(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -681,7 +681,7 @@
             startingLineNumber = "55"
             endingLineNumber = "55"
             landmarkName = "updateLastDownloadDatetime(_:datetime:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -698,7 +698,7 @@
             startingLineNumber = "50"
             endingLineNumber = "50"
             landmarkName = "updateLastDownloadDatetime(_:datetime:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1442,54 +1442,6 @@
             startingLineNumber = "360"
             endingLineNumber = "360"
             landmarkName = "restoreDataOnClick(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E0378544-EE34-40E9-B1BD-31880A93C0E2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/TaskDetailViewInput.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "564"
-            endingLineNumber = "564"
-            landmarkName = "dropdownHandleFunc(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "61E66C15-64AA-44A1-A01C-DA638F47986A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/InputMode01CellView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "dropdownHandleFunc(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8BC61831-CCF8-4200-BB67-473C0D3038B3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/CustomExtensionObjects.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1682"
-            endingLineNumber = "1682"
-            landmarkName = "showListData(_:parent:handle:listData:width:height:allowMulpSel:tag:allowManuallyInput:keyValues:selectedValues:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

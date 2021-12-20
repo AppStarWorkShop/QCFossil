@@ -450,7 +450,7 @@
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
 		9C0848861C61E08500CAAD88 /* POCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POCellView.xib; sourceTree = "<group>"; };
 		9C0848881C61E0FA00CAAD88 /* POCellViewInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POCellViewInput.swift; sourceTree = "<group>"; };
-		9C0C36CB1C1E6F7800CF48ED /* QC211208P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211208P.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0C36CB1C1E6F7800CF48ED /* QC211215P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211215P.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0C36D01C1E6F7800CF48ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C0C36D31C1E6F7800CF48ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -659,7 +659,7 @@
 		BDCF870E1C576D0F000B0C38 /* PoDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoDataHelper.swift; sourceTree = "<group>"; };
 		BDCF87101C57886D000B0C38 /* InspSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSection.swift; sourceTree = "<group>"; };
 		BDCFCCE01DB4835D00414027 /* InputModeDFMaster2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeDFMaster2.swift; sourceTree = "<group>"; };
-		BDD1A3472123472B00AE391E /* QC211208U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211208U.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDD1A3472123472B00AE391E /* QC211215U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC211215U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD2E0C11C45048C00CB0C40 /* TaskTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTypeViewController.swift; sourceTree = "<group>"; };
 		BDD51C4E1C3E442000A6E656 /* InputMode04DefectCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04DefectCellView.swift; sourceTree = "<group>"; };
 		BDD51C501C3E443C00A6E656 /* InputMode04DefectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04DefectCell.xib; sourceTree = "<group>"; };
@@ -744,10 +744,10 @@
 		9C0C36CC1C1E6F7800CF48ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0C36CB1C1E6F7800CF48ED /* QC211208P.app */,
+				9C0C36CB1C1E6F7800CF48ED /* QC211215P.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
-				BDD1A3472123472B00AE391E /* QC211208U.app */,
+				BDD1A3472123472B00AE391E /* QC211215U.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1271,7 +1271,7 @@
 			);
 			name = "QCFossil PRD";
 			productName = QCFossil;
-			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC211208P.app */;
+			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC211215P.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9C0C36DE1C1E6F7800CF48ED /* QCFossilTests */ = {
@@ -1327,7 +1327,7 @@
 			);
 			name = "QCFossil UAT";
 			productName = QCFossil;
-			productReference = BDD1A3472123472B00AE391E /* QC211208U.app */;
+			productReference = BDD1A3472123472B00AE391E /* QC211215U.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1993,7 +1993,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
-				PRODUCT_NAME = QC211208P;
+				PRODUCT_NAME = QC211215P;
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC PRD Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2024,7 +2024,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp;
-				PRODUCT_NAME = QC211208P;
+				PRODUCT_NAME = QC211215P;
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC PRD Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2126,9 +2126,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.16;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
-				PRODUCT_NAME = QC211208U;
+				PRODUCT_NAME = QC211215U;
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC TEST Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";
@@ -2158,9 +2159,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.16;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.testapp;
-				PRODUCT_NAME = QC211208U;
+				PRODUCT_NAME = QC211215U;
 				PROVISIONING_PROFILE = "945aaf40-fb03-4628-87a5-aa9e6479d819";
 				PROVISIONING_PROFILE_SPECIFIER = "Fossil QC TEST Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "QCFossil/QCFossil-Bridging-Header.h";

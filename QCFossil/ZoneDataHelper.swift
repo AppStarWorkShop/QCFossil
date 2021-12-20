@@ -34,9 +34,9 @@ class ZoneDataHelper:DataHelperMaster {
         return zoneValues
     }
     
-    func getZoneValueNameById(_ Id:Int) ->String {
+    func getZoneValueNameById(_ Id:Int) -> String {
         let sql = "SELECT value_name_en, value_name_cn FROM zone_value_mstr WHERE value_id = \(Id)"
-        var zoneValueName = ""
+        var zoneValueName: String?
         
         if db.open() {
             
@@ -50,7 +50,7 @@ class ZoneDataHelper:DataHelperMaster {
             db.close()
         }
         
-        return zoneValueName
+        return zoneValueName ?? ""
     }
     
     func getDefectValuesByElementId(_ Id:Int) ->[DropdownValue] {
@@ -101,9 +101,9 @@ class ZoneDataHelper:DataHelperMaster {
         return values
     }
     
-    func getDefectDescValueNameById(_ Id:Int) ->String {
+    func getDefectDescValueNameById(_ Id:Int) -> String {
         let sql = "SELECT value_name_en, value_name_cn FROM defect_value_mstr WHERE value_id = \(Id)"
-        var valueName = ""
+        var valueName: String?
         
         if db.open() {
             
@@ -117,12 +117,12 @@ class ZoneDataHelper:DataHelperMaster {
             db.close()
         }
         
-        return valueName
+        return valueName ?? ""
     }
     
-    func getCaseValueNameById(_ Id:Int) ->String {
+    func getCaseValueNameById(_ Id:Int) -> String {
         let sql = "SELECT value_name_en, value_name_cn FROM case_value_mstr WHERE value_id = \(Id)"
-        var valueName = ""
+        var valueName: String?
         
         if db.open() {
             
@@ -136,6 +136,6 @@ class ZoneDataHelper:DataHelperMaster {
             db.close()
         }
         
-        return valueName
+        return valueName ?? ""
     }
 }

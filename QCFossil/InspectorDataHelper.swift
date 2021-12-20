@@ -183,7 +183,7 @@ class InspectorDataHelper:DataHelperMaster {
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     

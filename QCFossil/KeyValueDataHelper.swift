@@ -36,7 +36,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["LastLoginDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.string(forColumn: "value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -70,7 +70,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["LastDownloadDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.string(forColumn: "value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -104,7 +104,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["LastUploadDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.string(forColumn: "value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -138,7 +138,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["LastBackupDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.string(forColumn: "value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -172,7 +172,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["LastRestoreDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.string(forColumn: "value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -206,7 +206,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["LastUploadTasksCount-"+userId]) {
                 if rs.next() {
-                    datetime = rs.string(forColumn: "value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -240,7 +240,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["InspectorSignImage-"+userId]) {
                 if rs.next() {
-                    inspectorSignImage = rs.string(forColumn: "value")
+                    inspectorSignImage = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -258,7 +258,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["TaskRunningNo-"+userId]) {
                 if rs.next() {
-                    runningNo = Int(rs.string(forColumn: "value"))! + 1
+                    runningNo = Int(rs.string(forColumn: "value") ?? "0")! + 1
                     
                     sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ?, datetime('now','localtime'))"
                     
@@ -307,7 +307,7 @@ class KeyValueDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["version"]) {
                 if rs.next() {
-                    version = rs.string(forColumn: "value")
+                    version = rs.string(forColumn: "value") ?? ""
                 }
             }
             

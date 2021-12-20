@@ -173,14 +173,6 @@ class InputMode01View: InputModeSCMaster {
         inputCellViewObj?.inspAreaText = inspItemText
         inputCellViewObj?.inspItemText = inspItemInputText
         inputCellViewObj?.requiredElementFlag = requiredElementFlag
-        if let font = inputCellViewObj?.inptItemInput.font {
-            let fontAttributes = [NSAttributedString.Key.font: font]
-            let myText = inspItemText
-            let size = (myText as NSString).size(withAttributes: fontAttributes)
-            if let textFieldWidth = inputCellViewObj?.inptItemInput.frame.size.width, size.width > textFieldWidth {
-                inputCellViewObj?.isTruncated = true
-            }
-        }
         
         if !userInteractive {
             inputCellViewObj?.inptItemInput.isUserInteractionEnabled = false

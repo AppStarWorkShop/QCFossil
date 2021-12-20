@@ -96,7 +96,7 @@ class PhotoDataHelper:DataHelperMaster {
             let dataType = photo.dataType ?? 0
             
             if db.executeUpdate(sql, withArgumentsIn: [photoId, taskId, refPhotoId, photoFile, photoFile, thumbFile, photoDesc, dataRecordId, createUser, createDate, modifyUser, modifyDate, dataType]){
-                photo.photoId = Int(db.lastInsertRowId())
+                photo.photoId = Int(db.lastInsertRowId)
                 
                 db.close()
                 
@@ -157,9 +157,9 @@ class PhotoDataHelper:DataHelperMaster {
             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                 if rs.next() {
                     let inputMode = rs.string(forColumn: "input_mode_code")
-                    var inspAreaText = ""
-                    var inspCatText = ""
-                    var inspItemText = ""
+                    var inspAreaText:String?
+                    var inspCatText:String?
+                    var inspItemText:String?
                     
                     switch inputMode ?? "" {
                         case _INPUTMODE01:
@@ -167,8 +167,8 @@ class PhotoDataHelper:DataHelperMaster {
                         
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspItemText = _ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")
-                                    inspCatText = _ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")
+                                    inspItemText = (_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")) ?? ""
+                                    inspCatText = (_ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")) ?? ""
                                 }
                             }
                         
@@ -177,8 +177,8 @@ class PhotoDataHelper:DataHelperMaster {
                             
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspAreaText = _ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")
-                                    inspCatText = _ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")
+                                    inspAreaText = (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? ""
+                                    inspCatText = (_ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")) ?? ""
                                 }
                             }
                         
@@ -197,7 +197,7 @@ class PhotoDataHelper:DataHelperMaster {
                         
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspItemText = rs.string(forColumn: "request_element_desc")
+                                    inspItemText = rs.string(forColumn: "request_element_desc") ?? ""
                                     inspCatText = _ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")
                                 }
                             }
@@ -550,7 +550,7 @@ class PhotoDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [taskId]) {
                 if rs.next() {
-                    stylePhotos = StylePhoto(ssPhotoName: rs.string(forColumn: "ss_photo_name"), cbPhotoName: rs.string(forColumn: "cb_photo_name"))
+                    stylePhotos = StylePhoto(ssPhotoName: rs.string(forColumn: "ss_photo_name") ?? "", cbPhotoName: rs.string(forColumn: "cb_photo_name") ?? "")
                 }
             }
             
@@ -567,12 +567,12 @@ class PhotoDataHelper:DataHelperMaster {
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
                     
                     let path = Cache_Inspector?.typeCode == TypeCode.WATCH.rawValue ? _WATCHSSPHOTOSPHYSICALPATH : _JEWELRYSSPHOTOSPHYSICALPATH
-                    paths.append(path + rs.string(forColumn: "ss_photo_name"))
-                    paths.append(_CASEBACKPHOTOSPHYSICALPATH + rs.string(forColumn: "cb_photo_name"))
+                    paths.append(path + (rs.string(forColumn: "ss_photo_name") ?? ""))
+                    paths.append(_CASEBACKPHOTOSPHYSICALPATH + (rs.string(forColumn: "cb_photo_name") ?? ""))
                 }
             }
             
@@ -588,7 +588,7 @@ class PhotoDataHelper:DataHelperMaster {
         
         if db.open() {
             
-            if !db.executeUpdate(sql, withArgumentsIn: nil) {
+            if !db.executeUpdate(sql, withArgumentsIn: []) {
                 db.close()
                 
                 return false
@@ -608,7 +608,7 @@ class PhotoDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [photoId]) {
                 if rs.next() {
-                    return rs.string(forColumn: "task_id")
+                    return rs.string(forColumn: "task_id") ?? ""
                 }
             }
             

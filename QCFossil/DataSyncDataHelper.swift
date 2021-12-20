@@ -11,13 +11,14 @@ import UIKit
 
 class DataSyncDataHelper:DataHelperMaster {
     
+    @discardableResult
     func cleanDBTableByName(_ tableName:String) ->Bool {
         let sql = "DELETE FROM " + tableName
         var result = false
         
         let noDeleteTables = ["inspect_task_item","inspect_task"]
         
-        if noDeleteTables.contains(tableName) || db.executeUpdate(sql, withArgumentsIn: nil) {
+        if noDeleteTables.contains(tableName) || db.executeUpdate(sql, withArgumentsIn: []) {
                 result = true
         }
         
@@ -74,48 +75,41 @@ class DataSyncDataHelper:DataHelperMaster {
         return true
     }
     
-    func updateTableRecordsByScript(_ vc:DataSyncViewController, apiName:String, sqlScript:[String], handler:(Bool)-> Void) ->Bool {
+    func updateTableRecordsByScript(_ vc:DataSyncViewController, apiName:String, sqlScript:[String], handler:(Bool)-> Void) {
         
         if db.open() {
             db.beginTransaction()
             
             if apiName == "_DS_FGPODATA" {
-                self.cleanDBTableByName("fgpo_line_item WHERE item_id NOT IN (SELECT po_item_id FROM inspect_task_item)")
+                cleanDBTableByName("fgpo_line_item WHERE item_id NOT IN (SELECT po_item_id FROM inspect_task_item)")
                 vc.updateProgressBar(0.7)
+            } else if apiName == "_DS_MSTRDATA" {
+                let alterSql = "CREATE TABLE vdr_brand_map2 (data_env varchar(30) not null, vdr_id numeric(10,0) not null, brand_id numeric(10,0) not null, create_user varchar(30) not null, create_date datetime not null, modify_user varchar(30) not null, modify_date datetime not null);INSERT INTO vdr_brand_map2 (data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date) SELECT data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date FROM vdr_brand_map; DROP TABLE vdr_brand_map; ALTER TABLE vdr_brand_map2 RENAME TO vdr_brand_map;"
+                db.executeStatements(alterSql)
             }
             
             for sql in sqlScript {
-                //1. skip no data record
-                if sql == "" {
-                    continue
-                }
-                    
-                //2. update table records
-//                @see lastError
-//                @see lastErrorCode
-//                @see lastErrorMessage
-                if !db.executeUpdate(sql, withArgumentsIn: nil) {
+            
+            // batch update
+                if !db.executeUpdate(sql, withArgumentsIn: []) {
+    //            if db.executeStatements(sqlScript.joined(separator:";")) {
+
                     vc.errorMsg += "Error in \(apiName)\n"
                     vc.errorMsg += "Error Sql Script: \(sql)\n"
                     vc.errorMsg += "Sqlite Error: \(db.lastError())\n ErrorCode: \(db.lastErrorCode())\n ErrorMessage: \(db.lastErrorMessage())"
-                    print("Error, DB Rollback!")
+                    
                     db.rollback()
                     db.close()
                         
-//                    if apiName == "_DS_DL_TASK_STATUS" {
                     handler(false)
-//                    }
-                    
-                    return false
                 }
             }
             
             db.commit()
             db.close()
-        }
             
-        handler(true)
-        return true
+            handler(true)
+        }
     }
     
     func shouldSkipTaskData(_ objId:Int) ->Bool {

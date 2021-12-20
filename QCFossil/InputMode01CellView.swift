@@ -52,10 +52,10 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     @IBOutlet weak var inptDetailItemsListBtn: UIButton!
     @IBOutlet weak var errorMessageLabel: UILabel!
     @IBOutlet weak var showInspectItemDetailButton: UIButton!
+    @IBOutlet weak var showInspectDetailButton: UIButton!
     
     var selectValues = [String]()
     var inspectItemKeyValues = [String:Int]()
-    var isTruncated: Bool = false
     //weak var parentView = InputMode01View()
     
     /*
@@ -86,6 +86,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     override func awakeFromNib() {
         cellResultInput.delegate = self
         inptItemInput.delegate = self
+        inptDetailInput.delegate = self
         
         updateLocalizedString()
     }
@@ -113,7 +114,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         
         fetchDetailSelectedValues()
         
-        if isTruncated {
+        if inptItemInput.isTruncated() {
             self.showInspectItemDetailButton.isHidden = false
         }
     }
@@ -253,7 +254,13 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     func dropdownHandleFunc(_ textField: UITextField) {
         Cache_Task_On?.didModify = true
         
-        if textField == self.cellResultInput {
+        if textField == self.inptDetailInput {
+            if textField.isTruncated() {
+                self.showInspectDetailButton.isHidden = false
+            } else {
+                self.showInspectDetailButton.isHidden = true
+            }
+        } else if textField == self.cellResultInput {
             guard let resultText = cellResultInput.text else {return}
             
             self.resultValueId = self.parentView.resultKeyValues[resultText] ?? 0
@@ -281,6 +288,12 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
                 self.inspPostId = defectDataHelper.getPositionIdByElementId(inspElementId)
                 
                 fetchDetailSelectedValues()
+            }
+            
+            if inptItemInput.isTruncated() {
+                self.showInspectItemDetailButton.isHidden = false
+            } else {
+                self.showInspectItemDetailButton.isHidden = true
             }
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updatePhotoInfo"), object: nil,userInfo: ["inspElmt":self])
@@ -328,6 +341,18 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             return false
         }
         
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == self.inptDetailInput {
+            if textField.isTruncated() {
+                self.showInspectDetailButton.isHidden = false
+            } else {
+                self.showInspectDetailButton.isHidden = true
+            }
+        }
         return true
     }
 
@@ -382,4 +407,22 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     
+    @IBAction func showInspectDetailDidPress(_ sender: UIButton) {
+        let popoverContent = PopoverViewController()
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
+        popoverContent.dataType = _POPOVERNOTITLE
+        popoverContent.selectedValue = inptDetailInput.text ?? ""
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
+        
+        let popover = nav.popoverPresentationController
+        popover!.delegate = sender.parentVC as! PopoverMaster
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
+        
+        sender.parentVC!.present(nav, animated: true, completion: nil)
+    }
 }

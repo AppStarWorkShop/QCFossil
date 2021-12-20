@@ -18,7 +18,7 @@ class PoDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [poId]) {
                 if rs.next() {
-                    styleDesc = rs.string(forColumnIndex: 0)
+                    styleDesc = rs.string(forColumnIndex: 0) ?? ""
                 }
             }
             
@@ -37,7 +37,7 @@ class PoDataHelper:DataHelperMaster {
             if let rs = db.executeQuery(sql, withArgumentsIn: [poId]) {
             
                 if rs.next() {
-                    poNo = rs.string(forColumnIndex: 0)
+                    poNo = rs.string(forColumnIndex: 0) ?? ""
                 }
             }
             
@@ -178,7 +178,7 @@ class PoDataHelper:DataHelperMaster {
         if db.open() {
             
             //Sched Po Items
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
             
                 while rs.next() {
                 
@@ -277,7 +277,7 @@ class PoDataHelper:DataHelperMaster {
             //Not Sched Po Items
             sql = "SELECT * FROM fgpo_line_item WHERE item_id NOT IN (SELECT po_item_id FROM inspect_task_item) AND outstand_qty > 0 AND line_status <> 5 AND deleted_flag = 0"
 
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -496,8 +496,8 @@ class PoDataHelper:DataHelperMaster {
         if db.open() {
             
             if db.executeUpdate(sql, withArgumentsIn: [task.taskId!,task.prodTypeId!,task.inspectionTypeId!,task.bookingNo!,task.bookingDate!,task.vdrLocationId!,task.reportInspectorId!,task.reportPrefix!,task.inspectionNo!,task.inspectionDate!,task.taskRemarks!,task.vdrNotes!,task.inspectionResultValueId!,task.inspectionSignImageFile!,task.vdrSignName!,task.vdrSignImageFile!,task.taskStatus!,task.uploadInspectorId!,task.uploadDeviceId!,task.refTaskId!,task.recStatus!,task.createUser!,task.createDate!,task.modifyUser!,task.modifyDate!,task.deleteFlag!,task.deleteUser!,task.deleteDate!,task.inspectSetupId!,task.tmplId!,task.reportRunningNo!]) {
-            
-                lastId = Int(db.lastInsertRowId())
+                
+                lastId = Int(db.lastInsertRowId)
             }
             
             db.close()
@@ -514,7 +514,7 @@ class PoDataHelper:DataHelperMaster {
             
             if db.executeUpdate(sql, withArgumentsIn: [task.taskId!,task.prodTypeId!,task.inspectionTypeId!,task.bookingNo!,task.bookingDate!,task.vdrLocationId!,task.reportInspectorId!,task.reportPrefix!,task.inspectionNo!,task.inspectionDate!,task.taskRemarks!,task.vdrNotes!,task.inspectionResultValueId!,task.inspectionSignImageFile!,task.vdrSignName!,task.vdrSignImageFile!,task.taskStatus!,task.uploadInspectorId!,task.uploadDeviceId!,task.refTaskId!,task.recStatus!,task.createUser!,task.createDate!,task.modifyUser!,task.modifyDate!,task.deleteFlag!,task.deleteUser!,task.deleteDate!,task.inspectSetupId!,task.tmplId!,task.reportRunningNo!]) {
                 
-                lastId = Int(db.lastInsertRowId())
+                lastId = Int(db.lastInsertRowId)
             }
             
             db.close()
@@ -529,7 +529,7 @@ class PoDataHelper:DataHelperMaster {
         
         if db.open() {
             if db.executeUpdate(sql, withArgumentsIn: [taskItem.taskId!,taskItem.poItemId!,taskItem.targetInspectQty!,taskItem.availInspectQty!,taskItem.inspectEnableFlag!,taskItem.createUser!,taskItem.createDate!,taskItem.modifyUser!,taskItem.modifyDate!,taskItem.samplingQty!]) {
-                lastId = Int(db.lastInsertRowId())
+                lastId = Int(db.lastInsertRowId)
             }
     
             db.close()
@@ -543,7 +543,7 @@ class PoDataHelper:DataHelperMaster {
         
         if db.open() {
             if db.executeUpdate(sql, withArgumentsIn: [taskItem.taskId!,taskItem.poItemId!,taskItem.targetInspectQty!,taskItem.availInspectQty!,taskItem.inspectEnableFlag!,taskItem.createUser!,taskItem.createDate!,taskItem.modifyUser!,taskItem.modifyDate!,taskItem.samplingQty!]) {
-                lastId = Int(db.lastInsertRowId())
+                lastId = Int(db.lastInsertRowId)
             }
             
             db.close()
@@ -606,7 +606,7 @@ class PoDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["%"+inputValue+"%", vendorName, vendorLocationCode]) {
                 while rs.next() {
-                    styleNoList.append(rs.string(forColumn: "style_no"))
+                    styleNoList.append(rs.string(forColumn: "style_no") ?? "")
                 }
             }
             
@@ -626,7 +626,7 @@ class PoDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["%"+inputValue+"%"]) {
                 while rs.next() {
-                    poNoList.append(rs.string(forColumn: "po_no"))
+                    poNoList.append(rs.string(forColumn: "po_no") ?? "")
                 }
             }
             
@@ -647,7 +647,7 @@ class PoDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["%"+inputValue+"%", vendorName, vendorLocationCode]) {
                 while rs.next() {
-                    poNoList.append(rs.string(forColumn: "po_no"))
+                    poNoList.append(rs.string(forColumn: "po_no") ?? "")
                 }
             }
             

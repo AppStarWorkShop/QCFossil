@@ -97,6 +97,9 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             defectPositionPoints[_ENGLISH ? defectPositPoint.positionNameEn ?? "" : defectPositPoint.positionNameCn ?? ""] = defectPositPoint.positionId
         })
         
+        if self.cellDPPInput.isTruncated() {
+            self.showDefectPositionPointsButton.isHidden = false
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -201,6 +204,12 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             
             textField.backgroundColor = UIColor.white
             self.defectPositionPointIcon.isHidden = false
+            
+            if self.cellDPPInput.isTruncated() {
+                self.showDefectPositionPointsButton.isHidden = false
+            } else {
+                self.showDefectPositionPointsButton.isHidden = true
+            }
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updatePhotoInfo"), object: nil,userInfo: ["inspElmt":self])
         }else if textField == self.dpInput {

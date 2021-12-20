@@ -1926,3 +1926,15 @@ fileprivate func convertToOptionalCIContextOptionDictionary(_ input: [String: An
 fileprivate func convertFromCIContextOption(_ input: CIContextOption) -> String {
 	return input.rawValue
 }
+
+extension UITextField {
+    func isTruncated() -> Bool {
+        if let font = self.font, let text = self.text {
+            let fontAttributes = [NSAttributedString.Key.font: font]
+            let size = (text as NSString).size(withAttributes: fontAttributes)
+            let textFieldWidth = self.frame.size.width - 24
+            return size.width > textFieldWidth
+        }
+        return false
+    }
+}

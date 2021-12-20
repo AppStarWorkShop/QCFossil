@@ -127,7 +127,7 @@ class DefectDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [id]) {
                 if rs.next() {
-                    name = _ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")
+                    name = (_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")) ?? ""
                 }
             }
             
@@ -167,7 +167,7 @@ class DefectDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [id]) {
                 if rs.next() {
-                    name = _ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")
+                    name = (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? ""
                 }
             }
             
@@ -186,7 +186,7 @@ class DefectDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [positionId]) {
                 while rs.next() {
-                    defectTypes.append((_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")))
+                    defectTypes.append(((_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")) ?? ""))
                 }
             }
             

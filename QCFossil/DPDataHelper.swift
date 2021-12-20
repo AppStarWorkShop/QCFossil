@@ -42,7 +42,7 @@ class DPDataHelper:DataHelperMaster {
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     let positionId = Int(rs.int(forColumn: "position_id"))
@@ -155,7 +155,7 @@ class DPDataHelper:DataHelperMaster {
         return defectPositPoints
     }
     
-    func getDefectPositionPointsByRecordId(_ recordId:Int) ->String {
+    func getDefectPositionPointsByRecordId(_ recordId:Int) -> String {
         let sql = "SELECT ipm.position_name_en,ipm.position_name_cn FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
         var defectPositPoints = ""
         
@@ -163,7 +163,7 @@ class DPDataHelper:DataHelperMaster {
         
             if let rs = db.executeQuery(sql, withArgumentsIn: [recordId]) {
                 while rs.next() {
-                    defectPositPoints += (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) + ", "
+                    defectPositPoints += ((_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? "") + ", "
                 }
                 
                 if defectPositPoints != "" {
@@ -178,7 +178,7 @@ class DPDataHelper:DataHelperMaster {
         return defectPositPoints
     }
     
-    func getDefectPositionPointsByDFRecordId(_ recordId:Int) ->String {
+    func getDefectPositionPointsByDFRecordId(_ recordId:Int) -> String {
         let sql = "SELECT ipm.position_name_en,ipm.position_name_cn FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
         var defectPositPoints = ""
         
@@ -186,7 +186,7 @@ class DPDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [recordId]) {
                 while rs.next() {
-                    defectPositPoints += (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) + ", "
+                    defectPositPoints += ((_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? "") + ", "
                 }
                 
                 if defectPositPoints != "" {
@@ -256,7 +256,7 @@ class DPDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [elementId]) {
                 if rs.next() {
-                    positionString = (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn"))
+                    positionString = ((_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? "")
                 }
             }
             
@@ -294,8 +294,8 @@ class DPDataHelper:DataHelperMaster {
             if let rs = db.executeQuery(sql, withArgumentsIn: [id]) {
                 if rs.next() {
                     
-                    let refTaskId = Int(rs.string(forColumn: "ref_task_id"))
-                    let aqlQty = Int(rs.string(forColumn: "aql_qty"))
+                    let refTaskId = Int(rs.string(forColumn: "ref_task_id") ?? "0")
+                    let aqlQty = Int(rs.string(forColumn: "aql_qty") ?? "0")
                     let productClass = rs.string(forColumn: "product_class")
                     let qualityStandard = rs.string(forColumn: "quality_standard")
                     let adjustTime = rs.string(forColumn: "adjust_time")

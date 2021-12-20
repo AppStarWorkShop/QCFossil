@@ -458,7 +458,7 @@ class TaskDataHelper:DataHelperMaster{
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [inspTypeId]) {
                 if rs.next() {
-                    inspType = _ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")
+                    inspType = (_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? ""
                 }
             }
             db.close()
@@ -473,9 +473,9 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
-                    inspType.append(_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn"))
+                    inspType.append((_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? "")
                 }
             }
             db.close()
@@ -492,7 +492,7 @@ class TaskDataHelper:DataHelperMaster{
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.prodTypeId)!, (Cache_Inspector?.selectedInspType)!, (Cache_Inspector?.selectedInspType)!]) {
                 while rs.next() {
-                    tmplType.append( _ENGLISH ? rs.string(forColumn: "tmpl_name_en") : rs.string(forColumn: "tmpl_name_cn"))
+                    tmplType.append( (_ENGLISH ? rs.string(forColumn: "tmpl_name_en") : rs.string(forColumn: "tmpl_name_cn")) ?? "")
                 }
             }
             db.close()
@@ -544,9 +544,9 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
-                    inspType.append( _ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn"))
+                    inspType.append( (_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? "")
                 }
             }
             db.close()
@@ -584,7 +584,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [insptorId]) {
             
                 if rs.next() {
-                    insptorName = rs.string(forColumnIndex: 0)
+                    insptorName = rs.string(forColumnIndex: 0) ?? ""
                 }
             }
                 
@@ -822,9 +822,9 @@ class TaskDataHelper:DataHelperMaster{
             while rs.next() {
                 
                 if _ENGLISH {
-                    resultSetValues.append(rs.string(forColumn: "value_name_en"))
+                    resultSetValues.append(rs.string(forColumn: "value_name_en") ?? "")
                 }else{
-                    resultSetValues.append(rs.string(forColumn: "value_name_cn"))
+                    resultSetValues.append(rs.string(forColumn: "value_name_cn") ?? "")
                 }
             }
             }
@@ -848,9 +848,9 @@ class TaskDataHelper:DataHelperMaster{
             while rs.next() {
                 
                 if _ENGLISH {
-                    resultSetValues.append(rs.string(forColumn: "value_name_en"))
+                    resultSetValues.append(rs.string(forColumn: "value_name_en") ?? "")
                 }else{
-                    resultSetValues.append(rs.string(forColumn: "value_name_cn"))
+                    resultSetValues.append(rs.string(forColumn: "value_name_cn") ?? "")
                 }
             }
             }
@@ -874,9 +874,9 @@ class TaskDataHelper:DataHelperMaster{
                 while rs.next() {
                     
                     if _ENGLISH {
-                        resultKeyValues[rs.string(forColumn: "value_name_en")] = Int(rs.int(forColumn: "value_id"))
+                        resultKeyValues[rs.string(forColumn: "value_name_en") ?? ""] = Int(rs.int(forColumn: "value_id"))
                     }else{
-                        resultKeyValues[rs.string(forColumn: "value_name_cn")] = Int(rs.int(forColumn: "value_id"))
+                        resultKeyValues[rs.string(forColumn: "value_name_cn") ?? ""] = Int(rs.int(forColumn: "value_id"))
                     }
                 }
             }
@@ -899,7 +899,7 @@ class TaskDataHelper:DataHelperMaster{
                 
                 if db.executeUpdate(sql, withArgumentsIn: [notNilObject(inspDataRecord.recordId as AnyObject)!,inspDataRecord.taskId!,inspDataRecord.refRecordId!,inspDataRecord.inspectSectionId!,inspDataRecord.inspectElementId!,inspDataRecord.inspectPositionId!,inspDataRecord.inspectPositionDesc!,inspDataRecord.inspectDetail!,inspDataRecord.inspectRemarks!,inspDataRecord.resultValueId,inspDataRecord.createUser!,inspDataRecord.createDate!,inspDataRecord.modifyUser!,inspDataRecord.modifyDate!,notNilObject(inspDataRecord.requestSectionId as AnyObject)!,notNilObject(inspDataRecord.requestElementDesc as AnyObject)!]) {
                 
-                    inspDataRecord.recordId = Int(db.lastInsertRowId())
+                    inspDataRecord.recordId = Int(db.lastInsertRowId)
                 }else{
                     //UIView.init().alertView("Saving Inspect Items Error!")
                     db.rollback()
@@ -926,7 +926,7 @@ class TaskDataHelper:DataHelperMaster{
                 
             if db.executeUpdate(sql, withArgumentsIn: [notNilObject(inspDataRecord.recordId as AnyObject)!,inspDataRecord.taskId!,inspDataRecord.refRecordId!,inspDataRecord.inspectSectionId!,inspDataRecord.inspectElementId!,inspDataRecord.inspectPositionId!,inspDataRecord.inspectPositionDesc!,inspDataRecord.inspectDetail!,inspDataRecord.inspectRemarks!,inspDataRecord.resultValueId,inspDataRecord.createUser!,inspDataRecord.createDate!,inspDataRecord.modifyUser!,inspDataRecord.modifyDate!,notNilObject(inspDataRecord.requestSectionId as AnyObject)!,notNilObject(inspDataRecord.requestElementDesc as AnyObject)!, inspDataRecord.inspectPositionZoneValueId ?? 0]) {
                     
-                inspDataRecord.recordId = Int(db.lastInsertRowId())
+                inspDataRecord.recordId = Int(db.lastInsertRowId)
             }else{
                 //UIView.init().alertView("Saving Inspect Items Error!")
                 db.rollback()
@@ -1219,7 +1219,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueId]) {
             
                 if rs.next() {
-                    resultValue = _ENGLISH ? rs.string(forColumn: "value_name_en") : rs.string(forColumn: "value_name_cn")
+                    resultValue = (_ENGLISH ? rs.string(forColumn: "value_name_en") : rs.string(forColumn: "value_name_cn")) ?? ""
                 }
             }
             
@@ -1293,9 +1293,9 @@ class TaskDataHelper:DataHelperMaster{
             while rs.next() {
                 
                 if _ENGLISH {
-                    resultSetValues.append(rs.string(forColumn: "value_name_en"))
+                    resultSetValues.append(rs.string(forColumn: "value_name_en") ?? "")
                 }else{
-                    resultSetValues.append(rs.string(forColumn: "value_name_cn"))
+                    resultSetValues.append(rs.string(forColumn: "value_name_cn") ?? "")
                 }
             }
             }
@@ -1316,7 +1316,7 @@ class TaskDataHelper:DataHelperMaster{
             
             if db.executeUpdate(sql, withArgumentsIn:[notNilObject(taskInspDefectDataRecord.recordId as AnyObject)!,taskInspDefectDataRecord.taskId!,taskInspDefectDataRecord.inspectRecordId!,taskInspDefectDataRecord.refRecordId!,taskInspDefectDataRecord.inspectElementId!,taskInspDefectDataRecord.defectDesc!,taskInspDefectDataRecord.defectQtyCritical,taskInspDefectDataRecord.defectQtyMajor,taskInspDefectDataRecord.defectQtyMinor,taskInspDefectDataRecord.defectQtyTotal,taskInspDefectDataRecord.createUser!,taskInspDefectDataRecord.createDate!,taskInspDefectDataRecord.modifyUser!,taskInspDefectDataRecord.modifyDate!,taskInspDefectDataRecord.inspectElementDefectValueId ?? 0,taskInspDefectDataRecord.inspectElementCaseValueId ?? 0,taskInspDefectDataRecord.defectRemarksOptionList ?? "",taskInspDefectDataRecord.othersRemark ?? ""]){
             
-                lastInsertId = Int(db.lastInsertRowId())
+                lastInsertId = Int(db.lastInsertRowId)
             }else{
                 
                 db.rollback()
@@ -1342,7 +1342,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [typeId]) {
             
                 if rs.next() {
-                    typeName = _ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")
+                    typeName = (_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? ""
                 }
             }
             
@@ -1403,9 +1403,9 @@ class TaskDataHelper:DataHelperMaster{
             if rs.next() {
                 
                 if _ENGLISH {
-                    resultValueName = rs.string(forColumn: "value_name_en")
+                    resultValueName = rs.string(forColumn: "value_name_en") ?? ""
                 }else{
-                    resultValueName = rs.string(forColumn: "value_name_cn")
+                    resultValueName = rs.string(forColumn: "value_name_cn") ?? ""
                 }
             }
             }
@@ -1461,9 +1461,9 @@ class TaskDataHelper:DataHelperMaster{
                 
                 let recordId = Int(rs.int(forColumn: "record_id"))
                 let taskId = Int(rs.int(forColumn: "task_id"))
-                let refRecordId = Int(rs.string(forColumn: "ref_record_id"))
-                let inspSecId = Int(rs.string(forColumn: "inspect_section_id"))
-                let inspElmtId = Int(rs.string(forColumn: "inspect_element_id"))
+                let refRecordId = Int(rs.string(forColumn: "ref_record_id") ?? "0")
+                let inspSecId = Int(rs.string(forColumn: "inspect_section_id") ?? "0")
+                let inspElmtId = Int(rs.string(forColumn: "inspect_element_id") ?? "0")
                 let inspPostnId = Int(rs.int(forColumn: "inspect_position_id"))
                 let inspPostnDesc = rs.string(forColumn: "inspect_position_desc")
                 let inspDetail = rs.string(forColumn: "inspect_detail")
@@ -1563,9 +1563,9 @@ class TaskDataHelper:DataHelperMaster{
                 
                 let recordId = Int(rs.int(forColumn: "record_id"))
                 let taskId = Int(rs.int(forColumn: "task_id"))
-                let inspRecordId = Int(rs.string(forColumn: "inspect_record_id"))
-                let refRecordId = Int(rs.string(forColumn: "ref_record_id"))
-                let inspElmtId = Int(rs.string(forColumn: "inspect_element_id"))
+                let inspRecordId = Int(rs.string(forColumn: "inspect_record_id") ?? "0")
+                let refRecordId = Int(rs.string(forColumn: "ref_record_id") ?? "0")
+                let inspElmtId = Int(rs.string(forColumn: "inspect_element_id") ?? "0")
                 let defectDesc = rs.string(forColumn: "defect_desc")
                 let defectQtyCritical = Int(rs.int(forColumn: "defect_qty_critical"))
                 let defectQtyMajor = Int(rs.int(forColumn: "defect_qty_major"))
@@ -1649,7 +1649,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [recordId]) {
             
             if rs.next() {
-                inputMode = rs.string(forColumn: "input_mode_code")
+                inputMode = rs.string(forColumn: "input_mode_code") ?? ""
                 
             }else{
                 
@@ -1787,7 +1787,7 @@ class TaskDataHelper:DataHelperMaster{
         if db.open() {
             db.executeUpdate(sql, withArgumentsIn: [taskInspDataRecord.recordId!,taskInspDataRecord.taskId!,taskInspDataRecord.refRecordId!,taskInspDataRecord.inspectSectionId!,taskInspDataRecord.inspectElementId!,taskInspDataRecord.inspectPositionId!,taskInspDataRecord.inspectPositionDesc!,taskInspDataRecord.inspectDetail!,taskInspDataRecord.inspectRemarks!,taskInspDataRecord.resultValueId,taskInspDataRecord.createUser!,taskInspDataRecord.createDate!,taskInspDataRecord.modifyUser!,taskInspDataRecord.modifyDate!,notNilObject(taskInspDataRecord.requestSectionId as AnyObject)!,notNilObject(taskInspDataRecord.requestElementDesc as AnyObject)!])
         
-            taskInspDataRecordId = Int(db.lastInsertRowId())
+            taskInspDataRecordId = Int(db.lastInsertRowId)
             
             
             db.close()
@@ -2016,7 +2016,7 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -2052,7 +2052,7 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -2075,7 +2075,7 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn:nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -2169,7 +2169,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn:[taskId]) {
                 
                 if rs.next() {
-                    bookingNo = rs.string(forColumn: "booking_no") != "" ? rs.string(forColumn: "booking_no") : rs.string(forColumn: "inspection_no")
+                    bookingNo = (rs.string(forColumn: "booking_no") != "" ? rs.string(forColumn: "booking_no") : rs.string(forColumn: "inspection_no")) ?? ""
                 }
             }
             
@@ -2268,7 +2268,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [GetTaskStatusId(caseId: "Confirmed").rawValue, vdrLocId]) {
                 if rs.next() {
                     if rs.string(forColumn: "vdr_sign_name") != nil && rs.string(forColumn: "vdr_sign_name") != "" {
-                        vdrConfirmerName = rs.string(forColumn: "vdr_sign_name")
+                        vdrConfirmerName = rs.string(forColumn: "vdr_sign_name") ?? ""
                     }
                 }
             }
@@ -2288,7 +2288,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [taskId]) {
                 if rs.next() {
                     if rs.string(forColumn: "vdr_sign_name") != nil && rs.string(forColumn: "vdr_sign_name") != "" {
-                        vdrConfirmerName = rs.string(forColumn: "vdr_sign_name")
+                        vdrConfirmerName = rs.string(forColumn: "vdr_sign_name") ?? ""
                     }
                 }
             }
@@ -2326,7 +2326,7 @@ class TaskDataHelper:DataHelperMaster{
             
             if let rs = db.executeQuery(sql, withArgumentsIn: ["%"+inputValue+"%"]) {
                 while rs.next() {
-                    styleNoList.append(rs.string(forColumn: "style_no"))
+                    styleNoList.append(rs.string(forColumn: "style_no") ?? "")
                 }
             }
             
@@ -2342,7 +2342,7 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: nil) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
                     ids.append(Int(rs.int(forColumn: "task_id")))
                 }
@@ -2478,7 +2478,7 @@ class TaskDataHelper:DataHelperMaster{
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [valueId]) {
                 if rs.next() {
-                    valueCode = rs.string(forColumn: "value_code")
+                    valueCode = rs.string(forColumn: "value_code") ?? ""
                 }
             }
             
@@ -2528,7 +2528,7 @@ class TaskDataHelper:DataHelperMaster{
             var count = 0
             if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
-                    textValue += _ENGLISH ? rs.string(forColumn: "option_text_en"):rs.string(forColumn: "option_text_zh") + ","
+                    textValue += ((_ENGLISH ? rs.string(forColumn: "option_text_en"):rs.string(forColumn: "option_text_zh")) ?? "") + ","
                     count += 1
                 }
                 
