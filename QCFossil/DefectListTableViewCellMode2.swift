@@ -139,6 +139,28 @@ class DefectListTableViewCellMode2: InputModeDFMaster2, UIActionSheetDelegate, U
         let tap5 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto5.addGestureRecognizer(tap5)
         defectPhoto5.isUserInteractionEnabled = true
+        
+        if dpInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: dpInput)
+        }
+        if dppInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: dppInput)
+        }
+        if dtInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: dtInput)
+        }
+        if dfDescInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: dfDescInput)
+        }
+        if defectDesc1Input.isTruncated() {
+            self.showTextFieldFullTextButton(textField: defectDesc1Input)
+        }
+        if defectDesc2Input.isTruncated() {
+            self.showTextFieldFullTextButton(textField: defectDesc2Input)
+        }
+        if otherRemarkInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: otherRemarkInput)
+        }
     }
     
     func updateLocalizedString(){

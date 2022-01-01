@@ -32,7 +32,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class DefectListViewController: UIViewController, UITableViewDelegate,  UITableViewDataSource, UIScrollViewDelegate {
+class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableViewDataSource, UIScrollViewDelegate {
     @IBOutlet weak var sectionSegmentControl: UISegmentedControl!
     @IBOutlet weak var defectTableView: UITableView!
     @IBOutlet weak var inptNoLabel: UILabel!

@@ -75,7 +75,6 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         self.defectZoneInput.delegate = self
         
         updateLocalizedString()
-
     }
     
     override func didMoveToSuperview() {
@@ -99,6 +98,14 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         
         if self.cellDPPInput.isTruncated() {
             self.showDefectPositionPointsButton.isHidden = false
+        }
+        
+        if self.dpInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: dpInput)
+        }
+        
+        if self.defectZoneInput.isTruncated() {
+            self.showTextFieldFullTextButton(textField: defectZoneInput)
         }
     }
     

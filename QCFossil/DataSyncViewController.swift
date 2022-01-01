@@ -1543,6 +1543,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 //buffer.setData(NSMutableData())
                 
                 _DS_SESSION = jsonData["service_session"] as? String ?? ""
+                ainit_service_session = jsonData["service_session"] as? String ?? ""
                 var session_result = _DS_SESSION
                 if let result = jsonData["action_result"] as? String {
                     session_result += result

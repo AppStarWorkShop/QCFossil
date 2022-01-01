@@ -1927,6 +1927,48 @@ fileprivate func convertFromCIContextOption(_ input: CIContextOption) -> String 
 	return input.rawValue
 }
 
+extension UIView {
+    func showTextFieldFullTextButton(textField: UITextField) {
+        let detailButton = CustomButton()
+        detailButton.setTitleColor(.systemBlue, for: .normal)
+        detailButton.setTitle("+", for: .normal)
+        detailButton.translatesAutoresizingMaskIntoConstraints = false
+        detailButton.addTarget(self, action: #selector(showDetailDidPress(_:)), for: .touchUpInside)
+        detailButton.destinationTextField = textField
+        self.addSubview(detailButton)
+        
+        NSLayoutConstraint.activate([
+            detailButton.widthAnchor.constraint(equalToConstant: 20),
+            detailButton.heightAnchor.constraint(equalToConstant: 20),
+            detailButton.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            detailButton.bottomAnchor.constraint(equalTo: textField.topAnchor, constant: -8)
+        ])
+    }
+    
+    @objc func showDetailDidPress(_ sender: UIButton) {
+        let popoverContent = PopoverViewController()
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
+        popoverContent.dataType = _POPOVERNOTITLE
+        if let customButton = sender as? CustomButton {
+            popoverContent.selectedValue = customButton.destinationTextField?.text ?? ""
+        } else {
+            popoverContent.selectedValue = ""
+        }
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
+        
+        let popover = nav.popoverPresentationController
+        popover!.delegate = sender.parentVC as! PopoverMaster
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
+        
+        sender.parentVC!.present(nav, animated: true, completion: nil)
+    }
+}
+
 extension UITextField {
     func isTruncated() -> Bool {
         if let font = self.font, let text = self.text {
