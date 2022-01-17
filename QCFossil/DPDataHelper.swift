@@ -24,8 +24,9 @@ class DPDataHelper:DataHelperMaster {
                     let positionId = Int(rs.int(forColumn: "position_id"))
                     let positionNameEn = rs.string(forColumn: "position_name_en")
                     let positionNameCn = rs.string(forColumn: "position_name_cn")
+                    let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                     
-                    let positObj = PositObj(positionId:positionId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!)
+                    let positObj = PositObj(positionId:positionId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!, positionNameFr: positionNameFr)
                     defectPosits.append(positObj)
                 }
             }
@@ -49,8 +50,9 @@ class DPDataHelper:DataHelperMaster {
                     let parentId = Int(rs.int(forColumn: "parent_position_id"))
                     let positionNameEn = rs.string(forColumn: "position_name_en")
                     let positionNameCn = rs.string(forColumn: "position_name_cn")
+                    let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                     
-                    let positPointObj = PositPointObj(positionId:positionId, parentId: parentId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!)
+                    let positPointObj = PositPointObj(positionId:positionId, parentId: parentId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!, positionNameFr: positionNameFr)
                     defectPositPoints.append(positPointObj)
                 }
             }
@@ -73,8 +75,9 @@ class DPDataHelper:DataHelperMaster {
                     let positionId = Int(rs.int(forColumn: "position_id"))
                     let positionNameEn = rs.string(forColumn: "position_name_en")
                     let positionNameCn = rs.string(forColumn: "position_name_cn")
+                    let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                     
-                    let positObj = PositObj(positionId:positionId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!)
+                    let positObj = PositObj(positionId:positionId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!, positionNameFr: positionNameFr)
                     defectPositPoints.append(positObj)
                 }
             }
@@ -163,7 +166,7 @@ class DPDataHelper:DataHelperMaster {
         
             if let rs = db.executeQuery(sql, withArgumentsIn: [recordId]) {
                 while rs.next() {
-                    defectPositPoints += ((_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? "") + ", "
+                    defectPositPoints += MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")]) + ", "
                 }
                 
                 if defectPositPoints != "" {
@@ -186,7 +189,7 @@ class DPDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [recordId]) {
                 while rs.next() {
-                    defectPositPoints += ((_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? "") + ", "
+                    defectPositPoints += MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")]) + ", "
                 }
                 
                 if defectPositPoints != "" {
@@ -256,7 +259,7 @@ class DPDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [elementId]) {
                 if rs.next() {
-                    positionString = ((_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? "")
+                    positionString = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")])
                 }
             }
             

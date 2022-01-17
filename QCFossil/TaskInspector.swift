@@ -34,6 +34,7 @@ struct ProdType {
     var typeCode:String?
     var typeNameEn:String?
     var typeNameCn:String?
+    var typeNameFr:String?
     var dataEnv:String?
     var recStatus:String?
     var createDate:String?

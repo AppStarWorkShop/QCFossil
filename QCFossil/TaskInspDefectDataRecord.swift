@@ -41,9 +41,9 @@ class TaskInspDefectDataRecord {
     var othersRemark:String?
     
     //Element Display Using
-    var sectObj:SectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
-    var elmtObj:ElmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
-    var postnObj:PositObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"")
+    var sectObj:SectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "", inputMode: "")
+    var elmtObj:ElmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", elementNameFr:"", reqElmtFlag: 0)
+    var postnObj:PositObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"", positionNameFr: "")
     var defectpositionPoints = ""
     
     //UI Obj

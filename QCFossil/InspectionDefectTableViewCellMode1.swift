@@ -571,7 +571,7 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
             var listData = [String]()
             
             self.defectValues?.forEach({ value in
-                listData.append(_ENGLISH ? value.valueNameEn ?? "":value.valueNameCn ?? "")
+                listData.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: value.valueNameEn, .zh: value.valueNameCn, .fr: value.valueNameFr]))
             })
             
             if self.ifExistingSubviewByViewTag(self.pVC.inspectDefectTableview, tag: _TAG1) {
@@ -588,7 +588,7 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
             var listData = [String]()
             
             self.caseValues?.forEach({ value in
-                listData.append(_ENGLISH ? value.valueNameEn ?? "":value.valueNameCn ?? "")
+                listData.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: value.valueNameEn, .zh: value.valueNameCn, .fr: value.valueNameFr]))
             })
             
             if self.ifExistingSubviewByViewTag(self.pVC.inspectDefectTableview, tag: _TAG1) {

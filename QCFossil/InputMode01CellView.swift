@@ -108,8 +108,8 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         updatePhotoAddediConStatus("",photoTakenIcon: self.photoAddedIcon)
         
         for optInspElmt in self.parentView!.optInspElms {
-            guard let nameEn = optInspElmt.elementNameEn, let nameCn = optInspElmt.elementNameCn else {continue}
-            inspectItemKeyValues[_ENGLISH ? nameEn : nameCn] = optInspElmt.elementId
+            guard let nameEn = optInspElmt.elementNameEn, let nameCn = optInspElmt.elementNameCn, let nameFr = optInspElmt.elementNameFr else {continue}
+            inspectItemKeyValues[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: nameEn, .zh: nameCn, .fr: nameFr])] = optInspElmt.elementId
         }
         
         fetchDetailSelectedValues()
@@ -158,8 +158,8 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             
             newDfItem?.inputMode = _INPUTMODE01
             newDfItem?.inspElmt = self
-            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName,inputMode: _INPUTMODE01)
-            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName, sectionNameFr: self.cellCatName,inputMode: _INPUTMODE01)
+            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
             
             let defectsByItemId = Cache_Task_On?.defectItems.filter({$0.sectObj.sectionId == self.cellCatIdx && $0.elmtObj.elementId == self.elementDbId})
             newDfItem?.cellIdx = defectsByItemId!.count

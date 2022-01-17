@@ -247,7 +247,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             let section = Cache_Task_On?.inspSections[idx]
             let itemCount = taskDataHelper.getCatItemCountById((Cache_Task_On?.taskId)!,sectionId: (section?.sectionId)!)
             
-            let catBtnTitle = (_ENGLISH ? section?.sectionNameEn:section?.sectionNameCn)!+"(\(itemCount))"
+            let catBtnTitle = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section?.sectionNameEn, .zh: section?.sectionNameCn, .fr: section?.sectionNameFr]) + "(\(itemCount))"
             inputInptCatViewObj?.inptCatButton.setTitle(catBtnTitle, for: UIControl.State())
             inputInptCatViewObj?.inptCatButton.titleLabel?.numberOfLines = 1
             inputInptCatViewObj?.inptCatButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -274,14 +274,14 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         
         let qcRemarkValues = taskDataHelper.getQCRemarksOptionList(String(describing: Cache_Task_On?.inspectionResultValueId) ?? "0")
         for value in qcRemarkValues {
-            guard let nameEn = value.valueNameEn, let nameCn = value.valueNameCn else {continue}
-            self.qcRemarksKeyValue[_ENGLISH ? nameEn : nameCn] = value.valueId
+            guard let nameEn = value.valueNameEn, let nameCn = value.valueNameCn, let nameFr = value.valueNameFr else {continue}
+            self.qcRemarksKeyValue[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: nameEn, .zh: nameCn, .fr: nameFr])] = value.valueId
         }
         
         let AdditionalAdministrativeItemKeyValue = taskDataHelper.getAdditionalAdministrativeItemOptionList(String(describing: Cache_Task_On?.inspectionResultValueId) ?? "0")
         for value in AdditionalAdministrativeItemKeyValue {
-            guard let nameEn = value.valueNameEn, let nameCn = value.valueNameCn else {continue}
-            self.AdditionalAdministrativeItemKeyValue[_ENGLISH ? nameEn : nameCn] = value.valueId
+            guard let nameEn = value.valueNameEn, let nameCn = value.valueNameCn, let nameFr = value.valueNameFr else {continue}
+            self.AdditionalAdministrativeItemKeyValue[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: nameEn, .zh: nameCn, .fr: nameFr])] = value.valueId
         }
         
         self.qcRemarkInput.showMultiDropdownValues(Cache_Task_On?.qcRemarks ?? "", textField: self.qcRemarkInput, keyValues: self.qcRemarksKeyValue)

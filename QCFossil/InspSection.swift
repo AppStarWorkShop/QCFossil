@@ -14,6 +14,7 @@ class InspSection {
     var inspectSetupId:Int?
     var sectionNameEn:String?
     var sectionNameCn:String?
+    var sectionNameFr:String?
     var prodTypeId:Int?
     var inspectTypeId:Int?
     var displayOrder:Int?
@@ -32,13 +33,14 @@ class InspSection {
     //extension
     var taskInspDataRecords = [TaskInspDataRecord]()
     
-    init(taskId:Int, sectionId:Int, inspectSetupId:Int, sectionNameEn:String, sectionNameCn:String, prodTypeId:Int, inspectTypeId:Int, displayOrder:Int, resultSetId:Int, inputModeCode:String, optionalEnableFlag:Int, adhocSelectFlag:Int, recStatus:Int, createUser:String, createDate:String, modifyUser:String, modifyDate:String, deletedFlag:Int, deleteUser:String?, deleteDate:String?) {
+    init(taskId:Int, sectionId:Int, inspectSetupId:Int, sectionNameEn:String, sectionNameCn:String, sectionNameFr: String?, prodTypeId:Int, inspectTypeId:Int, displayOrder:Int, resultSetId:Int, inputModeCode:String, optionalEnableFlag:Int, adhocSelectFlag:Int, recStatus:Int, createUser:String, createDate:String, modifyUser:String, modifyDate:String, deletedFlag:Int, deleteUser:String?, deleteDate:String?) {
         
         self.taskId = taskId
         self.sectionId = sectionId
         self.inspectSetupId = inspectSetupId
         self.sectionNameEn = sectionNameEn
         self.sectionNameCn = sectionNameCn
+        self.sectionNameFr = sectionNameFr ?? ""
         self.prodTypeId = prodTypeId
         self.inspectTypeId = inspectTypeId
         self.displayOrder = displayOrder

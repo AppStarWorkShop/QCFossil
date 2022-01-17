@@ -132,7 +132,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.idx = idx
                 inputview.categoryIdx = section.sectionId!
                 inputview.inspSection = section
-                inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
+                inputview.categoryName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr])
                 inputview.InputMode = inputMode!
                 
                 inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height)
@@ -143,7 +143,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.idx = idx
                 inputview.categoryIdx = section.sectionId!
                 inputview.inspSection = section
-                inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
+                inputview.categoryName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr])
                 inputview.InputMode = inputMode!
                 
                 inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height)
@@ -154,7 +154,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.idx = idx
                 inputview.categoryIdx = section.sectionId!
                 inputview.inspSection = section
-                inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
+                inputview.categoryName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr])
                 inputview.InputMode = inputMode!
                 
                 inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height)
@@ -164,7 +164,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 let inputview = InputMode04View.loadFromNibNamed("InputMode04")!
                 inputview.idx = idx
                 inputview.categoryIdx = section.sectionId!
-                inputview.categoryName = _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!
+                inputview.categoryName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr])
                 inputview.inspSection = section
                 inputview.InputMode = inputMode!
                 
@@ -181,7 +181,8 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
     }
     
     func updateSectionHeader(_ currentPage:Int = 0) {
-        if currentPage < Cache_Task_On?.inspSections.count, let title = _ENGLISH ? Cache_Task_On?.inspSections[currentPage].sectionNameEn : Cache_Task_On?.inspSections[currentPage].sectionNameCn {
+        if currentPage < Cache_Task_On?.inspSections.count {
+            let title = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: Cache_Task_On?.inspSections[currentPage].sectionNameEn, .zh: Cache_Task_On?.inspSections[currentPage].sectionNameCn, .fr: Cache_Task_On?.inspSections[currentPage].sectionNameFr])
             self.pVC.updateNavigationTitle(title: title)
             (self.pVC! as TaskDetailsViewController).inspCatText = title
         }

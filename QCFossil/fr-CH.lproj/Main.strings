@@ -1,0 +1,1329 @@
+
+/* Class = "UILabel"; text = "Login User"; ObjectID = "0De-Bb-jMQ"; */
+"0De-Bb-jMQ.text" = "Login User";
+
+/* Class = "UILabel"; text = "Last Login Date"; ObjectID = "0GN-hk-lCW"; */
+"0GN-hk-lCW.text" = "Last Login Date";
+
+/* Class = "UITextField"; placeholder = "Brand"; ObjectID = "0Sr-OK-gbB"; */
+"0Sr-OK-gbB.placeholder" = "Brand";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "0an-gH-y0Z"; */
+"0an-gH-y0Z.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "PO No."; ObjectID = "0hs-XD-Lmy"; */
+"0hs-XD-Lmy.text" = "PO No.";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "0y6-hG-2cO"; */
+"0y6-hG-2cO.text" = "Brand";
+
+/* Class = "UILabel"; text = "Ship Win From"; ObjectID = "1Rq-OU-nJh"; */
+"1Rq-OU-nJh.text" = "Ship Win From";
+
+/* Class = "UILabel"; text = "Vendor"; ObjectID = "1Ty-lj-lDd"; */
+"1Ty-lj-lDd.text" = "Vendor";
+
+/* Class = "UILabel"; text = "Ship Win From"; ObjectID = "1UT-yg-55y"; */
+"1UT-yg-55y.text" = "Ship Win From";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "1cO-Lw-OSv"; */
+"1cO-Lw-OSv.text" = "#";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "1eq-ao-YJ7"; */
+"1eq-ao-YJ7.text" = "To";
+
+/* Class = "UITextField"; placeholder = "Number"; ObjectID = "1kK-t6-D6H"; */
+"1kK-t6-D6H.placeholder" = "Number";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "1ln-Fa-j78"; */
+"1ln-Fa-j78.normalTitle" = "Button";
+
+/* Class = "UIBarButtonItem"; title = "App Menu"; ObjectID = "1xx-sI-abZ"; */
+"1xx-sI-abZ.title" = "App Menu";
+
+/* Class = "UILabel"; text = "Please input all defect quantity field"; ObjectID = "1yi-re-8RP"; */
+"1yi-re-8RP.text" = "Please input all defect quantity field";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "2Gg-wF-a4o"; */
+"2Gg-wF-a4o.normalTitle" = "-";
+
+/* Class = "UIViewController"; title = "Photo Album"; ObjectID = "2qe-Vl-qpG"; */
+"2qe-Vl-qpG.title" = "Photo Album";
+
+/* Class = "UILabel"; text = "Remark"; ObjectID = "33N-4E-w4f"; */
+"33N-4E-w4f.text" = "Remark";
+
+/* Class = "UILabel"; text = "Material"; ObjectID = "34g-9c-Mpz"; */
+"34g-9c-Mpz.text" = "Material";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "3OT-T7-8My"; */
+"3OT-T7-8My.text" = "To";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "3Uc-yf-18K"; */
+"3Uc-yf-18K.text" = "Defect Description";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "3YS-K9-niq"; */
+"3YS-K9-niq.normalTitle" = "+";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "40a-cA-YM7"; */
+"40a-cA-YM7.normalTitle" = "+";
+
+/* Class = "UIButton"; normalTitle = "List Backup History"; ObjectID = "487-vU-2mw"; */
+"487-vU-2mw.normalTitle" = "List Backup History";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "4O2-rf-Ky8"; */
+"4O2-rf-Ky8.normalTitle" = "-";
+
+/* Class = "UITabBarController"; title = "Task Form"; ObjectID = "4Xw-ya-RUv"; */
+"4Xw-ya-RUv.title" = "Task Form";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4bx-iz-eEK"; */
+"4bx-iz-eEK.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "4nS-Ew-E3c"; */
+"4nS-Ew-E3c.normalTitle" = "-";
+
+/* Class = "UITextField"; placeholder = "Vendor Location"; ObjectID = "4r8-Uo-j93"; */
+"4r8-Uo-j93.placeholder" = "Vendor Location";
+
+/* Class = "UILabel"; text = "OS QC Qty"; ObjectID = "4s9-LI-eAY"; */
+"4s9-LI-eAY.text" = "OS QC Qty";
+
+/* Class = "UIButton"; normalTitle = "OK"; ObjectID = "50L-7C-vmM"; */
+"50L-7C-vmM.normalTitle" = "OK";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "54m-KC-nQg"; */
+"54m-KC-nQg.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Dimension of Photo from Library or Camera"; ObjectID = "5EB-5J-Umz"; */
+"5EB-5J-Umz.text" = "Dimension of Photo from Library or Camera";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "5L2-fe-32u"; */
+"5L2-fe-32u.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "5Q7-PM-FOk"; */
+"5Q7-PM-FOk.normalTitle" = "Clear";
+
+/* Class = "UITextField"; placeholder = "Location"; ObjectID = "5jG-9G-Thd"; */
+"5jG-9G-Thd.placeholder" = "Location";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "5pu-SA-zZz"; */
+"5pu-SA-zZz.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "PRD 20161206"; ObjectID = "5wE-ES-9We"; */
+"5wE-ES-9We.text" = "PRD 20161206";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "61R-Zn-aQy"; */
+"61R-Zn-aQy.text" = "Brand";
+
+/* Class = "UITextField"; placeholder = "Vendor"; ObjectID = "66f-Zz-2L4"; */
+"66f-Zz-2L4.placeholder" = "Vendor";
+
+/* Class = "UILabel"; text = "Login User"; ObjectID = "6RV-Ah-o6v"; */
+"6RV-Ah-o6v.text" = "Login User";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "6Vs-7v-Q7o"; */
+"6Vs-7v-Q7o.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Inspector Signature"; ObjectID = "6vI-xK-p0e"; */
+"6vI-xK-p0e.text" = "Inspector Signature";
+
+/* Class = "UILabel"; text = "Refused"; ObjectID = "6zw-P9-Tls"; */
+"6zw-P9-Tls.text" = "Refused";
+
+/* Class = "UILabel"; text = "Book/Inspect No."; ObjectID = "7IP-63-XOP"; */
+"7IP-63-XOP.text" = "Book/Inspect No.";
+
+/* Class = "UILabel"; text = "-Task Booking Data"; ObjectID = "7Mg-lD-RtB"; */
+"7Mg-lD-RtB.text" = "-Task Booking Data";
+
+/* Class = "UILabel"; text = "BrandName"; ObjectID = "7R5-4Y-CgN"; */
+"7R5-4Y-CgN.text" = "BrandName";
+
+/* Class = "UIButton"; normalTitle = "- User Logout"; ObjectID = "7UA-tD-779"; */
+"7UA-tD-779.normalTitle" = "- User Logout";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "7Ul-53-Dba"; */
+"7Ul-53-Dba.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "App Release"; ObjectID = "7a8-ji-eWd"; */
+"7a8-ji-eWd.text" = "App Release";
+
+/* Class = "UILabel"; text = "Order Qty"; ObjectID = "7i1-iq-MNd"; */
+"7i1-iq-MNd.text" = "Order Qty";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "7lK-fp-6mC"; */
+"7lK-fp-6mC.text" = "To";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7o3-zf-OhI"; */
+"7o3-zf-OhI.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Defect Desc. 2"; ObjectID = "7r8-kx-AJf"; */
+"7r8-kx-AJf.text" = "Defect Desc. 2";
+
+/* Class = "UILabel"; text = "Book/Inspect Date From"; ObjectID = "7vY-BN-w4T"; */
+"7vY-BN-w4T.text" = "Book/Inspect Date From";
+
+/* Class = "UILabel"; text = "Vendor Location"; ObjectID = "87T-Xf-7N8"; */
+"87T-Xf-7N8.text" = "Vendor Location";
+
+/* Class = "UILabel"; text = "Inspection Area"; ObjectID = "8BT-TM-GFR"; */
+"8BT-TM-GFR.text" = "Inspection Area";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "8Pp-6f-i00"; */
+"8Pp-6f-i00.text" = "Status";
+
+/* Class = "UILabel"; text = "Other Inspections"; ObjectID = "8cp-PI-tcW"; */
+"8cp-PI-tcW.text" = "Other Inspections";
+
+/* Class = "UIBarButtonItem"; title = "Create Task"; ObjectID = "8hx-eC-Xsa"; */
+"8hx-eC-Xsa.title" = "Create Task";
+
+/* Class = "UILabel"; text = "Critical"; ObjectID = "8in-HM-J2l"; */
+"8in-HM-J2l.text" = "Critical";
+
+/* Class = "UISegmentedControl"; 8pL-Pt-7MY.segmentTitles[0] = "English"; ObjectID = "8pL-Pt-7MY"; */
+"8pL-Pt-7MY.segmentTitles[0]" = "English";
+
+/* Class = "UISegmentedControl"; 8pL-Pt-7MY.segmentTitles[1] = "中文"; ObjectID = "8pL-Pt-7MY"; */
+"8pL-Pt-7MY.segmentTitles[1]" = "中文";
+
+/* Class = "UISegmentedControl"; 8pL-Pt-7MY.segmentTitles[2] = "français"; ObjectID = "8pL-Pt-7MY"; */
+"8pL-Pt-7MY.segmentTitles[2]" = "français";
+
+/* Class = "UILabel"; text = "Vendor Location"; ObjectID = "8zD-PJ-3Q8"; */
+"8zD-PJ-3Q8.text" = "Vendor Location";
+
+/* Class = "UILabel"; text = "SW/Req. Ex-fty Date"; ObjectID = "9D2-KS-oqV"; */
+"9D2-KS-oqV.text" = "SW/Req. Ex-fty Date";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "9GZ-Ex-fNB"; */
+"9GZ-Ex-fNB.text" = "Defect Description";
+
+/* Class = "UILabel"; text = "PO No."; ObjectID = "9Nz-2M-TTS"; */
+"9Nz-2M-TTS.text" = "PO No.";
+
+/* Class = "UILabel"; text = "Uploaded"; ObjectID = "9O6-iq-SCn"; */
+"9O6-iq-SCn.text" = "Uploaded";
+
+/* Class = "UILabel"; text = "Please provide below info and email would be sent"; ObjectID = "9SY-3n-19v"; */
+"9SY-3n-19v.text" = "Please provide below info and email would be sent";
+
+/* Class = "UILabel"; text = "New Password"; ObjectID = "9hs-cA-Mde"; */
+"9hs-cA-Mde.text" = "New Password";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "9ir-KP-3tb"; */
+"9ir-KP-3tb.normalTitle" = "Cancel";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "9pb-Xo-mYX"; */
+"9pb-Xo-mYX.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Defect Qty"; ObjectID = "9yA-FU-X23"; */
+"9yA-FU-X23.text" = "Defect Qty";
+
+/* Class = "UILabel"; text = "Inspection Type"; ObjectID = "A1F-IY-9aW"; */
+"A1F-IY-9aW.text" = "Inspection Type";
+
+/* Class = "UILabel"; text = "Please input description for backup data"; ObjectID = "A9g-pg-grl"; */
+"A9g-pg-grl.text" = "Please input description for backup data";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "AJ9-LC-vUG"; */
+"AJ9-LC-vUG.normalTitle" = "Clear";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "ALX-Jj-msi"; */
+"ALX-Jj-msi.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Canceled"; ObjectID = "APp-91-Bh5"; */
+"APp-91-Bh5.text" = "Canceled";
+
+/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "AYB-1i-gza"; */
+"AYB-1i-gza.title" = "Menu";
+
+/* Class = "UILabel"; text = "Username"; ObjectID = "AbF-qW-VVy"; */
+"AbF-qW-VVy.text" = "Username";
+
+/* Class = "UILabel"; text = "Inspection Area"; ObjectID = "Ag9-9L-QEb"; */
+"Ag9-9L-QEb.text" = "Inspection Area";
+
+/* Class = "UILabel"; text = "Current Password"; ObjectID = "AuV-p2-Odj"; */
+"AuV-p2-Odj.text" = "Current Password";
+
+/* Class = "UILabel"; text = "Data Download"; ObjectID = "B0D-Qo-vgx"; */
+"B0D-Qo-vgx.text" = "Data Download";
+
+/* Class = "UINavigationItem"; title = "User Setting"; ObjectID = "B1N-6x-h3J"; */
+"B1N-6x-h3J.title" = "User Setting";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "B9p-CH-mfZ"; */
+"B9p-CH-mfZ.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "BFc-aJ-TCP"; */
+"BFc-aJ-TCP.text" = "Style";
+
+/* Class = "UILabel"; text = "Login through the WS"; ObjectID = "BXx-iU-eha"; */
+"BXx-iU-eha.text" = "Login through the WS";
+
+/* Class = "UILabel"; text = "Backup Process Date"; ObjectID = "Bzm-qY-ESt"; */
+"Bzm-qY-ESt.text" = "Backup Process Date";
+
+/* Class = "UILabel"; text = "-Clean Task"; ObjectID = "C9A-Xy-8jB"; */
+"C9A-Xy-8jB.text" = "-Clean Task";
+
+/* Class = "UILabel"; text = "Task Status"; ObjectID = "CBn-mX-dBr"; */
+"CBn-mX-dBr.text" = "Task Status";
+
+/* Class = "UILabel"; text = "Last Download Date"; ObjectID = "CVd-90-Iz3"; */
+"CVd-90-Iz3.text" = "Last Download Date";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "Ccz-WQ-XxC"; */
+"Ccz-WQ-XxC.text" = "No.";
+
+/* Class = "UITextField"; placeholder = "Number"; ObjectID = "Cla-Ka-RG8"; */
+"Cla-Ka-RG8.placeholder" = "Number";
+
+/* Class = "UILabel"; text = "OPD/RSD"; ObjectID = "D4c-YF-OId"; */
+"D4c-YF-OId.text" = "OPD/RSD";
+
+/* Class = "UILabel"; text = "Book/Inspect Date"; ObjectID = "DBb-1h-zy2"; */
+"DBb-1h-zy2.text" = "Book/Inspect Date";
+
+/* Class = "UILabel"; text = "Other Inspections"; ObjectID = "DCe-SW-l3d"; */
+"DCe-SW-l3d.text" = "Other Inspections";
+
+/* Class = "UILabel"; text = "Major"; ObjectID = "DdF-ju-yY6"; */
+"DdF-ju-yY6.text" = "Major";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "Du3-Ym-nSa"; */
+"Du3-Ym-nSa.normalTitle" = "Login";
+
+/* Class = "UILabel"; text = "Ship Win"; ObjectID = "E3o-Dc-j5a"; */
+"E3o-Dc-j5a.text" = "Ship Win";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "E4L-su-AVN"; */
+"E4L-su-AVN.text" = "Brand";
+
+/* Class = "UITextField"; placeholder = "Final/In-line/Material"; ObjectID = "EWx-TP-RCv"; */
+"EWx-TP-RCv.placeholder" = "Final/In-line/Material";
+
+/* Class = "UILabel"; text = "Product Type"; ObjectID = "Eb5-hE-OtL"; */
+"Eb5-hE-OtL.text" = "Product Type";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "EhM-Ow-63x"; */
+"EhM-Ow-63x.text" = "No.";
+
+/* Class = "UILabel"; text = "Order Qty"; ObjectID = "EpY-Ld-5j8"; */
+"EpY-Ld-5j8.text" = "Order Qty";
+
+/* Class = "UIButton"; normalTitle = "!"; ObjectID = "Ew6-Mm-met"; */
+"Ew6-Mm-met.normalTitle" = "!";
+
+/* Class = "UILabel"; text = "-Inspection Setup Data"; ObjectID = "Ew7-vH-n5K"; */
+"Ew7-vH-n5K.text" = "-Inspection Setup Data";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "F0y-4o-Yzm"; */
+"F0y-4o-Yzm.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "-FGPO Data"; ObjectID = "FBi-fC-gXh"; */
+"FBi-fC-gXh.text" = "-FGPO Data";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "FdD-Qd-XQR"; */
+"FdD-Qd-XQR.text" = "Total";
+
+/* Class = "UIButton"; normalTitle = "Change Password"; ObjectID = "Fks-eg-UeO"; */
+"Fks-eg-UeO.normalTitle" = "Change Password";
+
+/* Class = "UILabel"; text = "Draft"; ObjectID = "FpI-2c-vg9"; */
+"FpI-2c-vg9.text" = "Draft";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "FrJ-vQ-s1k"; */
+"FrJ-vQ-s1k.text" = "Style";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "GBO-Lx-Xug"; */
+"GBO-Lx-Xug.text" = "Location";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "GHf-1a-FNO"; */
+"GHf-1a-FNO.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Vendor Confirmer"; ObjectID = "Ge9-0G-CvO"; */
+"Ge9-0G-CvO.text" = "Vendor Confirmer";
+
+/* Class = "UILabel"; text = "Please provide below info and email would be sent"; ObjectID = "GrK-lG-X2j"; */
+"GrK-lG-X2j.text" = "Please provide below info and email would be sent";
+
+/* Class = "UITextField"; placeholder = "Style"; ObjectID = "Gvt-eA-fxi"; */
+"Gvt-eA-fxi.placeholder" = "Style";
+
+/* Class = "UIButton"; normalTitle = "Download"; ObjectID = "HCt-U5-2b8"; */
+"HCt-U5-2b8.normalTitle" = "Download";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[0] = "Book Date"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[0]" = "Book Date";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[1] = "Book No"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[1]" = "Book No";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[2] = "Status"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[2]" = "Status";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[3] = "PO"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[3]" = "PO";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[4] = "Style"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[4]" = "Style";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[5] = "Brand"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[5]" = "Brand";
+
+/* Class = "UISegmentedControl"; HF6-zZ-GPx.segmentTitles[6] = "Ship Win"; ObjectID = "HF6-zZ-GPx"; */
+"HF6-zZ-GPx.segmentTitles[6]" = "Ship Win";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "HJu-sL-KBv"; */
+"HJu-sL-KBv.text" = "Defect Description";
+
+/* Class = "UILabel"; text = "1.0"; ObjectID = "HKP-Xh-ooU"; */
+"HKP-Xh-ooU.text" = "1.0";
+
+/* Class = "UILabel"; text = "No"; ObjectID = "HOf-kf-UNP"; */
+"HOf-kf-UNP.text" = "No";
+
+/* Class = "UITabBarItem"; title = "QCInfo"; ObjectID = "HS8-Qu-84C"; */
+"HS8-Qu-84C.title" = "QCInfo";
+
+/* Class = "UILabel"; text = "PO No."; ObjectID = "Hd2-j6-0WE"; */
+"Hd2-j6-0WE.text" = "PO No.";
+
+/* Class = "UILabel"; text = "Backup History"; ObjectID = "HfQ-7f-7Rw"; */
+"HfQ-7f-7Rw.text" = "Backup History";
+
+/* Class = "UIButton"; normalTitle = "Tap to Sign"; ObjectID = "HhI-dq-5d8"; */
+"HhI-dq-5d8.normalTitle" = "Tap to Sign";
+
+/* Class = "UILabel"; text = "Product Type"; ObjectID = "Hqa-66-McH"; */
+"Hqa-66-McH.text" = "Product Type";
+
+/* Class = "UIBarButtonItem"; title = "Save & Create"; ObjectID = "I74-An-YaY"; */
+"I74-An-YaY.title" = "Save & Create";
+
+/* Class = "UILabel"; text = "Book/Inspect Date"; ObjectID = "IGJ-OG-LLa"; */
+"IGJ-OG-LLa.text" = "Book/Inspect Date";
+
+/* Class = "UIViewController"; title = "Defect List"; ObjectID = "IIJ-L9-3zw"; */
+"IIJ-L9-3zw.title" = "Defect List";
+
+/* Class = "UILabel"; text = "Email Address"; ObjectID = "IIk-gC-kFd"; */
+"IIk-gC-kFd.text" = "Email Address";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "IVt-Fk-AMB"; */
+"IVt-Fk-AMB.text" = "No.";
+
+/* Class = "UILabel"; text = "Username"; ObjectID = "JUp-Sb-1pH"; */
+"JUp-Sb-1pH.text" = "Username";
+
+/* Class = "UILabel"; text = "Inspection Category"; ObjectID = "Kna-gE-jVC"; */
+"Kna-gE-jVC.text" = "Inspection Category";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "L0a-rj-PkN"; */
+"L0a-rj-PkN.text" = "Description";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "L2e-1p-rRD"; */
+"L2e-1p-rRD.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Others Remark"; ObjectID = "LBe-wJ-29v"; */
+"LBe-wJ-29v.text" = "Others Remark";
+
+/* Class = "UILabel"; text = "Minor"; ObjectID = "LFK-ri-uMf"; */
+"LFK-ri-uMf.text" = "Minor";
+
+/* Class = "UIButton"; normalTitle = "Tap to Sign"; ObjectID = "LKU-C3-bif"; */
+"LKU-C3-bif.normalTitle" = "Tap to Sign";
+
+/* Class = "UILabel"; text = "Ship Win"; ObjectID = "LLJ-y4-jWy"; */
+"LLJ-y4-jWy.text" = "Ship Win";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "LPu-PF-jUm"; */
+"LPu-PF-jUm.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "LXs-Mw-vJg"; */
+"LXs-Mw-vJg.text" = "Brand";
+
+/* Class = "UILabel"; text = "Defect Qty"; ObjectID = "LZn-er-olE"; */
+"LZn-er-olE.text" = "Defect Qty";
+
+/* Class = "UINavigationItem"; title = "Task Form"; ObjectID = "Lb8-vK-5w9"; */
+"Lb8-vK-5w9.title" = "Task Form";
+
+/* Class = "UILabel"; text = "Inspection Item"; ObjectID = "Lbs-ga-Cqr"; */
+"Lbs-ga-Cqr.text" = "Inspection Item";
+
+/* Class = "UINavigationItem"; title = "Data Control"; ObjectID = "Lch-3O-KMe"; */
+"Lch-3O-KMe.title" = "Data Control";
+
+/* Class = "UILabel"; text = "Major"; ObjectID = "Lx8-Ze-RQk"; */
+"Lx8-Ze-RQk.text" = "Major";
+
+/* Class = "UILabel"; text = "Username"; ObjectID = "M09-kr-pOW"; */
+"M09-kr-pOW.text" = "Username";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "M32-pP-CNe"; */
+"M32-pP-CNe.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Task Form"; ObjectID = "MEK-vI-pJP"; */
+"MEK-vI-pJP.title" = "Task Form";
+
+/* Class = "UIBarButtonItem"; title = "App Menu"; ObjectID = "MVH-Cv-vla"; */
+"MVH-Cv-vla.title" = "App Menu";
+
+/* Class = "UITextField"; placeholder = "Leather-Final"; ObjectID = "MX6-83-zRz"; */
+"MX6-83-zRz.placeholder" = "Leather-Final";
+
+/* Class = "UIButton"; normalTitle = "Upload"; ObjectID = "Mbf-cc-bib"; */
+"Mbf-cc-bib.normalTitle" = "Upload";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "Men-L6-USv"; */
+"Men-L6-USv.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "TS-1"; ObjectID = "MmE-Bw-PHF"; */
+"MmE-Bw-PHF.text" = "TS-1";
+
+/* Class = "UILabel"; text = "Vendor"; ObjectID = "Mpj-D7-Sa4"; */
+"Mpj-D7-Sa4.text" = "Vendor";
+
+/* Class = "UILabel"; text = "Inspection Type"; ObjectID = "My1-Qy-cDJ"; */
+"My1-Qy-cDJ.text" = "Inspection Type";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "N1r-cJ-gnS"; */
+"N1r-cJ-gnS.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Last Upload Date"; ObjectID = "NJ5-oM-T0h"; */
+"NJ5-oM-T0h.text" = "Last Upload Date";
+
+/* Class = "UILabel"; text = "Signature"; ObjectID = "NMa-Wj-hgg"; */
+"NMa-Wj-hgg.text" = "Signature";
+
+/* Class = "UILabel"; text = "Please Select Product Type and Inspection Type"; ObjectID = "NN1-pn-W83"; */
+"NN1-pn-W83.text" = "Please Select Product Type and Inspection Type";
+
+/* Class = "UIButton"; normalTitle = "- Data Control"; ObjectID = "NP5-MQ-6ZK"; */
+"NP5-MQ-6ZK.normalTitle" = "- Data Control";
+
+/* Class = "UILabel"; text = "Critical"; ObjectID = "NSm-Ht-bYb"; */
+"NSm-Ht-bYb.text" = "Critical";
+
+/* Class = "UILabel"; text = "PO No."; ObjectID = "Naq-G6-XxO"; */
+"Naq-G6-XxO.text" = "PO No.";
+
+/* Class = "UINavigationItem"; title = "Task Search"; ObjectID = "Nbk-dR-TO6"; */
+"Nbk-dR-TO6.title" = "Task Search";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "NeU-Py-reK"; */
+"NeU-Py-reK.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "!"; ObjectID = "NmV-OO-KMs"; */
+"NmV-OO-KMs.text" = "!";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "NqC-By-tVR"; */
+"NqC-By-tVR.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "2015-01-01"; ObjectID = "NqK-ph-a4P"; */
+"NqK-ph-a4P.text" = "2015-01-01";
+
+/* Class = "UILabel"; text = "PO List/Material"; ObjectID = "O4x-cb-Sn8"; */
+"O4x-cb-Sn8.text" = "PO List/Material";
+
+/* Class = "UILabel"; text = "Pending"; ObjectID = "O52-7f-rw0"; */
+"O52-7f-rw0.text" = "Pending";
+
+/* Class = "UILabel"; text = "Inspector"; ObjectID = "Oau-Jx-fL7"; */
+"Oau-Jx-fL7.text" = "Inspector";
+
+/* Class = "UILabel"; text = "OPD/RSD"; ObjectID = "Omh-Wb-MbO"; */
+"Omh-Wb-MbO.text" = "OPD/RSD";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "P4q-5S-Uet"; */
+"P4q-5S-Uet.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "PKL-Ch-iMJ"; */
+"PKL-Ch-iMJ.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "PbC-Bg-OUg"; */
+"PbC-Bg-OUg.text" = "To";
+
+/* Class = "UILabel"; text = "Progress"; ObjectID = "PyQ-z5-KdD"; */
+"PyQ-z5-KdD.text" = "Progress";
+
+/* Class = "UILabel"; text = "Vendor"; ObjectID = "Q0f-qW-czV"; */
+"Q0f-qW-czV.text" = "Vendor";
+
+/* Class = "UILabel"; text = "Inspection Item"; ObjectID = "QIO-l0-Iha"; */
+"QIO-l0-Iha.text" = "Inspection Item";
+
+/* Class = "UILabel"; text = "2015-01-01"; ObjectID = "QOx-DB-SCV"; */
+"QOx-DB-SCV.text" = "2015-01-01";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "QTK-A5-evA"; */
+"QTK-A5-evA.title" = "Edit";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "QUs-3G-rBT"; */
+"QUs-3G-rBT.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "QWl-zM-sJ4"; */
+"QWl-zM-sJ4.text" = "Label";
+
+/* Class = "UILabel"; text = "Inspection Item"; ObjectID = "Qpa-8O-jOA"; */
+"Qpa-8O-jOA.text" = "Inspection Item";
+
+/* Class = "UILabel"; text = "Line No."; ObjectID = "Qtt-md-Iq1"; */
+"Qtt-md-Iq1.text" = "Line No.";
+
+/* Class = "UILabel"; text = "Defect Type"; ObjectID = "QyD-cz-oe9"; */
+"QyD-cz-oe9.text" = "Defect Type";
+
+/* Class = "UILabel"; text = "DeviceId"; ObjectID = "Qz8-nl-NXA"; */
+"Qz8-nl-NXA.text" = "DeviceId";
+
+/* Class = "UIButton"; normalTitle = "Delete Login User Data"; ObjectID = "R5c-L3-ukj"; */
+"R5c-L3-ukj.normalTitle" = "Delete Login User Data";
+
+/* Class = "UILabel"; text = "Defect Desc. 1"; ObjectID = "RNU-dL-6Ir"; */
+"RNU-dL-6Ir.text" = "Defect Desc. 1";
+
+/* Class = "UILabel"; text = "-Task Status Data"; ObjectID = "ROo-yG-EQ5"; */
+"ROo-yG-EQ5.text" = "-Task Status Data";
+
+/* Class = "UILabel"; text = "Login User"; ObjectID = "Rea-RR-LUK"; */
+"Rea-RR-LUK.text" = "Login User";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "SFX-ve-Tfe"; */
+"SFX-ve-Tfe.normalTitle" = "Clear";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "T7H-HM-r8K"; */
+"T7H-HM-r8K.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "T8k-LR-lv4"; */
+"T8k-LR-lv4.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "Defect Type"; ObjectID = "TJg-Nq-52r"; */
+"TJg-Nq-52r.text" = "Defect Type";
+
+/* Class = "UIBarButtonItem"; title = "Create Task"; ObjectID = "TSw-Ub-97e"; */
+"TSw-Ub-97e.title" = "Create Task";
+
+/* Class = "UITextField"; placeholder = "Number"; ObjectID = "TV5-Xt-sXV"; */
+"TV5-Xt-sXV.placeholder" = "Number";
+
+/* Class = "UILabel"; text = "Critical"; ObjectID = "UAT-zL-rkZ"; */
+"UAT-zL-rkZ.text" = "Critical";
+
+/* Class = "UILabel"; text = "Defect Position"; ObjectID = "UCK-R8-dSx"; */
+"UCK-R8-dSx.text" = "Defect Position";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "UQs-Lv-MqL"; */
+"UQs-Lv-MqL.text" = "Label";
+
+/* Class = "UILabel"; text = "Photo Filename"; ObjectID = "UeU-7J-hrS"; */
+"UeU-7J-hrS.text" = "Photo Filename";
+
+/* Class = "UIButton"; normalTitle = "From Camera"; ObjectID = "UfU-Su-3aw"; */
+"UfU-Su-3aw.normalTitle" = "From Camera";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "UkA-ki-Bbr"; */
+"UkA-ki-Bbr.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "V2Y-kN-xlF"; */
+"V2Y-kN-xlF.normalTitle" = "-";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "V4H-o9-Oai"; */
+"V4H-o9-Oai.normalTitle" = "+";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "VEP-zw-bFh"; */
+"VEP-zw-bFh.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "PO"; ObjectID = "VMZ-kA-TGt"; */
+"VMZ-kA-TGt.text" = "PO";
+
+/* Class = "UILabel"; text = "POLINE00001"; ObjectID = "VNi-aK-TWX"; */
+"VNi-aK-TWX.text" = "POLINE00001";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "VQg-Va-OOS"; */
+"VQg-Va-OOS.text" = "No.";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "VaI-XW-cQl"; */
+"VaI-XW-cQl.normalTitle" = "+";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "VsY-E4-JHO"; */
+"VsY-E4-JHO.text" = "Label";
+
+/* Class = "UILabel"; text = "Ship To"; ObjectID = "W7g-wa-CeL"; */
+"W7g-wa-CeL.text" = "Ship To";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "WZk-e3-FI1"; */
+"WZk-e3-FI1.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "WhK-Bf-FRf"; */
+"WhK-Bf-FRf.text" = "Type";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "WpL-wG-mWJ"; */
+"WpL-wG-mWJ.normalTitle" = "Clear";
+
+/* Class = "UITextField"; placeholder = "Location"; ObjectID = "X46-Ic-hX7"; */
+"X46-Ic-hX7.placeholder" = "Location";
+
+/* Class = "UITabBarItem"; title = "Task Findings"; ObjectID = "XQJ-bs-yhy"; */
+"XQJ-bs-yhy.title" = "Task Findings";
+
+/* Class = "UILabel"; text = "Defect Desc. 2"; ObjectID = "XQT-r5-LSk"; */
+"XQT-r5-LSk.text" = "Defect Desc. 2";
+
+/* Class = "UITextField"; placeholder = "Product Type"; ObjectID = "XsJ-4F-dWu"; */
+"XsJ-4F-dWu.placeholder" = "Product Type";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "XtV-FU-aoF"; */
+"XtV-FU-aoF.text" = "Brand";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Xzr-Bq-tdI"; */
+"Xzr-Bq-tdI.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "YNR-A3-5Q7"; */
+"YNR-A3-5Q7.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Major"; ObjectID = "YRc-hY-8AJ"; */
+"YRc-hY-8AJ.text" = "Major";
+
+/* Class = "UIButton"; normalTitle = "Backup Data"; ObjectID = "YgL-Au-J8U"; */
+"YgL-Au-J8U.normalTitle" = "Backup Data";
+
+/* Class = "UISegmentedControl"; Z71-Ah-h4r.segmentTitles[0] = "Filename"; ObjectID = "Z71-Ah-h4r"; */
+"Z71-Ah-h4r.segmentTitles[0]" = "Filename";
+
+/* Class = "UISegmentedControl"; Z71-Ah-h4r.segmentTitles[1] = "Inspect Category"; ObjectID = "Z71-Ah-h4r"; */
+"Z71-Ah-h4r.segmentTitles[1]" = "Inspect Category";
+
+/* Class = "UISegmentedControl"; Z71-Ah-h4r.segmentTitles[2] = "Inspect Area"; ObjectID = "Z71-Ah-h4r"; */
+"Z71-Ah-h4r.segmentTitles[2]" = "Inspect Area";
+
+/* Class = "UISegmentedControl"; Z71-Ah-h4r.segmentTitles[3] = "Inspect Item"; ObjectID = "Z71-Ah-h4r"; */
+"Z71-Ah-h4r.segmentTitles[3]" = "Inspect Item";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "ZKx-ql-VPD"; */
+"ZKx-ql-VPD.title" = "Back";
+
+/* Class = "UILabel"; text = "Inspection Information"; ObjectID = "ZW7-9I-ILw"; */
+"ZW7-9I-ILw.text" = "Inspection Information";
+
+/* Class = "UILabel"; text = "OPD/RSD"; ObjectID = "ZYR-en-Jza"; */
+"ZYR-en-Jza.text" = "OPD/RSD";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "ZaI-KL-xWa"; */
+"ZaI-KL-xWa.text" = "#";
+
+/* Class = "UITextField"; placeholder = "Style"; ObjectID = "Zn2-1C-Ldn"; */
+"Zn2-1C-Ldn.placeholder" = "Style";
+
+/* Class = "UINavigationItem"; title = "Task Findings"; ObjectID = "a24-zn-2xX"; */
+"a24-zn-2xX.title" = "Task Findings";
+
+/* Class = "UIButton"; normalTitle = "From Library"; ObjectID = "a2b-pK-vyB"; */
+"a2b-pK-vyB.normalTitle" = "From Library";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "a9k-Cc-Ugw"; */
+"a9k-Cc-Ugw.normalTitle" = "Clear";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "aF9-ZD-BTK"; */
+"aF9-ZD-BTK.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "aJo-kA-THf"; */
+"aJo-kA-THf.text" = "No.";
+
+/* Class = "UIViewController"; title = "Create Task Form"; ObjectID = "aPk-6w-Rfo"; */
+"aPk-6w-Rfo.title" = "Create Task Form";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "aUL-rt-PEM"; */
+"aUL-rt-PEM.text" = "Defect Description";
+
+/* Class = "UILabel"; text = "OS QC Qty"; ObjectID = "aVf-b4-cUh"; */
+"aVf-b4-cUh.text" = "OS QC Qty";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "aZE-A7-w9n"; */
+"aZE-A7-w9n.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "Earliest Ship Win"; ObjectID = "aZQ-dJ-hau"; */
+"aZQ-dJ-hau.text" = "Earliest Ship Win";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "ahm-PM-2tE"; */
+"ahm-PM-2tE.text" = "#";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "aou-eF-l4Y"; */
+"aou-eF-l4Y.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Book/Inspect No."; ObjectID = "aph-5T-sba"; */
+"aph-5T-sba.text" = "Book/Inspect No.";
+
+/* Class = "UIButton"; normalTitle = "- Task Search"; ObjectID = "aw4-ZW-jKG"; */
+"aw4-ZW-jKG.normalTitle" = "- Task Search";
+
+/* Class = "UILabel"; text = "Task Scheduled"; ObjectID = "b3b-B8-M7K"; */
+"b3b-B8-M7K.text" = "Task Scheduled";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "bBn-oT-skx"; */
+"bBn-oT-skx.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UITextField"; placeholder = "Number"; ObjectID = "bFq-4f-K8n"; */
+"bFq-4f-K8n.placeholder" = "Number";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "bGc-hG-VPa"; */
+"bGc-hG-VPa.text" = "#";
+
+/* Class = "UINavigationItem"; title = "Data Sync"; ObjectID = "bNK-Iw-dZu"; */
+"bNK-Iw-dZu.title" = "Data Sync";
+
+/* Class = "UITextField"; placeholder = "Inspector Name"; ObjectID = "bPk-BQ-MAy"; */
+"bPk-BQ-MAy.placeholder" = "Inspector Name";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "baX-uG-Qay"; */
+"baX-uG-Qay.text" = "#";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "bcg-cj-8hR"; */
+"bcg-cj-8hR.text" = "#";
+
+/* Class = "UILabel"; text = "Defect Desc. 1"; ObjectID = "bdR-5O-Bik"; */
+"bdR-5O-Bik.text" = "Defect Desc. 1";
+
+/* Class = "UISegmentedControl"; bic-TQ-Bmc.segmentTitles[0] = "600x800"; ObjectID = "bic-TQ-Bmc"; */
+"bic-TQ-Bmc.segmentTitles[0]" = "600x800";
+
+/* Class = "UISegmentedControl"; bic-TQ-Bmc.segmentTitles[1] = "800x1200"; ObjectID = "bic-TQ-Bmc"; */
+"bic-TQ-Bmc.segmentTitles[1]" = "800x1200";
+
+/* Class = "UISegmentedControl"; bic-TQ-Bmc.segmentTitles[2] = "1200x1600"; ObjectID = "bic-TQ-Bmc"; */
+"bic-TQ-Bmc.segmentTitles[2]" = "1200x1600";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "bj8-LR-3mx"; */
+"bj8-LR-3mx.normalTitle" = "+";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "bxz-ik-sq3"; */
+"bxz-ik-sq3.normalTitle" = "Back";
+
+/* Class = "UITextField"; placeholder = "Brand"; ObjectID = "cAl-gT-duU"; */
+"cAl-gT-duU.placeholder" = "Brand";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "cIy-xg-ris"; */
+"cIy-xg-ris.normalTitle" = "Button";
+
+/* Class = "UILabel"; accessibilityLabel = "dsfds"; ObjectID = "cJR-x3-TO5"; */
+"cJR-x3-TO5.accessibilityLabel" = "dsfds";
+
+/* Class = "UILabel"; text = "Template Type"; ObjectID = "cJR-x3-TO5"; */
+"cJR-x3-TO5.text" = "Template Type";
+
+/* Class = "UIButton"; normalTitle = "Forget Password?"; ObjectID = "cLq-pp-HwJ"; */
+"cLq-pp-HwJ.normalTitle" = "Forget Password?";
+
+/* Class = "UILabel"; text = "Inspection No."; ObjectID = "cNu-t4-TYj"; */
+"cNu-t4-TYj.text" = "Inspection No.";
+
+/* Class = "UILabel"; text = "Defect Type"; ObjectID = "cRW-Vo-HTq"; */
+"cRW-Vo-HTq.text" = "Defect Type";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "cf8-dB-5ae"; */
+"cf8-dB-5ae.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Booking Qty"; ObjectID = "clR-3A-065"; */
+"clR-3A-065.text" = "Booking Qty";
+
+/* Class = "UILabel"; text = "Other Inspections"; ObjectID = "coK-nE-ERb"; */
+"coK-nE-ERb.text" = "Other Inspections";
+
+/* Class = "UILabel"; text = "Password"; ObjectID = "cr7-yF-s3t"; */
+"cr7-yF-s3t.text" = "Password";
+
+/* Class = "UIBarButtonItem"; title = "App Menu"; ObjectID = "cyZ-7K-tmM"; */
+"cyZ-7K-tmM.title" = "App Menu";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "cya-T8-EeY"; */
+"cya-T8-EeY.text" = "No.";
+
+/* Class = "UILabel"; text = "Book/Inspect No."; ObjectID = "dFx-Tv-Di6"; */
+"dFx-Tv-Di6.text" = "Book/Inspect No.";
+
+/* Class = "UILabel"; text = "PO Line No."; ObjectID = "dGg-Wo-54u"; */
+"dGg-Wo-54u.text" = "PO Line No.";
+
+/* Class = "UILabel"; text = "Defect Position Points&Info"; ObjectID = "daC-tr-7ei"; */
+"daC-tr-7ei.text" = "Defect Position Points&Info";
+
+/* Class = "UILabel"; text = "Minor"; ObjectID = "dd1-eC-fHE"; */
+"dd1-eC-fHE.text" = "Minor";
+
+/* Class = "UILabel"; text = "-Task Result Photo"; ObjectID = "dep-iC-XaM"; */
+"dep-iC-XaM.text" = "-Task Result Photo";
+
+/* Class = "UILabel"; text = "PO000000001"; ObjectID = "dvs-75-b6C"; */
+"dvs-75-b6C.text" = "PO000000001";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "e0j-Kr-1y5"; */
+"e0j-Kr-1y5.text" = "Brand";
+
+/* Class = "UILabel"; text = "Vendor Location"; ObjectID = "e0s-U1-BN8"; */
+"e0s-U1-BN8.text" = "Vendor Location";
+
+/* Class = "UIButton"; normalTitle = "!"; ObjectID = "e1l-Qw-3TL"; */
+"e1l-Qw-3TL.normalTitle" = "!";
+
+/* Class = "UILabel"; text = "Last Download"; ObjectID = "e2a-oS-iim"; */
+"e2a-oS-iim.text" = "Last Download";
+
+/* Class = "UIButton"; normalTitle = "OK"; ObjectID = "eJT-J2-Edz"; */
+"eJT-J2-Edz.normalTitle" = "OK";
+
+/* Class = "UILabel"; text = "Inspect Area"; ObjectID = "eSJ-Ym-KzT"; */
+"eSJ-Ym-KzT.text" = "Inspect Area";
+
+/* Class = "UILabel"; text = "Defect Desc. 1"; ObjectID = "eeI-Ei-N5F"; */
+"eeI-Ei-N5F.text" = "Defect Desc. 1";
+
+/* Class = "UILabel"; text = "Others Remark"; ObjectID = "ehf-E9-KHJ"; */
+"ehf-E9-KHJ.text" = "Others Remark";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "ep5-Ds-mKM"; */
+"ep5-Ds-mKM.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eti-UV-pfa"; */
+"eti-UV-pfa.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Inspection Category"; ObjectID = "f83-Ao-cWr"; */
+"f83-Ao-cWr.text" = "Inspection Category";
+
+/* Class = "UIButton"; normalTitle = "Search"; ObjectID = "f8G-Ku-8W9"; */
+"f8G-Ku-8W9.normalTitle" = "Search";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "fGk-f4-e15"; */
+"fGk-f4-e15.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Add PO Line(s)"; ObjectID = "fOn-z4-3jH"; */
+"fOn-z4-3jH.normalTitle" = "Add PO Line(s)";
+
+/* Class = "UIBarButtonItem"; title = "App Menu"; ObjectID = "fcD-PS-xxf"; */
+"fcD-PS-xxf.title" = "App Menu";
+
+/* Class = "UILabel"; text = "Task Scheduled? "; ObjectID = "fl5-nq-TPl"; */
+"fl5-nq-TPl.text" = "Task Scheduled? ";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "fnv-a2-JSP"; */
+"fnv-a2-JSP.text" = "Defect Description";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "foa-SN-9aM"; */
+"foa-SN-9aM.text" = "Defect Description";
+
+/* Class = "UIViewController"; title = "QCINFO"; ObjectID = "g7W-1g-2s5"; */
+"g7W-1g-2s5.title" = "QCINFO";
+
+/* Class = "UILabel"; text = "Vendor Location"; ObjectID = "gEQ-hx-25g"; */
+"gEQ-hx-25g.text" = "Vendor Location";
+
+/* Class = "UILabel"; text = "Booking. Qty"; ObjectID = "gEk-NR-jXX"; */
+"gEk-NR-jXX.text" = "Booking. Qty";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "gEq-gm-TFf"; */
+"gEq-gm-TFf.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "-Master Data"; ObjectID = "gPx-MP-U26"; */
+"gPx-MP-U26.text" = "-Master Data";
+
+/* Class = "UILabel"; text = "Ship Win"; ObjectID = "gYx-Jl-ngm"; */
+"gYx-Jl-ngm.text" = "Ship Win";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "gjO-ve-pcL"; */
+"gjO-ve-pcL.text" = "Style";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "glM-6N-PbT"; */
+"glM-6N-PbT.text" = "No.";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "gnZ-m3-Id5"; */
+"gnZ-m3-Id5.text" = "Style";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "grh-GU-ue5"; */
+"grh-GU-ue5.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "gwL-Rw-6ae"; */
+"gwL-Rw-6ae.text" = "#";
+
+/* Class = "UILabel"; text = "Data Upload"; ObjectID = "gyI-su-fce"; */
+"gyI-su-fce.text" = "Data Upload";
+
+/* Class = "UILabel"; text = "Defect Desc. 2"; ObjectID = "h7m-av-aQw"; */
+"h7m-av-aQw.text" = "Defect Desc. 2";
+
+/* Class = "UIButton"; normalTitle = "!"; ObjectID = "hAU-uq-dgE"; */
+"hAU-uq-dgE.normalTitle" = "!";
+
+/* Class = "UITabBarItem"; title = "Task Form"; ObjectID = "hBp-gZ-PyS"; */
+"hBp-gZ-PyS.title" = "Task Form";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "hJK-R5-CLM"; */
+"hJK-R5-CLM.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "Vendor"; ObjectID = "hJe-CU-OUB"; */
+"hJe-CU-OUB.text" = "Vendor";
+
+/* Class = "UILabel"; text = "OPD/RSD From"; ObjectID = "hKf-oE-SZ3"; */
+"hKf-oE-SZ3.text" = "OPD/RSD From";
+
+/* Class = "UISegmentedControl"; hPz-07-OSg.segmentTitles[0] = "All"; ObjectID = "hPz-07-OSg"; */
+"hPz-07-OSg.segmentTitles[0]" = "All";
+
+/* Class = "UISegmentedControl"; hPz-07-OSg.segmentTitles[1] = "Material"; ObjectID = "hPz-07-OSg"; */
+"hPz-07-OSg.segmentTitles[1]" = "Material";
+
+/* Class = "UISegmentedControl"; hPz-07-OSg.segmentTitles[2] = "Production Process"; ObjectID = "hPz-07-OSg"; */
+"hPz-07-OSg.segmentTitles[2]" = "Production Process";
+
+/* Class = "UISegmentedControl"; hPz-07-OSg.segmentTitles[3] = "Product Packaging"; ObjectID = "hPz-07-OSg"; */
+"hPz-07-OSg.segmentTitles[3]" = "Product Packaging";
+
+/* Class = "UISegmentedControl"; hPz-07-OSg.segmentTitles[4] = "Other Inspections"; ObjectID = "hPz-07-OSg"; */
+"hPz-07-OSg.segmentTitles[4]" = "Other Inspections";
+
+/* Class = "UITextField"; placeholder = "Vendor "; ObjectID = "hk6-ET-SNX"; */
+"hk6-ET-SNX.placeholder" = "Vendor ";
+
+/* Class = "UILabel"; text = "01172017"; ObjectID = "hze-KE-NAb"; */
+"hze-KE-NAb.text" = "01172017";
+
+/* Class = "UILabel"; text = "Backup Remarks"; ObjectID = "i5a-rd-8xs"; */
+"i5a-rd-8xs.text" = "Backup Remarks";
+
+/* Class = "UILabel"; text = "Change Password ?"; ObjectID = "iOS-8J-IGl"; */
+"iOS-8J-IGl.text" = "Change Password ?";
+
+/* Class = "UILabel"; text = "Brand"; ObjectID = "iaD-LO-B0f"; */
+"iaD-LO-B0f.text" = "Brand";
+
+/* Class = "UILabel"; text = "PO No."; ObjectID = "icc-Sa-Uco"; */
+"icc-Sa-Uco.text" = "PO No.";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "if4-23-zE8"; */
+"if4-23-zE8.normalTitle" = "-";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "imN-Ub-MAw"; */
+"imN-Ub-MAw.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Basic Information"; ObjectID = "j4P-oF-mPC"; */
+"j4P-oF-mPC.text" = "Basic Information";
+
+/* Class = "UILabel"; text = "Inspection Type"; ObjectID = "jD0-Sj-1PA"; */
+"jD0-Sj-1PA.text" = "Inspection Type";
+
+/* Class = "UILabel"; text = "Order Qty"; ObjectID = "jFi-ke-QOQ"; */
+"jFi-ke-QOQ.text" = "Order Qty";
+
+/* Class = "UIButton"; normalTitle = "Tap to Sign"; ObjectID = "jJk-y5-oBj"; */
+"jJk-y5-oBj.normalTitle" = "Tap to Sign";
+
+/* Class = "UILabel"; text = "0%"; ObjectID = "jKl-Tt-9cr"; */
+"jKl-Tt-9cr.text" = "0%";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "jc4-on-80a"; */
+"jc4-on-80a.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "Defect Desc. 1"; ObjectID = "jmh-vb-IHD"; */
+"jmh-vb-IHD.text" = "Defect Desc. 1";
+
+/* Class = "UIButton"; normalTitle = "Forget Username?"; ObjectID = "ju8-p4-9Xw"; */
+"ju8-p4-9Xw.normalTitle" = "Forget Username?";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "k0T-y7-IjG"; */
+"k0T-y7-IjG.text" = "Style";
+
+/* Class = "UINavigationItem"; title = "Version 1.0"; ObjectID = "k2B-er-hg2"; */
+"k2B-er-hg2.title" = "Version 1.0";
+
+/* Class = "UILabel"; text = "2015-01-01"; ObjectID = "k5v-M8-F4y"; */
+"k5v-M8-F4y.text" = "2015-01-01";
+
+/* Class = "UITextField"; placeholder = "Vendor Name"; ObjectID = "k8l-4x-74o"; */
+"k8l-4x-74o.placeholder" = "Vendor Name";
+
+/* Class = "UILabel"; text = "Displaying error msg"; ObjectID = "kSY-7c-t6t"; */
+"kSY-7c-t6t.text" = "Displaying error msg";
+
+/* Class = "UILabel"; text = "Other Remark"; ObjectID = "kX4-4Z-NcR"; */
+"kX4-4Z-NcR.text" = "Other Remark";
+
+/* Class = "UILabel"; text = "Last Upload Tasks"; ObjectID = "kdq-6g-D6s"; */
+"kdq-6g-D6s.text" = "Last Upload Tasks";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lHJ-A1-JzS"; */
+"lHJ-A1-JzS.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Ship To"; ObjectID = "lP8-aO-Lpy"; */
+"lP8-aO-Lpy.text" = "Ship To";
+
+/* Class = "UILabel"; text = "Confirmed"; ObjectID = "lx7-bZ-yg6"; */
+"lx7-bZ-yg6.text" = "Confirmed";
+
+/* Class = "UIButton"; normalTitle = "- Data Sync"; ObjectID = "mad-Wl-AFc"; */
+"mad-Wl-AFc.normalTitle" = "- Data Sync";
+
+/* Class = "UILabel"; text = "Inspector"; ObjectID = "mms-nt-kpx"; */
+"mms-nt-kpx.text" = "Inspector";
+
+/* Class = "UILabel"; text = "Order Qty"; ObjectID = "myF-qB-l15"; */
+"myF-qB-l15.text" = "Order Qty";
+
+/* Class = "UILabel"; text = "Email Address"; ObjectID = "nAp-IT-7mY"; */
+"nAp-IT-7mY.text" = "Email Address";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "nCc-Km-ogM"; */
+"nCc-Km-ogM.text" = "#";
+
+/* Class = "UILabel"; text = "Defect Desc. 2"; ObjectID = "nHv-5r-kI0"; */
+"nHv-5r-kI0.text" = "Defect Desc. 2";
+
+/* Class = "UILabel"; text = "01172017"; ObjectID = "nep-K6-mkI"; */
+"nep-K6-mkI.text" = "01172017";
+
+/* Class = "UISegmentedControl"; nxV-Kf-Cjo.segmentTitles[0] = "PO No"; ObjectID = "nxV-Kf-Cjo"; */
+"nxV-Kf-Cjo.segmentTitles[0]" = "PO No";
+
+/* Class = "UISegmentedControl"; nxV-Kf-Cjo.segmentTitles[1] = "Brand"; ObjectID = "nxV-Kf-Cjo"; */
+"nxV-Kf-Cjo.segmentTitles[1]" = "Brand";
+
+/* Class = "UISegmentedControl"; nxV-Kf-Cjo.segmentTitles[2] = "Style"; ObjectID = "nxV-Kf-Cjo"; */
+"nxV-Kf-Cjo.segmentTitles[2]" = "Style";
+
+/* Class = "UISegmentedControl"; nxV-Kf-Cjo.segmentTitles[3] = "Ship To"; ObjectID = "nxV-Kf-Cjo"; */
+"nxV-Kf-Cjo.segmentTitles[3]" = "Ship To";
+
+/* Class = "UISegmentedControl"; nxV-Kf-Cjo.segmentTitles[4] = "Ship Win"; ObjectID = "nxV-Kf-Cjo"; */
+"nxV-Kf-Cjo.segmentTitles[4]" = "Ship Win";
+
+/* Class = "UISegmentedControl"; nxV-Kf-Cjo.segmentTitles[5] = "OPD/RSD"; ObjectID = "nxV-Kf-Cjo"; */
+"nxV-Kf-Cjo.segmentTitles[5]" = "OPD/RSD";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "orV-Mu-vKW"; */
+"orV-Mu-vKW.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "App Version"; ObjectID = "ord-kB-IGW"; */
+"ord-kB-IGW.text" = "App Version";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "p6V-uL-rtd"; */
+"p6V-uL-rtd.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Defect Qty"; ObjectID = "p7Y-Z9-1Cb"; */
+"p7Y-Z9-1Cb.text" = "Defect Qty";
+
+/* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "pCa-lK-taz"; */
+"pCa-lK-taz.normalTitle" = "Delete";
+
+/* Class = "UILabel"; text = "InspectionAreaInput"; ObjectID = "pLK-lg-YIT"; */
+"pLK-lg-YIT.text" = "InspectionAreaInput";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "pN7-Fu-MBF"; */
+"pN7-Fu-MBF.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UIViewController"; title = "Container"; ObjectID = "pXB-kh-0oP"; */
+"pXB-kh-0oP.title" = "Container";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "pc3-AT-k1U"; */
+"pc3-AT-k1U.text" = "To";
+
+/* Class = "UILabel"; text = "Major"; ObjectID = "peb-SH-E7o"; */
+"peb-SH-E7o.text" = "Major";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "pfA-7T-C0O"; */
+"pfA-7T-C0O.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "2015-01-01"; ObjectID = "q2y-NC-nJf"; */
+"q2y-NC-nJf.text" = "2015-01-01";
+
+/* Class = "UIButton"; normalTitle = "- User Setting"; ObjectID = "qWE-ik-KVi"; */
+"qWE-ik-KVi.normalTitle" = "- User Setting";
+
+/* Class = "UILabel"; text = "No."; ObjectID = "qdH-uA-oWO"; */
+"qdH-uA-oWO.text" = "No.";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "qgB-33-WVc"; */
+"qgB-33-WVc.text" = "Style";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "r9D-J1-Of9"; */
+"r9D-J1-Of9.text" = "Language";
+
+/* Class = "UILabel"; text = "Signature"; ObjectID = "rE3-S6-N38"; */
+"rE3-S6-N38.text" = "Signature";
+
+/* Class = "UILabel"; text = "Last Update"; ObjectID = "rLi-CR-n6y"; */
+"rLi-CR-n6y.text" = "Last Update";
+
+/* Class = "UINavigationItem"; title = "Photo Album"; ObjectID = "rNE-ug-hGL"; */
+"rNE-ug-hGL.title" = "Photo Album";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "rcB-Z4-NLC"; */
+"rcB-Z4-NLC.normalTitle" = "Back";
+
+/* Class = "UILabel"; text = "InspectionItemInput"; ObjectID = "re5-wk-VTx"; */
+"re5-wk-VTx.text" = "InspectionItemInput";
+
+/* Class = "UIButton"; normalTitle = "Search"; ObjectID = "rnv-hd-0c4"; */
+"rnv-hd-0c4.normalTitle" = "Search";
+
+/* Class = "UIButton"; normalTitle = "- PO Search"; ObjectID = "rti-K1-inY"; */
+"rti-K1-inY.normalTitle" = "- PO Search";
+
+/* Class = "UIButton"; normalTitle = "Restore"; ObjectID = "sBA-Vh-Cg0"; */
+"sBA-Vh-Cg0.normalTitle" = "Restore";
+
+/* Class = "UILabel"; text = "Task Scheduled?"; ObjectID = "sIV-TY-a6H"; */
+"sIV-TY-a6H.text" = "Task Scheduled?";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "sMO-l8-j60"; */
+"sMO-l8-j60.text" = "Total";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "sPT-qy-Zrv"; */
+"sPT-qy-Zrv.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "Tester"; ObjectID = "sSf-83-CON"; */
+"sSf-83-CON.text" = "Tester";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "sZJ-Di-9jU"; */
+"sZJ-Di-9jU.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Reviewed"; ObjectID = "sa9-yo-wyV"; */
+"sa9-yo-wyV.text" = "Reviewed";
+
+/* Class = "UILabel"; text = "-Task Result Data"; ObjectID = "sfG-wr-oq7"; */
+"sfG-wr-oq7.text" = "-Task Result Data";
+
+/* Class = "UILabel"; text = "Please input all defect quantity field"; ObjectID = "spu-Hq-YCF"; */
+"spu-Hq-YCF.text" = "Please input all defect quantity field";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "t1A-38-qOM"; */
+"t1A-38-qOM.text" = "Description";
+
+/* Class = "UINavigationItem"; title = "PO Search"; ObjectID = "t42-Ri-ffa"; */
+"t42-Ri-ffa.title" = "PO Search";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "trA-dL-Szs"; */
+"trA-dL-Szs.text" = "Defect Description";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "uF1-ll-rSc"; */
+"uF1-ll-rSc.text" = "Date";
+
+/* Class = "UILabel"; text = "Inspection Item"; ObjectID = "uHf-tX-Fyk"; */
+"uHf-tX-Fyk.text" = "Inspection Item";
+
+/* Class = "UILabel"; text = "Task Status"; ObjectID = "uNF-Ma-Iik"; */
+"uNF-Ma-Iik.text" = "Task Status";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "uRZ-aO-eHF"; */
+"uRZ-aO-eHF.normalTitle" = "Clear";
+
+/* Class = "UILabel"; text = "-Clean Style Photo"; ObjectID = "ueG-ua-xFz"; */
+"ueG-ua-xFz.text" = "-Clean Style Photo";
+
+/* Class = "UILabel"; text = "Ship To"; ObjectID = "ulk-Dh-enf"; */
+"ulk-Dh-enf.text" = "Ship To";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "utX-fe-C6f"; */
+"utX-fe-C6f.text" = "Total";
+
+/* Class = "UITextField"; placeholder = "MM/DD/YYYY"; ObjectID = "v4w-HH-ZEL"; */
+"v4w-HH-ZEL.placeholder" = "MM/DD/YYYY";
+
+/* Class = "UILabel"; text = "Style No."; ObjectID = "v5g-gb-gK6"; */
+"v5g-gb-gK6.text" = "Style No.";
+
+/* Class = "UILabel"; text = "Ver 1.0"; ObjectID = "v6q-Ly-avm"; */
+"v6q-Ly-avm.text" = "Ver 1.0";
+
+/* Class = "UILabel"; text = "OPD/RSD"; ObjectID = "vKP-Q3-ql5"; */
+"vKP-Q3-ql5.text" = "OPD/RSD";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "vKV-Em-FQs"; */
+"vKV-Em-FQs.text" = "Total";
+
+/* Class = "UILabel"; text = "Inspect Item"; ObjectID = "vV9-fc-euv"; */
+"vV9-fc-euv.text" = "Inspect Item";
+
+/* Class = "UILabel"; text = "PO Line No."; ObjectID = "vgT-JD-XdJ"; */
+"vgT-JD-XdJ.text" = "PO Line No.";
+
+/* Class = "UITabBarItem"; title = "Photo Album"; ObjectID = "vlQ-9P-0Cz"; */
+"vlQ-9P-0Cz.title" = "Photo Album";
+
+/* Class = "UILabel"; text = "Defect Type"; ObjectID = "w1r-ZU-Bv7"; */
+"w1r-ZU-Bv7.text" = "Defect Type";
+
+/* Class = "UILabel"; text = "Defect Description"; ObjectID = "w4a-KQ-Rd1"; */
+"w4a-KQ-Rd1.text" = "Defect Description";
+
+/* Class = "UILabel"; text = "Ship Win From"; ObjectID = "wCW-cj-AP9"; */
+"wCW-cj-AP9.text" = "Ship Win From";
+
+/* Class = "UILabel"; text = "Defect Qty"; ObjectID = "wJ9-8n-h5Q"; */
+"wJ9-8n-h5Q.text" = "Defect Qty";
+
+/* Class = "UILabel"; text = "Critical"; ObjectID = "wJc-OW-i26"; */
+"wJc-OW-i26.text" = "Critical";
+
+/* Class = "UILabel"; text = "Ship Win"; ObjectID = "wLf-v1-fxL"; */
+"wLf-v1-fxL.text" = "Ship Win";
+
+/* Class = "UILabel"; text = "Minor"; ObjectID = "wQa-CV-6nb"; */
+"wQa-CV-6nb.text" = "Minor";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "wR0-fO-otd"; */
+"wR0-fO-otd.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "wcl-dH-gla"; */
+"wcl-dH-gla.normalTitle" = "Clear";
+
+/* Class = "UILabel"; text = "Inspect Category"; ObjectID = "wgq-IA-nGm"; */
+"wgq-IA-nGm.text" = "Inspect Category";
+
+/* Class = "UILabel"; text = "Use Background Mode for Download/Upload Task"; ObjectID = "wpY-1p-iQa"; */
+"wpY-1p-iQa.text" = "Use Background Mode for Download/Upload Task";
+
+/* Class = "UILabel"; text = "Last Login Date"; ObjectID = "wtJ-1Z-1Co"; */
+"wtJ-1Z-1Co.text" = "Last Login Date";
+
+/* Class = "UILabel"; text = "Style"; ObjectID = "x25-xt-jvg"; */
+"x25-xt-jvg.text" = "Style";
+
+/* Class = "UIButton"; normalTitle = "Select PO Line"; ObjectID = "xEb-W2-oA1"; */
+"xEb-W2-oA1.normalTitle" = "Select PO Line";
+
+/* Class = "UILabel"; text = "Ship To"; ObjectID = "xGr-Qz-boc"; */
+"xGr-Qz-boc.text" = "Ship To";
+
+/* Class = "UITextField"; placeholder = "Pending/Draft"; ObjectID = "xba-uF-4Am"; */
+"xba-uF-4Am.placeholder" = "Pending/Draft";
+
+/* Class = "UILabel"; text = "-Style Photo"; ObjectID = "xdH-AI-bb4"; */
+"xdH-AI-bb4.text" = "-Style Photo";
+
+/* Class = "UILabel"; text = "0%"; ObjectID = "xeG-3h-6s8"; */
+"xeG-3h-6s8.text" = "0%";
+
+/* Class = "UILabel"; text = "Confirm Password"; ObjectID = "xeg-mz-ggj"; */
+"xeg-mz-ggj.text" = "Confirm Password";
+
+/* Class = "UIButton"; normalTitle = "OK"; ObjectID = "y7Z-f4-6WT"; */
+"y7Z-f4-6WT.normalTitle" = "OK";
+
+/* Class = "UILabel"; text = "Minor"; ObjectID = "yoa-bf-9B4"; */
+"yoa-bf-9B4.text" = "Minor";
+
+/* Class = "UILabel"; text = "Task Status"; ObjectID = "yxZ-dL-ciA"; */
+"yxZ-dL-ciA.text" = "Task Status";
+
+/* Class = "UIButton"; normalTitle = "!"; ObjectID = "z3n-KB-B25"; */
+"z3n-KB-B25.normalTitle" = "!";
+
+/* Class = "UILabel"; text = "Vendor"; ObjectID = "zC0-Sb-fgC"; */
+"zC0-Sb-fgC.text" = "Vendor";
+
+/* Class = "UILabel"; text = "Inspect Type"; ObjectID = "zIp-nd-2Wk"; */
+"zIp-nd-2Wk.text" = "Inspect Type";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "ziU-zv-nLL"; */
+"ziU-zv-nLL.title" = "Cancel";

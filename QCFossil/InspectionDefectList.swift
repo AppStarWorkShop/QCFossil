@@ -325,8 +325,8 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         
         newDfItem?.inputMode = inspItem?.parentView?.InputMode
         newDfItem?.inspElmt = inspItem!
-        newDfItem?.sectObj = SectObj(sectionId:inspItem!.cellCatIdx, sectionNameEn: inspItem!.cellCatName, sectionNameCn: inspItem!.cellCatName,inputMode: (inspItem?.parentView?.InputMode)!)
-        newDfItem?.elmtObj = ElmtObj(elementId:inspItem!.elementDbId,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+        newDfItem?.sectObj = SectObj(sectionId:inspItem!.cellCatIdx, sectionNameEn: inspItem!.cellCatName, sectionNameCn: inspItem!.cellCatName, sectionNameFr: inspItem!.cellCatName,inputMode: (inspItem?.parentView?.InputMode)!)
+        newDfItem?.elmtObj = ElmtObj(elementId:inspItem!.elementDbId,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
         //newDfItem!.inspectElementId = 0
         
         let cellIdx = (Cache_Task_On?.defectItems.filter({ $0.inspElmt.cellCatIdx == inspItem!.cellCatIdx && $0.inspElmt.cellIdx == inspItem!.cellIdx }))!
@@ -419,7 +419,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
             let taskDataHelper = TaskDataHelper()
             let remarkValues = taskDataHelper.getRemarksOptionList("\(cellMode2.inspItem?.resultValueId)")
             remarkValues.forEach({ value in
-                cellMode2.remarkKeyValue[_ENGLISH ? value.valueNameEn ?? "": value.valueNameCn ?? ""] = value.valueId
+                cellMode2.remarkKeyValue[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: value.valueNameEn, .zh: value.valueNameCn, .fr: value.valueNameFr])] = value.valueId
             })
             
             cellMode2.defectRemarkOptionList.showMultiDropdownValues(defectItem.defectRemarksOptionList ?? "", textField: cellMode2.defectRemarkOptionList, keyValues: cellMode2.remarkKeyValue)
@@ -529,13 +529,13 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
             let defectDataHelper = DefectDataHelper()
             let dfElms = defectDataHelper.getDefectObjectsByPositionId(cellMode1.inspItem?.inspPostId ?? 0)
             dfElms.forEach({ dfElm in
-                cellMode1.defectTypeKeyValues[_ENGLISH ? dfElm.valueNameEn ?? "": dfElm.valueNameCn ?? ""] = dfElm.valueId
+                cellMode1.defectTypeKeyValues[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: dfElm.valueNameEn, .zh: dfElm.valueNameCn, .fr: dfElm.valueNameFr])] = dfElm.valueId
             })
             
             let taskDataHelper = TaskDataHelper()
             let remarkValues = taskDataHelper.getRemarksOptionList(String(cellMode1.inspItem!.resultValueId))
             remarkValues.forEach({ value in
-                cellMode1.remarkKeyValue[_ENGLISH ? value.valueNameEn ?? "": value.valueNameCn ?? ""] = value.valueId
+                cellMode1.remarkKeyValue[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: value.valueNameEn, .zh: value.valueNameCn, .fr: value.valueNameFr])] = value.valueId
             })
             
             cellMode1.defectDescInput.showMultiDropdownValues(defectItem.defectRemarksOptionList ?? "", textField: cellMode1.defectDescInput, keyValues: cellMode1.remarkKeyValue)
@@ -560,7 +560,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
             if Int(defectItem.inspectElementId!) > 0 {
                 let defectDataHelper = DefectDataHelper()
                 let defectTypeObject = defectDataHelper.getInspElementValueById(defectItem.inspectElementId ?? 0)
-                cellMode1.defectTypeInput.text = _ENGLISH ? defectTypeObject.valueNameEn : defectTypeObject.valueNameCn
+                cellMode1.defectTypeInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectTypeObject.valueNameEn, .zh: defectTypeObject.valueNameCn, .fr: defectTypeObject.valueNameFr])
                 defectItem.defectType = cellMode1.defectTypeInput.text
                 
                 let zoneDataHelper = ZoneDataHelper()

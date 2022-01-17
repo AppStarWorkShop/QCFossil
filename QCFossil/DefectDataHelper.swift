@@ -12,7 +12,7 @@ import UIKit
 class DefectDataHelper:DataHelperMaster {
 
     func getDefectTypeByTaskDefectDataRecordId(_ Id:Int) ->[String] {
-        let sql = "SELECT distinct iem.element_name_en, iem.element_name_cn FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN task_inspect_position_point tipp ON ipe.inspect_position_id = tipp.inspect_position_id INNER JOIN task_defect_data_record tddr ON tipp.inspect_record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"
+        let sql = "SELECT distinct iem.element_name_en, iem.element_name_cn, iem.element_name_fr FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN task_inspect_position_point tipp ON ipe.inspect_position_id = tipp.inspect_position_id INNER JOIN task_defect_data_record tddr ON tipp.inspect_record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"
         var defectTypeElms = [String]()
         
         if db.open() {
@@ -22,8 +22,9 @@ class DefectDataHelper:DataHelperMaster {
                     
                     let elementNameEn = rs.string(forColumn: "element_name_en")
                     let elementNameCn = rs.string(forColumn: "element_name_cn")
+                    let elementNameFr = rs.string(forColumn: "element_name_fr")
 
-                    defectTypeElms.append( (_ENGLISH ? elementNameEn:elementNameCn)!)
+                    defectTypeElms.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: elementNameEn, .zh: elementNameCn, .fr: elementNameFr]) )
                 }
             }
             
@@ -45,8 +46,9 @@ class DefectDataHelper:DataHelperMaster {
                     let parentId = Int(rs.int(forColumn: "parent_position_id"))
                     let elementNameEn = rs.string(forColumn: "position_name_en")
                     let elementNameCn = rs.string(forColumn: "position_name_cn")
+                    let elementNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                     
-                    let positionObject = PositPointObj(positionId: positionId, parentId: parentId, positionNameEn: elementNameEn!, positionNameCn: elementNameCn!)
+                    let positionObject = PositPointObj(positionId: positionId, parentId: parentId, positionNameEn: elementNameEn!, positionNameCn: elementNameCn!, positionNameFr: elementNameFr)
                     
                     defectTypeElms.append(positionObject)
                 }
@@ -59,7 +61,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getDefectTypeElms(_ positionIds:[String]) ->[String] {
-        var sql = "SELECT distinct iem.element_name_en, iem.element_name_cn FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id WHERE iem.element_type = 2 AND ipe.inspect_position_id IN "
+        var sql = "SELECT distinct iem.element_name_en, iem.element_name_cn, iem.element_name_fr FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id WHERE iem.element_type = 2 AND ipe.inspect_position_id IN "
         var defectTypeElms = [String]()
         
         let positions = positionIds.joined(separator: ",")
@@ -72,9 +74,10 @@ class DefectDataHelper:DataHelperMaster {
                     //let elementId = Int(rs.intForColumn("element_id"))
                     let elementNameEn = rs.string(forColumn: "element_name_en")
                     let elementNameCn = rs.string(forColumn: "element_name_cn")
+                    let elementNameFr = rs.string(forColumn: "element_name_fr")
                     
                     //let elemtObj = ElmtObj(elementId:elementId, elementNameEn: elementNameEn,elementNameCn: elementNameCn,reqElmtFlag: 0)
-                    defectTypeElms.append( (_ENGLISH ? elementNameEn:elementNameCn)!)
+                    defectTypeElms.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: elementNameEn, .zh: elementNameCn, .fr: elementNameFr]) )
                 }
             }
             
@@ -120,14 +123,14 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getInspElementNameById(_ id:Int) ->String {
-        let sql = "SELECT element_name_en, element_name_cn FROM inspect_element_mstr WHERE element_id = ? AND element_type = 2"
+        let sql = "SELECT element_name_en, element_name_cn, element_name_fr FROM inspect_element_mstr WHERE element_id = ? AND element_type = 2"
         var name = ""
         
         if db.open() {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [id]) {
                 if rs.next() {
-                    name = (_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")) ?? ""
+                    name = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "element_name_en"), .zh: rs.string(forColumn: "element_name_Cn"), .fr: rs.string(forColumn: "element_name_fr")])
                 }
             }
             
@@ -139,7 +142,7 @@ class DefectDataHelper:DataHelperMaster {
     
     func getInspElementValueById(_ id:Int) ->DropdownValue {
         let sql = "SELECT element_id, element_name_en, element_name_cn FROM inspect_element_mstr WHERE element_id = ? AND element_type = 2"
-        var value = DropdownValue(valueId: 0, valueNameEn: "", valueNameCn: "")
+        var value = DropdownValue(valueId: 0, valueNameEn: "", valueNameCn: "", valueNameFr: "")
         
         if db.open() {
             
@@ -149,7 +152,8 @@ class DefectDataHelper:DataHelperMaster {
                     let id = Int(rs.int(forColumn: "element_id"))
                     let nameEn = rs.string(forColumn: "element_name_en")
                     let nameCn = rs.string(forColumn: "element_name_cn")
-                    value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn)
+                    let nameFr = rs.string(forColumn: "element_name_fr")
+                    value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn, valueNameFr: nameFr)
                 }
             }
             
@@ -167,7 +171,7 @@ class DefectDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [id]) {
                 if rs.next() {
-                    name = (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? ""
+                    name = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")])
                 }
             }
             
@@ -186,7 +190,7 @@ class DefectDataHelper:DataHelperMaster {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [positionId]) {
                 while rs.next() {
-                    defectTypes.append(((_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")) ?? ""))
+                    defectTypes.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "element_name_en"), .zh: rs.string(forColumn: "element_name_cn"), .fr: rs.string(forColumn: "element_name_fr")]) )
                 }
             }
             
@@ -207,7 +211,8 @@ class DefectDataHelper:DataHelperMaster {
                     let valueId = Int(rs.int(forColumn: "element_id"))
                     let valueNameEn = rs.string(forColumn: "element_name_en")
                     let valueNameCn = rs.string(forColumn: "element_name_cn")
-                    let defectType = DropdownValue(valueId: valueId, valueNameEn: valueNameEn, valueNameCn: valueNameCn)
+                    let valueNameFr = rs.string(forColumn: "element_name_fr")
+                    let defectType = DropdownValue(valueId: valueId, valueNameEn: valueNameEn, valueNameCn: valueNameCn, valueNameFr: valueNameFr)
                     
                     defectTypes.append(defectType)
                 }

@@ -69,7 +69,7 @@ class InputMode04View: InputModeSCMaster{
         //Init Insp Items
         for taskInspDataRecord in (inspSection?.taskInspDataRecords)! {
             
-            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),iaLabelText: _ENGLISH ?(taskInspDataRecord.postnObj?.positionNameEn)! : (taskInspDataRecord.postnObj?.positionNameCn)!,iiLabelText: _ENGLISH ? (taskInspDataRecord.elmtObj?.elementNameEn)! : (taskInspDataRecord.elmtObj?.elementNameCn)!,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId:(taskInspDataRecord.postnObj?.positionId)!, resultValueId: taskInspDataRecord.resultValueId, taskInspDataRecordId:taskInspDataRecord.recordId!, requiredElementFlag: taskInspDataRecord.elmtObj!.reqElmtFlag, optionEnableFlag: inspSection?.optionalEnableFlag ?? 1)
+            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),iaLabelText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.postnObj?.positionNameEn, .zh: taskInspDataRecord.postnObj?.positionNameCn, .fr: taskInspDataRecord.postnObj?.positionNameFr]),iiLabelText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.elmtObj?.elementNameEn, .zh: taskInspDataRecord.elmtObj?.elementNameCn, .fr: taskInspDataRecord.elmtObj?.elementNameFr]),dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId:(taskInspDataRecord.postnObj?.positionId)!, resultValueId: taskInspDataRecord.resultValueId, taskInspDataRecordId:taskInspDataRecord.recordId!, requiredElementFlag: taskInspDataRecord.elmtObj!.reqElmtFlag, optionEnableFlag: inspSection?.optionalEnableFlag ?? 1)
             
             inputCell.photoAdded = photoDataHelper.checkPhotoAddedByInspDataRecordId(taskInspDataRecord.recordId!)
             inputCell.updatePhotoNeededStatus((taskInspDataRecord.resultObj?.resultValueNameEn)!)
@@ -82,7 +82,7 @@ class InputMode04View: InputModeSCMaster{
             
             self.optInspElms = self.optInspElms.filter({ $0.elementId != taskInspDataRecord.elmtObj?.elementId})
             inputCells.append(inputCell)
-            inspElmNames.append(_ENGLISH ? (taskInspDataRecord.elmtObj?.elementNameEn)! : (taskInspDataRecord.elmtObj?.elementNameCn)!)
+            inspElmNames.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.elmtObj?.elementNameEn, .zh: taskInspDataRecord.elmtObj?.elementNameCn, .fr: taskInspDataRecord.elmtObj?.elementNameFr]))
             
             idx += 1
         }
@@ -180,9 +180,9 @@ class InputMode04View: InputModeSCMaster{
             
             let optInspElm = self.optInspElms[0]
             let optInspPost = self.optInspPosts.filter({$0.positionId == optInspElm.inspectPositionId})[0]
-            usedInspItemNames.append((_ENGLISH ? optInspElm.elementNameEn:optInspElm.elementNameCn)!)
+            usedInspItemNames.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspElm.elementNameEn, .zh: optInspElm.elementNameCn, .fr: optInspElm.elementNameFr]))
             
-            let inputCell = inputCellInit(inputCells.count+1, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(inputCells.count+1),iaLabelText: (_ENGLISH ? optInspPost.positionNameEn:optInspPost.positionNameCn)!, iiLabelText: (_ENGLISH ? optInspElm.elementNameEn:optInspElm.elementNameCn)!,dismissBtnHidden: false, elementDbId: 0, refRecordId: 0, inspElmId: optInspElm.elementId!, inspPostId: optInspPost.positionId!, displayDDList: true, userInteractive:true)
+            let inputCell = inputCellInit(inputCells.count+1, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(inputCells.count+1),iaLabelText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspPost.positionNameEn, .zh: optInspPost.positionNameCn, .fr: optInspPost.positionNameFr]), iiLabelText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspElm.elementNameEn, .zh: optInspElm.elementNameCn, .fr: optInspElm.elementNameFr]),dismissBtnHidden: false, elementDbId: 0, refRecordId: 0, inspElmId: optInspElm.elementId!, inspPostId: optInspPost.positionId!, displayDDList: true, userInteractive:true)
             
             
             inputCell.saveMyselfToGetId()
@@ -241,11 +241,11 @@ class InputMode04View: InputModeSCMaster{
         if action == "filter" {
             self.optInspElms = self.optInspElmsMaster
             for inspElmtName in inspElmtNames {
-                self.optInspElms = self.optInspElms.filter({ _ENGLISH ? $0.elementNameEn != inspElmtName : $0.elementNameCn != inspElmtName })
+                self.optInspElms = self.optInspElms.filter({ MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: $0.elementNameEn, .zh: $0.elementNameCn, .fr: $0.elementNameFr]) != inspElmtName })
             }
         }else{
             for inspElmtName in inspElmtNames {
-                let inspElmt = self.optInspElmsMaster.filter({ _ENGLISH ? $0.elementNameEn == inspElmtName : $0.elementNameCn == inspElmtName })
+                let inspElmt = self.optInspElmsMaster.filter({ MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: $0.elementNameEn, .zh: $0.elementNameCn, .fr: $0.elementNameFr]) == inspElmtName })
                 
                 if inspElmt.count>0{
                     self.optInspElms.append(inspElmt[0])

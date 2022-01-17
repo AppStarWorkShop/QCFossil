@@ -12,10 +12,12 @@ class DropdownValue {
     var valueId:Int?
     var valueNameEn:String?
     var valueNameCn:String?
+    var valueNameFr:String?
     
-    init(valueId:Int?, valueNameEn:String?, valueNameCn:String?) {
+    init(valueId:Int?, valueNameEn:String?, valueNameCn:String?, valueNameFr:String?) {
         self.valueId = valueId
         self.valueNameEn = valueNameEn
         self.valueNameCn = valueNameCn
+        self.valueNameFr = valueNameFr
     }
 }

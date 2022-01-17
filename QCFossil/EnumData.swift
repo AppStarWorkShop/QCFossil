@@ -166,6 +166,7 @@ struct ElmtObj{
     var elementId:Int
     var elementNameEn:String
     var elementNameCn:String
+    var elementNameFr:String
     var reqElmtFlag:Int
 }
 
@@ -173,6 +174,7 @@ struct PositObj{
     var positionId:Int
     var positionNameEn:String
     var positionNameCn:String
+    var positionNameFr:String
 }
 
 struct PositPointObj{
@@ -180,6 +182,7 @@ struct PositPointObj{
     var parentId:Int
     var positionNameEn:String
     var positionNameCn:String
+    var positionNameFr:String
 }
 
 
@@ -187,6 +190,7 @@ struct SectObj{
     var sectionId:Int
     var sectionNameEn:String
     var sectionNameCn:String
+    var sectionNameFr:String
     var inputMode:String
 }
 
@@ -194,6 +198,7 @@ struct ResultValueObj{
     var resultValueId:Int
     var resultValueNameEn:String
     var resultValueNameCn:String
+    var resultValueNameFr:String
 }
 
 struct DefectPhoto {

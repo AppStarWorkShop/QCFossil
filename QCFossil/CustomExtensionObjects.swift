@@ -1023,7 +1023,7 @@ extension UIView {
     }
     
     func sortStringArrayByName(_ arrayString:[String]) ->[String] {
-        let locale = _ENGLISH ? Locale(identifier: "en_HK") : Locale(identifier: "zh_HK")
+        let locale = MylocalizedString.sharedLocalizeManager.getCurrentLocale()
         return arrayString.sorted(by: {$0.compare($1, locale: locale) == .orderedAscending})
     }
 }

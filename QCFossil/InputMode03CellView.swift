@@ -158,7 +158,7 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
             var inspCatList = [String]()
             
             for inspSec in inspSecs! {
-                inspCatList.append( _ENGLISH ? inspSec.sectionNameEn! : inspSec.sectionNameCn!)
+                inspCatList.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: inspSec.sectionNameEn, .zh: inspSec.sectionNameCn, .fr: inspSec.sectionNameFr]))
             }
             
             textField.showListData(textField, parent: (self.parentView as! InputMode03View).scrollCellView!, handle: handleFun, listData: inspCatList as NSArray, width: 200, height: 250, tag: _TAG1)
@@ -201,8 +201,8 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         
             newDfItem?.inputMode = _INPUTMODE03
             newDfItem?.inspElmt = self
-            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName,inputMode: _INPUTMODE03)
-            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName, sectionNameFr: self.cellCatName,inputMode: _INPUTMODE03)
+            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
         
             let defectsByItemId = Cache_Task_On?.defectItems.filter({$0.sectObj.sectionId == self.cellCatIdx && $0.elmtObj.elementId == self.elementDbId})
             newDfItem?.cellIdx = defectsByItemId!.count

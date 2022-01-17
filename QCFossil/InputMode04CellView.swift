@@ -126,7 +126,7 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
                     let optInspElmFilter = optInspElmFilterList[0]
                     let optInspPostFilter = self.parentView!.optInspPosts.filter({$0.positionId == optInspElmFilter.inspectPositionId})[0]
                     
-                    inspectionAreaLabel.text = _ENGLISH ? optInspPostFilter.positionNameEn : optInspPostFilter.positionNameCn
+                    inspectionAreaLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspPostFilter.positionNameEn, .zh: optInspPostFilter.positionNameCn, .fr: optInspPostFilter.positionNameFr])
                     
                     self.inspItemText = textField.text!
                     self.inspAreaText = inspectionAreaLabel.text!
@@ -160,7 +160,7 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         }else if textField == inspectionAreaLabel {
             var listData = [String]()
             for optInspPost in self.parentView!.optInspPosts {
-                listData.append( _ENGLISH ? optInspPost.positionNameEn! : optInspPost.positionNameCn!)
+                listData.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspPost.positionNameEn, .zh: optInspPost.positionNameCn, .fr: optInspPost.positionNameFr]) )
             }
             
             textField.showListData(textField, parent: ((self.parentView as! InputMode04View).ScrollCellView)!, handle: handleFun, listData: listData as NSArray, width: inspectionAreaLabel.frame.size.width*1.2, height: 250, tag: _TAG1)
@@ -176,13 +176,13 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
                 
                     if optInspElmFilter.count > 0 {
                         for optInspElm in optInspElmFilter {
-                            listData.append( _ENGLISH ? optInspElm.elementNameEn! : optInspElm.elementNameCn!)
+                            listData.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspElm.elementNameEn, .zh: optInspElm.elementNameCn, .fr: optInspElm.elementNameFr]) )
                         }
                     }
                 }
             }else{
                 for optInspElm in self.parentView!.optInspElms {
-                    listData.append( _ENGLISH ? optInspElm.elementNameEn! : optInspElm.elementNameCn!)
+                    listData.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: optInspElm.elementNameEn, .zh: optInspElm.elementNameCn, .fr: optInspElm.elementNameFr]) )
                 }
             }
             textField.showListData(textField, parent: ((self.parentView as! InputMode04View).ScrollCellView)!, handle: handleFun, listData: listData as NSArray, width: inspectionItemLabel.frame.size.width*1.2, height: 250, tag: _TAG1)
@@ -218,8 +218,8 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
             
             newDfItem?.inputMode = _INPUTMODE04
             newDfItem?.inspElmt = self
-            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName,inputMode: _INPUTMODE04)
-            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName, sectionNameFr: self.cellCatName,inputMode: _INPUTMODE04)
+            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
             
             let defectsByItemId = Cache_Task_On?.defectItems.filter({$0.sectObj.sectionId == self.cellCatIdx && $0.elmtObj.elementId == self.elementDbId})
             newDfItem?.cellIdx = defectsByItemId!.count

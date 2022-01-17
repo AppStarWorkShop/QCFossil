@@ -82,18 +82,18 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         guard let parentView = self.parentView as? InputMode02View else {return}
 
         for dfPosit in parentView.defectPosits {
-            inspectItemKeyValues[_ENGLISH ? dfPosit.positionNameEn : dfPosit.positionNameCn] = dfPosit.positionId
+            inspectItemKeyValues[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: dfPosit.positionNameEn, .zh: dfPosit.positionNameCn, .fr: dfPosit.positionNameFr])] = dfPosit.positionId
         }
         
         let zoneDataHelper = ZoneDataHelper()
         let zoneItems = zoneDataHelper.getZoneValuesByPositionId(self.inspPostId ?? 0)
         zoneItems.forEach({ zoneItem in
-            zoneItemKeyValues[_ENGLISH ? zoneItem.valueNameEn ?? "" : zoneItem.valueNameCn ?? ""] = zoneItem.valueId
+            zoneItemKeyValues[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: zoneItem.valueNameEn, .zh: zoneItem.valueNameCn, .fr: zoneItem.valueNameFr])] = zoneItem.valueId
         })
         
         let defectPositPoints = (self.parentView as! InputMode02View).defectPositPoints.filter({ $0.parentId == self.inspPostId ?? 0})
         defectPositPoints.forEach({ defectPositPoint in
-            defectPositionPoints[_ENGLISH ? defectPositPoint.positionNameEn ?? "" : defectPositPoint.positionNameCn ?? ""] = defectPositPoint.positionId
+            defectPositionPoints[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectPositPoint.positionNameEn, .zh: defectPositPoint.positionNameCn, .fr: defectPositPoint.positionNameFr])] = defectPositPoint.positionId
         })
         
         if self.cellDPPInput.isTruncated() {
@@ -162,8 +162,8 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             
             newDfItem?.inputMode = _INPUTMODE02
             newDfItem?.inspElmt = self
-            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName,inputMode: _INPUTMODE02)
-            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+            newDfItem?.sectObj = SectObj(sectionId:cellCatIdx, sectionNameEn: self.cellCatName, sectionNameCn: self.cellCatName, sectionNameFr: self.cellCatName,inputMode: _INPUTMODE02)
+            newDfItem?.elmtObj = ElmtObj(elementId:self.elementDbId,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
             
             let defectsByItemId = Cache_Task_On?.defectItems.filter({$0.sectObj.sectionId == self.cellCatIdx && $0.elmtObj.elementId == self.elementDbId})
             newDfItem?.cellIdx = defectsByItemId!.count
@@ -250,12 +250,12 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             
             let zoneItems = zoneDataHelper.getZoneValuesByPositionId(self.inspPostId ?? 0)
             zoneItems.forEach({ zoneItem in
-                zoneItemKeyValues[_ENGLISH ? zoneItem.valueNameEn ?? "" : zoneItem.valueNameCn ?? ""] = zoneItem.valueId
+                zoneItemKeyValues[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: zoneItem.valueNameEn, .zh: zoneItem.valueNameCn, .fr: zoneItem.valueNameFr])] = zoneItem.valueId
             })
             
             let defectPositPoints = (self.parentView as! InputMode02View).defectPositPoints.filter({ $0.parentId == self.inspPostId ?? 0})
             defectPositPoints.forEach({ defectPositPoint in
-                defectPositionPoints[_ENGLISH ? defectPositPoint.positionNameEn ?? "" : defectPositPoint.positionNameCn ?? ""] = defectPositPoint.positionId
+                defectPositionPoints[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectPositPoint.positionNameEn, .zh: defectPositPoint.positionNameCn, .fr: defectPositPoint.positionNameFr])] = defectPositPoint.positionId
             })
             
         } else if textField == self.defectZoneInput {

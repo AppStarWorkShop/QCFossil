@@ -90,7 +90,7 @@ class InputMode02View: InputModeSCMaster {
             //if taskInspDataRecord.postnObj?.positionId > 0 {
             
             let dfPositPoints = dpDataHelper.getDefectPositionPointsByRecordId(taskInspDataRecord.recordId!)
-            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),dpText: (_ENGLISH ? taskInspDataRecord.postnObj?.positionNameEn:taskInspDataRecord.postnObj?.positionNameCn)!, dpDescText: taskInspDataRecord.inspectPositionDesc!, dppText: dfPositPoints, dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId: taskInspDataRecord.postnObj!.positionId, resultValueObj:taskInspDataRecord.resultObj!, taskInspDataRecordId:taskInspDataRecord.recordId!, inspectPositionZoneValueId: taskInspDataRecord.inspectPositionZoneValueId ?? 0)
+            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),dpText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.postnObj?.positionNameEn, .zh: taskInspDataRecord.postnObj?.positionNameCn, .fr: taskInspDataRecord.postnObj?.positionNameFr]), dpDescText: taskInspDataRecord.inspectPositionDesc!, dppText: dfPositPoints, dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId: taskInspDataRecord.postnObj!.positionId, resultValueObj:taskInspDataRecord.resultObj!, taskInspDataRecordId:taskInspDataRecord.recordId!, inspectPositionZoneValueId: taskInspDataRecord.inspectPositionZoneValueId ?? 0)
             
             inputCell.photoAdded = photoDataHelper.checkPhotoAddedByInspDataRecordId(taskInspDataRecord.recordId!)
             inputCell.updatePhotoNeededStatus((taskInspDataRecord.resultObj?.resultValueNameEn)!)
@@ -161,7 +161,7 @@ class InputMode02View: InputModeSCMaster {
         self.scrollCellView.contentSize = size
     }
     
-    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, dpText:String, dpDescText:String, dppText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: ""), taskInspDataRecordId:Int=0, inspectPositionZoneValueId:Int=0) -> InputMode02CellView {
+    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, dpText:String, dpDescText:String, dppText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: ""), taskInspDataRecordId:Int=0, inspectPositionZoneValueId:Int=0) -> InputMode02CellView {
         
         let inputCellViewObj = InputMode02CellView.loadFromNibNamed("InputMode02Cell")
         inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 160)
@@ -175,7 +175,7 @@ class InputMode02View: InputModeSCMaster {
         inputCellViewObj?.dpInput.text = dpText
         inputCellViewObj?.dpDescInput.text = dpDescText
         inputCellViewObj?.cellDPPInput.text = dppText
-        inputCellViewObj?.cellResultInput.text = _ENGLISH ? resultValueObj.resultValueNameEn : resultValueObj.resultValueNameCn
+        inputCellViewObj?.cellResultInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: resultValueObj.resultValueNameEn, .zh: resultValueObj.resultValueNameCn, .fr: resultValueObj.resultValueNameFr])
         
         let zoneDataHelper = ZoneDataHelper()
         inputCellViewObj?.defectZoneInput.text = zoneDataHelper.getZoneValueNameById(inspectPositionZoneValueId)

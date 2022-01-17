@@ -20,9 +20,6 @@ var _RELEASECODE = ""
 var _NEEDDATAUPDATE = false
 var _NEEDRESIZEIMAGE = true
 
-//Language, default English
-var _ENGLISH = false
-
 //Device
 let _DEVICE_WIDTH = UIScreen.main.bounds.width
 let _DEVICE_HEIGHT = UIScreen.main.bounds.height
@@ -139,3 +136,9 @@ let _TAG7 = 1000007
 let _TAG8 = 1000008
 let _TAG9 = 1000009
 let _TAG20 = 1000010
+
+enum Languages: String {
+    case en = "en"
+    case zh = "zh-Hans"
+    case fr = "fr-CH"
+}

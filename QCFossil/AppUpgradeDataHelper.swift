@@ -786,6 +786,217 @@ class AppUpgradeDataHelper:DataHelperMaster {
                         }
                     }
                 
+                    // Add support to french
+                    // Add new field to prod_type_mstr
+                    sql = "ALTER TABLE prod_type_mstr ADD COLUMN type_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(prod_type_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "type_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to case_value_mstr
+                    sql = "ALTER TABLE case_value_mstr ADD COLUMN value_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(case_value_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "value_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to defect_value_mstr
+                    sql = "ALTER TABLE defect_value_mstr ADD COLUMN value_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(defect_value_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "value_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_element_detail_select_val
+                    sql = "ALTER TABLE inspect_element_detail_select_val ADD COLUMN select_text_fr nvarchar(1000)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_element_detail_select_val)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "select_text_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_element_mstr
+                    sql = "ALTER TABLE inspect_element_mstr ADD COLUMN element_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_element_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "element_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_position_mstr
+                    sql = "ALTER TABLE inspect_position_mstr ADD COLUMN position_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_position_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "position_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_section_mstr
+                    sql = "ALTER TABLE inspect_section_mstr ADD COLUMN section_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_section_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "section_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_task_field_mstr
+                    sql = "ALTER TABLE inspect_task_field_mstr ADD COLUMN field_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_task_field_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "field_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_task_field_select_val
+                    sql = "ALTER TABLE inspect_task_field_select_val ADD COLUMN select_text_fr nvarchar(1000)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_task_field_select_val)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "select_text_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_task_tmpl_mstr
+                    sql = "ALTER TABLE inspect_task_tmpl_mstr ADD COLUMN tmpl_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_task_tmpl_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "tmpl_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to inspect_type_mstr
+                    sql = "ALTER TABLE inspect_type_mstr ADD COLUMN type_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(inspect_type_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "type_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to result_value_mstr
+                    sql = "ALTER TABLE result_value_mstr ADD COLUMN value_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(result_value_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "value_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to task_selection_option_mstr
+                    sql = "ALTER TABLE task_selection_option_mstr ADD COLUMN option_text_fr nvarchar(1000)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(task_selection_option_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "option_text_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new field to zone_value_mstr
+                    sql = "ALTER TABLE zone_value_mstr ADD COLUMN value_name_fr nvarchar(60)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(zone_value_mstr)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "value_name_fr" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+
                     //----------------------------------------------------------------------------------
                     
                     if result {

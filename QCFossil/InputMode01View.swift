@@ -65,7 +65,7 @@ class InputMode01View: InputModeSCMaster {
         var inspElmNames = [String]()
         for taskInspDataRecord in (inspSection?.taskInspDataRecords)! {
             
-            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspItemText: (_ENGLISH ? taskInspDataRecord.elmtObj?.elementNameEn:taskInspDataRecord.elmtObj?.elementNameCn)!,inspDetailText: taskInspDataRecord.inspectDetail!, inspRemarksText: taskInspDataRecord.inspectRemarks!,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId:taskInspDataRecord.postnObj!.positionId, resultValueObj: taskInspDataRecord.resultObj!, taskInspDataRecordId: taskInspDataRecord.recordId!, inspItemInputText:"" , requiredElementFlag: taskInspDataRecord.elmtObj!.reqElmtFlag, optionEnableFlag: inspSection?.optionalEnableFlag ?? 1)
+            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspItemText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.elmtObj?.elementNameEn, .zh: taskInspDataRecord.elmtObj?.elementNameCn, .fr: taskInspDataRecord.elmtObj?.elementNameFr]),inspDetailText: taskInspDataRecord.inspectDetail!, inspRemarksText: taskInspDataRecord.inspectRemarks!,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId:taskInspDataRecord.postnObj!.positionId, resultValueObj: taskInspDataRecord.resultObj!, taskInspDataRecordId: taskInspDataRecord.recordId!, inspItemInputText:"" , requiredElementFlag: taskInspDataRecord.elmtObj!.reqElmtFlag, optionEnableFlag: inspSection?.optionalEnableFlag ?? 1)
             
             
             inputCell.photoAdded = photoDataHelper.checkPhotoAddedByInspDataRecordId(taskInspDataRecord.recordId!)
@@ -79,7 +79,7 @@ class InputMode01View: InputModeSCMaster {
             
             //self.optInspElms = self.optInspElms.filter({ $0.elementId != taskInspDataRecord.elmtObj?.elementId})
             inputCells.append(inputCell)
-            inspElmNames.append(_ENGLISH ? (taskInspDataRecord.elmtObj?.elementNameEn)! : (taskInspDataRecord.elmtObj?.elementNameCn)!)
+            inspElmNames.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.elmtObj?.elementNameEn, .zh: taskInspDataRecord.elmtObj?.elementNameCn, .fr: taskInspDataRecord.elmtObj?.elementNameFr]))
         
             idx += 1
         }
@@ -147,7 +147,7 @@ class InputMode01View: InputModeSCMaster {
         self.scrollCellView.contentSize = size
     }
     
-    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=true, requiredElementFlag:Int=0, optionEnableFlag:Int=1) -> InputMode01CellView {
+    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=true, requiredElementFlag:Int=0, optionEnableFlag:Int=1) -> InputMode01CellView {
         
         let inputCellViewObj = InputMode01CellView.loadFromNibNamed("InputMode01Cell")
         inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 160)
@@ -161,7 +161,7 @@ class InputMode01View: InputModeSCMaster {
         inputCellViewObj?.inptItemInput.text = inspItemText
         inputCellViewObj?.inptDetailInput.text = inspDetailText
         inputCellViewObj?.cellRemarksInput.text = inspRemarksText
-        inputCellViewObj?.cellResultInput.text = _ENGLISH ? resultValueObj.resultValueNameEn : resultValueObj.resultValueNameCn
+        inputCellViewObj?.cellResultInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: resultValueObj.resultValueNameEn, .zh: resultValueObj.resultValueNameCn, .fr: resultValueObj.resultValueNameFr])
         
         //for Save DB
         inputCellViewObj?.refRecordId = refRecordId
@@ -198,13 +198,10 @@ class InputMode01View: InputModeSCMaster {
     func updateOptionalInspElmts(_ inspElmtNames:[String]=[], action:String="filter") {
         
         if action == "filter" {
-            /*self.optInspElms = self.optInspElmsMaster
-            for inspElmtName in inspElmtNames {
-                self.optInspElms = self.optInspElms.filter({ _ENGLISH ? $0.elementNameEn != inspElmtName : $0.elementNameCn != inspElmtName })
-            }*/
+
         }else{
             for inspElmtName in inspElmtNames {
-                let inspElmt = self.optInspElmsMaster.filter({ _ENGLISH ? $0.elementNameEn == inspElmtName : $0.elementNameCn == inspElmtName })
+                let inspElmt = self.optInspElmsMaster.filter({ MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: $0.elementNameEn, .zh: $0.elementNameCn, .fr: $0.elementNameFr]) == inspElmtName })
                 
                 if inspElmt.count>0{
                     self.optInspElms.append(inspElmt[0])

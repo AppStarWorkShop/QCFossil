@@ -325,8 +325,8 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                             }
                             
                             inspectionCategoryCell?.updateSummaryResultValues(resultSetValues)
-                            let title = _ENGLISH ? icSec.inspSection!.sectionNameEn:icSec.inspSection!.sectionNameCn
-                            inspectionCategoryCell?.inptCatButton.setTitle(title!+"(\(itemsCount))", for: UIControl.State())
+                            let title = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: icSec.inspSection!.sectionNameEn, .zh: icSec.inspSection!.sectionNameCn, .fr: icSec.inspSection!.sectionNameFr])
+                            inspectionCategoryCell?.inptCatButton.setTitle(title+"(\(itemsCount))", for: UIControl.State())
                         }
                     }
                 }

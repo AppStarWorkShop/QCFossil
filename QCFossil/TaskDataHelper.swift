@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -260,56 +261,56 @@ class TaskDataHelper:DataHelperMaster{
             if taskInspDataRecord.inspectSectionId>0 {
                 let section = getInspSectionsById(taskInspDataRecord.inspectSectionId!)
                 if section != nil {
-                taskInspDataRecord.sectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!,inputMode: (section?.inputModeCode)!)
+                    taskInspDataRecord.sectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!, sectionNameFr: section?.sectionNameFr ?? "",inputMode: (section?.inputModeCode)!)
                 }else{
-                    taskInspDataRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
+                    taskInspDataRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "",inputMode: "")
                 }
             }else{
-                taskInspDataRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
+                taskInspDataRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "",inputMode: "")
             }
             
             if taskInspDataRecord.requestSectionId>0 {
                 let section = getInspSectionsById(taskInspDataRecord.requestSectionId)
                 if section != nil {
-                taskInspDataRecord.reqSectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!,inputMode: (section?.inputModeCode)!)
+                    taskInspDataRecord.reqSectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!, sectionNameFr: section?.sectionNameFr ?? "",inputMode: (section?.inputModeCode)!)
                 }else{
-                    taskInspDataRecord.reqSectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
+                    taskInspDataRecord.reqSectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "",inputMode: "")
                 }
             }else{
-                taskInspDataRecord.reqSectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
+                taskInspDataRecord.reqSectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "",inputMode: "")
             }
             
             if taskInspDataRecord.inspectElementId>0 {
                 let element = getInspSecElementById(taskInspDataRecord.inspectElementId!)
                 if element != nil {
-                    taskInspDataRecord.elmtObj = ElmtObj(elementId:(element?.elementId)!,elementNameEn:(element?.elementNameEn)!, elementNameCn:(element?.elementNameCn)!, reqElmtFlag: (element?.requiredElementFlag)!)
+                    taskInspDataRecord.elmtObj = ElmtObj(elementId:(element?.elementId)!,elementNameEn:(element?.elementNameEn)!, elementNameCn:(element?.elementNameCn)!, elementNameFr: element?.elementNameFr ?? "", reqElmtFlag: (element?.requiredElementFlag)!)
                 }else{
-                    taskInspDataRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+                    taskInspDataRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
                 }
             }else{
-                taskInspDataRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+                taskInspDataRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
             }
             
             if taskInspDataRecord.inspectPositionId>0 {
                 let position = getInspSecPositionById(taskInspDataRecord.inspectPositionId!)
                 if position != nil {
-                taskInspDataRecord.postnObj = PositObj(positionId:(position?.positionId)!, positionNameEn:(position?.positionNameEn)!,positionNameCn:(position?.positionNameCn)!)
+                    taskInspDataRecord.postnObj = PositObj(positionId:(position?.positionId)!, positionNameEn:(position?.positionNameEn)!,positionNameCn:(position?.positionNameCn)!, positionNameFr: position?.positionNameFr ?? "")
                 }else{
-                    taskInspDataRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"")
+                    taskInspDataRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"", positionNameFr: "")
                 }
             }else{
-                taskInspDataRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"")
+                taskInspDataRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"", positionNameFr: "")
             }
             
             if taskInspDataRecord.resultValueId>0 {
                 let resultValue = getResultValueById(taskInspDataRecord.resultValueId)
                 if resultValue != nil {
-                taskInspDataRecord.resultObj = ResultValueObj(resultValueId:(resultValue?.resultValueId)!, resultValueNameEn:resultValue!.resultValueNameEn, resultValueNameCn:resultValue!.resultValueNameCn)
+                    taskInspDataRecord.resultObj = ResultValueObj(resultValueId:(resultValue?.resultValueId)!, resultValueNameEn:resultValue!.resultValueNameEn, resultValueNameCn:resultValue!.resultValueNameCn, resultValueNameFr: resultValue?.resultValueNameFr ?? "")
                 }else{
-                    taskInspDataRecord.resultObj = ResultValueObj(resultValueId:0, resultValueNameEn:"", resultValueNameCn:"")
+                    taskInspDataRecord.resultObj = ResultValueObj(resultValueId:0, resultValueNameEn:"", resultValueNameCn:"", resultValueNameFr: "")
                 }
             }else{
-                taskInspDataRecord.resultObj = ResultValueObj(resultValueId:0, resultValueNameEn:"", resultValueNameCn:"")
+                taskInspDataRecord.resultObj = ResultValueObj(resultValueId:0, resultValueNameEn:"", resultValueNameCn:"", resultValueNameFr: "")
             }
         }
     }
@@ -363,9 +364,9 @@ class TaskDataHelper:DataHelperMaster{
                 let element = getInspSecElementById(taskDefectDateRecord.inspectElementId!)
                 
                 if element != nil {
-                    taskDefectDateRecord.elmtObj = ElmtObj(elementId:(element?.elementId)!,elementNameEn:(element?.elementNameEn)!, elementNameCn:(element?.elementNameCn)!, reqElmtFlag: (element?.requiredElementFlag)!)
+                    taskDefectDateRecord.elmtObj = ElmtObj(elementId:(element?.elementId)!,elementNameEn:(element?.elementNameEn)!, elementNameCn:(element?.elementNameCn)!, elementNameFr: element?.elementNameFr ?? "", reqElmtFlag: (element?.requiredElementFlag)!)
                 }else{
-                    taskDefectDateRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+                    taskDefectDateRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
                 }
                 
                 //init Sections
@@ -373,9 +374,9 @@ class TaskDataHelper:DataHelperMaster{
                 let section = getInspSectionsById(sectionId)
                 
                 if section != nil {
-                    taskDefectDateRecord.sectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!,inputMode: (section?.inputModeCode)!)
+                    taskDefectDateRecord.sectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!, sectionNameFr: section?.sectionNameFr ?? "",inputMode: (section?.inputModeCode)!)
                 }else{
-                    taskDefectDateRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
+                    taskDefectDateRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "",inputMode: "")
                 }
                 
                 //init Positions
@@ -383,9 +384,9 @@ class TaskDataHelper:DataHelperMaster{
                 let position = getInspSecPositionById(positionId)
                 
                 if position != nil {
-                    taskDefectDateRecord.postnObj = PositObj(positionId:(position?.positionId)!, positionNameEn:(position?.positionNameEn)!,positionNameCn:(position?.positionNameCn)!)
+                    taskDefectDateRecord.postnObj = PositObj(positionId:(position?.positionId)!, positionNameEn:(position?.positionNameEn)!,positionNameCn:(position?.positionNameCn)!, positionNameFr: position?.positionNameFr ?? "")
                 }else{
-                    taskDefectDateRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"")
+                    taskDefectDateRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"", positionNameFr: "")
                 }
                 
                 //init Defect Photos
@@ -396,14 +397,14 @@ class TaskDataHelper:DataHelperMaster{
                 
             }else{
                 //If no relative element
-                taskDefectDateRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
-                taskDefectDateRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"")
+                taskDefectDateRecord.elmtObj = ElmtObj(elementId:0,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
+                taskDefectDateRecord.postnObj = PositObj(positionId:0, positionNameEn:"",positionNameCn:"", positionNameFr: "")
                 
                 let section = getSectionByTaskInspDataId(taskDefectDateRecord.inspectRecordId!)
                 if section != nil {
-                    taskDefectDateRecord.sectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!,inputMode: (section?.inputModeCode)!)
+                    taskDefectDateRecord.sectObj = SectObj(sectionId:(section?.sectionId)!, sectionNameEn: (section?.sectionNameEn)!, sectionNameCn: (section?.sectionNameCn)!, sectionNameFr: section?.sectionNameFr ?? "",inputMode: (section?.inputModeCode)!)
                 }else{
-                    taskDefectDateRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "",inputMode: "")
+                    taskDefectDateRecord.sectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "",inputMode: "")
                 }
     
                 //init Defect Photos
@@ -451,14 +452,14 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getInspTypeByInspTypeId(_ inspTypeId:Int) ->String {
-        let sql = "SELECT type_name_en,type_name_cn FROM inspect_type_mstr WHERE type_id = ? AND rec_status = 0 AND deleted_flag = 0"
+        let sql = "SELECT type_name_en, type_name_cn, type_name_fr FROM inspect_type_mstr WHERE type_id = ? AND rec_status = 0 AND deleted_flag = 0"
         var inspType:String = "null"
         
         if db.open() {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: [inspTypeId]) {
                 if rs.next() {
-                    inspType = (_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? ""
+                    inspType = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "type_name_en"), .zh: rs.string(forColumn: "type_name_cn"), .fr: rs.string(forColumn: "type_name_fr")])
                 }
             }
             db.close()
@@ -468,14 +469,14 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getAllInspType() ->[String] {
-        let sql = "SELECT type_name_en,type_name_cn FROM inspect_type_mstr WHERE rec_status = 0 AND deleted_flag = 0 ORDER BY type_name_en ASC"
+        let sql = "SELECT type_name_en,type_name_cn, type_name_fr FROM inspect_type_mstr WHERE rec_status = 0 AND deleted_flag = 0 ORDER BY type_name_en ASC"
         var inspType = [String]()
         
         if db.open() {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
-                    inspType.append((_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? "")
+                    inspType.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "type_name_en"), .zh: rs.string(forColumn: "type_name_cn"), .fr: rs.string(forColumn: "type_name_fr")]))
                 }
             }
             db.close()
@@ -485,14 +486,14 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getAllTmplType() ->[String] {
-        let sql = "SELECT tmpl_name_en, tmpl_name_cn FROM inspect_task_tmpl_mstr ittm INNER JOIN inspect_type_mstr itm ON ittm.inspect_type_id = itm.type_id WHERE ittm.prod_type_id = ? AND (itm.type_name_en = ? OR itm.type_name_cn = ?) AND itm.rec_status = 0 AND itm.deleted_flag = 0 AND ittm.rec_status = 0 AND ittm.deleted_flag = 0"
+        let sql = "SELECT tmpl_name_en, tmpl_name_cn, tmpl_name_fr FROM inspect_task_tmpl_mstr ittm INNER JOIN inspect_type_mstr itm ON ittm.inspect_type_id = itm.type_id WHERE ittm.prod_type_id = ? AND (itm.type_name_fr = ? OR itm.type_name_en = ? OR itm.type_name_cn = ?) AND itm.rec_status = 0 AND itm.deleted_flag = 0 AND ittm.rec_status = 0 AND ittm.deleted_flag = 0"
         var tmplType = [String]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.prodTypeId)!, (Cache_Inspector?.selectedInspType)!, (Cache_Inspector?.selectedInspType)!]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.prodTypeId)!, (Cache_Inspector?.selectedInspType)!, (Cache_Inspector?.selectedInspType)!, (Cache_Inspector?.selectedInspType)!]) {
                 while rs.next() {
-                    tmplType.append( (_ENGLISH ? rs.string(forColumn: "tmpl_name_en") : rs.string(forColumn: "tmpl_name_cn")) ?? "")
+                    tmplType.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "tmpl_name_en"), .zh: rs.string(forColumn: "tmpl_name_cn"), .fr: rs.string(forColumn: "tmpl_name_fr")]) )
                 }
             }
             db.close()
@@ -502,12 +503,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTmplIdByName(_ tmplName:String) ->Int {
-        let sql = "SELECT tmpl_id FROM inspect_task_tmpl_mstr WHERE (tmpl_name_en = ? OR tmpl_name_cn = ?) AND rec_status = 0 AND deleted_flag = 0"
+        let sql = "SELECT tmpl_id FROM inspect_task_tmpl_mstr WHERE (tmpl_name_fr = ? OR tmpl_name_en = ? OR tmpl_name_cn = ?) AND rec_status = 0 AND deleted_flag = 0"
         var tmplId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [tmplName, tmplName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [tmplName, tmplName, tmplName]) {
                 if rs.next() {
                     tmplId = Int(rs.int(forColumn: "tmpl_id"))
                 }
@@ -520,12 +521,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getInspSetupIdByName(_ tmplName:String) ->Int {
-        let sql = "SELECT inspect_setup_id FROM inspect_task_tmpl_mstr WHERE (tmpl_name_en = ? OR tmpl_name_cn = ?) AND rec_status = 0 AND deleted_flag = 0"
+        let sql = "SELECT inspect_setup_id FROM inspect_task_tmpl_mstr WHERE (tmpl_name_fr = ? OR tmpl_name_en = ? OR tmpl_name_cn = ?) AND rec_status = 0 AND deleted_flag = 0"
         var inspSetupId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [tmplName, tmplName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [tmplName, tmplName, tmplName]) {
                 if rs.next() {
                     inspSetupId = Int(rs.int(forColumn: "inspect_setup_id"))
                 }
@@ -539,14 +540,14 @@ class TaskDataHelper:DataHelperMaster{
 
     
     func getAllProdType() ->[String] {
-        let sql = "SELECT type_name_en, type_name_cn FROM prod_type_mstr WHERE rec_status = 0 AND deleted_flag = 0"
+        let sql = "SELECT type_name_en, type_name_cn, type_name_fr FROM prod_type_mstr WHERE rec_status = 0 AND deleted_flag = 0"
         var inspType = [String]()
         
         if db.open() {
             
             if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
-                    inspType.append( (_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? "")
+                    inspType.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "type_name_en"), .zh: rs.string(forColumn: "type_name_cn"), .fr: rs.string(forColumn: "type_name_fr")]) )
                 }
             }
             db.close()
@@ -650,6 +651,7 @@ class TaskDataHelper:DataHelperMaster{
                 let inspectSetupId = 0//Int(rs.intForColumn("inspect_setup_id"))
                 let sectionNameEn = rs.string(forColumn: "section_name_en")
                 let sectionNameCn = rs.string(forColumn: "section_name_cn")
+                let sectionNameFr = rs.string(forColumn: "section_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let displayOrder = Int(rs.int(forColumn: "display_order"))
@@ -666,7 +668,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                let inspSection = InspSection(taskId: taskId, sectionId: sectionId, inspectSetupId: inspectSetupId, sectionNameEn: sectionNameEn!, sectionNameCn: sectionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, displayOrder: displayOrder, resultSetId: resultSetId, inputModeCode: inputModeCode!, optionalEnableFlag: optionalEnableFlag, adhocSelectFlag: adhoSelectFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                let inspSection = InspSection(taskId: taskId, sectionId: sectionId, inspectSetupId: inspectSetupId, sectionNameEn: sectionNameEn!, sectionNameCn: sectionNameCn!, sectionNameFr: sectionNameFr, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, displayOrder: displayOrder, resultSetId: resultSetId, inputModeCode: inputModeCode!, optionalEnableFlag: optionalEnableFlag, adhocSelectFlag: adhoSelectFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
                 
                 inspSections.append(inspSection)
             }
@@ -709,6 +711,7 @@ class TaskDataHelper:DataHelperMaster{
                     let inspectSetupId = 0//Int(rs.intForColumn("inspect_setup_id"))
                     let elementNameEn = rs.string(forColumn: "element_name_en")
                     let elementNameCn = rs.string(forColumn: "element_name_cn")
+                    let elementNameFr = rs.string(forColumn: "element_name_fr") ?? ""
                     let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                     let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                     let elementType = Int(rs.int(forColumn: "element_type"))
@@ -733,7 +736,7 @@ class TaskDataHelper:DataHelperMaster{
                         detailRequiredResultList = ""
                     }
                     
-                    let inspSecElm = InspSectionElement(elementId: elementId, inspectSetupId: inspectSetupId, elementNameEn: elementNameEn!, elementNameCn: elementNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, elementType: elementType, inspectSectionId: inspectSectionId, inspectPositionId: inspectPositionId, displayOrder: displayOrder, resultSetId: resultSetId, requiredElementFlag: requiredElementFlag, detailDefaultValue: detailDefaultValue!, detailRequiredResultList: detailRequiredResultList!, detailSuggestFlag: detailSuggestFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                    let inspSecElm = InspSectionElement(elementId: elementId, inspectSetupId: inspectSetupId, elementNameEn: elementNameEn!, elementNameCn: elementNameCn!, elementNameFr: elementNameFr, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, elementType: elementType, inspectSectionId: inspectSectionId, inspectPositionId: inspectPositionId, displayOrder: displayOrder, resultSetId: resultSetId, requiredElementFlag: requiredElementFlag, detailDefaultValue: detailDefaultValue!, detailRequiredResultList: detailRequiredResultList!, detailSuggestFlag: detailSuggestFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
                     
                     inspSecElms.append(inspSecElm)
                 }
@@ -763,6 +766,7 @@ class TaskDataHelper:DataHelperMaster{
                 let positionCode = rs.string(forColumn: "position_code")
                 let positionNameEn = rs.string(forColumn: "position_name_en")
                 let positionNameCn = rs.string(forColumn: "position_name_cn")
+                let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let currentLevel = Int(rs.int(forColumn: "current_level"))
@@ -777,7 +781,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                let inspSecPostn = InspSectionPosition(positionId: positionId, inspectSetupId: inspectSetupId, positionCode: positionCode!, positionNameEn: positionNameEn!, positionNameCn: positionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, currentLevel: currentLevel, parentPositionId: parentPositionId, displayOrder: displayOrder, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                let inspSecPostn = InspSectionPosition(positionId: positionId, inspectSetupId: inspectSetupId, positionCode: positionCode!, positionNameEn: positionNameEn!, positionNameFr: positionNameFr, positionNameCn: positionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, currentLevel: currentLevel, parentPositionId: parentPositionId, displayOrder: displayOrder, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
                 
                 inspSecPostns.append(inspSecPostn)
             }
@@ -811,7 +815,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultSetValueByElmId(_ elmId:Int) ->[String]? {
-        let sql = "SELECT v.value_name_en,v.value_name_cn FROM result_set_value as s INNER JOIN result_value_mstr as v ON s.value_id=v.value_id WHERE s.set_id = ? AND (v.rec_status = 0 AND v.deleted_flag = 0) ORDER BY v.display_order"
+        let sql = "SELECT v.value_name_en,v.value_name_cn, v.value_name_fr FROM result_set_value as s INNER JOIN result_value_mstr as v ON s.value_id=v.value_id WHERE s.set_id = ? AND (v.rec_status = 0 AND v.deleted_flag = 0) ORDER BY v.display_order"
         var resultSetValues = [String]()
         let rsId = getResultSetIdByElmId(elmId)
         
@@ -820,12 +824,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [rsId]) {
             
             while rs.next() {
-                
-                if _ENGLISH {
-                    resultSetValues.append(rs.string(forColumn: "value_name_en") ?? "")
-                }else{
-                    resultSetValues.append(rs.string(forColumn: "value_name_cn") ?? "")
-                }
+                resultSetValues.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")]))
             }
             }
             
@@ -838,7 +837,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultSetValueBySetId(_ rsId:Int) ->[String]? {
-        let sql = "SELECT v.value_name_en,v.value_name_cn FROM result_set_value as s INNER JOIN result_value_mstr as v ON s.value_id=v.value_id WHERE s.set_id = ? AND (v.rec_status = 0 AND v.deleted_flag = 0) ORDER BY v.display_order"
+        let sql = "SELECT v.value_name_en,v.value_name_cn, v.value_name_fr FROM result_set_value as s INNER JOIN result_value_mstr as v ON s.value_id=v.value_id WHERE s.set_id = ? AND (v.rec_status = 0 AND v.deleted_flag = 0) ORDER BY v.display_order"
         var resultSetValues = [String]()
         
         if db.open() {
@@ -846,12 +845,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [rsId]) {
             
             while rs.next() {
-                
-                if _ENGLISH {
-                    resultSetValues.append(rs.string(forColumn: "value_name_en") ?? "")
-                }else{
-                    resultSetValues.append(rs.string(forColumn: "value_name_cn") ?? "")
-                }
+                resultSetValues.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")]))
             }
             }
             
@@ -864,7 +858,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultKeyValueBySetId(_ rsId:Int) ->[String:Int]? {
-        let sql = "SELECT v.value_id,v.value_name_en,v.value_name_cn FROM result_set_value as s INNER JOIN result_value_mstr as v ON s.value_id=v.value_id WHERE s.set_id = ? AND (v.rec_status = 0 AND v.deleted_flag = 0) ORDER BY v.display_order"
+        let sql = "SELECT v.value_id,v.value_name_en,v.value_name_cn,v.value_name_fr FROM result_set_value as s INNER JOIN result_value_mstr as v ON s.value_id=v.value_id WHERE s.set_id = ? AND (v.rec_status = 0 AND v.deleted_flag = 0) ORDER BY v.display_order"
         var resultKeyValues = [String:Int]()
         
         if db.open() {
@@ -872,12 +866,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [rsId]) {
                 
                 while rs.next() {
-                    
-                    if _ENGLISH {
-                        resultKeyValues[rs.string(forColumn: "value_name_en") ?? ""] = Int(rs.int(forColumn: "value_id"))
-                    }else{
-                        resultKeyValues[rs.string(forColumn: "value_name_cn") ?? ""] = Int(rs.int(forColumn: "value_id"))
-                    }
+                    resultKeyValues[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")])] = Int(rs.int(forColumn: "value_id"))
                 }
             }
             
@@ -977,6 +966,7 @@ class TaskDataHelper:DataHelperMaster{
                 let inspectSetupId = 0//Int(rs.intForColumn("inspect_setup_id"))
                 let elementNameEn = rs.string(forColumn: "element_name_en")
                 let elementNameCn = rs.string(forColumn: "element_name_cn")
+                let elementNameFr = rs.string(forColumn: "element_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let elementType = Int(rs.int(forColumn: "element_type"))
@@ -997,7 +987,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                let inspSecElm = InspSectionElement(elementId: elementId, inspectSetupId: inspectSetupId, elementNameEn: elementNameEn!, elementNameCn: elementNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, elementType: elementType, inspectSectionId: inspectSectionId, inspectPositionId: inspectPositionId, displayOrder: displayOrder, resultSetId: resultSetId, requiredElementFlag: requiredElementFlag, detailDefaultValue: detailDefaultValue!, detailRequiredResultList: detailRequiredResultList!, detailSuggestFlag: detailSuggestFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                let inspSecElm = InspSectionElement(elementId: elementId, inspectSetupId: inspectSetupId, elementNameEn: elementNameEn!, elementNameCn: elementNameCn!, elementNameFr: elementNameFr, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, elementType: elementType, inspectSectionId: inspectSectionId, inspectPositionId: inspectPositionId, displayOrder: displayOrder, resultSetId: resultSetId, requiredElementFlag: requiredElementFlag, detailDefaultValue: detailDefaultValue!, detailRequiredResultList: detailRequiredResultList!, detailSuggestFlag: detailSuggestFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
                 
                 inspSecElms.append(inspSecElm)
             }
@@ -1028,6 +1018,7 @@ class TaskDataHelper:DataHelperMaster{
                 let positionCode = rs.string(forColumn: "position_code")
                 let positionNameEn = rs.string(forColumn: "position_name_en")
                 let positionNameCn = rs.string(forColumn: "position_name_cn")
+                let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let currentLevel = Int(rs.int(forColumn: "current_level"))
@@ -1042,7 +1033,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                let inspSecPostn = InspSectionPosition(positionId: positionId, inspectSetupId: inspectSetupId, positionCode: positionCode!, positionNameEn: positionNameEn!, positionNameCn: positionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, currentLevel: currentLevel, parentPositionId: parentPositionId, displayOrder: displayOrder, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                let inspSecPostn = InspSectionPosition(positionId: positionId, inspectSetupId: inspectSetupId, positionCode: positionCode!, positionNameEn: positionNameEn!, positionNameFr: positionNameFr, positionNameCn: positionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, currentLevel: currentLevel, parentPositionId: parentPositionId, displayOrder: displayOrder, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
                 
                 inspSecPostns.append(inspSecPostn)
             }
@@ -1113,6 +1104,7 @@ class TaskDataHelper:DataHelperMaster{
                 let positionCode = rs.string(forColumn: "position_code")
                 let positionNameEn = rs.string(forColumn: "position_name_en")
                 let positionNameCn = rs.string(forColumn: "position_name_cn")
+                let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let currentLevel = Int(rs.int(forColumn: "current_level"))
@@ -1127,7 +1119,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                inspSecPost = InspSectionPosition(positionId: positionId, inspectSetupId: inspectSetupId, positionCode: positionCode!, positionNameEn: positionNameEn!, positionNameCn: positionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, currentLevel: currentLevel, parentPositionId: parentPositionId, displayOrder: displayOrder, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                inspSecPost = InspSectionPosition(positionId: positionId, inspectSetupId: inspectSetupId, positionCode: positionCode!, positionNameEn: positionNameEn!, positionNameFr: positionNameFr, positionNameCn: positionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, currentLevel: currentLevel, parentPositionId: parentPositionId, displayOrder: displayOrder, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
                 
             }
             }
@@ -1154,6 +1146,7 @@ class TaskDataHelper:DataHelperMaster{
                 let inspectSetupId = 0//Int(rs.intForColumn("inspect_setup_id"))
                 let elementNameEn = rs.string(forColumn: "element_name_en")
                 let elementNameCn = rs.string(forColumn: "element_name_cn")
+                let elementNameFr = rs.string(forColumn: "element_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let elementType = Int(rs.int(forColumn: "element_type"))
@@ -1178,7 +1171,7 @@ class TaskDataHelper:DataHelperMaster{
                     detailRequiredResultList = ""
                 }
                 
-                inspSecElm = InspSectionElement(elementId: elementId, inspectSetupId: inspectSetupId, elementNameEn: elementNameEn!, elementNameCn: elementNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, elementType: elementType, inspectSectionId: inspectSectionId, inspectPositionId: inspectPositionId, displayOrder: displayOrder, resultSetId: resultSetId, requiredElementFlag: requiredElementFlag, detailDefaultValue: detailDefaultValue!, detailRequiredResultList: detailRequiredResultList!, detailSuggestFlag: detailSuggestFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                inspSecElm = InspSectionElement(elementId: elementId, inspectSetupId: inspectSetupId, elementNameEn: elementNameEn!, elementNameCn: elementNameCn!, elementNameFr: elementNameFr, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, elementType: elementType, inspectSectionId: inspectSectionId, inspectPositionId: inspectPositionId, displayOrder: displayOrder, resultSetId: resultSetId, requiredElementFlag: requiredElementFlag, detailDefaultValue: detailDefaultValue!, detailRequiredResultList: detailRequiredResultList!, detailSuggestFlag: detailSuggestFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
             }
             }
             
@@ -1192,12 +1185,12 @@ class TaskDataHelper:DataHelperMaster{
     
     func getResultValueIdByResultValue(_ resultValue:String, prodTypeId:Int, inspTypeId:Int) ->Int {
         //let sql = "SELECT value_id FROM result_value_mstr WHERE (value_name_en LIKE ? OR value_name_cn LIKE ?) AND prod_type_id = ? AND inspect_type_id = ?"
-        let sql = "SELECT value_id FROM result_value_mstr WHERE value_name_en LIKE ? OR value_name_cn LIKE ? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT value_id FROM result_value_mstr WHERE value_name_en LIKE ? OR value_name_cn LIKE ? OR value_name_fr LIKE ? AND (rec_status = 0 AND deleted_flag = 0)"
         var resultValueId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValue,resultValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValue,resultValue, resultValue]) {
             
                 if rs.next() {
                     resultValueId = Int(rs.int(forColumn: "value_id"))
@@ -1219,7 +1212,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueId]) {
             
                 if rs.next() {
-                    resultValue = (_ENGLISH ? rs.string(forColumn: "value_name_en") : rs.string(forColumn: "value_name_cn")) ?? ""
+                    resultValue = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")])
                 }
             }
             
@@ -1241,8 +1234,9 @@ class TaskDataHelper:DataHelperMaster{
                 let resultValueId = Int(rs.int(forColumn: "value_id"))
                 let resultValueNameEn = rs.string(forColumn: "value_name_en")
                 let resultValueNameCn = rs.string(forColumn: "value_name_cn")
+                let resultValueNameFr = rs.string(forColumn: "value_name_fr") ?? ""
                 
-                resultValue = ResultValueObj(resultValueId:resultValueId, resultValueNameEn:resultValueNameEn!, resultValueNameCn:resultValueNameCn!)
+                resultValue = ResultValueObj(resultValueId:resultValueId, resultValueNameEn:resultValueNameEn!, resultValueNameCn:resultValueNameCn!, resultValueNameFr: resultValueNameFr)
             }
             }
             
@@ -1255,7 +1249,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultSetValuesByTaskId(_ taskId:Int) ->[SummaryResultValue] {
-        let sql = "SELECT ism.section_id, ism.section_name_en,ism.section_name_cn,rvm.value_id, rvm.value_name_en,rvm.value_name_cn,IFNULL(dr.result_cnt, 0) AS result_cnt FROM inspect_task it INNER JOIN inspect_task_tmpl_section itts ON it.tmpl_id = itts.tmpl_id INNER JOIN inspect_section_mstr ism ON ism.section_id = itts.inspect_section_id AND ism.rec_status = 0 AND ism.deleted_flag = 0 INNER JOIN result_set_mstr rsm ON rsm.set_id = ism.result_set_id AND rsm.rec_status = 0 AND rsm.deleted_flag = 0 INNER JOIN result_set_value rsv ON rsv.set_id = rsm.set_id INNER JOIN result_value_mstr rvm ON rvm.value_id = rsv.value_id AND rvm.rec_status = 0 AND rvm.deleted_flag = 0 LEFT OUTER JOIN (SELECT task_id, inspect_section_id, result_value_id, COUNT(record_id) AS result_cnt FROM task_inspect_data_record GROUP BY task_id, inspect_section_id, result_value_id) dr ON dr.task_id = it.task_id AND dr.inspect_section_id = ism.section_id AND dr.result_value_id = rsv.value_id WHERE it.task_id=? AND (it.rec_status = 0 AND it.deleted_flag = 0) AND (ism.rec_status = 0 AND ism.deleted_flag = 0) AND (rsm.rec_status = 0 AND rsm.deleted_flag = 0) AND (rvm.rec_status = 0 AND rvm.deleted_flag = 0) ORDER BY ism.display_order ASC, rvm.display_order ASC"
+        let sql = "SELECT ism.section_id, ism.section_name_en,ism.section_name_cn, ism.section_name_fr,rvm.value_id, rvm.value_name_en,rvm.value_name_cn, rvm.value_name_fr,IFNULL(dr.result_cnt, 0) AS result_cnt FROM inspect_task it INNER JOIN inspect_task_tmpl_section itts ON it.tmpl_id = itts.tmpl_id INNER JOIN inspect_section_mstr ism ON ism.section_id = itts.inspect_section_id AND ism.rec_status = 0 AND ism.deleted_flag = 0 INNER JOIN result_set_mstr rsm ON rsm.set_id = ism.result_set_id AND rsm.rec_status = 0 AND rsm.deleted_flag = 0 INNER JOIN result_set_value rsv ON rsv.set_id = rsm.set_id INNER JOIN result_value_mstr rvm ON rvm.value_id = rsv.value_id AND rvm.rec_status = 0 AND rvm.deleted_flag = 0 LEFT OUTER JOIN (SELECT task_id, inspect_section_id, result_value_id, COUNT(record_id) AS result_cnt FROM task_inspect_data_record GROUP BY task_id, inspect_section_id, result_value_id) dr ON dr.task_id = it.task_id AND dr.inspect_section_id = ism.section_id AND dr.result_value_id = rsv.value_id WHERE it.task_id=? AND (it.rec_status = 0 AND it.deleted_flag = 0) AND (ism.rec_status = 0 AND ism.deleted_flag = 0) AND (rsm.rec_status = 0 AND rsm.deleted_flag = 0) AND (rvm.rec_status = 0 AND rvm.deleted_flag = 0) ORDER BY ism.display_order ASC, rvm.display_order ASC"
         
         var resultSetValues = [SummaryResultValue]()
         
@@ -1266,12 +1260,12 @@ class TaskDataHelper:DataHelperMaster{
             while rs.next() {
                 
                 let sectionId = Int(rs.int(forColumn: "section_id"))
-                let sectionName = _ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")
+                let sectionName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                 let valueId = Int(rs.int(forColumn: "value_id"))
-                let valueName = _ENGLISH ? rs.string(forColumn: "value_name_en") : rs.string(forColumn: "value_name_cn")
+                let valueName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")])
                 let resultCount = Int(rs.int(forColumn: "result_cnt"))
                 
-                let resultSetValue = SummaryResultValue(sectionId: sectionId,sectionName: sectionName!,valueId: valueId,valueName: valueName!,resultCount: resultCount)
+                let resultSetValue = SummaryResultValue(sectionId: sectionId,sectionName: sectionName,valueId: valueId,valueName: valueName,resultCount: resultCount)
                 resultSetValues.append(resultSetValue)
             }
             }
@@ -1283,7 +1277,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultSetValuesBySectionId(_ sectionId:Int) ->[String] {
-        let sql = "SELECT value_name_en, value_name_cn FROM result_set_value AS rsv INNER JOIN result_value_mstr AS rvm ON rsv.value_id = rvm.value_id WHERE set_id = (SELECT rsm.set_id FROM inspect_section_mstr AS ism INNER JOIN result_set_mstr AS rsm ON ism.result_set_id = rsm.set_id WHERE ism.section_id = ?) ORDER BY rvm.display_order ASC"
+        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM result_set_value AS rsv INNER JOIN result_value_mstr AS rvm ON rsv.value_id = rvm.value_id WHERE set_id = (SELECT rsm.set_id FROM inspect_section_mstr AS ism INNER JOIN result_set_mstr AS rsm ON ism.result_set_id = rsm.set_id WHERE ism.section_id = ?) ORDER BY rvm.display_order ASC"
         var resultSetValues = [String]()
         
         if db.open() {
@@ -1291,12 +1285,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [sectionId]) {
             
             while rs.next() {
-                
-                if _ENGLISH {
-                    resultSetValues.append(rs.string(forColumn: "value_name_en") ?? "")
-                }else{
-                    resultSetValues.append(rs.string(forColumn: "value_name_cn") ?? "")
-                }
+                resultSetValues.append( MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")]) )
             }
             }
             
@@ -1334,7 +1323,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTypeNameByTypeId(_ typeId:Int) ->String {
-        let sql = "SELECT type_name_en, type_name_cn FROM prod_type_mstr WHERE type_id = ? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT type_name_en, type_name_cn, type_name_fr FROM prod_type_mstr WHERE type_id = ? AND (rec_status = 0 AND deleted_flag = 0)"
         var typeName = ""
         
         if db.open() {
@@ -1342,7 +1331,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [typeId]) {
             
                 if rs.next() {
-                    typeName = (_ENGLISH ? rs.string(forColumn: "type_name_en") : rs.string(forColumn: "type_name_cn")) ?? ""
+                    typeName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "type_name_en"), .zh: rs.string(forColumn: "type_name_cn"), .fr: rs.string(forColumn: "type_name_fr")])
                 }
             }
             
@@ -1374,12 +1363,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultValueIdByName(_ resultValueName:String) ->Int {
-        let sql = "SELECT value_id FROM result_value_mstr WHERE value_name_en=? OR value_name_cn=? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT value_id FROM result_value_mstr WHERE value_name_en=? OR value_name_cn=? OR value_name_fr=? AND (rec_status = 0 AND deleted_flag = 0)"
         var resultValueId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueName,resultValueName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueName,resultValueName, resultValueName]) {
             
                 if rs.next() {
                     resultValueId = Int(rs.int(forColumn: "value_id"))
@@ -1393,7 +1382,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultValueNameById(_ resultValueId:Int) ->String {
-        let sql = "SELECT value_name_en,value_name_cn FROM result_value_mstr WHERE value_id=? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT value_name_en,value_name_cn, value_name_fr FROM result_value_mstr WHERE value_id=? AND (rec_status = 0 AND deleted_flag = 0)"
         var resultValueName = ""
         
         if db.open() {
@@ -1401,12 +1390,7 @@ class TaskDataHelper:DataHelperMaster{
             if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueId]) {
             
             if rs.next() {
-                
-                if _ENGLISH {
-                    resultValueName = rs.string(forColumn: "value_name_en") ?? ""
-                }else{
-                    resultValueName = rs.string(forColumn: "value_name_cn") ?? ""
-                }
+                resultValueName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "value_name_en"), .zh: rs.string(forColumn: "value_name_cn"), .fr: rs.string(forColumn: "value_name_fr")])
             }
             }
             
@@ -1505,6 +1489,7 @@ class TaskDataHelper:DataHelperMaster{
                 let inspectSetupId = 0//Int(rs.intForColumn("inspect_setup_id"))
                 let sectionNameEn = rs.string(forColumn: "section_name_en")
                 let sectionNameCn = rs.string(forColumn: "section_name_cn")
+                let sectionNameFr = rs.string(forColumn: "section_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let displayOrder = Int(rs.int(forColumn: "display_order"))
@@ -1521,7 +1506,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                inspSection = InspSection(taskId: 0, sectionId: sectionId, inspectSetupId: inspectSetupId, sectionNameEn: sectionNameEn!, sectionNameCn: sectionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, displayOrder: displayOrder, resultSetId: resultSetId, inputModeCode: inputModeCode!, optionalEnableFlag: optionalEnableFlag, adhocSelectFlag: adhoSelectFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                inspSection = InspSection(taskId: 0, sectionId: sectionId, inspectSetupId: inspectSetupId, sectionNameEn: sectionNameEn!, sectionNameCn: sectionNameCn!, sectionNameFr: sectionNameFr, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, displayOrder: displayOrder, resultSetId: resultSetId, inputModeCode: inputModeCode!, optionalEnableFlag: optionalEnableFlag, adhocSelectFlag: adhoSelectFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
             }
             }
             
@@ -1686,6 +1671,7 @@ class TaskDataHelper:DataHelperMaster{
                 let inspectSetupId = 0//Int(rs.intForColumn("inspect_setup_id"))
                 let sectionNameEn = rs.string(forColumn: "section_name_en")
                 let sectionNameCn = rs.string(forColumn: "section_name_cn")
+                let sectionNameFr = rs.string(forColumn: "section_name_fr") ?? ""
                 let prodTypeId = Int(rs.int(forColumn: "prod_type_id"))
                 let inspectTypeId = Int(rs.int(forColumn: "inspect_type_id"))
                 let displayOrder = Int(rs.int(forColumn: "display_order"))
@@ -1702,7 +1688,7 @@ class TaskDataHelper:DataHelperMaster{
                 let deleteUser = rs.string(forColumn: "delete_user")
                 let deleteDate = rs.string(forColumn: "delete_date")
                 
-                inspSection = InspSection(taskId: 0, sectionId: sectionId, inspectSetupId: inspectSetupId, sectionNameEn: sectionNameEn!, sectionNameCn: sectionNameCn!, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, displayOrder: displayOrder, resultSetId: resultSetId, inputModeCode: inputModeCode!, optionalEnableFlag: optionalEnableFlag, adhocSelectFlag: adhoSelectFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
+                inspSection = InspSection(taskId: 0, sectionId: sectionId, inspectSetupId: inspectSetupId, sectionNameEn: sectionNameEn!, sectionNameCn: sectionNameCn!, sectionNameFr: sectionNameFr, prodTypeId: prodTypeId, inspectTypeId: inspectTypeId, displayOrder: displayOrder, resultSetId: resultSetId, inputModeCode: inputModeCode!, optionalEnableFlag: optionalEnableFlag, adhocSelectFlag: adhoSelectFlag, recStatus: recStatus, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, deletedFlag: deletedFlag, deleteUser: deleteUser, deleteDate: deleteDate)
             }
             }
             
@@ -1797,12 +1783,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getInspTypeIdByName(_ inspTypeName:String) ->Int {
-        let sql = "SELECT type_id FROM inspect_type_mstr WHERE type_name_en = ? OR type_name_cn =? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT type_id FROM inspect_type_mstr WHERE type_name_fr = ? OR type_name_en = ? OR type_name_cn =? AND (rec_status = 0 AND deleted_flag = 0)"
         var inspTypeId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [inspTypeName, inspTypeName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [inspTypeName, inspTypeName, inspTypeName]) {
                 if rs.next() {
                     inspTypeId = Int(rs.int(forColumn: "type_id"))
                 }
@@ -1815,12 +1801,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getProdTypeIdByName(_ prodTypeName:String) ->Int {
-        let sql = "SELECT type_id FROM prod_type_mstr WHERE type_name_en = ? OR type_name_cn = ? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT type_id FROM prod_type_mstr WHERE type_name_fr = ? OR type_name_en = ? OR type_name_cn = ? AND (rec_status = 0 AND deleted_flag = 0)"
         var prodTypeId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [prodTypeName, prodTypeName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [prodTypeName, prodTypeName, prodTypeName]) {
                 if rs.next() {
                     prodTypeId = Int(rs.int(forColumn: "type_id"))
                 }
@@ -2403,9 +2389,9 @@ class TaskDataHelper:DataHelperMaster{
                 
                 while rs.next() {
                     
-                    let value = _ENGLISH ? rs.string(forColumn: "select_text_en") : rs.string(forColumn: "select_text_cn")
+                    let value = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "select_text_en"), .zh: rs.string(forColumn: "select_text_cn"), .fr: rs.string(forColumn: "select_text_fr")])
                     
-                    values.append(value!)
+                    values.append(value)
                     
                 }
             }
@@ -2431,7 +2417,8 @@ class TaskDataHelper:DataHelperMaster{
                     let id = Int(rs.int(forColumn: "option_id"))
                     let nameEn = rs.string(forColumn: "option_text_en")
                     let nameCn = rs.string(forColumn: "option_text_zh")
-                    let value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn)
+                    let nameFr = rs.string(forColumn: "option_text_fr")
+                    let value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn, valueNameFr: nameFr)
                         
                     values.append(value)
                 }
@@ -2458,7 +2445,8 @@ class TaskDataHelper:DataHelperMaster{
                     let id = Int(rs.int(forColumn: "option_id"))
                     let nameEn = rs.string(forColumn: "option_text_en")
                     let nameCn = rs.string(forColumn: "option_text_zh")
-                    let value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn)
+                    let nameFr = rs.string(forColumn: "option_text_fr")
+                    let value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn, valueNameFr: nameFr)
                     
                     values.append(value)
                 }
@@ -2505,7 +2493,8 @@ class TaskDataHelper:DataHelperMaster{
                     let id = Int(rs.int(forColumn: "option_id"))
                     let nameEn = rs.string(forColumn: "option_text_en")
                     let nameCn = rs.string(forColumn: "option_text_zh")
-                    let value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn)
+                    let nameFr = rs.string(forColumn: "option_text_fr")
+                    let value = DropdownValue(valueId: id, valueNameEn: nameEn, valueNameCn: nameCn, valueNameFr: nameFr)
                     
                     values.append(value)
                 }
@@ -2528,7 +2517,7 @@ class TaskDataHelper:DataHelperMaster{
             var count = 0
             if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 while rs.next() {
-                    textValue += ((_ENGLISH ? rs.string(forColumn: "option_text_en"):rs.string(forColumn: "option_text_zh")) ?? "") + ","
+                    textValue += MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "option_text_en"), .zh: rs.string(forColumn: "option_text_zh"), .fr: rs.string(forColumn: "option_text_fr")]) + ","
                     count += 1
                 }
                 
@@ -2570,10 +2559,10 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func isNeedAddPhotoForInspectItem(_ resultValue:String) -> Bool {
-        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_name_cn = ? OR value_name_en = ?"
+        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_name_fr = ? OR value_name_cn = ? OR value_name_en = ?"
         var result = false
         if db.open() {
-            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValue, resultValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [resultValue, resultValue, resultValue]) {
                 result = rs.next() && Int(rs.int(forColumn: "defect_gen_flag")) > 0
             }
             db.close()

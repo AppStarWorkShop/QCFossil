@@ -167,8 +167,8 @@ class PhotoDataHelper:DataHelperMaster {
                         
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspItemText = (_ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")) ?? ""
-                                    inspCatText = (_ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")) ?? ""
+                                    inspItemText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "element_name_en"), .zh: rs.string(forColumn: "element_name_cn"), .fr: rs.string(forColumn: "element_name_fr")])
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                                 }
                             }
                         
@@ -177,8 +177,8 @@ class PhotoDataHelper:DataHelperMaster {
                             
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspAreaText = (_ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")) ?? ""
-                                    inspCatText = (_ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")) ?? ""
+                                    inspAreaText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")])
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                                 }
                             }
                         
@@ -198,7 +198,7 @@ class PhotoDataHelper:DataHelperMaster {
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
                                     inspItemText = rs.string(forColumn: "request_element_desc") ?? ""
-                                    inspCatText = _ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                                 }
                             }
                         
@@ -207,9 +207,9 @@ class PhotoDataHelper:DataHelperMaster {
                             
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspAreaText = _ENGLISH ? rs.string(forColumn: "position_name_en") : rs.string(forColumn: "position_name_cn")
-                                    inspCatText = _ENGLISH ? rs.string(forColumn: "section_name_en") : rs.string(forColumn: "section_name_cn")
-                                    inspItemText = _ENGLISH ? rs.string(forColumn: "element_name_en") : rs.string(forColumn: "element_name_cn")
+                                    inspAreaText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")])
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
+                                    inspItemText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "element_name_en"), .zh: rs.string(forColumn: "element_name_cn"), .fr: rs.string(forColumn: "element_name_fr")])
                                 }
                             }
                         

@@ -239,12 +239,13 @@ class InspectorDataHelper:DataHelperMaster {
     func updateProdType(_ prodType:ProdType) ->Bool {
         
         if db.open() {
-            let sql = "INSERT OR REPLACE INTO prod_type_mstr('type_id', 'type_code', 'type_name_en', 'type_name_cn', 'data_env', 'rec_status', 'create_date', 'create_user', 'modify_date', 'modify_user', 'deleted_flag', 'delete_date', 'delete_user') VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql = "INSERT OR REPLACE INTO prod_type_mstr('type_id', 'type_code', 'type_name_en', 'type_name_cn', 'data_env', 'rec_status', 'create_date', 'create_user', 'modify_date', 'modify_user', 'deleted_flag', 'delete_date', 'delete_user', 'type_name_fr') VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             
             let typeId = prodType.typeId ?? ""
             let typeCode = prodType.typeCode ?? ""
             let typeNameEn = prodType.typeNameEn ?? ""
             let typeNameCn = prodType.typeNameCn ?? ""
+            let typeNameFr = prodType.typeNameFr ?? ""
             let dataEnv = prodType.dataEnv ?? ""
             let recStatus = prodType.recStatus ?? ""
             let createDate = prodType.createDate ?? ""
@@ -255,7 +256,7 @@ class InspectorDataHelper:DataHelperMaster {
             let deleteDate = prodType.deleteDate ?? ""
             let deleteUser = prodType.deleteUser ?? ""
             
-            if !db.executeUpdate(sql, withArgumentsIn: [typeId, typeCode, typeNameEn, typeNameCn, dataEnv, recStatus, createDate, createUser, modifyDate, modifyUser, deletedFlag, deleteDate, deleteUser]) {
+            if !db.executeUpdate(sql, withArgumentsIn: [typeId, typeCode, typeNameEn, typeNameCn, dataEnv, recStatus, createDate, createUser, modifyDate, modifyUser, deletedFlag, deleteDate, deleteUser, typeNameFr]) {
                 
                 db.close()
                 return false

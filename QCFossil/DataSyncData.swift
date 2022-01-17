@@ -10,7 +10,7 @@ import UIKit
 
 //Data Sync Server
 #if DEBUG
-let dataSyncServerUsing = dataSyncUatServer
+let dataSyncServerUsing = dataSyncTestServer
 #else
 let dataSyncServerUsing = dataSyncPrdServer
 #endif
@@ -100,7 +100,8 @@ let _DS_USERLOGIN = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "type_name_fr"
         ]
     ]
 ] as [String : Any]
@@ -381,7 +382,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "type_name_fr"
         ],
         "inspect_setup_mstr_list" : [
             "setup_id",
@@ -413,7 +415,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "tmpl_name_fr"
         ],
         "inspect_task_tmpl_field_list": [
             "tmpl_id",
@@ -459,7 +462,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "field_name_fr"
         ],
         "inspect_task_field_select_val_list": [
             "val_id",
@@ -472,7 +476,8 @@ let _DS_INPTSETUP = [
             "create_date",
             "create_user",
             "modify_date",
-            "modify_user"
+            "modify_user",
+            "select_text_fr"
         ],
         "inspect_section_mstr_list" : [
             "section_id",
@@ -492,7 +497,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "section_name_fr"
         ],
         "inspect_section_element_list" : [
             "inspect_section_id",
@@ -521,7 +527,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "position_name_fr"
         ],
         "inspect_position_element_list" : [
             "inspect_position_id",
@@ -553,7 +560,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "element_name_fr"
         ],
         "inspect_element_detail_select_val_list" : [
             "val_id",
@@ -566,7 +574,8 @@ let _DS_INPTSETUP = [
             "create_date",
             "create_user",
             "modify_date",
-            "modify_user"
+            "modify_user",
+            "select_text_fr"
         ],
         "result_value_mstr_list" : [
             "value_id",
@@ -583,7 +592,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "value_name_fr"
         ],
         "result_set_mstr_list" :[
             "set_id",
@@ -618,7 +628,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "value_name_fr"
         ],
         "zone_set_mstr_list" : [
             "set_id",
@@ -654,7 +665,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "value_name_fr"
         ],
         "case_set_mstr_list" : [
             "set_id",
@@ -689,7 +701,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "value_name_fr"
         ],
         "defect_set_mstr_list" : [
             "set_id",
@@ -727,7 +740,8 @@ let _DS_INPTSETUP = [
             "modify_date",
             "deleted_flag",
             "delete_user",
-            "delete_date"
+            "delete_date",
+            "option_text_fr"
         ]
     ]
 ] as [String : Any]

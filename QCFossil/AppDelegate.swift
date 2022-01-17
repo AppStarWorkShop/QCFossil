@@ -15,15 +15,15 @@ import UIKit
 private let sharedLocalizeInstance = MylocalizedString()
 
 @objc class MylocalizedString: NSObject  {
-    @objc var language = "en"
+    var language: Languages = .en
     @objc var bundle = Bundle(path: Bundle.main.path(forResource: "en", ofType: "lproj")!)
     
-    @objc func setMyLanguage(_ lang:String="en") {
+    func setMyLanguage(_ lang:Languages = .en) {
         language = lang
-        bundle = Bundle(path: Bundle.main.path(forResource: lang, ofType: "lproj")!)
+        bundle = Bundle(path: Bundle.main.path(forResource: lang.rawValue, ofType: "lproj")!)
     }
     
-    @objc func getLanguage() ->String {
+    func getLanguage() -> Languages {
         return language
     }
     
@@ -35,6 +35,27 @@ private let sharedLocalizeInstance = MylocalizedString()
         return sharedLocalizeInstance
     }
     
+    func getLocalizedString(stringDic: [Languages: String?]) -> String {
+        switch language {
+        case .zh:
+            return (stringDic[.zh] ?? "") ?? ""
+        case .fr:
+            return (stringDic[.fr] ?? "") ?? ""
+        default:
+            return (stringDic[.en] ?? "") ?? ""
+        }
+    }
+    
+    func getCurrentLocale() -> Locale {
+        switch language {
+        case .zh:
+            return Locale(identifier: "zh_HK")
+        case .fr:
+            return Locale(identifier: "fr_CH")
+        default:
+            return Locale(identifier: "en_HK")
+        }
+    }
 }
 
 @UIApplicationMain

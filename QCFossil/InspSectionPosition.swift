@@ -15,6 +15,7 @@ class InspSectionPosition {
     var positionCode:String?
     var positionNameEn:String?
     var positionNameCn:String?
+    var positionNameFr:String?
     var prodTypeId:Int?
     var inspectTypeId:Int?
     var currentLevel:Int?
@@ -29,13 +30,14 @@ class InspSectionPosition {
     var deleteUser:String?
     var deleteDate:String?
     
-    init(positionId:Int, inspectSetupId:Int, positionCode:String, positionNameEn:String, positionNameCn:String, prodTypeId:Int, inspectTypeId:Int, currentLevel:Int, parentPositionId:Int, displayOrder:Int, recStatus:Int, createUser:String, createDate:String, modifyUser:String, modifyDate:String, deletedFlag:Int, deleteUser:String?, deleteDate:String?) {
+    init(positionId:Int, inspectSetupId:Int, positionCode:String, positionNameEn:String, positionNameFr:String, positionNameCn:String, prodTypeId:Int, inspectTypeId:Int, currentLevel:Int, parentPositionId:Int, displayOrder:Int, recStatus:Int, createUser:String, createDate:String, modifyUser:String, modifyDate:String, deletedFlag:Int, deleteUser:String?, deleteDate:String?) {
         
         self.positionId = positionId
         self.inspectSetupId = inspectSetupId
         self.positionCode = positionCode
         self.positionNameEn = positionNameEn
         self.positionNameCn = positionNameCn
+        self.positionNameFr = positionNameFr
         self.prodTypeId = prodTypeId
         self.inspectTypeId = inspectTypeId
         self.currentLevel = currentLevel

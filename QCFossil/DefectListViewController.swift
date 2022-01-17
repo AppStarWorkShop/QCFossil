@@ -67,11 +67,11 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
         defectTableView.allowsSelection = false
         
         sectionSegmentControl.removeAllSegments()
-        sectionSegmentControl.insertSegment(withTitle: _ENGLISH ? "All" : "全部", at: 0, animated: true)
+        sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: "All", .zh: "全部", .fr: "All"]), at: 0, animated: true)
         
         var index = 1
         for section in (Cache_Task_On?.inspSections)! {
-            sectionSegmentControl.insertSegment(withTitle: _ENGLISH ? section.sectionNameEn! : section.sectionNameCn!, at: index, animated: true)
+            sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameEn]), at: index, animated: true)
             index += 1
         }
         
@@ -104,19 +104,18 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
                                 
                                 defectItem.inspElmt.cellCatIdx = inspSection.sectionId!
                                 defectItem.inspElmt.cellIdx = idx
-                                defectItem.inspElmt.cellCatName = (_ENGLISH ? inspSection.sectionNameEn : inspSection.sectionNameCn)!
-                                defectItem.inspElmt.inspCatText = (_ENGLISH ? inspSection.sectionNameEn : inspSection.sectionNameCn)!
-                                //defectItem.inspElmt.inspAreaText = (_ENGLISH ? inspElmt.postnObj?.positionNameEn : inspElmt.postnObj?.positionNameCn)!
-                                defectItem.inspElmt.inspAreaText = (_ENGLISH ? defectItem.postnObj.positionNameEn : defectItem.postnObj.positionNameCn)
+                                defectItem.inspElmt.cellCatName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: inspSection.sectionNameEn, .zh: inspSection.sectionNameCn, .fr: inspSection.sectionNameFr])
+                                defectItem.inspElmt.inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: inspSection.sectionNameEn, .zh: inspSection.sectionNameCn, .fr: inspSection.sectionNameFr])
+                                defectItem.inspElmt.inspAreaText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectItem.postnObj.positionNameEn, .zh: defectItem.postnObj.positionNameCn, .fr: defectItem.postnObj.positionNameFr])
                                 
                                 if defectItem.inputMode == _INPUTMODE03 {
-                                    defectItem.inspElmt.inspReqCatText = (_ENGLISH ? inspElmt.reqSectObj?.sectionNameEn : inspElmt.reqSectObj?.sectionNameCn)!
+                                    defectItem.inspElmt.inspReqCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: inspElmt.reqSectObj?.sectionNameEn, .zh: inspElmt.reqSectObj?.sectionNameCn, .fr: inspElmt.reqSectObj?.sectionNameFr])
                                     defectItem.inspElmt.inspItemText = inspElmt.requestElementDesc
                                 }else if defectItem.inputMode == _INPUTMODE01{
-                                    defectItem.inspElmt.inspAreaText = (_ENGLISH ? inspElmt.elmtObj?.elementNameEn : inspElmt.elmtObj?.elementNameCn)!
+                                    defectItem.inspElmt.inspAreaText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: inspElmt.elmtObj?.elementNameEn, .zh: inspElmt.elmtObj?.elementNameCn, .fr: inspElmt.elmtObj?.elementNameFr])
                                 }
                                 else{
-                                    defectItem.inspElmt.inspItemText = (_ENGLISH ? inspElmt.elmtObj?.elementNameEn : inspElmt.elmtObj?.elementNameCn)!
+                                    defectItem.inspElmt.inspItemText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: inspElmt.elmtObj?.elementNameEn, .zh: inspElmt.elmtObj?.elementNameCn, .fr: inspElmt.elmtObj?.elementNameFr])
                                 }
                             }
                             idx += 1
@@ -373,8 +372,8 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
         
         newDfItem?.inputMode = inputMode
         newDfItem?.inspElmt = inspItem as! InputModeICMaster
-        newDfItem?.sectObj = SectObj(sectionId:sectionId, sectionNameEn: (inspItem as! InputModeICMaster).cellCatName, sectionNameCn: (inspItem as! InputModeICMaster).cellCatName,inputMode: inputMode)
-        newDfItem?.elmtObj = ElmtObj(elementId:itemId,elementNameEn:"", elementNameCn:"", reqElmtFlag: 0)
+        newDfItem?.sectObj = SectObj(sectionId:sectionId, sectionNameEn: (inspItem as! InputModeICMaster).cellCatName, sectionNameCn: (inspItem as! InputModeICMaster).cellCatName, sectionNameFr: (inspItem as! InputModeICMaster).cellCatName,inputMode: inputMode)
+        newDfItem?.elmtObj = ElmtObj(elementId:itemId,elementNameEn:"", elementNameCn:"", elementNameFr: "", reqElmtFlag: 0)
         newDfItem?.cellIdx = cellIdx
         newDfItem?.sortNum = (newDfItem?.inspElmt.cellCatIdx)!*1000000 + (newDfItem?.inspElmt.cellIdx)!*1000 + cellIdx
         newDfItem?.photoNames = [String]()
@@ -635,7 +634,7 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
             cellMode2.pVC = self
             cellMode2.taskDefectDataRecordId = defectItem.recordId!
             cellMode2.inspItem = defectItem.inspElmt as? InputMode02CellView
-            cellMode2.sectionName.text = _ENGLISH ? defectItem.sectObj.sectionNameEn : defectItem.sectObj.sectionNameCn
+            cellMode2.sectionName.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectItem.sectObj.sectionNameEn, .zh: defectItem.sectObj.sectionNameCn, .fr: defectItem.sectObj.sectionNameFr])
             cellMode2.sectionId = defectItem.inspElmt.cellCatIdx
             cellMode2.itemId = defectItem.inspElmt.cellIdx
             cellMode2.cellIdx = defectItem.cellIdx
@@ -666,7 +665,7 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
                 cellMode2.dppInput.text = defectItem.defectpositionPoints
             }
             
-            cellMode2.dtInput.text = _ENGLISH ? defectItem.elmtObj.elementNameEn : defectItem.elmtObj.elementNameCn
+            cellMode2.dtInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectItem.elmtObj.elementNameEn, .zh: defectItem.elmtObj.elementNameCn, .fr: defectItem.elmtObj.elementNameFr])
             
             let defectDataHelper = DefectDataHelper()
             if Int(defectItem.inspectElementId!) > 0 {

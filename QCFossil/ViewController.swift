@@ -67,7 +67,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //print("\(UIDevice.currentDevice().systemVersion)")
         // Do any additional setup after loading the view, typically from a nib.
         self.language.selectedSegmentIndex = 1
-        MylocalizedString.sharedLocalizeManager.setMyLanguage("zh-Hans")
+        MylocalizedString.sharedLocalizeManager.setMyLanguage(.zh)
         updateLocalizedString()
         // DatabaseManager.sharedDatabaseManager.initDbObj()
         
@@ -128,7 +128,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //self.password.text = "wE$6T+8a"
         
         let defaults = UserDefaults.standard
-        let releaseDate = "20211222"//self.view.getCurrentDate("MMdd")
+        let releaseDate = "20220111"//self.view.getCurrentDate("MMdd")
         _RELEASE = releaseDate as String
         defaults.set(releaseDate, forKey: "release_preference")
         
@@ -221,17 +221,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         */
         let selectedSegment = sender.selectedSegmentIndex;
         
-        if (selectedSegment > 0) {
-            NSLog("Change language to: %@","中文")
-            //singleton instance MylocalizedString.sharedLocalizeManager
-            MylocalizedString.sharedLocalizeManager.setMyLanguage("zh-Hans")
-            _ENGLISH = false
-        }
-        else{
-            NSLog("Change language to: %@","English")
-            //singleton instance MylocalizedString.sharedLocalizeManager
-            MylocalizedString.sharedLocalizeManager.setMyLanguage("en")
-            _ENGLISH = true
+        switch selectedSegment {
+        case 1:
+            MylocalizedString.sharedLocalizeManager.setMyLanguage(.zh)
+        case 2:
+            MylocalizedString.sharedLocalizeManager.setMyLanguage(.fr)
+        default:
+            MylocalizedString.sharedLocalizeManager.setMyLanguage(.en)
         }
         
         //switch language
@@ -300,6 +296,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                             
                             if let typeNameCn = result![1]["type_name_cn"] {
                                 prodType.typeNameCn = typeNameCn
+                            }
+                            
+                            if let typeNameFr = result![1]["type_name_fr"] {
+                                prodType.typeNameFr = typeNameFr
                             }
                             
                             if let dataEnv = result![1]["data_env"] {
@@ -949,11 +949,20 @@ extension ViewController {
 
 extension ViewController {
     func setupView() {
-//        logoImage.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        NSLayoutConstraint.activate([
-//            logoImage.widthAnchor.constraint(equalToConstant: 700),
-//            logoImage.heightAnchor.constraint(equalToConstant: 500),
-//        ])
+        loginButton.titleLabel?.numberOfLines = 1
+        loginButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        loginButton.titleLabel?.lineBreakMode = .byClipping
+        
+        clearButton.titleLabel?.numberOfLines = 1
+        clearButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        clearButton.titleLabel?.lineBreakMode = .byClipping
+        
+        forgetPasswordButton.titleLabel?.numberOfLines = 1
+        forgetPasswordButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        forgetPasswordButton.titleLabel?.lineBreakMode = .byClipping
+        
+        forgetUserNameButton.titleLabel?.numberOfLines = 1
+        forgetUserNameButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        forgetUserNameButton.titleLabel?.lineBreakMode = .byClipping
     }
 }

@@ -56,7 +56,7 @@ class InputMode03View: InputModeSCMaster {
         
         for taskInspDataRecord in (inspSection?.taskInspDataRecords)! {
             
-            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspCatInputText: _ENGLISH ? taskInspDataRecord.reqSectObj!.sectionNameEn : taskInspDataRecord.reqSectObj!.sectionNameCn,inspItemInputText: taskInspDataRecord.requestElementDesc,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId: taskInspDataRecord.postnObj!.positionId,taskInspDataRecordId:taskInspDataRecord.recordId!,requestSecId:taskInspDataRecord.requestSectionId,inspDetailInputText:taskInspDataRecord.inspectDetail!,inspRemarksInputText:taskInspDataRecord.inspectRemarks!,resultValueObj:taskInspDataRecord.resultObj!)
+            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspCatInputText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.reqSectObj!.sectionNameEn, .zh: taskInspDataRecord.reqSectObj!.sectionNameCn, .fr: taskInspDataRecord.reqSectObj!.sectionNameFr]),inspItemInputText: taskInspDataRecord.requestElementDesc,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId: taskInspDataRecord.postnObj!.positionId,taskInspDataRecordId:taskInspDataRecord.recordId!,requestSecId:taskInspDataRecord.requestSectionId,inspDetailInputText:taskInspDataRecord.inspectDetail!,inspRemarksInputText:taskInspDataRecord.inspectRemarks!,resultValueObj:taskInspDataRecord.resultObj!)
             
             inputCell.photoAdded = photoDataHelper.checkPhotoAddedByInspDataRecordId(taskInspDataRecord.recordId!)
             inputCell.updatePhotoNeededStatus((taskInspDataRecord.resultObj?.resultValueNameEn)!)
@@ -136,7 +136,7 @@ class InputMode03View: InputModeSCMaster {
         self.scrollCellView.contentSize = size
     }
     
-    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspCatInputText:String, inspItemInputText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, taskInspDataRecordId:Int=0,requestSecId:Int?=0,inspDetailInputText:String="",inspRemarksInputText:String="",resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "")) -> InputMode03CellView {
+    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspCatInputText:String, inspItemInputText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, taskInspDataRecordId:Int=0,requestSecId:Int?=0,inspDetailInputText:String="",inspRemarksInputText:String="",resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: "")) -> InputMode03CellView {
         
         let inputCellViewObj = InputMode03CellView.loadFromNibNamed("InputMode03Cell")
         inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 140)
@@ -151,7 +151,7 @@ class InputMode03View: InputModeSCMaster {
         inputCellViewObj?.iiInput.text = inspItemInputText
         inputCellViewObj?.idInput.text = inspDetailInputText
         inputCellViewObj?.cellRemarksInput.text = inspRemarksInputText
-        inputCellViewObj?.cellResultInput.text = _ENGLISH ? resultValueObj.resultValueNameEn : resultValueObj.resultValueNameCn
+        inputCellViewObj?.cellResultInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: resultValueObj.resultValueNameEn, .zh: resultValueObj.resultValueNameCn, .fr: resultValueObj.resultValueNameFr])
         inputCellViewObj?.resultValueId = resultValueObj.resultValueId
         inputCellViewObj?.idInput.text = inspDetailInputText
         

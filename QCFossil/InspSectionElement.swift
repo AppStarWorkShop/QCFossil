@@ -14,6 +14,7 @@ class InspSectionElement {
     var inspectSetupId:Int?
     var elementNameEn:String?
     var elementNameCn:String?
+    var elementNameFr:String?
     var prodTypeId:Int?
     var inspectTypeId:Int?
     var elementType:Int?
@@ -38,12 +39,13 @@ class InspSectionElement {
     var requestSectionId:Int?
     var requestElementDesc:String?
     
-    init(elementId:Int, inspectSetupId:Int, elementNameEn:String, elementNameCn:String, prodTypeId:Int, inspectTypeId:Int, elementType:Int, inspectSectionId:Int, inspectPositionId:Int, displayOrder:Int, resultSetId:Int, requiredElementFlag:Int, detailDefaultValue:String, detailRequiredResultList:String, detailSuggestFlag:Int, recStatus:Int, createUser:String, createDate:String, modifyUser:String, modifyDate:String, deletedFlag:Int, deleteUser:String?, deleteDate:String?) {
+    init(elementId:Int, inspectSetupId:Int, elementNameEn:String, elementNameCn:String, elementNameFr:String, prodTypeId:Int, inspectTypeId:Int, elementType:Int, inspectSectionId:Int, inspectPositionId:Int, displayOrder:Int, resultSetId:Int, requiredElementFlag:Int, detailDefaultValue:String, detailRequiredResultList:String, detailSuggestFlag:Int, recStatus:Int, createUser:String, createDate:String, modifyUser:String, modifyDate:String, deletedFlag:Int, deleteUser:String?, deleteDate:String?) {
         
         self.elementId = elementId
         self.inspectSetupId = inspectSetupId
         self.elementNameEn = elementNameEn
         self.elementNameCn = elementNameCn
+        self.elementNameFr = elementNameFr
         self.prodTypeId = prodTypeId
         self.inspectTypeId = inspectTypeId
         self.elementType = elementType
