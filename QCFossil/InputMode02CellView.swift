@@ -200,9 +200,9 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             
             let cells = selectedValues.characters.split{$0 == ","}.map(String.init)
             for cell in cells {
-                let positName = cell as String
+                let positName = (cell as String).trimmingCharacters(in: .whitespaces)
 
-                let positObjs = (self.parentView as! InputMode02View).defectPositPoints.filter({$0.positionNameEn == positName || $0.positionNameCn == positName})
+                let positObjs = (self.parentView as! InputMode02View).defectPositPoints.filter({$0.positionNameFr == positName || $0.positionNameEn == positName || $0.positionNameCn == positName})
                 
                 if positObjs.count>0 {
                     myDefectPositPoints.append(positObjs[0])
@@ -235,7 +235,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updatePhotoInfo"), object: nil,userInfo: ["inspElmt":self])
             
-            let parentPositObjs = (self.parentView as! InputMode02View).defectPosits.filter({$0.positionNameEn == self.dpInput.text || $0.positionNameCn == self.dpInput.text})
+            let parentPositObjs = (self.parentView as! InputMode02View).defectPosits.filter({$0.positionNameFr == self.dpInput.text || $0.positionNameEn == self.dpInput.text || $0.positionNameCn == self.dpInput.text})
             if parentPositObjs.count > 0 {
                 self.cellDPPInput.backgroundColor = UIColor.white
                 self.defectPositionPointIcon.isHidden = false

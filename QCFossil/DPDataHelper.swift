@@ -159,7 +159,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getDefectPositionPointsByRecordId(_ recordId:Int) -> String {
-        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
+        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
         var defectPositPoints = ""
         
         if db.open() {
@@ -182,7 +182,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getDefectPositionPointsByDFRecordId(_ recordId:Int) -> String {
-        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
+        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
         var defectPositPoints = ""
         
         if db.open() {

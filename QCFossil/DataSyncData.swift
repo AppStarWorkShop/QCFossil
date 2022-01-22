@@ -226,7 +226,8 @@ let _DS_MSTRDATA = [
             "type_code",
             "type_id",
             "type_name_en",
-            "type_name_cn"
+            "type_name_cn",
+            "type_name_fr"
         ],
         "vdr_brand_map_list" : [
             "brand_id",

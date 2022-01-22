@@ -55,7 +55,7 @@ class ZoneDataHelper:DataHelperMaster {
     }
     
     func getDefectValuesByElementId(_ Id:Int) ->[DropdownValue] {
-        let sql = "SELECT distinct dvm.value_id, dvm.value_name_en, dvm.value_name_cn  FROM defect_set_mstr dsm INNER JOIN inspect_element_mstr iem ON dsm.set_id = iem.inspect_defect_set_id INNER JOIN defect_set_value dsv ON dsm.set_id = dsv.set_id INNER JOIN defect_value_mstr dvm ON dsv.value_id = dvm.value_id WHERE iem.element_id = \(Id)"
+        let sql = "SELECT distinct dvm.value_id, dvm.value_name_en, dvm.value_name_cn, dvm.value_name_fr  FROM defect_set_mstr dsm INNER JOIN inspect_element_mstr iem ON dsm.set_id = iem.inspect_defect_set_id INNER JOIN defect_set_value dsv ON dsm.set_id = dsv.set_id INNER JOIN defect_value_mstr dvm ON dsv.value_id = dvm.value_id WHERE iem.element_id = \(Id)"
         var defectValues = [DropdownValue]()
         
         if db.open() {

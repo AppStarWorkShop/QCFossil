@@ -84,8 +84,8 @@ class DataSyncDataHelper:DataHelperMaster {
                 cleanDBTableByName("fgpo_line_item WHERE item_id NOT IN (SELECT po_item_id FROM inspect_task_item)")
                 vc.updateProgressBar(0.7)
             } else if apiName == "_DS_MSTRDATA" {
-                let alterSql = "CREATE TABLE vdr_brand_map2 (data_env varchar(30) not null, vdr_id numeric(10,0) not null, brand_id numeric(10,0) not null, create_user varchar(30) not null, create_date datetime not null, modify_user varchar(30) not null, modify_date datetime not null);INSERT INTO vdr_brand_map2 (data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date) SELECT data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date FROM vdr_brand_map; DROP TABLE vdr_brand_map; ALTER TABLE vdr_brand_map2 RENAME TO vdr_brand_map;"
-                db.executeStatements(alterSql)
+//                let alterSql = "CREATE TABLE vdr_brand_map2 (data_env varchar(30) not null, vdr_id numeric(10,0) not null, brand_id numeric(10,0) not null, create_user varchar(30) not null, create_date datetime not null, modify_user varchar(30) not null, modify_date datetime not null);INSERT INTO vdr_brand_map2 (data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date) SELECT data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date FROM vdr_brand_map; DROP TABLE vdr_brand_map; ALTER TABLE vdr_brand_map2 RENAME TO vdr_brand_map;"
+//                db.executeStatements(alterSql)
             }
             
             for sql in sqlScript {

@@ -128,7 +128,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //self.password.text = "wE$6T+8a"
         
         let defaults = UserDefaults.standard
-        let releaseDate = "20220111"//self.view.getCurrentDate("MMdd")
+        let releaseDate = "20220120"//self.view.getCurrentDate("MMdd")
         _RELEASE = releaseDate as String
         defaults.set(releaseDate, forKey: "release_preference")
         
@@ -949,20 +949,20 @@ extension ViewController {
 
 extension ViewController {
     func setupView() {
-        loginButton.titleLabel?.numberOfLines = 1
-        loginButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        loginButton.titleLabel?.lineBreakMode = .byClipping
-        
-        clearButton.titleLabel?.numberOfLines = 1
-        clearButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        clearButton.titleLabel?.lineBreakMode = .byClipping
-        
-        forgetPasswordButton.titleLabel?.numberOfLines = 1
-        forgetPasswordButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        forgetPasswordButton.titleLabel?.lineBreakMode = .byClipping
-        
-        forgetUserNameButton.titleLabel?.numberOfLines = 1
-        forgetUserNameButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        forgetUserNameButton.titleLabel?.lineBreakMode = .byClipping
+//        loginButton.titleLabel?.numberOfLines = 1
+//        loginButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        loginButton.titleLabel?.lineBreakMode = .byClipping
+//        
+//        clearButton.titleLabel?.numberOfLines = 1
+//        clearButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        clearButton.titleLabel?.lineBreakMode = .byClipping
+//        
+//        forgetPasswordButton.titleLabel?.numberOfLines = 1
+//        forgetPasswordButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        forgetPasswordButton.titleLabel?.lineBreakMode = .byClipping
+//        
+//        forgetUserNameButton.titleLabel?.numberOfLines = 1
+//        forgetUserNameButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        forgetUserNameButton.titleLabel?.lineBreakMode = .byClipping
     }
 }

@@ -785,7 +785,13 @@ class AppUpgradeDataHelper:DataHelperMaster {
                             result = false
                         }
                     }
-                
+                    
+                    // Update vdr_brand_map table to remove unique key constraint
+                    sql = "CREATE TABLE vdr_brand_map2 (data_env varchar(30) not null, vdr_id numeric(10,0) not null, brand_id numeric(10,0) not null, create_user varchar(30) not null, create_date datetime not null, modify_user varchar(30) not null, modify_date datetime not null);INSERT INTO vdr_brand_map2 (data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date) SELECT data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date FROM vdr_brand_map; DROP TABLE vdr_brand_map; ALTER TABLE vdr_brand_map2 RENAME TO vdr_brand_map;"
+                    if !self.db.executeStatements(sql) {
+                        result = false
+                    }
+                    
                     // Add support to french
                     // Add new field to prod_type_mstr
                     sql = "ALTER TABLE prod_type_mstr ADD COLUMN type_name_fr nvarchar(60)"

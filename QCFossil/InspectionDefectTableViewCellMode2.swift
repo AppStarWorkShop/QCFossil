@@ -735,7 +735,7 @@ class InspectionDefectTableViewCellMode2: InputModeDFMaster2, UIImagePickerContr
             guard let defectValues = self.defectValues else {return}
             
             defectValues.forEach({ selectedObject in
-                if selectedObject.valueNameEn == defectValueName || selectedObject.valueNameCn == defectValueName {
+                if selectedObject.valueNameFr == defectValueName || selectedObject.valueNameEn == defectValueName || selectedObject.valueNameCn == defectValueName {
                     self.inspectElementDefectValueId = selectedObject.valueId
                     defectItem.inspectElementDefectValueId = selectedObject.valueId
                 }
@@ -747,7 +747,7 @@ class InspectionDefectTableViewCellMode2: InputModeDFMaster2, UIImagePickerContr
             guard let caseValues = self.caseValues else {return}
             
             caseValues.forEach({ selectedObject in
-                if selectedObject.valueNameEn == caseValueName || selectedObject.valueNameCn == caseValueName {
+                if selectedObject.valueNameFr == caseValueName || selectedObject.valueNameEn == caseValueName || selectedObject.valueNameCn == caseValueName {
                     self.inspectElementCaseValueId = selectedObject.valueId
                     defectItem.inspectElementCaseValueId = selectedObject.valueId
                 }

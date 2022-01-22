@@ -105,12 +105,12 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getInspElementIdByName(_ name:String, elementType:Int = 2) ->Int {
-        let sql = "SELECT element_id FROM inspect_element_mstr WHERE (element_name_en = ? OR element_name_cn = ?) AND element_type = ?"
+        let sql = "SELECT element_id FROM inspect_element_mstr WHERE (element_name_fr = ? OR element_name_en = ? OR element_name_cn = ?) AND element_type = ?"
         var id = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [name, name, elementType]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [name, name, name, elementType]) {
                 if rs.next() {
                     id = Int(rs.int(forColumn: "element_id"))
                 }

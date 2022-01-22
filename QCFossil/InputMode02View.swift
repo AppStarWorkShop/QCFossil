@@ -196,7 +196,7 @@ class InputMode02View: InputModeSCMaster {
         let defectDataHelper = DefectDataHelper()
         inputCellViewObj?.myDefectPositPoints = defectDataHelper.getDefectTypeByTaskInspectDataRecordId(taskInspDataRecordId)
         
-        let parentPositObjs = self.defectPosits.filter({$0.positionNameEn == dpText || $0.positionNameCn == dpText})
+        let parentPositObjs = self.defectPosits.filter({$0.positionNameFr == dpText || $0.positionNameEn == dpText || $0.positionNameCn == dpText})
         if parentPositObjs.count < 1 {
             inputCellViewObj?.cellDPPInput.backgroundColor = _GREY_BACKGROUD
             inputCellViewObj?.defectZoneListIcon.isHidden = true
