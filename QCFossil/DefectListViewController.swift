@@ -67,11 +67,11 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
         defectTableView.allowsSelection = false
         
         sectionSegmentControl.removeAllSegments()
-        sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: "All", .zh: "全部", .fr: "All"]), at: 0, animated: true)
+        sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString("All"), at: 0, animated: true)
         
         var index = 1
         for section in (Cache_Task_On?.inspSections)! {
-            sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameEn]), at: index, animated: true)
+            sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr]), at: index, animated: true)
             index += 1
         }
         
@@ -200,7 +200,6 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
     }
     
     @objc func sectionSegmentOnchange(/*sender: UISegmentedControl*/) {
-        
         let sectionName = sectionSegmentControl?.titleForSegment(at: (sectionSegmentControl?.selectedSegmentIndex)!)!
         
         if sectionSegmentControl?.selectedSegmentIndex < 1 {
@@ -213,6 +212,10 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
         
         self.defectItems.sort(by: { $0.sortNum < $1.sortNum })
         self.defectTableView?.reloadData()
+        
+        if let index = sectionSegmentControl?.selectedSegmentIndex {
+            sectionSegmentControl.updateSegmentWidthAtIndex(index: index)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

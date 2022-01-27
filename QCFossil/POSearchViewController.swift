@@ -107,7 +107,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
         self.vendorInput.text = vendorName
         self.vendorLocationInput.text = vendorLocCode
         self.styleInput.text = styleNo
-        self.taskScheduledInput.text =  MylocalizedString.sharedLocalizeManager.getLocalizedString("ALL")
+        self.taskScheduledInput.text =  MylocalizedString.sharedLocalizeManager.getLocalizedString("All")
         
         if vendorName != "" && vendorLocCode != "" && styleNo != "" {
             //if pVC != nil && pVC?.classForCoder == TaskDetailsViewController.classForCoder() {

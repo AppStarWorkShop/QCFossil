@@ -1980,3 +1980,23 @@ extension UITextField {
         return false
     }
 }
+
+extension UISegmentedControl {
+    func updateSegmentWidthAtIndex(index: Int) {
+        if let text = self.titleForSegment(at: index) {
+            let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+            let size = (text as NSString).size(withAttributes: fontAttributes)
+            let segmentWidth:CGFloat = self.frame.size.width / CGFloat(self.numberOfSegments)
+            if size.width > (segmentWidth - 6) {
+                let newSegmentWidth = (self.frame.size.width - size.width - 10.0) / CGFloat(self.numberOfSegments-1)
+                for newIndex in 0...self.numberOfSegments-1 {
+                    if newIndex != index {
+                        self.setWidth(newSegmentWidth - 0.4, forSegmentAt: newIndex)
+                    }
+                }
+                self.setWidth(size.width + 10.0, forSegmentAt: index)
+            }
+        }
+    }
+}
+

@@ -2406,7 +2406,7 @@ class TaskDataHelper:DataHelperMaster{
         
         let valueCode = getValueCodeByResultId(valueCode)
         //let sql = "SELECT option_id, option_text_en, option_text_zh FROM task_selection_option_mstr WHERE selection_type = 2"
-        let sql = "SELECT result_code_match_list, option_id, option_text_en, option_text_zh FROM task_selection_option_mstr tsom WHERE tsom.selection_type = 2 AND tsom.rec_status = 0 AND tsom.deleted_flag = 0 AND tsom.data_env IN (SELECT data_env FROM prod_type_mstr ptm INNER JOIN inspector_mstr im ON ptm.type_id = im.prod_type_id WHERE im.deleted_flag = 0 AND ptm.rec_status = 0 AND ptm.deleted_flag = 0 AND im.inspector_id = ?) AND (tsom.result_code_match_list IS NULL OR tsom.result_code_match_list LIKE ? OR tsom.result_code_match_list = '') ORDER BY tsom.display_order ASC"
+        let sql = "SELECT result_code_match_list, option_id, option_text_en, option_text_zh, option_text_fr FROM task_selection_option_mstr tsom WHERE tsom.selection_type = 2 AND tsom.rec_status = 0 AND tsom.deleted_flag = 0 AND tsom.data_env IN (SELECT data_env FROM prod_type_mstr ptm INNER JOIN inspector_mstr im ON ptm.type_id = im.prod_type_id WHERE im.deleted_flag = 0 AND ptm.rec_status = 0 AND ptm.deleted_flag = 0 AND im.inspector_id = ?) AND (tsom.result_code_match_list IS NULL OR tsom.result_code_match_list LIKE ? OR tsom.result_code_match_list = '') ORDER BY tsom.display_order ASC"
         var values = [DropdownValue]()
             
         if db.open() {
@@ -2434,7 +2434,7 @@ class TaskDataHelper:DataHelperMaster{
         
         let valueCode = getValueCodeByResultId(valueCode)
         //let sql = "SELECT option_id, option_text_en, option_text_zh FROM task_selection_option_mstr WHERE selection_type = 3"
-        let sql = "SELECT result_code_match_list, option_id, option_text_en, option_text_zh FROM task_selection_option_mstr tsom WHERE tsom.selection_type = 3 AND tsom.rec_status = 0 AND tsom.deleted_flag = 0 AND tsom.data_env IN (SELECT data_env FROM prod_type_mstr ptm INNER JOIN inspector_mstr im ON ptm.type_id = im.prod_type_id WHERE im.deleted_flag = 0 AND ptm.rec_status = 0 AND ptm.deleted_flag = 0 AND im.inspector_id = ?) AND (tsom.result_code_match_list IS NULL OR tsom.result_code_match_list LIKE ? OR tsom.result_code_match_list = '') ORDER BY tsom.display_order ASC"
+        let sql = "SELECT result_code_match_list, option_id, option_text_en, option_text_zh, option_text_fr FROM task_selection_option_mstr tsom WHERE tsom.selection_type = 3 AND tsom.rec_status = 0 AND tsom.deleted_flag = 0 AND tsom.data_env IN (SELECT data_env FROM prod_type_mstr ptm INNER JOIN inspector_mstr im ON ptm.type_id = im.prod_type_id WHERE im.deleted_flag = 0 AND ptm.rec_status = 0 AND ptm.deleted_flag = 0 AND im.inspector_id = ?) AND (tsom.result_code_match_list IS NULL OR tsom.result_code_match_list LIKE ? OR tsom.result_code_match_list = '') ORDER BY tsom.display_order ASC"
         var values = [DropdownValue]()
         
         if db.open() {
