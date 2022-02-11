@@ -785,7 +785,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
                 }
                 
                 //Filter By TaskScheduledInput
-                if self.taskScheduledInput.text != "" &&  self.taskScheduledInput.text != MylocalizedString.sharedLocalizeManager.getLocalizedString("ALL") {
+                if self.taskScheduledInput.text != "" &&  self.taskScheduledInput.text != MylocalizedString.sharedLocalizeManager.getLocalizedString("All") {
                     poItemsByFilter = poItemsByFilter.filter({ $0.taskSched == self.taskScheduledInput.text })
                 }
                 

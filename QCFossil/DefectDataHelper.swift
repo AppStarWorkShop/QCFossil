@@ -141,7 +141,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getInspElementValueById(_ id:Int) ->DropdownValue {
-        let sql = "SELECT element_id, element_name_en, element_name_cn FROM inspect_element_mstr WHERE element_id = ? AND element_type = 2"
+        let sql = "SELECT element_id, element_name_en, element_name_cn, element_name_fr FROM inspect_element_mstr WHERE element_id = ? AND element_type = 2"
         var value = DropdownValue(valueId: 0, valueNameEn: "", valueNameCn: "", valueNameFr: "")
         
         if db.open() {

@@ -1519,7 +1519,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getReqSectionIdByName(_ sectionName:String) ->Int {
-        let sql = "SELECT section_id FROM inspect_section_mstr WHERE section_name_en = ? OR section_name_cn = ? AND (rec_status = 0 AND deleted_flag = 0)"
+        let sql = "SELECT section_id FROM inspect_section_mstr WHERE section_name_fr = ? OR section_name_en = ? OR section_name_cn = ? AND (rec_status = 0 AND deleted_flag = 0)"
         var reqSecId = 0
         
         if db.open() {
@@ -2482,7 +2482,7 @@ class TaskDataHelper:DataHelperMaster{
         let valueCode = getValueCodeByResultId(valueCode)
         
         //let sql = "SELECT option_id, option_text_en, option_text_zh FROM task_selection_option_mstr WHERE selection_type = 1"
-        let sql = "SELECT result_code_match_list, option_id, option_text_en, option_text_zh FROM task_selection_option_mstr tsom WHERE tsom.selection_type = 1 AND tsom.rec_status = 0 AND tsom.deleted_flag = 0 AND tsom.data_env IN (SELECT data_env FROM prod_type_mstr ptm INNER JOIN inspector_mstr im ON ptm.type_id = im.prod_type_id WHERE im.deleted_flag = 0 AND ptm.rec_status = 0 AND ptm.deleted_flag = 0 AND im.inspector_id = ?) AND (tsom.result_code_match_list IS NULL OR tsom.result_code_match_list LIKE ? OR tsom.result_code_match_list = '') ORDER BY tsom.display_order ASC"
+        let sql = "SELECT result_code_match_list, option_id, option_text_en, option_text_zh, option_text_fr FROM task_selection_option_mstr tsom WHERE tsom.selection_type = 1 AND tsom.rec_status = 0 AND tsom.deleted_flag = 0 AND tsom.data_env IN (SELECT data_env FROM prod_type_mstr ptm INNER JOIN inspector_mstr im ON ptm.type_id = im.prod_type_id WHERE im.deleted_flag = 0 AND ptm.rec_status = 0 AND ptm.deleted_flag = 0 AND im.inspector_id = ?) AND (tsom.result_code_match_list IS NULL OR tsom.result_code_match_list LIKE ? OR tsom.result_code_match_list = '') ORDER BY tsom.display_order ASC"
         var values = [DropdownValue]()
         
         if db.open() {
@@ -2508,7 +2508,7 @@ class TaskDataHelper:DataHelperMaster{
     
     func getRemarksOptionValueById(_ Ids:[String]) ->String {
         
-        var sql = "SELECT option_text_en, option_text_zh FROM task_selection_option_mstr WHERE option_id IN ("
+        var sql = "SELECT option_text_en, option_text_zh, option_text_fr FROM task_selection_option_mstr WHERE option_id IN ("
         var textValue = ""
         sql += Ids.joined(separator: ",") + ")"
         

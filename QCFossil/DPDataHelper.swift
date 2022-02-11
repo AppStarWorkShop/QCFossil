@@ -48,9 +48,9 @@ class DPDataHelper:DataHelperMaster {
                 while rs.next() {
                     let positionId = Int(rs.int(forColumn: "position_id"))
                     let parentId = Int(rs.int(forColumn: "parent_position_id"))
-                    let positionNameEn = rs.string(forColumn: "position_name_en")
-                    let positionNameCn = rs.string(forColumn: "position_name_cn")
-                    let positionNameFr = rs.string(forColumn: "position_name_fr") ?? ""
+                    let positionNameEn = rs.string(forColumn: "position_name_en")?.trimmingCharacters(in: .whitespaces)
+                    let positionNameCn = rs.string(forColumn: "position_name_cn")?.trimmingCharacters(in: .whitespaces)
+                    let positionNameFr = rs.string(forColumn: "position_name_fr")?.trimmingCharacters(in: .whitespaces) ?? ""
                     
                     let positPointObj = PositPointObj(positionId:positionId, parentId: parentId, positionNameEn:positionNameEn!,positionNameCn:positionNameCn!, positionNameFr: positionNameFr)
                     defectPositPoints.append(positPointObj)

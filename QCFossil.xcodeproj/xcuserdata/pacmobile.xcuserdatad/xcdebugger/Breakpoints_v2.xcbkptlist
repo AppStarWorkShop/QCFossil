@@ -219,8 +219,8 @@
             timestampString = "650971518.990226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
             landmarkName = "getTaskDetailByTask(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -959,23 +959,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "873C7ED7-ADCD-4DD8-BABC-2647B0D8F5E8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/TaskSearchViewController.swift"
-            timestampString = "647366991.724968"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "737"
-            endingLineNumber = "737"
-            landmarkName = "clearOnClick(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A7826464-73BD-4045-993F-6EC057D375F2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1271,8 +1254,8 @@
             timestampString = "650971518.9918801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2110"
-            endingLineNumber = "2110"
+            startingLineNumber = "2109"
+            endingLineNumber = "2109"
             landmarkName = "getAllTaskBrandNames(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1339,8 +1322,8 @@
             timestampString = "650971518.991966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2133"
-            endingLineNumber = "2133"
+            startingLineNumber = "2132"
+            endingLineNumber = "2132"
             landmarkName = "getAllTaskBookingNo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1356,8 +1339,8 @@
             timestampString = "650971518.9920059"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2133"
-            endingLineNumber = "2133"
+            startingLineNumber = "2132"
+            endingLineNumber = "2132"
             landmarkName = "getAllTaskBookingNo(_:)"
             landmarkType = "7">
          </BreakpointContent>
