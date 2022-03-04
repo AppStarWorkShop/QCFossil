@@ -1693,7 +1693,7 @@ extension UITextField {
             let frame = sender.superview?.convert(sender.frame, to: parent)
             
             let actualHeight = CGFloat(listData.count*50)
-            let adjustheight = actualHeight < height ? actualHeight : height
+            let adjustheight = actualHeight < height ? (actualHeight - 1) : (height - 1)
             var actualMinX = frame?.origin.x ?? 0
             
             if actualMinX + width > _DEVICE_WIDTH {
