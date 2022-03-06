@@ -105,6 +105,22 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         self.inspectDefectTableview.dataSource = self
         self.inspectDefectTableview.rowHeight = 170
         self.inspectDefectTableview.allowsSelection = false
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    @objc func parentScrollEnable() {
+        inspectDefectTableview.isScrollEnabled = true
+    }
+    
+    @objc func parentScrollDisable() {
+        inspectDefectTableview.isScrollEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)

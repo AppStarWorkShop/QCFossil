@@ -27,7 +27,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
          
         // Do any additional setup after loading the view.
         ScrollView.translatesAutoresizingMaskIntoConstraints = false
-        ScrollView.contentSize = CGSize.init(width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
+//        ScrollView.contentSize = CGSize.init(width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
         ScrollView.delegate = self
         
         self.view.addSubview(self.ScrollView)
@@ -37,9 +37,25 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             ScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ScrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            ScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: -40),
+            ScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
         ])
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    @objc func parentScrollEnable() {
+        ScrollView.isScrollEnabled = true
+    }
+    
+    @objc func parentScrollDisable() {
+        ScrollView.isScrollEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -180,17 +196,6 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 taskDetailView.tag = _TASKDETAILVIEWTAG
                 
                 self.ScrollView.addSubview(taskDetailView)
-                self.ScrollView.translatesAutoresizingMaskIntoConstraints = false
-                taskDetailView.translatesAutoresizingMaskIntoConstraints = false
-                
-                let paddingBottom = self.ScrollView.contentSize.height - _DEVICE_HEIGHT
-                NSLayoutConstraint.activate([
-                    taskDetailView.topAnchor.constraint(equalTo: self.ScrollView.topAnchor, constant: -40),
-                    taskDetailView.heightAnchor.constraint(equalTo: self.ScrollView.heightAnchor, constant: paddingBottom > 0 ? paddingBottom : 0),
-                    taskDetailView.widthAnchor.constraint(equalTo: self.ScrollView.widthAnchor),
-                ])
-                
-                
                 self.view.removeActivityIndicator()
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil, userInfo: nil)

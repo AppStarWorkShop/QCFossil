@@ -813,6 +813,7 @@ extension UIView {
             if $0.classForCoder == DropdownListViewControl.classForCoder() {
                 ($0 as! DropdownListViewControl).myParentTextField?.endEditing(true)
                 $0.removeFromSuperview()
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollEnable"), object: nil)
             }else if $0.classForCoder == UITextField.classForCoder() /*|| $0.classForCoder == UITextView.classForCoder()*/ {
                 $0.resignFirstResponder()
             }
@@ -1680,7 +1681,7 @@ extension UITextField {
     func showListData(_ sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=250, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
         
         if listData.count > 0 {
-            //return Cache_Dropdown_Instance!
+
             Cache_Dropdown_Instance?.removeFromSuperview()
             
             if Cache_Dropdown_Instance == nil {
@@ -1713,7 +1714,7 @@ extension UITextField {
             }
             
             let absolutePoint = sender.convert(sender.bounds, to: nil)
-            let adjustMinY = absolutePoint.origin.y + 50 + sender.frame.size.height + adjustheight
+            let adjustMinY = absolutePoint.origin.y + 80 + sender.frame.size.height + adjustheight
             if adjustMinY > _DEVICE_HEIGHT {
                 minY -= adjustMinY - _DEVICE_HEIGHT
             }
@@ -1734,6 +1735,7 @@ extension UITextField {
             Cache_Dropdown_Instance?.selectedValues = selectedValues
             
             parent.addSubview(Cache_Dropdown_Instance!)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollDisable"), object: nil)
         }else{
             Cache_Dropdown_Instance?.removeFromSuperview()
         }

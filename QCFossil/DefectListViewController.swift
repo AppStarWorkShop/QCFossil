@@ -136,6 +136,22 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
         
         defectItems = (Cache_Task_On?.defectItems)!
         updateContentView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    @objc func parentScrollEnable() {
+        defectTableView.isScrollEnabled = true
+    }
+    
+    @objc func parentScrollDisable() {
+        defectTableView.isScrollEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
     }
     
     func getSortingNum(_ secFtor:Int, elmtFtor:Int, cellFtor:Int) ->Int {

@@ -53,6 +53,22 @@ class InputMode02View: InputModeSCMaster {
             scrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
+            
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    @objc func parentScrollEnable() {
+        scrollCellView.isScrollEnabled = true
+    }
+    
+    @objc func parentScrollDisable() {
+        scrollCellView.isScrollEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
