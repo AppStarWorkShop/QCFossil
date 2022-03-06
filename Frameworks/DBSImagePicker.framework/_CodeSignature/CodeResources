@@ -14,15 +14,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		oqA+bDf1ykJJbVnn1c98TXOe+yg=
+		0ha2UYPFhnN70sDI0c00OY+CrI0=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		zULYn1Wc/oeZbhr7x9uMtrRL0PM=
+		P7igeDG9aQJTzKbTFY2cHaUzNKg=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<data>
-		zULYn1Wc/oeZbhr7x9uMtrRL0PM=
+		P7igeDG9aQJTzKbTFY2cHaUzNKg=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		wahGsz0nJ4KL0zpgeNxwKDVT+oQ=
+		C+EqbeH8is2vaybgwFMnHgKQmxc=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftdoc</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		wahGsz0nJ4KL0zpgeNxwKDVT+oQ=
+		C+EqbeH8is2vaybgwFMnHgKQmxc=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -73,22 +73,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zULYn1Wc/oeZbhr7x9uMtrRL0PM=
+			P7igeDG9aQJTzKbTFY2cHaUzNKg=
 			</data>
 			<key>hash2</key>
 			<data>
-			7LCJ3VYfFIwUrTxsHT5e6xtf0qFXzvj5kAHRxVmknJ8=
+			opgSTE/YZi8Gxw6IsvPI7mGrHysOGt8iWR00kDJ+R1w=
 			</data>
 		</dict>
 		<key>Modules/BSImagePicker.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zULYn1Wc/oeZbhr7x9uMtrRL0PM=
+			P7igeDG9aQJTzKbTFY2cHaUzNKg=
 			</data>
 			<key>hash2</key>
 			<data>
-			7LCJ3VYfFIwUrTxsHT5e6xtf0qFXzvj5kAHRxVmknJ8=
+			opgSTE/YZi8Gxw6IsvPI7mGrHysOGt8iWR00kDJ+R1w=
 			</data>
 		</dict>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -106,11 +106,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wahGsz0nJ4KL0zpgeNxwKDVT+oQ=
+			C+EqbeH8is2vaybgwFMnHgKQmxc=
 			</data>
 			<key>hash2</key>
 			<data>
-			o1g0sRSLqgulWdf8dFlvsrp6ohqUqV4IXGmAM3jIpDM=
+			SwgKBlHOL3iPccyD9E7n1Xcs4nMJZSC+/VDIqxWShYk=
 			</data>
 		</dict>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftdoc</key>
@@ -128,11 +128,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wahGsz0nJ4KL0zpgeNxwKDVT+oQ=
+			C+EqbeH8is2vaybgwFMnHgKQmxc=
 			</data>
 			<key>hash2</key>
 			<data>
-			o1g0sRSLqgulWdf8dFlvsrp6ohqUqV4IXGmAM3jIpDM=
+			SwgKBlHOL3iPccyD9E7n1Xcs4nMJZSC+/VDIqxWShYk=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
