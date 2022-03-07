@@ -64,7 +64,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
         }
         
         self.inspNo.text = Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo
-        self.frame = CGRect(x: 0, y: 0, width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
+        self.frame = CGRect(x: 0, y: 25, width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
         self.scrollView.contentSize = CGSize.init(width: CGFloat(CGFloat(categoryCount)*CGFloat(_DEVICE_WIDTH)), height: 0)
         self.scrollView.isPagingEnabled = true
         self.scrollView.isDirectionalLockEnabled = true

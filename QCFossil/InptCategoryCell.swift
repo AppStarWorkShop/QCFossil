@@ -50,29 +50,35 @@ class InptCategoryCell: UIView {
     }
     */
     override func awakeFromNib() {
-        resultValue1.numberOfLines = 1
-        resultValue1.adjustsFontSizeToFitWidth = true
-        resultValue1.lineBreakMode = .byClipping
+        resultValue1.numberOfLines = 2
+//        resultValue1.adjustsFontSizeToFitWidth = true
+//        resultValue1.lineBreakMode = .byClipping
+        resultValue1.lineBreakMode = .byWordWrapping
         
-        resultValue2.numberOfLines = 1
-        resultValue2.adjustsFontSizeToFitWidth = true
-        resultValue2.lineBreakMode = .byClipping
+        resultValue2.numberOfLines = 2
+//        resultValue2.adjustsFontSizeToFitWidth = true
+//        resultValue2.lineBreakMode = .byClipping
+        resultValue2.lineBreakMode = .byWordWrapping
         
-        resultValue3.numberOfLines = 1
-        resultValue3.adjustsFontSizeToFitWidth = true
-        resultValue3.lineBreakMode = .byClipping
+        resultValue3.numberOfLines = 2
+//        resultValue3.adjustsFontSizeToFitWidth = true
+//        resultValue3.lineBreakMode = .byClipping
+        resultValue3.lineBreakMode = .byWordWrapping
         
-        resultValue4.numberOfLines = 1
-        resultValue4.adjustsFontSizeToFitWidth = true
-        resultValue4.lineBreakMode = .byClipping
+        resultValue4.numberOfLines = 2
+//        resultValue4.adjustsFontSizeToFitWidth = true
+//        resultValue4.lineBreakMode = .byClipping
+        resultValue4.lineBreakMode = .byWordWrapping
         
-        resultValue5.numberOfLines = 1
-        resultValue5.adjustsFontSizeToFitWidth = true
-        resultValue5.lineBreakMode = .byClipping
+        resultValue5.numberOfLines = 2
+//        resultValue5.adjustsFontSizeToFitWidth = true
+//        resultValue5.lineBreakMode = .byClipping
+        resultValue5.lineBreakMode = .byWordWrapping
         
-        resultValueTotal.numberOfLines = 1
-        resultValueTotal.adjustsFontSizeToFitWidth = true
-        resultValueTotal.lineBreakMode = .byClipping
+        resultValueTotal.numberOfLines = 2
+//        resultValueTotal.adjustsFontSizeToFitWidth = true
+//        resultValueTotal.lineBreakMode = .byClipping
+        resultValueTotal.lineBreakMode = .byWordWrapping
         
         resultValueLabels.append(resultValue1)
         resultValueLabels.append(resultValue2)
@@ -103,7 +109,7 @@ class InptCategoryCell: UIView {
             if idx < resultValueLabels.count {
                 let resultValueLabel = resultValueLabels[idx]
                 
-                resultValueLabel.font = resultValueTotal.font.withSize(14)
+                resultValueLabel.font = resultValueTotal.font.withSize(12)
                 if idx == resultSetValues.count {
                     resultValueLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Total"))(\(totalCount))"
                 }else{

@@ -239,9 +239,18 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         let resultValues = taskDataHelper.getResultSetValuesByTaskId((Cache_Task_On?.taskId)!)
         
         //init categories
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 5
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        
         for idx in 0...categoryCount-1 {
             let inputInptCatViewObj = InptCategoryCell.loadFromNibNamed("InptCategoryCellView")
-            inputInptCatViewObj?.frame = CGRect.init(x: 0, y: 80+cellHeight*idx, width: Int(_DEVICE_WIDTH), height: cellHeight)
+//            inputInptCatViewObj?.translatesAutoresizingMaskIntoConstraints = false
+            inputInptCatViewObj?.frame = CGRect.init(x: 0, y: 80+cellHeight*idx, width: Int(_DEVICE_WIDTH), height: cellHeight*2)
+//            stackView.addArrangedSubview(inputInptCatViewObj!)
             inputInptCatViewObj?.inptCatButton.tag = idx
             
             let section = Cache_Task_On?.inspSections[idx]
@@ -249,9 +258,9 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             
             let catBtnTitle = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section?.sectionNameEn, .zh: section?.sectionNameCn, .fr: section?.sectionNameFr]) + "(\(itemCount))"
             inputInptCatViewObj?.inptCatButton.setTitle(catBtnTitle, for: UIControl.State())
-            inputInptCatViewObj?.inptCatButton.titleLabel?.numberOfLines = 1
-            inputInptCatViewObj?.inptCatButton.titleLabel?.adjustsFontSizeToFitWidth = true
-            inputInptCatViewObj?.inptCatButton.titleLabel?.lineBreakMode = .byClipping
+            inputInptCatViewObj?.inptCatButton.titleLabel?.numberOfLines = 0
+//            inputInptCatViewObj?.inptCatButton.titleLabel?.adjustsFontSizeToFitWidth = true
+            inputInptCatViewObj?.inptCatButton.titleLabel?.lineBreakMode = .byWordWrapping
             inputInptCatViewObj?.parentView = self
             inputInptCatViewObj?.sectionId = section?.sectionId
             
@@ -265,6 +274,12 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             self.pVC!.categories.append(inputInptCatViewObj!)
         }
         
+//        self.inptCatWrapperView.addSubview(stackView)
+//        stackView.leadingAnchor.constraint(equalTo: self.inptCatWrapperView.leadingAnchor).isActive = true
+//        stackView.trailingAnchor.constraint(equalTo: self.inptCatWrapperView.trailingAnchor).isActive = true
+//        stackView.topAnchor.constraint(equalTo: self.inptCatWrapperView.topAnchor, constant: 20).isActive = true
+//        stackView.heightAnchor.constraint(equalToConstant: CGFloat(cellHeight * categoryCount)).isActive = true
+//
         self.commentWarpperView.frame = CGRect(x: 0, y: self.inptCatWrapperView.frame.origin.y+self.inptCatWrapperView.frame.size.height+CGFloat(cellHeight), width: _DEVICE_WIDTH, height: self.commentWarpperView.frame.size.height)
         self.addSubview(self.commentWarpperView)
         
