@@ -463,11 +463,11 @@
                                 </view>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="392" translatesAutoresizingMaskIntoConstraints="NO" id="6FH-0c-3S6">
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="200" translatesAutoresizingMaskIntoConstraints="NO" id="6FH-0c-3S6">
                             <rect key="frame" x="0.0" y="471" width="856" height="30"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MZm-UP-He1">
-                                    <rect key="frame" x="0.0" y="0.0" width="232" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="328" height="30"/>
                                     <color key="backgroundColor" red="0.1137254902" green="0.2156862745" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="Sign-off &amp; Confirm">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -477,7 +477,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGM-SD-qz0">
-                                    <rect key="frame" x="624" y="0.0" width="232" height="30"/>
+                                    <rect key="frame" x="528" y="0.0" width="328" height="30"/>
                                     <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="Cancel">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -488,7 +488,7 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="MZm-UP-He1" firstAttribute="width" secondItem="AGM-SD-qz0" secondAttribute="width" id="cTQ-JS-ykF"/>
+                                <constraint firstItem="MZm-UP-He1" firstAttribute="width" secondItem="AGM-SD-qz0" secondAttribute="width" id="VMF-ui-ZTi"/>
                             </constraints>
                         </stackView>
                     </subviews>
@@ -564,7 +564,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="92" y="1864"/>
+            <point key="canvasLocation" x="403" y="1820"/>
         </view>
     </objects>
     <resources>
