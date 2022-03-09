@@ -88,7 +88,7 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate, UI
     func updateLocalizeString() {
         self.startEditBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit"), for: UIControl.State())
         self.closeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Close")+" X", for: UIControl.State())
-        self.saveImageBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), for: UIControl.State())
+//        self.saveImageBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), for: UIControl.State())
         
         updateBrushColor()
         updateBrushSize()
