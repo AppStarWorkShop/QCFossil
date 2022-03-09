@@ -476,7 +476,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                     if state != .active {
                         self.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
                         self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-                        self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//                        self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                        self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                         self.updateDownloadTaskStatusDetailButton()
                         return
                     }
@@ -1011,7 +1012,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         let filemgr = FileManager.default
         if !filemgr.fileExists(atPath: photoFile) || !filemgr.fileExists(atPath: thumbFile) {
 //            updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed No Original or Thumb Photo Found!"))
-            self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed No Original or Thumb Photo Found!")
+//            self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed No Original or Thumb Photo Found!")
+            self.errorMsg = "Sync Failed No Original or Thumb Photo Found!"
             updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
             return NSMutableURLRequest() as URLRequest
         }
@@ -1095,7 +1097,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 // background
                 self.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
                 self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                 self.updateDownloadTaskStatusDetailButton()
             }
         }
@@ -1157,7 +1160,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 // background
                 self.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
                 self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                 self.updateDownloadTaskStatusDetailButton()
             }
         })
@@ -1222,7 +1226,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         }else{
             updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
             updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
-            errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//            errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+            errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
             updateDownloadTaskStatusDetailButton()
         }
     }
@@ -1344,7 +1349,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 if UIApplication.shared.applicationState == .active {
                     errorDesc = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue")
                 } else {
-                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+//                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                    errorMsg = "Sync Failed when iPad in Sleep Mode"
                 }
                 break
             default:
@@ -1386,17 +1392,21 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             
             var errorMsg = ""
             if error?._code == NSURLErrorTimedOut {
-                errorMsg = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue"))"
+//                errorMsg = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue"))"
+                errorMsg = "Sync Failed due to Network Issue"
             }else if error?._code == NSURLErrorNotConnectedToInternet || error?._code == NSURLErrorCannotConnectToHost {
-                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("App is in Offline Mode and unable to proceed Data Download.")
+//                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("App is in Offline Mode and unable to proceed Data Download.")
+                errorMsg = "App is in Offline Mode and unable to proceed Data Download."
             }else{
-                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Network Request Failed with Unknown Reason!")
+//                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Network Request Failed with Unknown Reason!")
+                errorMsg = "Network Request Failed with Unknown Reason!"
             }
             self.errorMsg = "\(error?.localizedDescription ?? "") with code: \(error?._code)"
             
             if UIApplication.shared.applicationState != .active {
                 errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                 updateDownloadTaskStatusDetailButton()
             }
             
@@ -1984,7 +1994,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                             // background
                             updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
                             updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
-                            self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//                            self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                            self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                             updateUploadTaskStatusDetailButton()
                         }
                         
@@ -2122,7 +2133,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         // background
                         updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
                         updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
-                        self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+//                        self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                        self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                         updateUploadTaskStatusDetailButton()
                     }
                 }
