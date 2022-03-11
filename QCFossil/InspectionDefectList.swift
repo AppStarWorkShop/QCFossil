@@ -73,7 +73,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
                 self.inspectionTitle1.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Inspection Area")
                 self.inspectionTitle2.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Inspection Details")
                 self.inspectionTitle1Input.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("\((inspItem?.inspAreaText)!)")
-                self.inspectionTitle2Input.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("\((inspectItem.inptDetailInput.text)!)")
+                self.inspectionTitle2Input.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("\((inspectItem.inptDetailInputTextView.text)!)")
             }
         }
         

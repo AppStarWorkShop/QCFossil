@@ -46,11 +46,15 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     }
     
     @objc func parentScrollEnable() {
-        ScrollView.isScrollEnabled = true
+        if displaySubViewTag == _TASKDETAILVIEWTAG {
+            ScrollView.isScrollEnabled = true
+        }
     }
     
     @objc func parentScrollDisable() {
-        ScrollView.isScrollEnabled = false
+        if displaySubViewTag == _TASKDETAILVIEWTAG {
+            ScrollView.isScrollEnabled = false
+        }
     }
     
     deinit {

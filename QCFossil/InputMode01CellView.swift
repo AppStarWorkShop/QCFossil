@@ -32,13 +32,13 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
+class InputMode01CellView: InputModeICMaster, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var cellIndexLabel: UILabel!
     @IBOutlet weak var inptItemLabel: UILabel!
-    @IBOutlet weak var inptItemInput: UITextField!
+//    @IBOutlet weak var inptItemInput: UITextField!
     @IBOutlet weak var inptDetailLabel: UILabel!
-    @IBOutlet weak var inptDetailInput: UITextField!
+//    @IBOutlet weak var inptDetailInput: UITextField!
     @IBOutlet weak var cellResultLabel: UILabel!
     @IBOutlet weak var cellResultInput: UITextField!
     @IBOutlet weak var cellRemarksLabel: UILabel!
@@ -53,6 +53,9 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     @IBOutlet weak var errorMessageLabel: UILabel!
     @IBOutlet weak var showInspectItemDetailButton: UIButton!
     @IBOutlet weak var showInspectDetailButton: UIButton!
+    
+    @IBOutlet weak var inptItemInputTextView: UITextView!
+    @IBOutlet weak var inptDetailInputTextView: UITextView!
     
     var selectValues = [String]()
     var inspectItemKeyValues = [String:Int]()
@@ -72,8 +75,8 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         {
             return
         }
-        
-        if touch.view!.isKind(of: UITextField().classForCoder) || String(describing: touch.view!.classForCoder) == "UITableViewCellContentView" {
+        self.resignFirstResponderByTextField((self.parentVC?.view)!)
+        if touch.view!.isKind(of: UITextView().classForCoder) || touch.view!.isKind(of: UITextField().classForCoder) || String(describing: touch.view!.classForCoder) == "UITableViewCellContentView" {
             self.resignFirstResponderByTextField((self.parentVC?.view)!)
             
         }else {
@@ -85,8 +88,18 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     
     override func awakeFromNib() {
         cellResultInput.delegate = self
-        inptItemInput.delegate = self
-        inptDetailInput.delegate = self
+//        inptItemInput.delegate = self
+//        inptDetailInput.delegate = self
+        inptItemInputTextView.delegate = self
+        inptDetailInputTextView.delegate = self
+        
+        inptItemInputTextView.layer.borderWidth = 0.5
+        inptItemInputTextView.layer.borderColor = UIColor.lightGray.cgColor
+        inptItemInputTextView.layer.cornerRadius = 5.0
+        
+        inptDetailInputTextView.layer.borderWidth = 0.5
+        inptDetailInputTextView.layer.borderColor = UIColor.lightGray.cgColor
+        inptDetailInputTextView.layer.cornerRadius = 5.0
         
         updateLocalizedString()
     }
@@ -114,9 +127,9 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         
         fetchDetailSelectedValues()
         
-        if inptItemInput.isTruncated() {
-            self.showInspectItemDetailButton.isHidden = false
-        }
+//        if inptItemInput.isTruncated() {
+//            self.showInspectItemDetailButton.isHidden = false
+//        }
     }
     
     func fetchDetailSelectedValues() {
@@ -134,7 +147,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     @IBAction func defectBtnOnClick(_ sender: UIButton) {
  
         //check if defect input and defect position points nil, then return
-        if let value = inptDetailInput.text {
+        if let value = inptDetailInputTextView.text {
             if inptDetailItemsListBtn.isHidden == false && (value == "" || value.isEmpty) {
                 self.errorMessageLabel.isHidden = false
                 return
@@ -209,7 +222,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             
             //Update Parent OptionElmts
             var releaseInspItems = [String]()
-            releaseInspItems.append(self.inptItemInput.text!)
+            releaseInspItems.append(self.inptItemInputTextView.text!)
             (self.parentView as! InputMode01View).updateOptionalInspElmts(releaseInspItems,action: "add")
             
             // Delete Relative Defect Items From DB
@@ -254,7 +267,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     func dropdownHandleFunc(_ textField: UITextField) {
         Cache_Task_On?.didModify = true
         
-        if textField == self.inptDetailInput {
+        if textField == self.inptDetailInputTextView {
             if textField.isTruncated() {
                 self.showInspectDetailButton.isHidden = false
             } else {
@@ -266,7 +279,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             self.resultValueId = self.parentView.resultKeyValues[resultText] ?? 0
             updatePhotoAddediConStatus(resultText, photoTakenIcon: self.photoAddedIcon)
             
-        }else if textField == self.inptItemInput {
+        }else if textField == self.inptItemInputTextView {
             
             if self.inspAreaText != textField.text! {
                 // delete all defect items if not match
@@ -282,7 +295,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             let inspElementId = self.inspectItemKeyValues[text] ?? 0
             
             if inspElementId != self.inspElmId {
-                self.inptDetailInput.text = ""
+                self.inptDetailInputTextView.text = ""
                 self.inspElmId = inspElementId
                 let defectDataHelper = DefectDataHelper()
                 self.inspPostId = defectDataHelper.getPositionIdByElementId(inspElementId)
@@ -290,10 +303,37 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
                 fetchDetailSelectedValues()
             }
             
-            if inptItemInput.isTruncated() {
-                self.showInspectItemDetailButton.isHidden = false
-            } else {
-                self.showInspectItemDetailButton.isHidden = true
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updatePhotoInfo"), object: nil,userInfo: ["inspElmt":self])
+        }
+    }
+    
+    func dropdownHandleFuncTextView(_ textView: UITextView) {
+        Cache_Task_On?.didModify = true
+        
+        if textView == self.inptDetailInputTextView {
+
+        } else if textView == self.inptItemInputTextView {
+            
+            if self.inspAreaText != textView.text! {
+                // delete all defect items if not match
+                self.deleteDefectItems()
+            }
+            
+            //Update Parent InspElmt
+            self.inspAreaText = textView.text!
+            
+            updateParentOptionElmts()
+            
+            guard let text = textView.text else {return}
+            let inspElementId = self.inspectItemKeyValues[text] ?? 0
+            
+            if inspElementId != self.inspElmId {
+                self.inptDetailInputTextView.text = ""
+                self.inspElmId = inspElementId
+                let defectDataHelper = DefectDataHelper()
+                self.inspPostId = defectDataHelper.getPositionIdByElementId(inspElementId)
+                
+                fetchDetailSelectedValues()
             }
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "updatePhotoInfo"), object: nil,userInfo: ["inspElmt":self])
@@ -305,10 +345,31 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         var usedInspItemNames = [String]()
         
         for usedInspItem in usedInspItems {
-            usedInspItemNames.append(usedInspItem.inptItemInput.text!)
+            usedInspItemNames.append(usedInspItem.inptItemInputTextView.text!)
         }
         
         (self.parentView as! InputMode01View).updateOptionalInspElmts(usedInspItemNames)
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        let handleFun:(UITextView)->(Void) = dropdownHandleFuncTextView
+        
+        if textView == self.inptItemInputTextView {
+            var listData = [String]()
+            for key in self.inspectItemKeyValues.keys {
+                listData.append(key)
+            }
+            
+            clearDropdownviewForSubviews(self.parentView!)
+            if listData.count > 0 {
+                
+                textView.showListData(textView, parent: (self.parentView as! InputMode01View).scrollCellView, handle: handleFun, listData: self.sortStringArrayByName(listData) as NSArray, width: self.inptItemInputTextView.frame.size.width*1.2, height:_DROPDOWNLISTHEIGHT, tag: _TAG5)
+            }
+
+            return false
+        }
+        
+        return true
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -325,20 +386,6 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
             }
             
             return false
-        }else if textField == self.inptItemInput {
-            var listData = [String]()
-            for key in self.inspectItemKeyValues.keys {
-                listData.append(key)
-            }
-            
-            if self.ifExistingSubviewByViewTag(self.parentView, tag: _TAG5) {
-                clearDropdownviewForSubviews(self.parentView!)
-            } else if listData.count > 0 {
-                
-                textField.showListData(textField, parent: (self.parentView as! InputMode01View).scrollCellView, handle: handleFun, listData: self.sortStringArrayByName(listData) as NSArray, width: self.inptItemInput.frame.size.width*1.2, height:_DROPDOWNLISTHEIGHT, tag: _TAG5)
-            }
-
-            return false
         }
         
         return true
@@ -346,7 +393,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if textField == self.inptDetailInput {
+        if textField == self.inptDetailInputTextView {
             if textField.isTruncated() {
                 self.showInspectDetailButton.isHidden = false
             } else {
@@ -357,17 +404,17 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
     }
 
     @IBAction func showInptDetailVals(_ sender: UIButton) {
-        if self.ifExistingSubviewByViewTag(self.inptDetailInput, tag: _TAG1) {
-            clearDropdownviewForSubviews(self.inptDetailInput)
+        if self.ifExistingSubviewByViewTag(self.inptDetailInputTextView, tag: _TAG1) {
+            clearDropdownviewForSubviews(self.inptDetailInputTextView)
             return
         }
         
-        self.inptDetailInput.showListData(self.inptDetailInput, parent: (self.parentView as! InputMode01View).scrollCellView!, handle: dropdownHandleFunc, listData: self.sortStringArrayByName(self.selectValues) as NSArray, width: 500, height:_DROPDOWNLISTHEIGHT, tag: _TAG1, allowManuallyInput: true)
+        self.inptDetailInputTextView.showListData(self.inptDetailInputTextView, parent: (self.parentView as! InputMode01View).scrollCellView!, handle: dropdownHandleFuncTextView, listData: self.sortStringArrayByName(self.selectValues) as NSArray, width: 500, height:_DROPDOWNLISTHEIGHT, tag: _TAG1, allowManuallyInput: true)
     }
     
     
     @IBAction func takePhotoFromCell(_ sender: UIButton) {
-        if self.inptItemInput.text == "" {
+        if self.inptItemInputTextView.text == "" {
             self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Select Inspect Item"))
             
             return
@@ -392,7 +439,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         let popoverContent = PopoverViewController()
         popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
         popoverContent.dataType = _POPOVERNOTITLE
-        popoverContent.selectedValue = self.inptItemInput.text ?? ""
+        popoverContent.selectedValue = self.inptItemInputTextView.text ?? ""
         
         let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -411,7 +458,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate {
         let popoverContent = PopoverViewController()
         popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
         popoverContent.dataType = _POPOVERNOTITLE
-        popoverContent.selectedValue = inptDetailInput.text ?? ""
+        popoverContent.selectedValue = inptDetailInputTextView.text ?? ""
         
         let nav = CustomNavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover

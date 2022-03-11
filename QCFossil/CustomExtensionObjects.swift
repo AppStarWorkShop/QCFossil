@@ -1676,10 +1676,77 @@ extension Date {
     }
 }
 
+extension UITextView {
+    
+    func showListData(_ sender: UITextView, parent:UIView, handle:((UITextView)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=250, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
+        let width = sender.frame.size.width < 250 ? 250 : sender.frame.size.width
+        if listData.count > 0 {
+
+            Cache_Dropdown_Instance?.removeFromSuperview()
+            
+            if Cache_Dropdown_Instance == nil {
+                Cache_Dropdown_Instance = DropdownListViewControl.loadFromNibNamed("DropdownListView")!
+            }
+            
+            Cache_Dropdown_Instance!.dropdownData = listData as! [String]
+            
+            // for fix auto layout position in stackview
+            let frame = sender.superview?.convert(sender.frame, to: parent)
+            
+            let actualHeight = CGFloat(listData.count*50)
+            let adjustheight = actualHeight < height ? (actualHeight - 1) : (height - 1)
+            var actualMinX = frame?.origin.x ?? 0
+            
+            if actualMinX + width > _DEVICE_WIDTH {
+                actualMinX = _DEVICE_WIDTH - width
+            }
+            
+//            var minY = sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+            var minY = (frame?.origin.y ?? 0) + (frame?.size.height ?? 0)
+            
+            if String(describing: sender.superview!.classForCoder) != nil {
+                let classCode = String(describing: sender.superview!.classForCoder)
+                
+                if classCode == "UITableViewCellContentView" {
+//                    minY = sender.superview!.superview!.frame.minY+sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+                    minY = sender.superview!.superview!.frame.minY+minY
+                }
+            }
+            
+            let absolutePoint = sender.convert(sender.bounds, to: nil)
+            let adjustMinY = absolutePoint.origin.y + 80 + sender.frame.size.height + adjustheight
+            if adjustMinY > _DEVICE_HEIGHT {
+                minY -= adjustMinY - _DEVICE_HEIGHT
+            }
+
+            Cache_Dropdown_Instance!.frame = CGRect.init(x: actualMinX, y: minY, width: width, height: adjustheight)
+            
+            Cache_Dropdown_Instance!.sizeWidth = Int(width)
+            Cache_Dropdown_Instance!.sizeHeight = Int(adjustheight) //Int(height)
+            
+            Cache_Dropdown_Instance!.myParentTextView = sender
+            Cache_Dropdown_Instance!.layer.cornerRadius = 5.0
+            Cache_Dropdown_Instance!.tableView.allowsMultipleSelection = allowMulpSel
+            Cache_Dropdown_Instance?.allowManuallyInput = allowManuallyInput
+            Cache_Dropdown_Instance!.tableView.rowHeight = 50
+            Cache_Dropdown_Instance!.handleFunTextView = handle
+            Cache_Dropdown_Instance?.tag = tag
+            Cache_Dropdown_Instance?.keyValues = keyValues
+            Cache_Dropdown_Instance?.selectedValues = selectedValues
+            
+            parent.addSubview(Cache_Dropdown_Instance!)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollDisable"), object: nil)
+        }else{
+            Cache_Dropdown_Instance?.removeFromSuperview()
+        }
+    }
+}
+
 extension UITextField {
     
-    func showListData(_ sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=250, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
+    func showListData(_ sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=500, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
         let width = sender.frame.size.width < 250 ? 250 : sender.frame.size.width
+        let height = 500.0
         if listData.count > 0 {
 
             Cache_Dropdown_Instance?.removeFromSuperview()

@@ -254,6 +254,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
             })
             
             let defectPositPoints = (self.parentView as! InputMode02View).defectPositPoints.filter({ $0.parentId == self.inspPostId ?? 0})
+            defectPositionPoints = [:]
             defectPositPoints.forEach({ defectPositPoint in
                 defectPositionPoints[MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: defectPositPoint.positionNameEn, .zh: defectPositPoint.positionNameCn, .fr: defectPositPoint.positionNameFr])] = defectPositPoint.positionId
             })

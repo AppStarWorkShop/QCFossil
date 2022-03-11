@@ -14,10 +14,12 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
     var dropdownData = [String]()
     var dropdownDataFilter = [String]()
     weak var myParentTextField:UITextField!
+    weak var myParentTextView:UITextView?
     var sizeWidth = 0
     var sizeHeight = 0
     var selectedTableViewCell = [UITableViewCell]()
     var handleFun:((UITextField)->(Void))? = nil
+    var handleFunTextView:((UITextView)->(Void))? = nil
     var allowManuallyInput = false
     var keyValues = [String:Int]()
     var selectedValues = [Int]()
@@ -74,14 +76,19 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
         self.addSubview(tableView)
         
         dropdownDataFilter = dropdownData
+        var selectedValues:String?
+        if let _ = myParentTextField {
+            selectedValues = myParentTextField?.text!.replacingOccurrences(of: ", ", with: ",")
+        } else {
+            selectedValues = myParentTextView?.text!.replacingOccurrences(of: ", ", with: ",")
+        }
         
-        let selectedValues = myParentTextField?.text!.replacingOccurrences(of: ", ", with: ",")
-        
-        let cells = selectedValues!.characters.split{$0 == ","}.map(String.init)
-        for cell in cells {
-            let cellObj = UITableViewCell.init()
-            cellObj.textLabel?.text = cell as String
-            self.selectedTableViewCell.append(cellObj)
+        if let cells = selectedValues?.characters.split{$0 == ","}.map(String.init) {
+            for cell in cells {
+                let cellObj = UITableViewCell.init()
+                cellObj.textLabel?.text = cell as String
+                self.selectedTableViewCell.append(cellObj)
+            }
         }
         
         self.tableView.reloadData()
@@ -167,6 +174,19 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
                     if (handleFun != nil){
                         handleFun!(myParentTextField!)
                     }
+                    
+                } else if let aTextView = myParentTextView {
+                    let text = String(dropdownDataFilter[indexPath.row])
+                    
+                    selectedValues.append(keyValues[text] ?? 0)
+                    
+                    if aTextView.text == "" {
+                        aTextView.text! += text
+                    }else{
+                        aTextView.text! += ","+text
+                    }
+
+                    handleFunTextView?(myParentTextView!)
                 }
             }
             
@@ -180,19 +200,31 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
                         if (handleFun != nil){
                             handleFun!(myParentTextField!)
                         }
+                        handleFunTextView?(myParentTextView!)
                         return
                     }
                     
                     myParentTextField!.text = oldText + String(dropdownDataFilter[indexPath.row])
                     handleFun?(myParentTextField!)
+                } else if myParentTextView != nil {
+                    guard let oldText = myParentTextView?.text else {
+                        myParentTextView?.text = String(dropdownDataFilter[indexPath.row])
+                        handleFunTextView?(myParentTextView!)
+                        return
+                    }
+                    
+                    myParentTextView?.text = oldText + String(dropdownDataFilter[indexPath.row])
+                    handleFunTextView?(myParentTextView!)
                 }
-                
                 
             } else {
             
                 if myParentTextField != nil {
                     myParentTextField?.text = String(dropdownDataFilter[indexPath.row])
                     handleFun?(myParentTextField!)
+                } else if myParentTextView != nil {
+                    myParentTextView?.text = String(dropdownDataFilter[indexPath.row])
+                    handleFunTextView?(myParentTextView!)
                 }
             }
             
@@ -221,10 +253,13 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
                 
                 if idx < 1 && selectedTableViewCell.count > 1 {
                     myParentTextField?.text = myParentTextField?.text!.replacingOccurrences(of: (cell.textLabel?.text)!+",", with: "", options: NSString.CompareOptions.literal, range: nil)
+                    myParentTextView?.text = myParentTextView?.text!.replacingOccurrences(of: (cell.textLabel?.text)!+",", with: "", options: NSString.CompareOptions.literal, range: nil)
                 }else if idx < 1 && selectedTableViewCell.count < 2 {
                     myParentTextField?.text = myParentTextField?.text!.replacingOccurrences(of: (cell.textLabel?.text)!, with: "", options: NSString.CompareOptions.literal, range: nil)
+                    myParentTextView?.text = myParentTextView?.text!.replacingOccurrences(of: (cell.textLabel?.text)!, with: "", options: NSString.CompareOptions.literal, range: nil)
                 }else{
                     myParentTextField?.text = myParentTextField?.text!.replacingOccurrences(of: ","+(cell.textLabel?.text)!, with: "", options: NSString.CompareOptions.literal, range: nil)
+                    myParentTextView?.text = myParentTextView?.text!.replacingOccurrences(of: ","+(cell.textLabel?.text)!, with: "", options: NSString.CompareOptions.literal, range: nil)
                 }
                 
                 selectedTableViewCell.remove(at: idx)
@@ -235,6 +270,7 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
         if (handleFun != nil){
             handleFun!(myParentTextField!)
         }
+        handleFunTextView?(myParentTextView!)
         }
     }
     

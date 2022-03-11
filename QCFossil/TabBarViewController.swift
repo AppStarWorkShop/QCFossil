@@ -173,7 +173,7 @@ class TabBarViewController: UITabBarController {
                     
                     for icElm in icElms {
                     
-                        if ((icElm.resultValueId < 1 || icElm.inptItemInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.inptItemInputTextView.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
@@ -184,11 +184,11 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         //if icElm.inptItemInput.text != "" && icElm.resultValueId > 0 {
-                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInput.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInputTextView.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
                         
                             icItemDatas.append(icItemData!)
                         
-                            if icElm.requiredElementFlag < 1 || icElm.inptItemInput.text != "" || icElm.resultValueId > 0 {
+                            if icElm.requiredElementFlag < 1 || icElm.inptItemInputTextView.text != "" || icElm.resultValueId > 0 {
                                 Cache_Task_On?.didKeepPending = false
                             }
                         

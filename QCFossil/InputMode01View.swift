@@ -17,7 +17,7 @@ class InputMode01View: InputModeSCMaster {
     var inputCells = [InputMode01CellView]()
     let inputCellCount = 6
     let cellWidth = Int(_DEVICE_WIDTH)
-    let cellHeight = 160
+    let cellHeight = 200
 
     
     /*
@@ -169,7 +169,7 @@ class InputMode01View: InputModeSCMaster {
     func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=true, requiredElementFlag:Int=0, optionEnableFlag:Int=1) -> InputMode01CellView {
         
         let inputCellViewObj = InputMode01CellView.loadFromNibNamed("InputMode01Cell")
-        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 160)
+        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 200)
         inputCellViewObj?.parentView = self
         inputCellViewObj?.cellIndexLabel.text = idxLabelText
         inputCellViewObj?.cellCatIdx = sectionId
@@ -177,8 +177,8 @@ class InputMode01View: InputModeSCMaster {
         inputCellViewObj?.cellIdx = index
         inputCellViewObj?.cellPhysicalIdx = index-1
         inputCellViewObj?.elementDbId = elementDbId
-        inputCellViewObj?.inptItemInput.text = inspItemText
-        inputCellViewObj?.inptDetailInput.text = inspDetailText
+        inputCellViewObj?.inptItemInputTextView.text = inspItemText
+        inputCellViewObj?.inptDetailInputTextView.text = inspDetailText
         inputCellViewObj?.cellRemarksInput.text = inspRemarksText
         inputCellViewObj?.cellResultInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: resultValueObj.resultValueNameEn, .zh: resultValueObj.resultValueNameCn, .fr: resultValueObj.resultValueNameFr])
         
@@ -194,7 +194,7 @@ class InputMode01View: InputModeSCMaster {
         inputCellViewObj?.requiredElementFlag = requiredElementFlag
         
         if !userInteractive {
-            inputCellViewObj?.inptItemInput.isUserInteractionEnabled = false
+            inputCellViewObj?.inptItemInputTextView.isUserInteractionEnabled = false
         }
         
         if !dismissBtnHidden || (requiredElementFlag < 1 && optionEnableFlag > 0) {
