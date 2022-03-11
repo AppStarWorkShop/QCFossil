@@ -74,7 +74,7 @@ class DefectListViewController: PopoverMaster, UITableViewDelegate,  UITableView
             sectionSegmentControl.insertSegment(withTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr]), at: index, animated: true)
             index += 1
         }
-        
+        UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
         sectionSegmentControl.selectedSegmentIndex = 0
         sectionSegmentControl.layer.cornerRadius = 5.0
         sectionSegmentControl.setTitleTextAttributes([NSAttributedString.Key(rawValue: convertFromNSAttributedStringKey(NSAttributedString.Key.font)): UIFont.systemFont(ofSize: 16)], for: UIControl.State())

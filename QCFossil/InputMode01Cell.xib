@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01CellView" customModule="QC220308P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01CellView" customModule="QC220310P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="160"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -133,9 +133,8 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defect Position Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PJ-Lh-HW1">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defect Position Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PJ-Lh-HW1">
                     <rect key="frame" x="8" y="72" width="744" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" red="0.98624604940414429" green="0.0071207880973815918" blue="0.02743418887257576" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -220,9 +219,11 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="6PJ-Lh-HW1" secondAttribute="trailing" constant="16" id="0kD-z7-B9p"/>
                 <constraint firstAttribute="trailing" secondItem="wp8-o5-M5x" secondAttribute="trailing" constant="16" id="Fd6-fy-JNh"/>
                 <constraint firstAttribute="trailing" secondItem="8hv-zN-BPg" secondAttribute="trailing" constant="16" id="JAV-0X-iWd"/>
                 <constraint firstItem="IOK-7X-0R6" firstAttribute="top" secondItem="Est-uY-axK" secondAttribute="bottom" constant="1" id="L2x-Fa-RWh"/>
+                <constraint firstItem="6PJ-Lh-HW1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ZKT-uP-w9k"/>
                 <constraint firstItem="TaN-SO-RTb" firstAttribute="leading" secondItem="DhX-Fr-RMA" secondAttribute="leading" id="cDh-aa-xES"/>
                 <constraint firstItem="wp8-o5-M5x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="gqI-6r-5dP"/>
                 <constraint firstItem="wp8-o5-M5x" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="jXD-dZ-2Yq"/>
@@ -230,6 +231,7 @@
                 <constraint firstAttribute="trailing" secondItem="o3D-a8-yQP" secondAttribute="trailing" constant="16" id="kqL-in-kiL"/>
                 <constraint firstItem="Est-uY-axK" firstAttribute="trailing" secondItem="IOK-7X-0R6" secondAttribute="trailing" id="l5M-ab-qC6"/>
                 <constraint firstItem="DhX-Fr-RMA" firstAttribute="top" secondItem="TaN-SO-RTb" secondAttribute="bottom" constant="6.5" id="pHw-6e-mXq"/>
+                <constraint firstItem="6PJ-Lh-HW1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="72" id="qZm-PK-yu9"/>
                 <constraint firstItem="o3D-a8-yQP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="110" id="u5c-G7-lvG"/>
                 <constraint firstItem="o3D-a8-yQP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="uvs-Zm-Ypn"/>
             </constraints>

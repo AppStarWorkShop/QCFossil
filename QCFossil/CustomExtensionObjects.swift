@@ -1679,7 +1679,7 @@ extension Date {
 extension UITextField {
     
     func showListData(_ sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=250, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
-        
+        let width = sender.frame.size.width < 250 ? 250 : sender.frame.size.width
         if listData.count > 0 {
 
             Cache_Dropdown_Instance?.removeFromSuperview()
