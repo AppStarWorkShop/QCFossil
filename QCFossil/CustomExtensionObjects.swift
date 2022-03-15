@@ -813,7 +813,7 @@ extension UIView {
             if $0.classForCoder == DropdownListViewControl.classForCoder() {
                 ($0 as! DropdownListViewControl).myParentTextField?.endEditing(true)
                 $0.removeFromSuperview()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollEnable"), object: nil)
+                
             }else if $0.classForCoder == UITextField.classForCoder() /*|| $0.classForCoder == UITextView.classForCoder()*/ {
                 $0.resignFirstResponder()
             }
@@ -1735,7 +1735,6 @@ extension UITextView {
             Cache_Dropdown_Instance?.selectedValues = selectedValues
             
             parent.addSubview(Cache_Dropdown_Instance!)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollDisable"), object: nil)
         }else{
             Cache_Dropdown_Instance?.removeFromSuperview()
         }
@@ -1802,7 +1801,6 @@ extension UITextField {
             Cache_Dropdown_Instance?.selectedValues = selectedValues
             
             parent.addSubview(Cache_Dropdown_Instance!)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollDisable"), object: nil)
         }else{
             Cache_Dropdown_Instance?.removeFromSuperview()
         }

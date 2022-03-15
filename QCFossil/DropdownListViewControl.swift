@@ -35,6 +35,7 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
     */
     
     override func awakeFromNib() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollDisable"), object: nil)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -227,7 +228,6 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
                     handleFunTextView?(myParentTextView!)
                 }
             }
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollEnable"), object: nil)
             Cache_Dropdown_Instance = nil
             self.removeFromSuperview()
         }
@@ -276,5 +276,9 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
     
     func dismissMyself() {
         self.removeFromSuperview()
+    }
+    
+    deinit {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollEnable"), object: nil)
     }
 }
