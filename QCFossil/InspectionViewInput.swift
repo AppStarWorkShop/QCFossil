@@ -189,7 +189,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        self.clearDropdownviewForSubviews(self)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

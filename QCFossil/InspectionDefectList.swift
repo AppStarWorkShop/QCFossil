@@ -254,7 +254,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
     }
     
     @objc func clearDefectItemsBeforeGOBack() {
-        
+        self.view.clearDropdownviewForSubviews(self.view)
         if !validation() {
             return
         }

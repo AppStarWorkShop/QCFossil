@@ -227,7 +227,7 @@ class DropdownListViewControl: UIView, UITableViewDataSource, UITableViewDelegat
                     handleFunTextView?(myParentTextView!)
                 }
             }
-            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "parentScrollEnable"), object: nil)
             Cache_Dropdown_Instance = nil
             self.removeFromSuperview()
         }

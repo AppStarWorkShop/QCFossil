@@ -182,13 +182,24 @@ class PopoverViewController: UIViewController {
                 nav.setNavigationBarHidden(true, animated: false)
             }
             
-            let descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            let descView = UITextView()// UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            descView.translatesAutoresizingMaskIntoConstraints = false
             descView.text = selectedValue
             descView.isUserInteractionEnabled = false
             descView.font = UIFont.systemFont(ofSize: 18.0)
             
             self.view.addSubview(descView)
-            
+            if #available(iOS 11.0, *) {
+                descView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+                descView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+                descView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+                descView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            } else {
+                descView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+                descView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+                descView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+                descView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            }
             return
         } else if dataType == _DOWNLOADTASKSTATUSDESC {
             if let nav = self.parent as? UINavigationController {
