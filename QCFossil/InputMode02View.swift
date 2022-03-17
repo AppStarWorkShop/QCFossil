@@ -28,6 +28,8 @@ class InputMode02View: InputModeSCMaster {
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var result: UITextField!
     @IBOutlet weak var addCellButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    
     var inputCells = [InputMode02CellView]()
     var defectPosits = [PositObj]()
     var defectPositPoints = [PositPointObj]()
@@ -142,21 +144,23 @@ class InputMode02View: InputModeSCMaster {
             }
         
             Cache_Task_On?.didModify = true
-            self.updateContentView()
+//            self.updateContentView()
             
         })
     }
     
     func updateContentView() {
-        if inputCells.count > 0 {
-            
+        self.stackView.arrangedSubviews.forEach({
+            $0.removeFromSuperview()
+        })
         
+        if inputCells.count > 0 {
         
         for index in 0...inputCells.count-1 {
             let cell = inputCells[index]
             cell.updateCellIndex(cell,index: index)
             cell.cellIndexLabel.text = String(cell.cellIdx)
-            cell.frame = CGRect.init(x: 0, y: index * cellHeight, width: cellWidth, height: cellHeight)
+//            cell.frame = CGRect.init(x: 0, y: index * cellHeight, width: cellWidth, height: cellHeight)
             
             if index % 2 == 0 {
                 cell.backgroundColor = _TABLECELL_BG_COLOR1
@@ -164,13 +168,40 @@ class InputMode02View: InputModeSCMaster {
                 cell.backgroundColor = _TABLECELL_BG_COLOR2
             }
             
-            self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
+            stackView.addArrangedSubview(cell)
+            cell.translatesAutoresizingMaskIntoConstraints = false
+            cell.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+            cell.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+            cell.heightAnchor.constraint(equalToConstant: CGFloat(cellHeight)).isActive = true
+//            self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
         }
         }
         
-        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
-        self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+250)))
+        
+        
+//        self.addCellButton.frame.size = CGSize.init(width: 50, height: 50)
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separator)
+        separator.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+        stackView.addArrangedSubview(addCellButton)
+        addCellButton.translatesAutoresizingMaskIntoConstraints = false
+        addCellButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
+        addCellButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addCellButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        let separatorDown = UIView()
+        separatorDown.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separatorDown)
+        separatorDown.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+//        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
+//        self.scrollCellView.addSubview(self.addCellButton)
+//        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+250)))
+        
+//        stackView.addArrangedSubview(UIView())
+//        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+100)))
     }
     
     func resizeScrollView(_ size:CGSize) {
@@ -247,7 +278,6 @@ class InputMode02View: InputModeSCMaster {
         inputCell.saveMyselfToGetId()
         
         inputCells.append(inputCell)
-        
         self.updateContentView()
     }
 }
