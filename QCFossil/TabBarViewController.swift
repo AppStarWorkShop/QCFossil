@@ -382,6 +382,11 @@ class TabBarViewController: UITabBarController {
     
     @objc func updateTask(_ taskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue) {
         
+        if self.view.disableFuns() {
+            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirmed Task Cant not be updated."))
+            return
+        }
+        
         if let handler = self.handler {
             if !handler() {
                 return

@@ -27,10 +27,12 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncp-bs-i0j">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncp-bs-i0j">
+                    <rect key="frame" x="0.0" y="1" width="768" height="1"/>
                     <color key="backgroundColor" red="0.98039215690000003" green="0.72156862749999995" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Ip1-Nk-DaK"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -249,14 +251,17 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="ncp-bs-i0j" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="0gh-LR-QDo"/>
                 <constraint firstItem="Ubz-vh-8vc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="2zG-hj-r6H"/>
                 <constraint firstItem="Ubz-vh-8vc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="31" id="713-1A-NM3"/>
+                <constraint firstItem="ncp-bs-i0j" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="1" id="L0Z-eA-8w4"/>
                 <constraint firstItem="DjA-og-2zw" firstAttribute="leading" secondItem="r3m-ww-88z" secondAttribute="leading" id="QUB-S4-Pq8"/>
                 <constraint firstItem="uJX-nT-aVu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="Roa-pd-VFt"/>
                 <constraint firstAttribute="trailing" secondItem="aDr-UR-TXL" secondAttribute="trailing" constant="16" id="U7c-IJ-Bzx"/>
                 <constraint firstItem="aDr-UR-TXL" firstAttribute="top" secondItem="gbC-JC-KVB" secondAttribute="bottom" constant="1" id="X0t-4c-adT"/>
                 <constraint firstAttribute="trailing" secondItem="uJX-nT-aVu" secondAttribute="trailing" constant="16" id="Xn8-1w-Be4"/>
                 <constraint firstItem="uJX-nT-aVu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="110" id="cNL-8K-NiT"/>
+                <constraint firstItem="ncp-bs-i0j" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="eYW-NG-wbn"/>
                 <constraint firstItem="Ubz-vh-8vc" firstAttribute="top" secondItem="G81-O6-UN5" secondAttribute="bottom" id="fXv-a5-osA"/>
                 <constraint firstItem="G81-O6-UN5" firstAttribute="trailing" secondItem="Ubz-vh-8vc" secondAttribute="trailing" id="inu-9e-tDp"/>
                 <constraint firstAttribute="trailing" secondItem="Ubz-vh-8vc" secondAttribute="trailing" constant="16" id="npn-1B-W5A"/>
@@ -286,7 +291,7 @@
                 <outlet property="showDefectPositionPointsButton" destination="G81-O6-UN5" id="VwU-OQ-czk"/>
                 <outlet property="takePhotoIcon" destination="93D-gK-gGq" id="Jhc-gK-oK6"/>
             </connections>
-            <point key="canvasLocation" x="-116.34146341463415" y="193.72881355932205"/>
+            <point key="canvasLocation" x="324" y="79"/>
         </view>
     </objects>
     <resources>

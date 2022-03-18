@@ -14,6 +14,8 @@ class InputMode01View: InputModeSCMaster {
     @IBOutlet weak var applyToAllButton: UIButton!
     @IBOutlet weak var result: UITextField!
     @IBOutlet weak var addCellButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    
     var inputCells = [InputMode01CellView]()
     let inputCellCount = 6
     let cellWidth = Int(_DEVICE_WIDTH)
@@ -135,7 +137,10 @@ class InputMode01View: InputModeSCMaster {
     }
     
     func updateContentView() {
-                
+        self.stackView.arrangedSubviews.forEach({
+            $0.removeFromSuperview()
+        })
+        
         if inputCells.count > 0 {
             //return
             
@@ -152,14 +157,36 @@ class InputMode01View: InputModeSCMaster {
             }
             
             if cell.cellPhysicalIdx < inputCells.count {
-                self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
+                
+                stackView.addArrangedSubview(cell)
+                cell.translatesAutoresizingMaskIntoConstraints = false
+                cell.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+                cell.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+                cell.heightAnchor.constraint(equalToConstant: CGFloat(cellHeight)).isActive = true
+//                self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
             }
         }
         }
         
-        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
-        self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+500)))
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separator)
+        separator.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+        stackView.addArrangedSubview(addCellButton)
+        addCellButton.translatesAutoresizingMaskIntoConstraints = false
+        addCellButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
+        addCellButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addCellButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        let separatorDown = UIView()
+        separatorDown.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separatorDown)
+        separatorDown.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+//        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
+//        self.scrollCellView.addSubview(self.addCellButton)
+//        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+500)))
     }
     
     func resizeScrollView(_ size:CGSize) {
@@ -169,7 +196,7 @@ class InputMode01View: InputModeSCMaster {
     func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=true, requiredElementFlag:Int=0, optionEnableFlag:Int=1) -> InputMode01CellView {
         
         let inputCellViewObj = InputMode01CellView.loadFromNibNamed("InputMode01Cell")
-        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 200)
+        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: CGFloat(cellHeight))
         inputCellViewObj?.parentView = self
         inputCellViewObj?.cellIndexLabel.text = idxLabelText
         inputCellViewObj?.cellCatIdx = sectionId

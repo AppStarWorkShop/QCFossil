@@ -9,12 +9,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01View" customModule="QC211124P" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputMode01View" customModule="QC220317P" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="820" height="1180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfi-GG-aRa">
                     <rect key="frame" x="0.0" y="84" width="820" height="1096"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="yz7-EE-sbg">
+                            <rect key="frame" x="0.0" y="0.0" width="820" height="876"/>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="yz7-EE-sbg" firstAttribute="top" secondItem="Cfi-GG-aRa" secondAttribute="top" id="VEM-b9-iNM"/>
+                        <constraint firstItem="yz7-EE-sbg" firstAttribute="leading" secondItem="Cfi-GG-aRa" secondAttribute="leading" id="Xyh-w0-AFg"/>
+                        <constraint firstAttribute="bottom" secondItem="yz7-EE-sbg" secondAttribute="bottom" constant="220" id="b1f-dR-ckL"/>
+                        <constraint firstItem="yz7-EE-sbg" firstAttribute="width" secondItem="Cfi-GG-aRa" secondAttribute="width" id="cie-Zk-uWl"/>
+                        <constraint firstItem="yz7-EE-sbg" firstAttribute="height" secondItem="Cfi-GG-aRa" secondAttribute="height" priority="250" constant="-220" id="u02-om-n7C"/>
+                        <constraint firstAttribute="trailing" secondItem="yz7-EE-sbg" secondAttribute="trailing" id="uqF-bK-SbG"/>
+                    </constraints>
                 </scrollView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4K6-bb-e83">
                     <rect key="frame" x="0.0" y="84" width="820" height="2"/>
@@ -35,6 +48,7 @@
                 <constraint firstItem="Cfi-GG-aRa" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Iyz-EA-E30"/>
                 <constraint firstItem="4K6-bb-e83" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="pUu-LP-wtq"/>
                 <constraint firstItem="4K6-bb-e83" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="84" id="vNs-dK-7qa"/>
+                <constraint firstItem="Cfi-GG-aRa" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" priority="250" id="vr3-0x-k4F"/>
                 <constraint firstItem="Cfi-GG-aRa" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="zcM-lg-KcG"/>
             </constraints>
             <variation key="default">
@@ -53,6 +67,7 @@
                 <outlet property="addCellButton" destination="sWT-ky-Sha" id="TXL-P1-xr0"/>
                 <outlet property="applyToAllButton" destination="CCh-gf-0n0" id="gQC-bs-Ttw"/>
                 <outlet property="scrollCellView" destination="Cfi-GG-aRa" id="hxs-SK-cGy"/>
+                <outlet property="stackView" destination="yz7-EE-sbg" id="q05-pk-X0L"/>
             </connections>
             <point key="canvasLocation" x="291.40625" y="331.640625"/>
         </view>
