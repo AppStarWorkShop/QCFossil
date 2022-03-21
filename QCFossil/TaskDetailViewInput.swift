@@ -486,9 +486,9 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
     
     func resizePoWrapperContent(_ offset:CGFloat) {
        
-//        self.inptCatWrapperView.frame = CGRect(x: self.inptCatWrapperView.frame.origin.x,y: self.inptCatWrapperView.frame.origin.y+offset,width: self.inptCatWrapperView.frame.size.width,height: self.inptCatWrapperView.frame.size.height)
-//
-//        self.commentWarpperView.frame = CGRect(x: self.commentWarpperView.frame.origin.x,y: self.commentWarpperView.frame.origin.y+offset,width: self.commentWarpperView.frame.size.width,height: self.commentWarpperView.frame.size.height)
+        self.inptCatWrapperView.frame = CGRect(x: self.inptCatWrapperView.frame.origin.x,y: self.inptCatWrapperView.frame.origin.y+offset,width: self.inptCatWrapperView.frame.size.width,height: self.inptCatWrapperView.frame.size.height)
+
+        self.commentWarpperView.frame = CGRect(x: self.commentWarpperView.frame.origin.x,y: self.commentWarpperView.frame.origin.y+offset,width: self.commentWarpperView.frame.size.width,height: self.commentWarpperView.frame.size.height)
         
         self.pVC?.ScrollView.contentSize.height += offset
         self.frame.size = CGSize(width: _DEVICE_WIDTH, height: self.frame.size.height+offset)

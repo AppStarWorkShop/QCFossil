@@ -134,7 +134,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                     destVC.poSelectedItems = taskDetailView.poItems
                 }
             }
-        }else if segue.identifier == "DefectListFromInspectItemSegue" {
+        } else if segue.identifier == "DefectListFromInspectItemSegue" {
             
             let destVC = segue.destination as! InspectionDefectList
             let inspectionItem = sender as! InputModeICMaster

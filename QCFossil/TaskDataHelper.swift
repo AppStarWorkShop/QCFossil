@@ -1701,12 +1701,13 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func updateTaskItem(_ taskItem:TaskItem) ->Bool {
-        //let sql = "INSERT OR REPLACE INTO inspect_task_item('rowid','task_id','po_item_id','target_inspect_qty','avail_inspect_qty','inspect_enable_flag','create_user','create_date','modify_user','modify_date','sampling_qty') VALUES((SELECT rowid FROM inspect_task_item WHERE task_id = ? AND po_item_id = ?),?,?,?,?,?,?,?,?,?,?)"
-        let sql = "UPDATE inspect_task_item SET po_item_id=?, avail_inspect_qty=?, inspect_enable_flag=?, create_user=?, create_date=?, modify_user=?, modify_date=?, sampling_qty=? WHERE task_id=? AND po_item_id=?"
+//        let sql = "INSERT OR REPLACE INTO inspect_task_item('rowid','task_id','po_item_id','target_inspect_qty','avail_inspect_qty','inspect_enable_flag','create_user','create_date','modify_user','modify_date','sampling_qty') VALUES((SELECT rowid FROM inspect_task_item WHERE task_id = ? AND po_item_id = ?),?,?,?,?,?,?,?,?,?,?)"
+//        let sql = "INSERT OR REPLACE INTO inspect_task_item (po_item_id=?, avail_inspect_qty=?, inspect_enable_flag=?, create_user=?, create_date=?, modify_user=?, modify_date=?, sampling_qty=? WHERE task_id=? AND po_item_id=?"
+        let sql = "INSERT OR REPLACE INTO inspect_task_item ('task_id','po_item_id','target_inspect_qty','avail_inspect_qty','inspect_enable_flag', 'create_user','create_date','modify_user','modify_date','ref_qc_plan_line_id','sampling_qty','item_barcode','retail_price','currency','style_size','substr_style_size') VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         
         if db.open(){
             
-            let rs = db.executeUpdate(sql, withArgumentsIn: [taskItem.poItemId!,taskItem.availInspectQty!,taskItem.inspectEnableFlag!,taskItem.createUser!,taskItem.createDate!,taskItem.modifyUser!,taskItem.modifyDate!,taskItem.samplingQty!,taskItem.taskId!,taskItem.poItemId!])
+            let rs = db.executeUpdate(sql, withArgumentsIn: [taskItem.taskId ?? 0, taskItem.poItemId ?? 0,taskItem.targetInspectQty ?? 0, taskItem.availInspectQty ?? 0,taskItem.inspectEnableFlag ?? 0,taskItem.createUser ?? "",taskItem.createDate ?? "",taskItem.modifyUser ?? "",taskItem.modifyDate ?? "",taskItem.ref_qc_plan_line_id ?? 0, taskItem.samplingQty ?? 0,taskItem.item_barcode ?? "",taskItem.retail_price ?? 0, taskItem.currency ?? "", taskItem.style_size ?? "",taskItem.substr_style_size ?? ""])
             
             db.close()
             return rs
