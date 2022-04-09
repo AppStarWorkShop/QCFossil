@@ -511,7 +511,7 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
             UITextField.init().showDatePicker(textField)
         }else if textField == self.taskScheduledInput {
             
-            let vdrData = [ MylocalizedString.sharedLocalizeManager.getLocalizedString("YES"), MylocalizedString.sharedLocalizeManager.getLocalizedString("NO"), MylocalizedString.sharedLocalizeManager.getLocalizedString("ALL")]
+            let vdrData = [ MylocalizedString.sharedLocalizeManager.getLocalizedString("YES"), MylocalizedString.sharedLocalizeManager.getLocalizedString("NO"), MylocalizedString.sharedLocalizeManager.getLocalizedString("All")]
             textField.showListData(textField, parent: self.view, handle: handleFun, listData: vdrData as NSArray, width: 269)
             
             return false

@@ -107,6 +107,8 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         if self.defectZoneInput.isTruncated() {
             self.showTextFieldFullTextButton(textField: defectZoneInput)
         }
+        
+        updatePhotoAddediConStatus(self.cellResultInput.text ?? "", photoTakenIcon: self.photoAddedIcon)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)

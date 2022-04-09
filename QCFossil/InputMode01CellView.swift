@@ -126,7 +126,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate, UITextViewDel
         }
         
         fetchDetailSelectedValues()
-        
+        updatePhotoAddediConStatus(self.cellResultInput.text ?? "", photoTakenIcon: self.photoAddedIcon)
 //        if inptItemInput.isTruncated() {
 //            self.showInspectItemDetailButton.isHidden = false
 //        }

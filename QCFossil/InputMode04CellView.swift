@@ -86,7 +86,7 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         
         self.inspReqCatText = self.cellCatName
         
-        updatePhotoAddediConStatus("",photoTakenIcon: self.photoAddedIcon)
+        updatePhotoAddediConStatus(self.subResultInput.text ?? "", photoTakenIcon: self.photoAddedIcon)
     }
     
     func updateParentOptionElmts() {

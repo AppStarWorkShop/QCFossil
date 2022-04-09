@@ -94,7 +94,7 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
             return
         }
         
-        updatePhotoAddediConStatus("",photoTakenIcon: self.photoTakenIcon)
+        updatePhotoAddediConStatus(self.cellResultInput.text ?? "", photoTakenIcon: self.photoTakenIcon)
     }
     
     func updateLocalizedString(){

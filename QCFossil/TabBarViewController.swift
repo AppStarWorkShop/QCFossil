@@ -179,7 +179,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
-                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for")) \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
@@ -206,7 +206,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
-                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
@@ -245,7 +245,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
-                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
@@ -269,7 +269,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
-                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText)."))
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
@@ -394,7 +394,7 @@ class TabBarViewController: UITabBarController {
         }
         
         DispatchQueue.main.async(execute: {
-            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
+            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving"))
         })
         
         //-------------------- Clear Blank Records --------------------------------------
@@ -480,7 +480,7 @@ class TabBarViewController: UITabBarController {
     @objc func confirmTask() {
         print("Confirm Task")
         DispatchQueue.main.async(execute: {
-            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
+            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving"))
             
             DispatchQueue.main.async(execute: {
         
@@ -545,7 +545,7 @@ class TabBarViewController: UITabBarController {
             self.view.alertConfirmViewStyle3(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Task")+"?",parentVC:self, handlerFunYes: { (action:UIAlertAction!) in
                 
                 DispatchQueue.main.async(execute: {
-                    self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
+                    self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving"))
                     
                     DispatchQueue.main.async(execute: {
                         
