@@ -9,8 +9,10 @@
 import UIKit
 
 //Data Sync Server
-#if DEBUG
+#if UAT
 let dataSyncServerUsing = dataSyncUatServer
+#elseif TEST
+let dataSyncServerUsing = dataSyncTestServer
 #else
 let dataSyncServerUsing = dataSyncPrdServer
 #endif

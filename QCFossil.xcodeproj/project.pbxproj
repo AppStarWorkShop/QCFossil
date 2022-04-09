@@ -588,6 +588,8 @@
 		BD429C8F1C29537200CCE726 /* SignoffView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignoffView.swift; sourceTree = "<group>"; };
 		BD4AD87122E1813A00CDC833 /* TaskQCInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskQCInfoView.swift; sourceTree = "<group>"; };
 		BD4AD87322E1816700CDC833 /* TaskQCInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskQCInfoView.xib; sourceTree = "<group>"; };
+		BD4EA7FF2801C26B00A8F3B6 /* testalpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = testalpha.xcconfig; sourceTree = "<group>"; };
+		BD4EA8002801C28300A8F3B6 /* testcwbase.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = testcwbase.xcconfig; sourceTree = "<group>"; };
 		BD5024C21C3390A2000CF7D6 /* ICViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICViewController.swift; sourceTree = "<group>"; };
 		BD5024CA1C33E048000CF7D6 /* InputMode04.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04.xib; sourceTree = "<group>"; };
 		BD5024CC1C33E40F000CF7D6 /* InputMode04View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04View.swift; sourceTree = "<group>"; };
@@ -659,7 +661,7 @@
 		BDCF870E1C576D0F000B0C38 /* PoDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoDataHelper.swift; sourceTree = "<group>"; };
 		BDCF87101C57886D000B0C38 /* InspSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSection.swift; sourceTree = "<group>"; };
 		BDCFCCE01DB4835D00414027 /* InputModeDFMaster2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeDFMaster2.swift; sourceTree = "<group>"; };
-		BDD1A3472123472B00AE391E /* QC220408U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC220408U.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDD1A3472123472B00AE391E /* QC220408Ua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC220408Ua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD2E0C11C45048C00CB0C40 /* TaskTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTypeViewController.swift; sourceTree = "<group>"; };
 		BDD51C4E1C3E442000A6E656 /* InputMode04DefectCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04DefectCellView.swift; sourceTree = "<group>"; };
 		BDD51C501C3E443C00A6E656 /* InputMode04DefectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04DefectCell.xib; sourceTree = "<group>"; };
@@ -755,7 +757,7 @@
 				9C0C36CB1C1E6F7800CF48ED /* QC220408Pa.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
-				BDD1A3472123472B00AE391E /* QC220408U.app */,
+				BDD1A3472123472B00AE391E /* QC220408Ua.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1270,6 +1272,8 @@
 				BDF87FCE27D6FCF900F4B0C2 /* uatcwbase.xcconfig */,
 				BDF87FD127D6FEBB00F4B0C2 /* productionalpha.xcconfig */,
 				BDF87FCF27D6FE7500F4B0C2 /* productioncwbase.xcconfig */,
+				BD4EA7FF2801C26B00A8F3B6 /* testalpha.xcconfig */,
+				BD4EA8002801C28300A8F3B6 /* testcwbase.xcconfig */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -1348,7 +1352,7 @@
 			);
 			name = "QCFossil UAT";
 			productName = QCFossil;
-			productReference = BDD1A3472123472B00AE391E /* QC220408U.app */;
+			productReference = BDD1A3472123472B00AE391E /* QC220408Ua.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2136,7 +2140,7 @@
 		};
 		BDD1A3452123472B00AE391E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF87FCE27D6FCF900F4B0C2 /* uatcwbase.xcconfig */;
+			baseConfigurationReference = BDF87FD027D6FEAF00F4B0C2 /* uatalpha.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2175,7 +2179,7 @@
 		};
 		BDD1A3462123472B00AE391E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF87FCE27D6FCF900F4B0C2 /* uatcwbase.xcconfig */;
+			baseConfigurationReference = BDF87FD027D6FEAF00F4B0C2 /* uatalpha.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
