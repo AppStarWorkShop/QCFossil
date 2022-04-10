@@ -137,7 +137,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
             releaseCode = "UAT " + releaseDate
             defaults.set("UAT", forKey: "serverEnv_preference")
             defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")
-        #elseif Test
+        #elseif TESTENV
             releaseCode = "TEST " + releaseDate
             defaults.set("TEST", forKey: "serverEnv_preference")
             defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")

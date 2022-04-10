@@ -11,7 +11,7 @@ import UIKit
 //Data Sync Server
 #if UAT
 let dataSyncServerUsing = dataSyncUatServer
-#elseif TEST
+#elseif TESTENV
 let dataSyncServerUsing = dataSyncTestServer
 #else
 let dataSyncServerUsing = dataSyncPrdServer
