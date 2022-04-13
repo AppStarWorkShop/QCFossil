@@ -78,6 +78,8 @@ class TabBarViewController: UITabBarController {
         } else {
             self.children[3].removeFromParent()
         }
+        
+//        print("tabBar height is: \(self.tabBar.frame.size.height)")
     }
 
     override func didReceiveMemoryWarning() {

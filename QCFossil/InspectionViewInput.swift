@@ -135,7 +135,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.categoryName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr])
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height)
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             case _INPUTMODE02:
@@ -157,7 +157,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.categoryName = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section.sectionNameEn, .zh: section.sectionNameCn, .fr: section.sectionNameFr])
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height)
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             case _INPUTMODE04:
@@ -168,7 +168,7 @@ class InspectionViewInput: UIView, UIScrollViewDelegate {
                 inputview.inspSection = section
                 inputview.InputMode = inputMode!
                 
-                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: inputview.frame.size.height)
+                inputview.frame = CGRect(x: CGFloat(idx)*_DEVICE_WIDTH, y: 0, width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
                 self.scrollView.addSubview(inputview)
                 self.pVC?.categoriesDetail.append(inputview)
             default:break

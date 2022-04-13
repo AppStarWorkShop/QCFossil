@@ -112,11 +112,6 @@ class InputMode01View: InputModeSCMaster {
         self.updateOptionalInspElmts(inspElmNames)
         self.updateContentView()
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.applyToAllButton)
-        
-        NSLayoutConstraint.activate([
-            scrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        ])
     }
     
     @objc func applyRstToAll() {
