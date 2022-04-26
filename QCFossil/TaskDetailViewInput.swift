@@ -465,7 +465,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         
         if Cache_Task_On?.bookingNo! == "" {
             
-            self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel Ad-hoc Task?"),parentVC:self.pVC!, handlerFun: { (action:UIAlertAction!) in
+            self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel Task?"),parentVC:self.pVC!, handlerFun: { (action:UIAlertAction!) in
                 
                 Cache_Task_On?.deleteFlag = 1
                 Cache_Task_On?.taskStatus = 0
@@ -473,9 +473,12 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             })
             
         }else if validateBeforeSignoff(1) {
-            //Task Cancel, inspection result is 0
-            Cache_Task_On?.inspectionResultValueId = -1
-            self.pVC!.performSegue(withIdentifier: "ToSignoffSegue", sender: sender)
+            self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel Task?"),parentVC:self.pVC!, handlerFun: { (action:UIAlertAction!) in
+                
+                //Task Cancel, inspection result is 0
+                Cache_Task_On?.inspectionResultValueId = -1
+                self.pVC!.performSegue(withIdentifier: "ToSignoffSegue", sender: sender)
+            })
         }
     }
     
@@ -630,7 +633,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
         print("Save Task")
         //check if no enable poItems, then prompt msg
         let enablePoItems = self.poCellItems.filter({ $0.isEnable == 1 })
-        if enablePoItems.count < 1 {
+        if enablePoItems.count < 1 && taskStatus != GetTaskStatusId(caseId: "Cancelled").rawValue {
 
             Cache_Task_On?.errorCode = 2
             return false
@@ -650,7 +653,11 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
                 Cache_Task_On?.didKeepPending = false
             }
             
-            taskDataHelper.updateTaskItem(taskItem)
+            if let bookingNo = Cache_Task_On?.bookingNo, bookingNo.isEmpty {
+                taskDataHelper.insertTaskItem(taskItem)
+            } else {
+                taskDataHelper.updateTaskItem(taskItem)
+            }
             
             if Cache_Task_On!.inspectionResultValueId < 0 {
                 poCellItem.enableSwitch.setOn(false, animated: false)
@@ -704,7 +711,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             Cache_Task_On?.didKeepPending = false
         }
         
-        if Cache_Task_On?.didKeepPending == true {
+        if Cache_Task_On?.didKeepPending == true && Cache_Task_On?.taskStatus != GetTaskStatusId(caseId: "Cancelled").rawValue {
             Cache_Task_On?.taskStatus = GetTaskStatusId(caseId: "Pending").rawValue
         }
         
