@@ -1928,22 +1928,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 
                 //Update Task Status
                 let dataSyncHelper = DataSyncDataHelper()
-                
-                let confirmedTaskIds = dataSyncHelper.getAllConfirmedTaskIds()
-                var includeTaskIds = "("
-                for taskId in confirmedTaskIds {
-                    includeTaskIds += "\(taskId),"
-                }
-                includeTaskIds += ")"
-                includeTaskIds = includeTaskIds.replacingOccurrences(of: ",)", with: ")")
-                
-                let refusedTaskIds = getRefusedTaskIdAndUpdateConfirmUploadDate()
-                var excludeTaskIds = "("
-                for taskId in refusedTaskIds{
-                    excludeTaskIds += "\(taskId),"
-                }
-                excludeTaskIds += ")"
-                excludeTaskIds = excludeTaskIds.replacingOccurrences(of: ",)", with: ")")
+                self.updateConfirmUploadDate()
                 
                 self.updateProgressBar(0.8)
                 //start upload task photo here
@@ -1951,7 +1936,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 if self.uploadPhotos.count > 0 {
                     self.totalULPhotos = uploadPhotos.count
                 } else {
-                    uploadPhotos = dataSyncHelper.getAllPhotos(includeTaskIds, excludeTaskIds: excludeTaskIds)!
+                    uploadPhotos = dataSyncHelper.getAllPhotos()
                     self.totalULPhotos = uploadPhotos.count
                     uploadPhotos = uploadPhotos.reversed()
                 }
@@ -2008,7 +1993,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                     })
                     
                     self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos)
-                    updateTaskStatus()
+                    self.updateProgressBar(1)
                     updateULProcessLabel("Complete")
                     updateButtonStatus("Enable",btn: self.uploadBtn)
                     
@@ -2083,7 +2068,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         self.taskPhotoProcessBar.progress = 100
                     })
                     
-                    updateTaskStatus()
+                    updateTaskStatusAfterPhotoUploaded()
                     updateULProcessLabel("Complete")
                     updateButtonStatus("Enable",btn: self.uploadBtn)
                     self.uploadPhotos = [Photo]()
@@ -2151,43 +2136,27 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         
     }
     
-    func getRefusedTaskIdAndUpdateConfirmUploadDate() ->[Int] {
-        let dataSyncDataHelper = DataSyncDataHelper()
-        var taskRefused = [Int]()
-        
-        for taskStatus in taskStatusList {
-            if taskStatus["task_id"] != nil && taskStatus["task_status"] != nil && taskStatus["data_refuse_desc"] != nil {
-                if Int(taskStatus["task_status"]!)! == GetTaskStatusId(caseId: "Refused").rawValue || Int(taskStatus["task_status"]!)! == GetTaskStatusId(caseId: "Confirmed").rawValue {
-                    taskRefused.append(Int(taskStatus["task_id"]!)!)
-                } else if Int(taskStatus["task_status"]!)! == GetTaskStatusId(caseId: "Uploaded").rawValue {
-                    //Set value to confirm_upload_date for confirmed task (not cancelled)
-                    dataSyncDataHelper.updateInspectTaskConfirmUploadDate(Int(taskStatus["task_id"]!)!)
-                }
-            }
-        }
-        
-        return taskRefused
-    }
-    
-    func updateTaskStatus() {
+    func updateConfirmUploadDate() {
         let dataSyncDataHelper = DataSyncDataHelper()
         
         for taskStatus in taskStatusList {
-            
-            if taskStatus["task_id"] != nil && !tasksWithPhotosUploadFail.contains(taskStatus["task_id"] ?? "") && taskStatus["ref_task_id"] != nil && taskStatus["task_status"] != nil && taskStatus["data_refuse_desc"] != nil {
+            if taskStatus["task_id"] != nil && taskStatus["task_status"] != nil && taskStatus["data_refuse_desc"] != nil {                
+                //Set value to confirm_upload_date for confirmed task (not cancelled)
+                dataSyncDataHelper.updateInspectTaskConfirmUploadDate(Int(taskStatus["task_id"]!)!)
                 
-                dataSyncDataHelper.updateTaskStatus(Int(taskStatus["task_id"]!)!, status: Int(taskStatus["task_status"]!)!, refuseDesc: taskStatus["data_refuse_desc"]!, ref_task_id: Int(taskStatus["ref_task_id"]!)!)
-                
+                let status = dataSyncDataHelper.updateTaskStatus(Int(taskStatus["task_id"]!)!, status: Int(taskStatus["task_status"]!)!, refuseDesc: taskStatus["data_refuse_desc"]!, ref_task_id: Int(taskStatus["ref_task_id"]!)!)
                 if Cache_Task_On?.taskId == Int(taskStatus["task_id"]!)! {
-                    Cache_Task_On?.taskStatus = Int(taskStatus["task_status"]!)!
+                    Cache_Task_On?.taskStatus = status
                     Cache_Task_On?.dataRefuseDesc = taskStatus["data_refuse_desc"]!
                     Cache_Task_On?.refTaskId = Int(taskStatus["ref_task_id"]!)!
                 }
-                
             }
         }
-        
-        tasksWithPhotosUploadFail = [String]()
+    }
+    
+    func updateTaskStatusAfterPhotoUploaded() {
+        let dataSyncDataHelper = DataSyncDataHelper()
+        dataSyncDataHelper.updateTaskStatusAfterPhotoUploaded()
         self.updateProgressBar(1)
     }
     

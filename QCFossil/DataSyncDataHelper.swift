@@ -380,10 +380,7 @@ class DataSyncDataHelper:DataHelperMaster {
     }
     
     func getAllConfirmedTaskIds() ->[Int] {
-
-        //let sql = "SELECT task_id FROM inspect_task WHERE task_status = ? OR task_status = ?"
-        let sql = "SELECT task_id FROM inspect_task WHERE task_status = ?"
-        
+        let sql = "SELECT task_id FROM inspect_task WHERE task_status = ? AND confirm_upload_date IS NULL ORDER BY modify_date ASC"
         var taskIds = [Int]()
         
         if db.open() {
@@ -402,14 +399,14 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskIds
     }
     
-    func getAllPhotos(_ includeTaskIds:String, excludeTaskIds:String) ->[Photo]? {
+    func getAllPhotos() ->[Photo] {
         //Task Status is 2, mean Confirmed Task
-        let sql = "SELECT * FROM inspect_task it INNER JOIN task_inspect_photo_file tipf ON it.task_id = tipf.task_id WHERE it.report_inspector_id = ? AND it.task_id NOT IN \(excludeTaskIds) AND it.task_id IN \(includeTaskIds) AND (tipf.upload_date = '' OR tipf.upload_date IS NULL) ORDER BY it.vdr_sign_date ASC, tipf.create_date ASC"
+        let sql = "SELECT * FROM task_inspect_photo_file tipf INNER JOIN inspect_task it ON it.task_id = tipf.task_id WHERE upload_date IS NULL AND EXISTS (SELECT 1 FROM inspect_task it WHERE it.task_id = tipf.task_id AND it.confirm_upload_date IS NOT NULL) ORDER BY modify_date DESC"
         var photos = [Photo]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [/*GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue,*/ (Cache_Inspector?.inspectorId)!]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
@@ -452,30 +449,56 @@ class DataSyncDataHelper:DataHelperMaster {
             }
             
             db.close()
-            
-            return photos
         }
         
-        return nil
+        return photos
     }
     
-    func updateTaskStatus(_ taskId:Int, status:Int, refuseDesc:String, ref_task_id:Int) ->Bool {
-        
-        let sql = "UPDATE inspect_task SET task_status = ?, data_refuse_desc = ? WHERE task_id = ? AND task_status <> ?"
-        let sqlUpdateRefTaskId = "UPDATE inspect_task SET ref_task_id = ? WHERE task_id = ? AND (ref_task_id is NULL OR ref_task_id < 1)"
-        var result = false
-        
+    func updateTaskStatus(_ taskId:Int, status:Int, refuseDesc:String, ref_task_id:Int) ->Int {
+        /*
+            If status = 5 (Uploaded) from Data Upload WS JSON, run below SQL to check any photo(s) under the task...
+                SELECT COUNT(1) FROM task_inspect_photo_file WHERE task_id = ?
+                If COUNT > 0, change status = 4 (Confirmed) for below UPDATE SQL
+        */
+        var taskStatus = status
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsIn: [status, refuseDesc, taskId, status]) {
+            if taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue {
+                let updateStatusSql = "SELECT COUNT(1) AS photoExist FROM task_inspect_photo_file WHERE task_id = ?"
+                if let rs = db.executeQuery(updateStatusSql, withArgumentsIn: [taskId]) {
+                    if rs.next() {
+                        if Int(rs.int(forColumn: "photoExist")) > 0 {
+                            taskStatus = GetTaskStatusId(caseId: "Confirmed").rawValue
+                        }
+                    }
+                }
+            }
+            
+            let sql = "UPDATE inspect_task SET task_status = ?, data_refuse_desc = ? WHERE task_id = ? AND task_status <> ?"
+            let sqlUpdateRefTaskId = "UPDATE inspect_task SET ref_task_id = ? WHERE task_id = ? AND (ref_task_id is NULL OR ref_task_id < 1)"
+            
+            if db.executeUpdate(sql, withArgumentsIn: [taskStatus, refuseDesc, taskId, taskStatus]) {
                 if db.executeUpdate(sqlUpdateRefTaskId, withArgumentsIn: [ref_task_id, taskId]) {
-                    result = true
+                    
                 }
             }
             
             db.close()
         }
         
+        return taskStatus
+    }
+    
+    func updateTaskStatusAfterPhotoUploaded() -> Bool {
+        let sql = "UPDATE inspect_task SET task_status = \(GetTaskStatusId(caseId: "Uploaded").rawValue) WHERE task_id IN (SELECT it.task_id FROM inspect_task it WHERE it.task_status = \(GetTaskStatusId(caseId: "Confirmed").rawValue) AND it.confirm_upload_date IS NOT NULL AND NOT EXISTS (SELECT 1 FROM task_inspect_photo_file tipf WHERE tipf.task_id = it.task_id AND tipf.upload_date IS NULL))"
+        var result = false
+        
+        if db.open() {
+            if db.executeUpdate(sql, withArgumentsIn: []) {
+                result = true
+            }
+            db.close()
+        }
         return result
     }
     
@@ -533,6 +556,7 @@ class DataSyncDataHelper:DataHelperMaster {
         return result
     }
     
+    @discardableResult
     func updateInspectTaskConfirmUploadDate(_ taskId:Int) ->Bool {
         let sql = "UPDATE inspect_task SET confirm_upload_date = datetime('now', 'localtime') WHERE task_id = ? AND task_status = ?"
         var result = false

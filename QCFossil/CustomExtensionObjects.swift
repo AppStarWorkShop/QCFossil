@@ -870,41 +870,7 @@ extension UIView {
     }
     
     func disableFuns(_ obj:AnyObject = UIButton()) ->Bool {
-        if ((Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Confirmed").rawValue && Cache_Task_On?.confirmUploadDate == nil) || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Cancelled").rawValue) && !_DEBUG_MODE {
-            if obj.classForCoder == UIButton.classForCoder() {
-                (obj as! UIButton).removeTarget(nil, action:nil, for:UIControl.Event.allEvents)
-                (obj as! UIButton).addTarget(self, action: #selector(UIView.btnFunDisble), for: UIControl.Event.touchUpInside)
-            }else if obj.classForCoder == UITextField.classForCoder() {
-                (obj as! UITextField).isUserInteractionEnabled = false
-            }else if obj.classForCoder == SignoffView.classForCoder() {
-                (obj as! SignoffView).isUserInteractionEnabled = false
-            }else if obj.classForCoder == CustomTextView.classForCoder() {
-                (obj as! CustomTextView).isUserInteractionEnabled = false
-            }
-
-            return true
-        }else if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Confirmed").rawValue && Cache_Task_On?.confirmUploadDate != nil) || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue {
-            
-            if obj.classForCoder == UIButton.classForCoder() {
-                (obj as! UIButton).removeTarget(nil, action:nil, for:UIControl.Event.allEvents)
-                (obj as! UIButton).addTarget(self, action: #selector(UIView.btnFunDisbleForUploaded), for: UIControl.Event.touchUpInside)
-                
-            }else if obj.classForCoder == CustomControlButton.classForCoder() {
-                (obj as! CustomControlButton).removeTarget(nil, action:nil, for:UIControl.Event.allEvents)
-                (obj as! CustomControlButton).addTarget(self, action: #selector(UIView.btnFunDisbleForUploaded), for: UIControl.Event.touchUpInside)
-            
-            }else if obj.classForCoder == UITextField.classForCoder() {
-                (obj as! UITextField).isUserInteractionEnabled = false
-            }else if obj.classForCoder == SignoffView.classForCoder() {
-                (obj as! SignoffView).isUserInteractionEnabled = false
-            }else if obj.classForCoder == CustomTextView.classForCoder() {
-                (obj as! CustomTextView).isUserInteractionEnabled = false
-            }
-            
-            return true
-        }
-        
-        return false
+        return Cache_Task_On?.confirmUploadDate != nil
     }
     
     func setButtonCornerRadius(_ button:UIButton) {
