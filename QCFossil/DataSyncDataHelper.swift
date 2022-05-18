@@ -401,7 +401,7 @@ class DataSyncDataHelper:DataHelperMaster {
     
     func getAllPhotos() ->[Photo] {
         //Task Status is 2, mean Confirmed Task
-        let sql = "SELECT * FROM task_inspect_photo_file tipf INNER JOIN inspect_task it ON it.task_id = tipf.task_id WHERE upload_date IS NULL AND EXISTS (SELECT 1 FROM inspect_task it WHERE it.task_id = tipf.task_id AND it.confirm_upload_date IS NOT NULL) ORDER BY modify_date DESC"
+        let sql = "SELECT * FROM task_inspect_photo_file tipf INNER JOIN inspect_task it ON it.task_id = tipf.task_id WHERE tipf.upload_date IS NULL AND EXISTS (SELECT 1 FROM inspect_task it WHERE it.task_id = tipf.task_id AND it.confirm_upload_date IS NOT NULL) ORDER BY tipf.task_id ASC, tipf.modify_date DESC"
         var photos = [Photo]()
         
         if db.open() {
@@ -489,6 +489,7 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskStatus
     }
     
+    @discardableResult
     func updateTaskStatusAfterPhotoUploaded() -> Bool {
         let sql = "UPDATE inspect_task SET task_status = \(GetTaskStatusId(caseId: "Uploaded").rawValue) WHERE task_id IN (SELECT it.task_id FROM inspect_task it WHERE it.task_status = \(GetTaskStatusId(caseId: "Confirmed").rawValue) AND it.confirm_upload_date IS NOT NULL AND NOT EXISTS (SELECT 1 FROM task_inspect_photo_file tipf WHERE tipf.task_id = it.task_id AND tipf.upload_date IS NULL))"
         var result = false

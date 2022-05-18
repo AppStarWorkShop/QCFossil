@@ -1392,20 +1392,16 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             
             var errorMsg = ""
             if error?._code == NSURLErrorTimedOut {
-//                errorMsg = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue"))"
                 errorMsg = "Sync Failed due to Network Issue"
             }else if error?._code == NSURLErrorNotConnectedToInternet || error?._code == NSURLErrorCannotConnectToHost {
-//                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("App is in Offline Mode and unable to proceed Data Download.")
                 errorMsg = "App is in Offline Mode and unable to proceed Data Download."
             }else{
-//                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Network Request Failed with Unknown Reason!")
                 errorMsg = "Network Request Failed with Unknown Reason!"
             }
-            self.errorMsg = "\(error?.localizedDescription ?? "") with code: \(error?._code)"
+            self.errorMsg = "\(error?.localizedDescription ?? "") with code: \(String(describing: error?._code))"
             
             if UIApplication.shared.applicationState != .active {
                 errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-//                self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
                 self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                 updateDownloadTaskStatusDetailButton()
             }
@@ -1418,6 +1414,10 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 updateULProcessLabel(errorMsg)
                 updateUploadTaskStatusDetailButton()
                 updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
+                
+                if self.dsDataObj!["NAME"] as! String == DataSyncConstants.TaskPhotoDataUpload {
+                    self.updateTaskStatusAfterPhotoUploaded()
+                }
             }
         }else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Master Data Download" {
             
@@ -1933,13 +1933,9 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 self.updateProgressBar(0.8)
                 //start upload task photo here
                 
-                if self.uploadPhotos.count > 0 {
-                    self.totalULPhotos = uploadPhotos.count
-                } else {
-                    uploadPhotos = dataSyncHelper.getAllPhotos()
-                    self.totalULPhotos = uploadPhotos.count
-                    uploadPhotos = uploadPhotos.reversed()
-                }
+                uploadPhotos = dataSyncHelper.getAllPhotos()
+                totalULPhotos = uploadPhotos.count
+                uploadPhotos = uploadPhotos.reversed()
                 
                 if self.totalULPhotos>0 {
                     self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos)
@@ -1950,7 +1946,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                             currULPhotoIndex += 1
                             failULPhotoCount += 1
                             self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos, fail: failULPhotoCount)
-                            tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0) ?? "")
+                            tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0))
                             
                             if let photo = uploadPhotos.popLast() {
                                 request = createPhotoULRequest(photo) as NSURLRequest
@@ -1959,31 +1955,31 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                             }
                         }
                         
-                        if UIApplication.shared.applicationState == .active {
-                            
-                            // foreground
-                            if let _ = request.url {
-                                sessionDownloadTask = self.fgSession?.downloadTask(with: request as URLRequest)
-                                sessionDownloadTask?.resume()
-                            } else {
-                                self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos, fail: failULPhotoCount)
-                                tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0) ?? "")
-                                updateUploadTaskStatusDetailButton()
-                                if uploadPhotos.count < 1 {
-                                    updateULProcessLabel("Complete")
+                        DispatchQueue.main.async {
+                            if UIApplication.shared.applicationState == .active {
+                                
+                                // foreground
+                                if let _ = request.url {
+                                    self.sessionDownloadTask = self.fgSession?.downloadTask(with: request as URLRequest)
+                                    self.sessionDownloadTask?.resume()
+                                } else {
+                                    self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos, fail: self.failULPhotoCount)
+                                    self.tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0))
+                                    self.updateUploadTaskStatusDetailButton()
+                                    if self.uploadPhotos.count < 1 {
+                                        self.updateULProcessLabel("Complete")
+                                    }
                                 }
+                                
+                            }else{
+                                
+                                // background
+                                self.updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
+                                self.updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
+                                self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
+                                self.updateUploadTaskStatusDetailButton()
                             }
-                            
-                        }else{
-                            
-                            // background
-                            updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
-                            updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
-//                            self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                            self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
-                            updateUploadTaskStatusDetailButton()
                         }
-                        
                     }
                     
                 }else{
@@ -2009,7 +2005,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 #endif
                 displayDetailErrorInfo(error as NSError, pathToFile: getDataJsonPath())
             }
-        }else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Task Photo Data Upload" {
+        }else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == DataSyncConstants.TaskPhotoDataUpload {
             //Handle data in NSData type
             updateULProcessLabel("Photo Uploading...")
             
@@ -2077,8 +2073,10 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                     self.presentLocalNotification("Data Upload Complete.")
                     
                     let keyValueDataHelper = KeyValueDataHelper()
-                    keyValueDataHelper.updateLastUploadDatetime(String((Cache_Inspector?.inspectorId)!), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
-                    keyValueDataHelper.updateLastUploadTasksCount(String((Cache_Inspector?.inspectorId)!), tasksCount: _DS_UPLOADEDTASKCOUNT)
+                    DispatchQueue.main.async {
+                        keyValueDataHelper.updateLastUploadDatetime(String((Cache_Inspector?.inspectorId)!), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+                        keyValueDataHelper.updateLastUploadTasksCount(String((Cache_Inspector?.inspectorId)!), tasksCount: _DS_UPLOADEDTASKCOUNT)
+                    }
                 }
                 
                 if let photo = uploadPhotos.popLast() {
@@ -2088,7 +2086,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         currULPhotoIndex += 1
                         failULPhotoCount += 1
                         self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos, fail: failULPhotoCount)
-                        tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0) ?? "")
+                        tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0))
                         
                         if let photo = uploadPhotos.popLast() {
                             request = createPhotoULRequest(photo) as NSURLRequest
@@ -2097,30 +2095,32 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         }
                     }
                     
-                    if UIApplication.shared.applicationState == .active {
-                        
-                        // foreground
-                        if let _ = request.url {
-                            sessionDownloadTask = self.fgSession?.downloadTask(with: request as URLRequest)
-                            sessionDownloadTask?.resume()
-                        } else {
-                            self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos, fail: failULPhotoCount)
-                            tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0) ?? "")
+                    DispatchQueue.main.async {
+                        if UIApplication.shared.applicationState == .active {
                             
-                            updateUploadTaskStatusDetailButton()
-                            if uploadPhotos.count < 1 {
-                                updateULProcessLabel("Complete")
+                            // foreground
+                            if let _ = request.url {
+                                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request as URLRequest)
+                                self.sessionDownloadTask?.resume()
+                            } else {
+                                self.updateULPhotoStatus(self.currULPhotoIndex, total: self.totalULPhotos, fail: self.failULPhotoCount)
+                                self.tasksWithPhotosUploadFail.append(photoDataHelper.getTaskIdByPhotoId(photo.photoId ?? 0))
+                                
+                                self.updateUploadTaskStatusDetailButton()
+                                if self.uploadPhotos.count < 1 {
+                                    self.updateULProcessLabel("Complete")
+                                }
                             }
+                            
+                        }else{
+                            
+                            // background
+                            self.updateTaskStatusAfterPhotoUploaded()
+                            self.updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
+                            self.updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
+                            self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
+                            self.updateUploadTaskStatusDetailButton()
                         }
-                        
-                    }else{
-                        
-                        // background
-                        updateULProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode"))
-                        updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
-//                        self.errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                        self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
-                        updateUploadTaskStatusDetailButton()
                     }
                 }
                 

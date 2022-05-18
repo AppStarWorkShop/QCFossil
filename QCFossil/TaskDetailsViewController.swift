@@ -84,19 +84,20 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     
     func updateNaviBarMenu(_ leftBarTitle:String = "Task Search", leftBarActionName:String = "backTaskSearch:", rightBarTitle:String, rightBarActionName:String) {
         if let myParentTabVC = self.parent as? TabBarViewController {
-        
-        if leftBarTitle == "Task Search" {
-            //myParentTabVC.navigationItem.leftBarButtonItem = myParentTabVC.navigationItem.backBarButtonItem
-            myParentTabVC.setLeftBarItem("< \(MylocalizedString.sharedLocalizeManager.getLocalizedString(leftBarTitle))",actionName: leftBarActionName)
-            myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
-        }else {
-            myParentTabVC.setLeftBarItem("< "+leftBarTitle,actionName: leftBarActionName)
-            myParentTabVC.navigationItem.title = inspCatText
-        }
-        
-        if !self.view.disableFuns(self.view) {
-            myParentTabVC.setRightBarItem(rightBarTitle, actionName: rightBarActionName)
-        }
+            if leftBarTitle == "Task Search" {
+                //myParentTabVC.navigationItem.leftBarButtonItem = myParentTabVC.navigationItem.backBarButtonItem
+                myParentTabVC.setLeftBarItem("< \(MylocalizedString.sharedLocalizeManager.getLocalizedString(leftBarTitle))",actionName: leftBarActionName)
+                myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
+            }else {
+                myParentTabVC.setLeftBarItem("< "+leftBarTitle,actionName: leftBarActionName)
+                myParentTabVC.navigationItem.title = inspCatText
+            }
+            
+            if self.view.disableFuns(self.view) {
+                myParentTabVC.navigationItem.rightBarButtonItem = nil
+            } else {
+                myParentTabVC.setRightBarItem(rightBarTitle, actionName: rightBarActionName)
+            }
         }
     }
     
