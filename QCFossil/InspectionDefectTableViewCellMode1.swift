@@ -204,18 +204,18 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
             for i in 0..<selectedAssets.count{
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
-                var image = UIImage()
+                
                 option.isSynchronous = true
                 manager.requestImage(for: selectedAssets[i], targetSize: CGSize(width: _RESIZEIMAGEWIDTH, height: _RESIZEIMAGEHEIGHT), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
-                    image = result!
+                    if let image = result {
+                        let imageView = UIImageView.init(image: image)
+                        if let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "") {
+                            photos.append(photo)
+                        }
+                        
+                    }
                 })
-                
-                let imageView = UIImageView.init(image: image)
-                if let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "") {
-                    photos.append(photo)
-                }
             }
-            
             updateInspItemPhotoStatus(photos: photos)
         }
     }
