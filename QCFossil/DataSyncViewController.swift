@@ -287,7 +287,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         self.errorMsg = ""
 
         dataSet = [Dictionary<String, String>]()
-        makeDLPostRequest(_DS_MSTRDATA as AnyObject)
+        makeDLPostRequest(_DS_APP_PROGRAM_VERSION_CHECK as AnyObject)
         
         self.lastDownloadDatetime.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
         let keyValueDataHelper = KeyValueDataHelper()
@@ -1089,7 +1089,11 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 self.updateDLProcessLabel("Sending Request...")
                 
                 // foreground
-                self.sessionDownloadTask = self.fgSession?.downloadTask(with: self.createDLRequest(dsData))
+                let requestData = self.createDLRequest(dsData)
+                #if UAT || TESTENV
+                print("requestData: \(requestData)")
+                #endif
+                self.sessionDownloadTask = self.fgSession?.downloadTask(with: requestData)
                 self.sessionDownloadTask?.resume()
                 
             }else{
@@ -1132,7 +1136,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             
         }
         
-        #if DEBUG
+        #if UAT || TESTENV
         print("Download Request: \(param)")
         #endif
             
@@ -1419,7 +1423,33 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                     self.updateTaskStatusAfterPhotoUploaded()
                 }
             }
-        }else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Master Data Download" {
+        } else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "App Program Version Check" {
+            do {
+                let dataJson = try Data(contentsOf: URL(fileURLWithPath: getDataJsonPath()), options: NSData.ReadingOptions.mappedIfSafe)
+                let jsonData = try JSONSerialization.jsonObject(with: dataJson, options: .allowFragments) as! NSDictionary
+
+                if let result = jsonData["check_result"] as? String, result == "ACCEPTED" {
+                    makeDLPostRequest(_DS_MSTRDATA as AnyObject)
+                } else {
+                    DispatchQueue.main.async {
+                        let currentVersion = jsonData["check_version"] as? String ?? ""
+                        let expectedVersion = jsonData["expect_version"] as? String ?? ""
+                        
+                        let alertMessage = String(format: MylocalizedString.sharedLocalizeManager.getLocalizedString("app program version check alert message"), currentVersion, expectedVersion)
+                        self.view.alertView(alertMessage, handlerFun: { _ in
+                            self.updateDLProcessLabel("Complete")
+                            self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
+                        })
+                    }
+                }
+                
+            } catch {
+                #if UAT || TESTENV
+                    print("error serializing JSON: \(error)")
+                #endif
+            }
+        
+        } else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Master Data Download" {
             
             do {
                 updateDLProcessLabel("Preparing Master Data...")
@@ -1609,7 +1639,6 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             
             
         }else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Task Booking Data Download" {
-            var jsonData:NSDictionary = [:]
             do {/*
                  dispatch_async(dispatch_get_main_queue(), {
                  self.taskDataStatus.text =  "100%"

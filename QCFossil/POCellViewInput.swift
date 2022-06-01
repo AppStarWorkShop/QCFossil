@@ -99,6 +99,15 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         self.availInspectQtyInput.delegate = self
         
         updateLocalizedString()
+        NotificationCenter.default.addObserver(self, selector: #selector(taskConfirmedAction), name: NSNotification.Name(rawValue: "taskConfirmed"), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "taskConfirmed"), object: nil)
+    }
+    
+    @objc func taskConfirmedAction() {
+        enableSwitch.isEnabled = false
     }
     
     override func didMoveToSuperview() {

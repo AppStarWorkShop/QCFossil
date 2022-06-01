@@ -989,3 +989,5 @@
 "Please avoid to press home/power button or show up control center when data sync in progress." = "在同步过程中请不要点击home/power按钮或者显示控制中心。";
 
 "Please enter defect item for" = "請輸入不良项目";
+
+"app program version check alert message" = "您当前的版本 (v%@) 不是最新的，无法继续操作。请安装最新版本（v%@）";

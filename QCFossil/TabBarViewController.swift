@@ -526,6 +526,7 @@ class TabBarViewController: UITabBarController {
                             
                             DispatchQueue.main.async(execute: {
                                 NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "taskConfirmed"), object: nil)
                                 self.navigationController?.popViewController(animated: true)
                             })
                         })

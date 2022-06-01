@@ -48,6 +48,29 @@ var _DS_TOTALRECORDS_DB:Dictionary<String, String> = [
     "inspect_task_inspector_count" : "0"
 ]
 
+// App Program Version Check
+let _DS_APP_PROGRAM_VERSION_CHECK = [
+    "NAME" : "App Program Version Check",
+    "APINAME" : "\(dataSyncServerUsing)chk_app_ver.aspx",
+    "APIPARA" : [
+        "service_token": _DS_SERVICETOKEN,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
+        "app_version" : _VERSION,
+        "app_release" : _RELEASE
+    ],
+    "ACTIONNAMES" : [
+        "novalue"
+    ],
+    "ACTIONTABLES" : [
+        "novalue"
+    ],
+    "ACTIONFIELDS" : [
+        "nokey" : [
+            "novalue"
+        ]
+    ]
+] as [String : Any]
+
 //User Login, Forget Username, Forget Password
 let _DS_USERLOGIN = [
     "NAME" : "Inspector Authentication",
@@ -1492,5 +1515,3 @@ let _DS_ULTASKPHOTO = [
         ]
     ]
 ] as [String : Any]
-
-

@@ -383,11 +383,12 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         NSLog("Image Pick")
         
-        picker.dismiss(animated: true, completion:{
+        picker.dismiss(animated: true, completion: { [weak self] in
+            guard let strongSelf = self else { return }
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 
-                if !self.photoNameAtIndex.contains("") {
-                    self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Maximun 5 Defect Photos!"))
+                if !strongSelf.photoNameAtIndex.contains("") {
+                    strongSelf.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Maximun 5 Defect Photos!"))
                     return
                 }
                 
@@ -395,28 +396,25 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
                 
                 let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
                 
-                let photoName = self.getNameBySaveDefectPhotoData(0, photo: photo!)
+                let photoName = strongSelf.getNameBySaveDefectPhotoData(0, photo: photo!)
                 
-                let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
-                if defectItem?.count > 0 {
-                    let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
-                    
-                    if defectCell.photoNames == nil {
-                        defectCell.photoNames = [String]()
+                if let defectItem = Cache_Task_On?.defectItems.filter({$0.recordId == strongSelf.taskDefectDataRecordId}).first {
+                    if defectItem.photoNames == nil {
+                        defectItem.photoNames = [String]()
                     }
                     
-                    if defectCell.photoNames!.count<=5 {
-                        defectCell.photoNames!.append(photoName)
+                    if defectItem.photoNames!.count<=5 {
+                        defectItem.photoNames!.append(photoName)
                     }
                 }
                 
                 //Update InspItem PhotoAdded Status
-                self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
-                self.updatePhotoAddedStatus("yes")
+                strongSelf.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
+                strongSelf.updatePhotoAddedStatus("yes")
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":photo!])
                 
-                self.pVC?.updateContentView()
+                self?.pVC?.updateContentView()
             }
         })
         
