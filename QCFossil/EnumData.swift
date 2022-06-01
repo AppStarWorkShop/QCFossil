@@ -8,49 +8,7 @@
 
 import Foundation
 import UIKit
-/*
-enum TaskStatus:String {
-    case Cancelled = "Cancelled"
-    case Draft = "Draft"
-    case Pending = "Pending"
-    case Confirmed = "Confirmed"
-    case Uploaded = "Uploaded"
-    case Refused = "Refuserd"
-    
-    init(caseId:Int) {
-        switch caseId {
-            case -1: self = .Cancelled
-            case 0: self = .Draft
-            case 1: self = .Pending
-            case 2: self = .Confirmed
-            case 3: self = .Uploaded
-            case 4: self = .Refused
-            default:self = .Draft
-        }
-    }
-}
 
-enum GetTaskStatusId:Int {
-    case Cancelled = -1
-    case Draft = 0
-    case Pending = 1
-    case Confirmed = 2
-    case Uploaded = 3
-    case Refused = 4
-    
-    init(caseId:String) {
-        switch caseId {
-        case "Cancelled": self = .Cancelled
-        case "Draft": self = .Draft
-        case "Pending": self = .Pending
-        case "Confirmed": self = .Confirmed
-        case "Uploaded": self = .Uploaded
-        case "Refuserd": self = .Refused
-        default:self = .Draft
-        }
-    }
-}
-*/
 enum TaskStatus:String {
     case Cancelled = "Cancelled"
     case Booking = "Booking"

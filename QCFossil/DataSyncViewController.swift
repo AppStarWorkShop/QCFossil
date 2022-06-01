@@ -502,12 +502,16 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         
                     }else if apiName == "_DS_DL_TASK_STATUS" {
                         
-                        if actionFields[data["tableName"]!]![idx] != "task_id" {
-                            dbActionForTaskStatus += "\(actionFields[data["tableName"]!]![idx])=\"\(value)\","
-                        }
+                        // reference: https://docs.google.com/document/d/14ak1LwsbrfN1uDWisDqsWnOry4hB_Wmw/edit
+                        let fieldName = actionFields[data["tableName"]!]![idx]
+                        let conditionValue = "(CASE WHEN task_status IN (\"\(GetTaskStatusId(caseId: "Draft").rawValue)\",\"\(GetTaskStatusId(caseId: "Confirmed").rawValue)\",\"\(GetTaskStatusId(caseId: "Refused").rawValue)\") THEN \(fieldName) ELSE \"\(value)\" END)"
                         
-                        if actionFields[data["tableName"]!]![idx] == "task_status" {
-                            taskStatusFromServer = value
+                        switch fieldName {
+                        case "inspect_result_value_id", "task_status", "review_remarks", "review_user", "review_date":
+                            dbActionForTaskStatus += "\(fieldName)=\(conditionValue),"
+                        case "task_id":break
+                        default:
+                            dbActionForTaskStatus += "\(fieldName)=\"\(value)\","
                         }
                         
                     }else if apiName == "_DS_MSTRDATA" && actionFields[data["tableName"]!]![idx] == "vdr_sign_name" {
@@ -595,7 +599,7 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             var dbAction = ""
             if apiName == "_DS_DL_TASK_STATUS" {
                 
-                dbAction = "UPDATE \(actionTables[data["tableName"]!]!) SET \(dbActionForTaskStatus) WHERE ref_task_id = \(refTaskIdInTaskStatus) AND task_status <> \(taskStatusFromServer)"
+                dbAction = "UPDATE \(actionTables[data["tableName"]!]!) SET \(dbActionForTaskStatus) WHERE ref_task_id = \(refTaskIdInTaskStatus) AND (task_status <> (CASE WHEN task_status IN (\"\(GetTaskStatusId(caseId: "Draft").rawValue)\",\"\(GetTaskStatusId(caseId: "Confirmed").rawValue)\",\"\(GetTaskStatusId(caseId: "Refused").rawValue)\") THEN task_status ELSE \"\(taskStatusFromServer)\" END) OR app_ready_purge_date <> \"\")"
                 
             }else if apiName == "_DS_FGPODATA" {
                 
