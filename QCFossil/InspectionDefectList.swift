@@ -108,6 +108,8 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         
         NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+        
+        updateContentView()
     }
     
     @objc func parentScrollEnable() {
@@ -189,7 +191,6 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.hidesBackButton = true
-        updateContentView()
         
         self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("\((inspItem?.cellCatName)!)")
         
