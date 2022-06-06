@@ -519,6 +519,8 @@ class DefectListTableViewCellMode2: InputModeDFMaster2, UIActionSheetDelegate, U
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
                 var image = UIImage()
+                
+                option.isNetworkAccessAllowed = true
                 option.isSynchronous = true
                 manager.requestImage(for: selectedAssets[i], targetSize: CGSize(width: _RESIZEIMAGEWIDTH, height: _RESIZEIMAGEHEIGHT), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
                     image = result!

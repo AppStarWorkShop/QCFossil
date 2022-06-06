@@ -97,6 +97,7 @@ class InspectionDefectTableViewCellMode3: InputModeDFMaster2, UIImagePickerContr
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
                 
+                option.isNetworkAccessAllowed = true
                 option.isSynchronous = true
                 manager.requestImage(for: selectedAssets[i], targetSize: CGSize(width: _RESIZEIMAGEWIDTH, height: _RESIZEIMAGEHEIGHT), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
                     if let image = result {
