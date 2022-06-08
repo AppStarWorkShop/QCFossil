@@ -31,15 +31,15 @@ class ScrollViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    @IBAction func startTaskMenuClick(sender: UIBarButtonItem) {
+    @IBAction func startTaskMenuClick(_ sender: UIBarButtonItem) {
         NSLog("Start Task in Scroll-Container")
         
         
     }
 
-    @IBAction func toggleMenuClick(sender: UIBarButtonItem) {
+    @IBAction func toggleMenuClick(_ sender: UIBarButtonItem) {
         NSLog("Toggle Menu in Scroll-Container")
         
-        NSNotificationCenter.defaultCenter().postNotificationName("toggleMenu", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "toggleMenu"), object: nil)
     }
 }

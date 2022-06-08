@@ -12,13 +12,13 @@ import UIKit
 
 class KeyValueDataHelper:DataHelperMaster {
     
-    func updateLastLoginDatetime(userId:String, datetime:String) ->Bool {
+    func updateLastLoginDatetime(_ userId:String, datetime:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?,?,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["LastLoginDatetime-"+userId, datetime]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["LastLoginDatetime-"+userId, datetime]) {
                 result = true
             }
             
@@ -28,15 +28,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return result
     }
     
-    func getLastLoginDatetimeByUserId(userId:String) ->String {
+    func getLastLoginDatetimeByUserId(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var datetime = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["LastLoginDatetime-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["LastLoginDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.stringForColumn("value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -46,13 +46,13 @@ class KeyValueDataHelper:DataHelperMaster {
         return datetime
     }
     
-    func updateLastDownloadDatetime(userId:String, datetime:String) ->Bool {
+    func updateLastDownloadDatetime(_ userId:String, datetime:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ? ,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["LastDownloadDatetime-"+userId, datetime]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["LastDownloadDatetime-"+userId, datetime]) {
                 result = true
             }
             
@@ -62,15 +62,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return result
     }
     
-    func getLastDownloadDatetimeByUserId(userId:String) ->String {
+    func getLastDownloadDatetimeByUserId(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var datetime = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["LastDownloadDatetime-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["LastDownloadDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.stringForColumn("value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -80,13 +80,13 @@ class KeyValueDataHelper:DataHelperMaster {
         return datetime
     }
     
-    func updateLastUploadDatetime(userId:String, datetime:String) ->Bool {
+    func updateLastUploadDatetime(_ userId:String, datetime:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ? ,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["LastUploadDatetime-"+userId, datetime]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["LastUploadDatetime-"+userId, datetime]) {
                 result = true
             }
             
@@ -96,15 +96,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return result
     }
     
-    func getLastUploadDatetimeByUserId(userId:String) ->String {
+    func getLastUploadDatetimeByUserId(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var datetime = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["LastUploadDatetime-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["LastUploadDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.stringForColumn("value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -114,13 +114,13 @@ class KeyValueDataHelper:DataHelperMaster {
         return datetime
     }
     
-    func updateLastBackupDatetime(userId:String, datetime:String) ->Bool {
+    func updateLastBackupDatetime(_ userId:String, datetime:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ? ,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["LastBackupDatetime-"+userId, datetime]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["LastBackupDatetime-"+userId, datetime]) {
                 result = true
             }
             
@@ -130,15 +130,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return result
     }
     
-    func getLastBackupDatetimeByUserId(userId:String) ->String {
+    func getLastBackupDatetimeByUserId(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var datetime = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["LastBackupDatetime-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["LastBackupDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.stringForColumn("value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -148,13 +148,13 @@ class KeyValueDataHelper:DataHelperMaster {
         return datetime
     }
     
-    func updateLastRestoreDatetime(userId:String, datetime:String) ->Bool {
+    func updateLastRestoreDatetime(_ userId:String, datetime:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ? ,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["LastRestoreDatetime-"+userId, datetime]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["LastRestoreDatetime-"+userId, datetime]) {
                 result = true
             }
             
@@ -164,15 +164,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return result
     }
     
-    func getLastRestoreDatetimeByUserId(userId:String) ->String {
+    func getLastRestoreDatetimeByUserId(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var datetime = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["LastRestoreDatetime-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["LastRestoreDatetime-"+userId]) {
                 if rs.next() {
-                    datetime = rs.stringForColumn("value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -182,13 +182,13 @@ class KeyValueDataHelper:DataHelperMaster {
         return datetime
     }
     
-    func updateLastUploadTasksCount(userId:String, tasksCount:Int) ->Bool {
+    func updateLastUploadTasksCount(_ userId:String, tasksCount:Int) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ? ,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["LastUploadTasksCount-"+userId, tasksCount]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["LastUploadTasksCount-"+userId, tasksCount]) {
                 result = true
             }
             
@@ -198,15 +198,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return result
     }
     
-    func getLastUploadTasksCountByUserId(userId:String) ->String {
+    func getLastUploadTasksCountByUserId(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var datetime = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["LastUploadTasksCount-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["LastUploadTasksCount-"+userId]) {
                 if rs.next() {
-                    datetime = rs.stringForColumn("value")
+                    datetime = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -216,12 +216,12 @@ class KeyValueDataHelper:DataHelperMaster {
         return datetime
     }
     
-    func saveInspectorSignImage(userId:String, imageToBase64:String) ->Bool {
+    func saveInspectorSignImage(_ userId:String, imageToBase64:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ?, datetime('now','localtime'))"
         
         if db.open() {
             
-            if !db.executeUpdate(sql, withArgumentsInArray: ["InspectorSignImage-"+userId, imageToBase64]) {
+            if !db.executeUpdate(sql, withArgumentsIn: ["InspectorSignImage-"+userId, imageToBase64]) {
                 db.close()
                 return false
             }
@@ -232,15 +232,15 @@ class KeyValueDataHelper:DataHelperMaster {
         return true
     }
     
-    func getInspectorSignImage(userId:String) ->String {
+    func getInspectorSignImage(_ userId:String) ->String {
         let sql = "SELECT value FROM option_key_value WHERE key = ?"
         var inspectorSignImage = ""
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["InspectorSignImage-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["InspectorSignImage-"+userId]) {
                 if rs.next() {
-                    inspectorSignImage = rs.stringForColumn("value")
+                    inspectorSignImage = rs.string(forColumn: "value") ?? ""
                 }
             }
             
@@ -250,29 +250,27 @@ class KeyValueDataHelper:DataHelperMaster {
         return inspectorSignImage
     }
     
-    func getTaskRunningNoByDate(userId:String) ->String {
+    func getTaskRunningNoByDate(_ userId:String) ->String {
         var sql = "SELECT * FROM option_key_value WHERE key = ? AND date_added >= date('now','0 day')"
         var runningNo = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["TaskRunningNo-"+userId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["TaskRunningNo-"+userId]) {
                 if rs.next() {
-                    runningNo = Int(rs.stringForColumn("value"))! + 1
+                    runningNo = Int(rs.string(forColumn: "value") ?? "0")! + 1
                     
-                    //sql = "UPDATE option_key_value SET value = ?, date_added = datetime('now','localtime') WHERE key = ?"
                     sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ?, datetime('now','localtime'))"
                     
-                    if db.executeUpdate(sql, withArgumentsInArray: ["TaskRunningNo-"+userId, runningNo]) {
+                    if db.executeUpdate(sql, withArgumentsIn: ["TaskRunningNo-"+userId, runningNo]) {
                         
                     }
                     
                 }else{
                     
-                    //sql = "UPDATE option_key_value SET value = 0, date_added = datetime('now','localtime') WHERE key = ?"
                     sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ?, datetime('now','localtime'))"
                     
-                    if db.executeUpdate(sql, withArgumentsInArray: ["TaskRunningNo-"+userId, runningNo]) {
+                    if db.executeUpdate(sql, withArgumentsIn: ["TaskRunningNo-"+userId, runningNo]) {
                        runningNo = 0
                     }
                     
@@ -285,13 +283,13 @@ class KeyValueDataHelper:DataHelperMaster {
         return String(runningNo)
     }
 
-    func updateDBVersionNum(versionNum:String) ->Bool {
+    func updateDBVersionNum(_ versionNum:String) ->Bool {
         let sql = "INSERT OR REPLACE INTO option_key_value(key,value,date_added) VALUES(?, ? ,datetime('now','localtime'))"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: ["version", versionNum]) {
+            if db.executeUpdate(sql, withArgumentsIn: ["version", versionNum]) {
                 result = true
             }
             
@@ -307,9 +305,9 @@ class KeyValueDataHelper:DataHelperMaster {
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: ["version"]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: ["version"]) {
                 if rs.next() {
-                    version = rs.stringForColumn("value")
+                    version = rs.string(forColumn: "value") ?? ""
                 }
             }
             

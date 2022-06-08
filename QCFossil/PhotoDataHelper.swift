@@ -8,34 +8,47 @@
 
 import Foundation
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class PhotoDataHelper:DataHelperMaster {
     
-    func getPhotosByTaskId(taskId:Int, dataType:Int) ->[Photo]? {
+    func getPhotosByTaskId(_ taskId:Int, dataType:Int) ->[Photo]? {
         let sql = "SELECT * FROM task_inspect_photo_file WHERE task_id = ? AND data_type<?"
         var photos = [Photo]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [taskId, dataType]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, dataType]) {
             
             while rs.next() {
                 
-                let photoId = Int(rs.intForColumn("photo_id"))
-                let taskId = Int(rs.intForColumn("task_id"))
-                let refPhotoId = Int(rs.intForColumn("ref_photo_id"))
-                let orgFileName = rs.stringForColumn("org_filename")
-                let photoFile = rs.stringForColumn("photo_file")
-                let thumbFile = rs.stringForColumn("thumb_file")
-                let photoDesc = rs.stringForColumn("photo_desc")
-                let dataRecordId = Int(rs.intForColumn("data_record_id"))
-                let createUser = rs.stringForColumn("create_user")
-                let createDate = rs.stringForColumn("create_date")
-                let modifyUser = rs.stringForColumn("modify_user")
-                let modifyDate = rs.stringForColumn("modify_date")
-                let dataType = Int(rs.intForColumn("data_type"))
+                let photoId = Int(rs.int(forColumn: "photo_id"))
+                let taskId = Int(rs.int(forColumn: "task_id"))
+                let refPhotoId = Int(rs.int(forColumn: "ref_photo_id"))
+                let orgFileName = rs.string(forColumn: "org_filename")
+                let photoFile = rs.string(forColumn: "photo_file")
+                let thumbFile = rs.string(forColumn: "thumb_file")
+                let photoDesc = rs.string(forColumn: "photo_desc")
+                let dataRecordId = Int(rs.int(forColumn: "data_record_id"))
+                let createUser = rs.string(forColumn: "create_user")
+                let createDate = rs.string(forColumn: "create_date")
+                let modifyUser = rs.string(forColumn: "modify_user")
+                let modifyDate = rs.string(forColumn: "modify_date")
+                let dataType = Int(rs.int(forColumn: "data_type"))
                 
-                let photo = Photo(photo: nil, photoFilename: photoFile, taskId: taskId, photoFile: photoFile)
+                let photo = Photo(photo: nil, photoFilename: photoFile!, taskId: taskId, photoFile: photoFile!)
                 
                 photo?.photoId = photoId
                 photo?.refPhotoId = refPhotoId
@@ -65,13 +78,25 @@ class PhotoDataHelper:DataHelperMaster {
         return nil
     }
     
-    func savePhoto(photo:Photo) ->Photo? {
+    func savePhoto(_ photo:Photo) ->Photo? {
         let sql = "INSERT OR REPLACE INTO task_inspect_photo_file  ('photo_id','task_id','ref_photo_id','org_filename','photo_file','thumb_file','photo_desc','data_record_id','create_user','create_date','modify_user','modify_date','data_type') VALUES ((SELECT photo_id FROM task_inspect_photo_file WHERE photo_id = ?),?,?,?,?,?,?,?,?,?,?,?,?)"
         
         if db.open() {
+            let photoId = photo.photoId ?? 0
+            let taskId = photo.taskId
+            let refPhotoId = photo.refPhotoId ?? 0
+            let photoFile = photo.photoFile
+            let thumbFile = photo.thumbFile ?? ""
+            let photoDesc = photo.photoDesc ?? ""
+            let dataRecordId = photo.dataRecordId ?? 0
+            let createUser = photo.createUser ?? ""
+            let createDate = photo.createDate ?? ""
+            let modifyUser = photo.modifyUser ?? ""
+            let modifyDate = photo.modifyDate ?? ""
+            let dataType = photo.dataType ?? 0
             
-            if db.executeUpdate(sql, withArgumentsInArray: [notNilObject(photo.photoId)!,photo.taskId,photo.refPhotoId!,photo.photoFile,photo.photoFile,photo.thumbFile!,photo.photoDesc!,photo.dataRecordId!,photo.createUser!,photo.createDate!,photo.modifyUser!,photo.modifyDate!,photo.dataType!]){
-                photo.photoId = Int(db.lastInsertRowId())
+            if db.executeUpdate(sql, withArgumentsIn: [photoId, taskId, refPhotoId, photoFile, photoFile, thumbFile, photoDesc, dataRecordId, createUser, createDate, modifyUser, modifyDate, dataType]){
+                photo.photoId = Int(db.lastInsertRowId)
                 
                 db.close()
                 
@@ -114,7 +139,7 @@ class PhotoDataHelper:DataHelperMaster {
         }
     }*/
     
-    func updateInspInfoToPhoto(photo:Photo) {
+    func updateInspInfoToPhoto(_ photo:Photo) {
         /*
         DataType:
         0: Task
@@ -129,62 +154,62 @@ class PhotoDataHelper:DataHelperMaster {
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [photo.photoId!]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                 if rs.next() {
-                    let inputMode = rs.stringForColumn("input_mode_code")
-                    var inspAreaText = ""
-                    var inspCatText = ""
-                    var inspItemText = ""
+                    let inputMode = rs.string(forColumn: "input_mode_code")
+                    var inspAreaText:String?
+                    var inspCatText:String?
+                    var inspItemText:String?
                     
-                    switch inputMode {
+                    switch inputMode ?? "" {
                         case _INPUTMODE01:
-                            sql = "SELECT ism.section_name_en,ism.section_name_cn,iem.element_name_en,iem.element_name_cn FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id INNER JOIN inspect_element_mstr AS iem ON tidr.inspect_element_id = iem.element_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT ism.section_name_en,ism.section_name_cn,ism.section_name_fr,iem.element_name_en,iem.element_name_cn,iem.element_name_fr FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id INNER JOIN inspect_element_mstr AS iem ON tidr.inspect_element_id = iem.element_id WHERE tipf.photo_id = ?"
                         
-                            if let rs = db.executeQuery(sql, withArgumentsInArray: [photo.photoId!]) {
+                            if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspItemText = _ENGLISH ? rs.stringForColumn("element_name_en") : rs.stringForColumn("element_name_cn")
-                                    inspCatText = _ENGLISH ? rs.stringForColumn("section_name_en") : rs.stringForColumn("section_name_cn")
+                                    inspItemText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "element_name_en"), .zh: rs.string(forColumn: "element_name_cn"), .fr: rs.string(forColumn: "element_name_fr")])
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                                 }
                             }
                         
                         case _INPUTMODE02:
-                            sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ism.section_name_en,ism.section_name_cn FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_position_mstr AS ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr,ism.section_name_en,ism.section_name_cn,ism.section_name_fr FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_position_mstr AS ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id WHERE tipf.photo_id = ?"
                             
-                            if let rs = db.executeQuery(sql, withArgumentsInArray: [photo.photoId!]) {
+                            if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspAreaText = _ENGLISH ? rs.stringForColumn("position_name_en") : rs.stringForColumn("position_name_cn")
-                                    inspCatText = _ENGLISH ? rs.stringForColumn("section_name_en") : rs.stringForColumn("section_name_cn")
+                                    inspAreaText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")])
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                                 }
                             }
                         
                             sql = "SELECT tidr.record_id FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tipf.data_record_id = tidr.record_id WHERE tipf.photo_id = ?"
                         
-                            if let rs = db.executeQuery(sql, withArgumentsInArray: [photo.photoId!]) {
+                            if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    let recordId = Int(rs.intForColumn("record_id"))
+                                    let recordId = Int(rs.int(forColumn: "record_id"))
                                     let dpDataHelper = DPDataHelper()
                                     inspItemText = dpDataHelper.getDefectPositionPointsByRecordId(recordId)
                                 }
                             }
                         
                         case _INPUTMODE03:
-                            sql = "SELECT ism.section_name_en,ism.section_name_cn,tidr.request_element_desc FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.request_section_id = ism.section_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT ism.section_name_en,ism.section_name_cn,ism.section_name_fr,tidr.request_element_desc FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.request_section_id = ism.section_id WHERE tipf.photo_id = ?"
                         
-                            if let rs = db.executeQuery(sql, withArgumentsInArray: [photo.photoId!]) {
+                            if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspItemText = rs.stringForColumn("request_element_desc")
-                                    inspCatText = _ENGLISH ? rs.stringForColumn("section_name_en") : rs.stringForColumn("section_name_cn")
+                                    inspItemText = rs.string(forColumn: "request_element_desc") ?? ""
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
                                 }
                             }
                         
                         case _INPUTMODE04:
-                            sql = "SELECT iem.element_name_en,iem.element_name_cn,ipm.position_name_en,ipm.position_name_cn,ism.section_name_en,ism.section_name_cn FROM task_inspect_photo_file tipf INNER JOIN task_inspect_data_record tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr ism ON ism.section_id = tidr.inspect_section_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT iem.element_name_en,iem.element_name_cn,iem.element_name_fr,ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr,ism.section_name_en,ism.section_name_cn,ism.section_name_fr FROM task_inspect_photo_file tipf INNER JOIN task_inspect_data_record tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr ism ON ism.section_id = tidr.inspect_section_id WHERE tipf.photo_id = ?"
                             
-                            if let rs = db.executeQuery(sql, withArgumentsInArray: [photo.photoId!]) {
+                            if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
-                                    inspAreaText = _ENGLISH ? rs.stringForColumn("position_name_en") : rs.stringForColumn("position_name_cn")
-                                    inspCatText = _ENGLISH ? rs.stringForColumn("section_name_en") : rs.stringForColumn("section_name_cn")
-                                    inspItemText = _ENGLISH ? rs.stringForColumn("element_name_en") : rs.stringForColumn("element_name_cn")
+                                    inspAreaText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "position_name_en"), .zh: rs.string(forColumn: "position_name_cn"), .fr: rs.string(forColumn: "position_name_fr")])
+                                    inspCatText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "section_name_en"), .zh: rs.string(forColumn: "section_name_cn"), .fr: rs.string(forColumn: "section_name_fr")])
+                                    inspItemText = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: rs.string(forColumn: "element_name_en"), .zh: rs.string(forColumn: "element_name_cn"), .fr: rs.string(forColumn: "element_name_fr")])
                                 }
                             }
                         
@@ -201,12 +226,12 @@ class PhotoDataHelper:DataHelperMaster {
         }
     }
     
-    func existPhotoByInspItem(dataRecordId:Int, dataType:Int) ->Bool {
+    func existPhotoByInspItem(_ dataRecordId:Int, dataType:Int) ->Bool {
         let sql = "SELECT * FROM task_inspect_photo_file WHERE data_record_id = ? AND data_type = ?"
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [dataRecordId, dataType]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [dataRecordId, dataType]) {
             
                 if rs.next() {
                     db.close()
@@ -220,13 +245,13 @@ class PhotoDataHelper:DataHelperMaster {
         return false
     }
     
-    func updatePhotoDatasByPhotoName(photoName:String, dataType:Int, dataRecordId:Int) ->Photo? {
+    func updatePhotoDatasByPhotoName(_ photoName:String, dataType:Int, dataRecordId:Int) ->Photo? {
         let sql = "UPDATE task_inspect_photo_file SET data_record_id = ?, data_type = ? WHERE photo_file = ?"
         var photo:Photo?
         
         if db.open() {
             
-            if !db.executeUpdate(sql, withArgumentsInArray: [dataRecordId,dataType,photoName]) {
+            if !db.executeUpdate(sql, withArgumentsIn: [dataRecordId,dataType,photoName]) {
                 UIView.init().alertView("Update Photo Data Error")
                 db.close()
                 
@@ -234,29 +259,29 @@ class PhotoDataHelper:DataHelperMaster {
             }
             
             let sql = "SELECT * FROM task_inspect_photo_file WHERE photo_file = ?"
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [photoName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [photoName]) {
                 
                 if rs.next() {
                     
-                    let photoId = Int(rs.intForColumn("photo_id"))
-                    let taskId = Int(rs.intForColumn("task_id"))
-                    let refPhotoId = Int(rs.intForColumn("ref_photo_id"))
-                    let orgFileName = rs.stringForColumn("org_filename")
-                    let photoFile = rs.stringForColumn("photo_file")
-                    let thumbFile = rs.stringForColumn("thumb_file")
-                    let photoDesc = rs.stringForColumn("photo_desc")
-                    let dataRecordId = Int(rs.intForColumn("data_record_id"))
-                    let createUser = rs.stringForColumn("create_user")
-                    let createDate = rs.stringForColumn("create_date")
-                    let modifyUser = rs.stringForColumn("modify_user")
-                    let modifyDate = rs.stringForColumn("modify_date")
-                    let dataType = Int(rs.intForColumn("data_type"))
+                    let photoId = Int(rs.int(forColumn: "photo_id"))
+                    let taskId = Int(rs.int(forColumn: "task_id"))
+                    let refPhotoId = Int(rs.int(forColumn: "ref_photo_id"))
+                    let orgFileName = rs.string(forColumn: "org_filename")
+                    let photoFile = rs.string(forColumn: "photo_file")
+                    let thumbFile = rs.string(forColumn: "thumb_file")
+                    let photoDesc = rs.string(forColumn: "photo_desc")
+                    let dataRecordId = Int(rs.int(forColumn: "data_record_id"))
+                    let createUser = rs.string(forColumn: "create_user")
+                    let createDate = rs.string(forColumn: "create_date")
+                    let modifyUser = rs.string(forColumn: "modify_user")
+                    let modifyDate = rs.string(forColumn: "modify_date")
+                    let dataType = Int(rs.int(forColumn: "data_type"))
                     
                     //Get Image
-                    let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photoFile
+                    let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photoFile!
                     let imageView = UIImageView.init(image: UIImage(contentsOfFile: pathForImage))
                     
-                    photo = Photo(photo: imageView, photoFilename: photoFile, taskId: taskId, photoFile: photoFile)
+                    photo = Photo(photo: imageView, photoFilename: photoFile!, taskId: taskId, photoFile: photoFile!)
                     
                     photo?.photoId = photoId
                     photo?.refPhotoId = refPhotoId
@@ -280,37 +305,37 @@ class PhotoDataHelper:DataHelperMaster {
     }
 
     
-    func updatePhotoDatas(photoId:Int, dataType:Int, dataRecordId:Int) ->Photo? {
+    func updatePhotoDatas(_ photoId:Int, dataType:Int, dataRecordId:Int) ->Photo? {
         let sql = "UPDATE task_inspect_photo_file SET data_record_id = ?, data_type = ? WHERE photo_id = ?"
         var photo:Photo?
         
         if db.open() {
             
-            if !db.executeUpdate(sql, withArgumentsInArray: [dataRecordId,dataType,photoId]) {
+            if !db.executeUpdate(sql, withArgumentsIn: [dataRecordId,dataType,photoId]) {
                 UIView.init().alertView("Update Photo Data Error")
                 return photo
             }
             
             let sql = "SELECT * FROM task_inspect_photo_file WHERE photo_id = ?"
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [photoId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [photoId]) {
             
             if rs.next() {
                 
-                let photoId = Int(rs.intForColumn("photo_id"))
-                let taskId = Int(rs.intForColumn("task_id"))
-                let refPhotoId = Int(rs.intForColumn("ref_photo_id"))
-                let orgFileName = rs.stringForColumn("org_filename")
-                let photoFile = rs.stringForColumn("photo_file")
-                let thumbFile = rs.stringForColumn("thumb_file")
-                let photoDesc = rs.stringForColumn("photo_desc")
-                let dataRecordId = Int(rs.intForColumn("data_record_id"))
-                let createUser = rs.stringForColumn("create_user")
-                let createDate = rs.stringForColumn("create_date")
-                let modifyUser = rs.stringForColumn("modify_user")
-                let modifyDate = rs.stringForColumn("modify_date")
-                let dataType = Int(rs.intForColumn("data_type"))
+                let photoId = Int(rs.int(forColumn: "photo_id"))
+                let taskId = Int(rs.int(forColumn: "task_id"))
+                let refPhotoId = Int(rs.int(forColumn: "ref_photo_id"))
+                let orgFileName = rs.string(forColumn: "org_filename")
+                let photoFile = rs.string(forColumn: "photo_file")
+                let thumbFile = rs.string(forColumn: "thumb_file")
+                let photoDesc = rs.string(forColumn: "photo_desc")
+                let dataRecordId = Int(rs.int(forColumn: "data_record_id"))
+                let createUser = rs.string(forColumn: "create_user")
+                let createDate = rs.string(forColumn: "create_date")
+                let modifyUser = rs.string(forColumn: "modify_user")
+                let modifyDate = rs.string(forColumn: "modify_date")
+                let dataType = Int(rs.int(forColumn: "data_type"))
                 
-                photo = Photo(photo: nil, photoFilename: photoFile, taskId: taskId, photoFile: photoFile)
+                photo = Photo(photo: nil, photoFilename: photoFile!, taskId: taskId, photoFile: photoFile!)
                 
                 photo?.photoId = photoId
                 photo?.refPhotoId = refPhotoId
@@ -333,17 +358,17 @@ class PhotoDataHelper:DataHelperMaster {
         return photo
     }
     
-    func getDefectPhotoNamesById(taskId:Int, dataRecordId:Int, taskPath:String) ->[String]? {
+    func getDefectPhotoNamesById(_ taskId:Int, dataRecordId:Int, taskPath:String) ->[String]? {
         let sql = "SELECT photo_file FROM task_inspect_photo_file WHERE task_id = ? AND data_record_id = ? AND data_type = 2"
         var photoNames = [String]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [taskId, dataRecordId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, dataRecordId]) {
                 
                 while rs.next() {
                 
-                    let photoFile = rs.stringForColumn("photo_file")
+                    let photoFile = rs.string(forColumn: "photo_file")
                 
                     photoNames.append(photoFile!)
                 }
@@ -357,35 +382,35 @@ class PhotoDataHelper:DataHelperMaster {
         return nil
     }
     
-    func getDefectPhotosById(taskId:Int, dataRecordId:Int, taskPath:String) ->[Photo]? {
+    func getDefectPhotosById(_ taskId:Int, dataRecordId:Int, taskPath:String) ->[Photo]? {
         let sql = "SELECT * FROM task_inspect_photo_file WHERE task_id = ? AND data_record_id = ? AND data_type = 2"
         var photos = [Photo]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [taskId, dataRecordId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, dataRecordId]) {
             
             while rs.next() {
                 
-                let photoId = Int(rs.intForColumn("photo_id"))
-                let taskId = Int(rs.intForColumn("task_id"))
-                let refPhotoId = Int(rs.intForColumn("ref_photo_id"))
-                let orgFileName = rs.stringForColumn("org_filename")
-                let photoFile = rs.stringForColumn("photo_file")
-                let thumbFile = rs.stringForColumn("thumb_file")
-                let photoDesc = rs.stringForColumn("photo_desc")
-                let dataRecordId = Int(rs.intForColumn("data_record_id"))
-                let createUser = rs.stringForColumn("create_user")
-                let createDate = rs.stringForColumn("create_date")
-                let modifyUser = rs.stringForColumn("modify_user")
-                let modifyDate = rs.stringForColumn("modify_date")
-                let dataType = Int(rs.intForColumn("data_type"))
+                let photoId = Int(rs.int(forColumn: "photo_id"))
+                let taskId = Int(rs.int(forColumn: "task_id"))
+                let refPhotoId = Int(rs.int(forColumn: "ref_photo_id"))
+                let orgFileName = rs.string(forColumn: "org_filename")
+                let photoFile = rs.string(forColumn: "photo_file")
+                let thumbFile = rs.string(forColumn: "thumb_file")
+                let photoDesc = rs.string(forColumn: "photo_desc")
+                let dataRecordId = Int(rs.int(forColumn: "data_record_id"))
+                let createUser = rs.string(forColumn: "create_user")
+                let createDate = rs.string(forColumn: "create_date")
+                let modifyUser = rs.string(forColumn: "modify_user")
+                let modifyDate = rs.string(forColumn: "modify_date")
+                let dataType = Int(rs.int(forColumn: "data_type"))
                 
                 //Get Image
-                let path = taskPath+"/"+photoFile
+                let path = taskPath+"/"+photoFile!
                 let image = UIImage(contentsOfFile: path)
                 
-                let photo = Photo(photo: UIImageView(image:image), photoFilename: photoFile, taskId: taskId, photoFile: photoFile)
+                let photo = Photo(photo: UIImageView(image:image), photoFilename: photoFile!, taskId: taskId, photoFile: photoFile!)
                 
                 photo?.photoId = photoId
                 photo?.refPhotoId = refPhotoId
@@ -411,14 +436,14 @@ class PhotoDataHelper:DataHelperMaster {
         return nil
     }
     
-    func checkPhotoAddedByInspDataRecordId(dataRecordId:Int) ->Bool {
+    func checkPhotoAddedByInspDataRecordId(_ dataRecordId:Int) ->Bool {
         let sql = "SELECT * FROM task_inspect_data_record AS tidr INNER JOIN task_defect_data_record AS tddr ON tidr.record_id = tddr.inspect_record_id INNER JOIN task_inspect_photo_file AS tipf ON tddr.record_id = tipf.data_record_id WHERE tidr.record_id = ? AND tipf.data_type = 2"
         
         if db.open(){
             
             //let rs = db.executeQuery(sql, withArgumentsInArray: [dataRecordId])
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [dataRecordId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [dataRecordId]) {
                 
                 if rs.next() {
                     db.close()
@@ -432,12 +457,12 @@ class PhotoDataHelper:DataHelperMaster {
         return false
     }
     
-    func deletePhotoByPhotoId(photoId:Int) ->Bool {
+    func deletePhotoByPhotoId(_ photoId:Int) ->Bool {
         let sql = "DELETE FROM task_inspect_photo_file WHERE photo_id = ?"
         
         if db.open(){
             
-            if !db.executeUpdate(sql, withArgumentsInArray: [photoId]) {
+            if !db.executeUpdate(sql, withArgumentsIn: [photoId]) {
                 db.close()
                 return false
             }
@@ -448,31 +473,31 @@ class PhotoDataHelper:DataHelperMaster {
         return true
     }
     
-    func getPhotosByInspElmtId(inspElmtId:Int,dataType:Int=1) ->[Photo]? {
+    func getPhotosByInspElmtId(_ inspElmtId:Int,dataType:Int=1) ->[Photo]? {
         let sql = "SELECT * FROM task_inspect_photo_file WHERE data_record_id = ? AND data_type = ?"
         var photos = [Photo]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [inspElmtId, dataType]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [inspElmtId, dataType]) {
             
             while rs.next() {
                 
-                let photoId = Int(rs.intForColumn("photo_id"))
-                let taskId = Int(rs.intForColumn("task_id"))
-                let refPhotoId = Int(rs.intForColumn("ref_photo_id"))
-                let orgFileName = rs.stringForColumn("org_filename")
-                let photoFile = rs.stringForColumn("photo_file")
-                let thumbFile = rs.stringForColumn("thumb_file")
-                let photoDesc = rs.stringForColumn("photo_desc")
-                let dataRecordId = Int(rs.intForColumn("data_record_id"))
-                let createUser = rs.stringForColumn("create_user")
-                let createDate = rs.stringForColumn("create_date")
-                let modifyUser = rs.stringForColumn("modify_user")
-                let modifyDate = rs.stringForColumn("modify_date")
-                let dataType = Int(rs.intForColumn("data_type"))
+                let photoId = Int(rs.int(forColumn: "photo_id"))
+                let taskId = Int(rs.int(forColumn: "task_id"))
+                let refPhotoId = Int(rs.int(forColumn: "ref_photo_id"))
+                let orgFileName = rs.string(forColumn: "org_filename")
+                let photoFile = rs.string(forColumn: "photo_file")
+                let thumbFile = rs.string(forColumn: "thumb_file")
+                let photoDesc = rs.string(forColumn: "photo_desc")
+                let dataRecordId = Int(rs.int(forColumn: "data_record_id"))
+                let createUser = rs.string(forColumn: "create_user")
+                let createDate = rs.string(forColumn: "create_date")
+                let modifyUser = rs.string(forColumn: "modify_user")
+                let modifyDate = rs.string(forColumn: "modify_date")
+                let dataType = Int(rs.int(forColumn: "data_type"))
                 
-                let photo = Photo(photo: nil, photoFilename: photoFile, taskId: taskId, photoFile: photoFile)
+                let photo = Photo(photo: nil, photoFilename: photoFile!, taskId: taskId, photoFile: photoFile!)
                 
                 photo?.photoId = photoId
                 photo?.refPhotoId = refPhotoId
@@ -498,15 +523,15 @@ class PhotoDataHelper:DataHelperMaster {
         return nil
     }
     
-    func getPhotoIdByPhotoName(photoName:String) ->Int {
+    func getPhotoIdByPhotoName(_ photoName:String) ->Int {
         let sql = "SELECT photo_id FROM task_inspect_photo_file WHERE photo_file = ?"
         var photoId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [photoName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [photoName]) {
                 if rs.next() {
-                    photoId = Int(rs.intForColumn("photo_id"))
+                    photoId = Int(rs.int(forColumn: "photo_id"))
                 }
             }
             
@@ -514,5 +539,82 @@ class PhotoDataHelper:DataHelperMaster {
         }
         
         return photoId
+    }
+    
+    func getStylePhotoByStyleNo(_ taskId:Int) ->StylePhoto {
+        
+        let sql = "SELECT sp.ss_photo_name, sp.cb_photo_name FROM style_photo sp INNER JOIN fgpo_line_item fli ON sp.style_no = fli.style_no INNER JOIN inspect_task_item iti ON fli.item_id = iti.po_item_id WHERE iti.task_id = ?"
+        var stylePhotos = StylePhoto(ssPhotoName: "", cbPhotoName: "")
+        
+        if db.open() {
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId]) {
+                if rs.next() {
+                    stylePhotos = StylePhoto(ssPhotoName: rs.string(forColumn: "ss_photo_name") ?? "", cbPhotoName: rs.string(forColumn: "cb_photo_name") ?? "")
+                }
+            }
+            
+            db.close()
+        }
+        
+        return stylePhotos
+    }
+    
+    func selectStylePhotosToRemove() ->[String] {
+        
+        let sql = "SELECT ss_photo_name, cb_photo_name FROM style_photo WHERE deleted_flag = 1"
+        var paths = [String]()
+        
+        if db.open() {
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
+                while rs.next() {
+                    
+                    let path = Cache_Inspector?.typeCode == TypeCode.WATCH.rawValue ? _WATCHSSPHOTOSPHYSICALPATH : _JEWELRYSSPHOTOSPHYSICALPATH
+                    paths.append(path + (rs.string(forColumn: "ss_photo_name") ?? ""))
+                    paths.append(_CASEBACKPHOTOSPHYSICALPATH + (rs.string(forColumn: "cb_photo_name") ?? ""))
+                }
+            }
+            
+            db.close()
+        }
+        
+        return paths
+    }
+    
+    func removeStylePhotosMarkDeleted() ->Bool {
+        
+        let sql = "DELETE FROM style_photo WHERE deleted_flag = 1"
+        
+        if db.open() {
+            
+            if !db.executeUpdate(sql, withArgumentsIn: []) {
+                db.close()
+                
+                return false
+            }
+            
+            db.close()
+        }
+        
+        return true
+    }
+    
+    func getTaskIdByPhotoId(_ photoId: Int) -> String {
+        
+        let sql = "SELECT task_id FROM task_inspect_photo_file WHERE photo_id = ?"
+        
+        if db.open() {
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn: [photoId]) {
+                if rs.next() {
+                    return rs.string(forColumn: "task_id") ?? ""
+                }
+            }
+            
+            db.close()
+        }
+        
+        return ""
     }
 }

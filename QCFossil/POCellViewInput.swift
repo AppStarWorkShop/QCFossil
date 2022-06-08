@@ -55,22 +55,22 @@ class POCellViewInput: UIView, UITextFieldDelegate {
     }
     */
     
-    @IBAction func isEnableSwitchOnClick(sender: UISwitch) {
+    @IBAction func isEnableSwitchOnClick(_ sender: UISwitch) {
         self.sampleQtyInput.endEditing(true)
         self.availInspectQtyInput.endEditing(true)
         self.bookingQtyInput.endEditing(true)
         
         Cache_Task_On?.didModify = true
         
-        if sender.on {
+        if sender.isOn {
             self.isEnable = 1
             self.sampleQtyInput.text = sampleQtyDB>0 ? String(sampleQtyDB) : ""
             self.availInspectQtyInput.text = availInspQtyDB>0 ? String(availInspQtyDB) : ""
             self.bookingQtyInput.text = String(self.bookingQtyDB)//String(bookingQtyDB)
             
             //enable sample & avail Qty Input
-            self.sampleQtyInput.userInteractionEnabled = true
-            self.availInspectQtyInput.userInteractionEnabled = true
+            self.sampleQtyInput.isUserInteractionEnabled = true
+            self.availInspectQtyInput.isUserInteractionEnabled = true
             
             Cache_Task_On!.poItems.forEach({ if $0.itemId == self.poItemId { $0.isEnable = 1 } })
             
@@ -87,8 +87,8 @@ class POCellViewInput: UIView, UITextFieldDelegate {
             taskDataHelper.updateTaskItemQty(availInspQtyDB, samplingQty: sampleQtyDB, taskId: (Cache_Task_On?.taskId)!, poItemId: poItemId!)
             
             //disable sample & avail Qty Input
-            self.sampleQtyInput.userInteractionEnabled = false
-            self.availInspectQtyInput.userInteractionEnabled = false
+            self.sampleQtyInput.isUserInteractionEnabled = false
+            self.availInspectQtyInput.isUserInteractionEnabled = false
             
             Cache_Task_On!.poItems.forEach({ if $0.itemId == self.poItemId { $0.isEnable = 0 } })
         }
@@ -99,6 +99,15 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         self.availInspectQtyInput.delegate = self
         
         updateLocalizedString()
+        NotificationCenter.default.addObserver(self, selector: #selector(taskConfirmedAction), name: NSNotification.Name(rawValue: "taskConfirmed"), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "taskConfirmed"), object: nil)
+    }
+    
+    @objc func taskConfirmedAction() {
+        enableSwitch.isEnabled = false
     }
     
     override func didMoveToSuperview() {
@@ -109,23 +118,23 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         }
         
         if pVC?.classForCoder == CreateTaskViewController.classForCoder() {
-            self.availInspectQtyLabel.hidden = true
-            self.availInspectQtyInput.hidden = true
-            self.enableLabel.hidden = true
-            self.enableSwitch.hidden = true
+            self.availInspectQtyLabel.isHidden = true
+            self.availInspectQtyInput.isHidden = true
+            self.enableLabel.isHidden = true
+            self.enableSwitch.isHidden = true
             
-            self.sampleQtyLabel.hidden = true
-            self.sampleQtyInput.hidden = true
-            self.bookingQtyLabel.hidden = true
-            self.bookingQtyInput.hidden = true
+            self.sampleQtyLabel.isHidden = true
+            self.sampleQtyInput.isHidden = true
+            self.bookingQtyLabel.isHidden = true
+            self.bookingQtyInput.isHidden = true
         }
         
         if self.disableFuns(self) {
-            enableSwitch.enabled = false
+            enableSwitch.isEnabled = false
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         
         if textField == self.sampleQtyInput && textField.text != "" {
             self.sampleQtyDB = Int(textField.text!)!
@@ -136,11 +145,11 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         Cache_Task_On?.didModify = true
         
         
-        if textField.keyboardType == UIKeyboardType.NumberPad {
+        if textField.keyboardType == UIKeyboardType.numberPad {
             
             return textField.numberOnlyCheck(textField, sourceText: string)
         }
@@ -153,7 +162,7 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         self.poNoLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("PO No.")
         self.poLineNoLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("PO Line No.")
         self.brandLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Brand")
-        self.styleLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Style")
+        self.styleLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Style, Size")
         self.orderQtyLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Order Qty")
         self.shipToLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Ship To")
         self.availInspectQtyLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Avail. Qty")
@@ -164,12 +173,12 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         self.shipWinLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("SW/Req. Ex-fty Date")
     }
     
-    @IBAction func delBtn(sender: UIButton){
+    @IBAction func delBtn(_ sender: UIButton){
         
         if pVC?.classForCoder == CreateTaskViewController.classForCoder() {
             let parentVC = self.pVC as! CreateTaskViewController
             //parentVC.poCellItems.removeAtIndex(self.idx)
-            parentVC.poItems.removeAtIndex(self.idx)
+            parentVC.poItems.remove(at: self.idx)
             //parentVC.loadPoItemCell()
             
             if parentVC.poItems.count < 1 {
@@ -183,7 +192,7 @@ class POCellViewInput: UIView, UITextFieldDelegate {
             
             if taskDetailViewInput.poItems.count > 1{
                 let poItemRemove = taskDetailViewInput.poItems[self.idx]
-                taskDetailViewInput.poItems.removeAtIndex(self.idx)
+                taskDetailViewInput.poItems.remove(at: self.idx)
                 //Resize
                 taskDetailViewInput.resizePoWrapperContent(-1*CGFloat(taskDetailViewInput.poCellHeight))
                 
@@ -200,24 +209,24 @@ class POCellViewInput: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBAction func showProdDesc(sender: UIButton){
+    @IBAction func showProdDesc(_ sender: UIButton){
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,150 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)//CGSizeMake(320,150 + _NAVIBARHEIGHT)
+//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
         popoverContent.dataType = _POPOVERPRODDESC
         popoverContent.selectedValue = prodDesc
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.navigationBar.tintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRectMake(0,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
         
     }
 }

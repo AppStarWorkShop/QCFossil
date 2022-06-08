@@ -21,42 +21,57 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.parentViewController?.parentViewController?.classForCoder == TabBarViewController.self {
-            let parentVC = self.parentViewController!.parentViewController as! TabBarViewController
+        if let parentVC = self.parent as? TabBarViewController {
             parentVC.taskDetalViewContorller = self
         }
-                
+         
         // Do any additional setup after loading the view.
-        self.ScrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: 768, height: 1024))
-        
-        self.ScrollView.contentSize = CGSize.init(width: 768, height: 1400)
-        self.ScrollView.delegate = self
+        ScrollView.translatesAutoresizingMaskIntoConstraints = false
+//        ScrollView.contentSize = CGSize.init(width: _DEVICE_WIDTH, height: _DEVICE_HEIGHT)
+        ScrollView.delegate = self
         
         self.view.addSubview(self.ScrollView)
         
         initTask()
+        
+        NSLayoutConstraint.activate([
+            ScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            ScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            ScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: -40),
+            ScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+        ])
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.self.parentViewController!.parentViewController!.view.removeActivityIndicator()
+    @objc func parentScrollEnable() {
+        if displaySubViewTag == _TASKDETAILVIEWTAG {
+            ScrollView.isScrollEnabled = true
+        }
+    }
+    
+    @objc func parentScrollDisable() {
+        if displaySubViewTag == _TASKDETAILVIEWTAG {
+            ScrollView.isScrollEnabled = false
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async(execute: {
+            self.self.parent?.view.removeActivityIndicator()
         })
         
         self.view.disableAllFunsForView(self.view)
     }
-    /*
-    override func viewWillDisappear(animated: Bool) {
-        if !inspCatAdded {
-            for idx in 0...(Cache_Task_On?.inspSections.count)!-1 {
-                self.startTask(idx)
-            }
-        }
-    }
-    */  
-    override func viewWillAppear(animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool) {
         refreshCameraIcon()
-        
         self.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
         if displaySubViewTag == _TASKINSPCATVIEWTAG {
             self.updateNaviBarMenu(backBtnText, leftBarActionName: "backToTaskDetail", rightBarTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), rightBarActionName: "updateTask:")
@@ -64,23 +79,31 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
             self.updateNaviBarMenu(rightBarTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), rightBarActionName: "updateTask:")
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
     }
     
-    func updateNaviBarMenu(leftBarTitle:String = "Task Search", leftBarActionName:String = "backTaskSearch:", rightBarTitle:String, rightBarActionName:String) {
-        let myParentTabVC = self.parentViewController?.parentViewController as! TabBarViewController
-        
-        if leftBarTitle == "Task Search" {
-            //myParentTabVC.navigationItem.leftBarButtonItem = myParentTabVC.navigationItem.backBarButtonItem
-            myParentTabVC.setLeftBarItem("< \(MylocalizedString.sharedLocalizeManager.getLocalizedString(leftBarTitle))",actionName: leftBarActionName)
-            myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
-        }else {
-            myParentTabVC.setLeftBarItem("< "+leftBarTitle,actionName: leftBarActionName)
-            myParentTabVC.navigationItem.title = inspCatText
+    func updateNaviBarMenu(_ leftBarTitle:String = "Task Search", leftBarActionName:String = "backTaskSearch:", rightBarTitle:String, rightBarActionName:String) {
+        if let myParentTabVC = self.parent as? TabBarViewController {
+            if leftBarTitle == "Task Search" {
+                //myParentTabVC.navigationItem.leftBarButtonItem = myParentTabVC.navigationItem.backBarButtonItem
+                myParentTabVC.setLeftBarItem("< \(MylocalizedString.sharedLocalizeManager.getLocalizedString(leftBarTitle))",actionName: leftBarActionName)
+                myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form")
+            }else {
+                myParentTabVC.setLeftBarItem("< "+leftBarTitle,actionName: leftBarActionName)
+                myParentTabVC.navigationItem.title = inspCatText
+            }
+            
+            if self.view.disableFuns(self.view) {
+                myParentTabVC.navigationItem.rightBarButtonItem = nil
+            } else {
+                myParentTabVC.setRightBarItem(rightBarTitle, actionName: rightBarActionName)
+            }
         }
-        
-        if !self.view.disableFuns(self.view) {
-            myParentTabVC.setRightBarItem(rightBarTitle, actionName: rightBarActionName)
+    }
+    
+    func updateNavigationTitle(title: String) {
+        if let myParentTabVC = self.parent as? TabBarViewController {
+            myParentTabVC.navigationItem.title = title
         }
     }
 
@@ -92,28 +115,29 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "CreateTaskSegueFromTaskForm" {
             
-            let destVC = segue.destinationViewController as! POSearchViewController
-            destVC.pVC = self
-            
-            let taskDetailView = self.view.viewWithTag(_TASKDETAILVIEWTAG) as! TaskDetailViewInput
-            destVC.vendorName = taskDetailView.vendorInput.text!
-            destVC.vendorLocCode = taskDetailView.vendorLocInput.text!
-            
-            if taskDetailView.poItems.count > 0 {
-                let poItem = taskDetailView.poItems[0]
-                destVC.styleNo = poItem.styleNo!
-                
-                destVC.poSelectedItems = taskDetailView.poItems
+            if let destVC = segue.destination.children.first as? POSearchViewController {
+                destVC.pVC = self
+
+                let taskDetailView = self.view.viewWithTag(_TASKDETAILVIEWTAG) as! TaskDetailViewInput
+                destVC.vendorName = taskDetailView.vendorInput.text!
+                destVC.vendorLocCode = taskDetailView.vendorLocInput.text!
+
+                if taskDetailView.poItems.count > 0 {
+                    let poItem = taskDetailView.poItems[0]
+                    destVC.styleNo = poItem.styleNo!
+
+                    destVC.poSelectedItems = taskDetailView.poItems
+                }
             }
-        }else if segue.identifier == "DefectListFromInspectItemSegue" {
+        } else if segue.identifier == "DefectListFromInspectItemSegue" {
             
-            let destVC = segue.destinationViewController as! InspectionDefectList
+            let destVC = segue.destination as! InspectionDefectList
             let inspectionItem = sender as! InputModeICMaster
             
             destVC.inspItem = inspectionItem
@@ -121,31 +145,31 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
         
     }
     
-    @IBAction func menuButton(sender: UIBarButtonItem) {
+    @IBAction func menuButton(_ sender: UIBarButtonItem) {
         NSLog("Toggle Menu in Scroll-Container")
         
-        NSNotificationCenter.defaultCenter().postNotificationName("toggleMenu", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "toggleMenu"), object: nil)
     }
 
-    @IBAction func startTaskMenuButton(sender: UIBarButtonItem) {
+    @IBAction func startTaskMenuButton(_ sender: UIBarButtonItem) {
         //let ScreenVC = ICScreenOneViewController()
         //self.presentViewController(ScreenVC, animated: true, completion: nil)
         //self.performSegueWithIdentifier("InptCategoryDetailSegue", sender: self)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollViewOffset = scrollView.contentOffset.y
     }
     
-    func scrollToPosition(offset:CGFloat) {
+    func scrollToPosition(_ offset:CGFloat) {
         self.ScrollView.setContentOffset(CGPoint(x: 0, y: offset), animated: false)
     }
     
     func initTask(){
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.view.showActivityIndicator()
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 //Retriving Task Data
                 let taskDataHelper = TaskDataHelper()
                 Cache_Task_On = taskDataHelper.getTaskDetailByTask(Cache_Task_On!)
@@ -168,7 +192,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                     Cache_Thumb_Path = Cache_Task_Path!+"/"+_THUMBSPHYSICALNAME
                 }else{
                     print("No Inspection Category In Selected Task!")
-                    self.parentViewController?.navigationController!.popViewControllerAnimated(true)
+                    self.navigationController!.popViewController(animated: true)
                 }
                 
                 //Init sub view TaskDetail
@@ -177,60 +201,29 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 taskDetailView.tag = _TASKDETAILVIEWTAG
                 
                 self.ScrollView.addSubview(taskDetailView)
-                
-                /*
-                dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
-                    
-                    //Init Task Detail
-                    let inspectionView = InspectionViewInput.loadFromNibNamed("InspectionView")
-                    inspectionView?.tag = _TASKINSPCATVIEWTAG
-                    inspectionView?.pVC = self
-                    self.inspCatAdded = true
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.ScrollView.addSubview(inspectionView!)
-                        self.ScrollView.bringSubviewToFront(self.ScrollView.viewWithTag(_TASKDETAILVIEWTAG)!)
-                    })
-                }
-                */
-                /*
-                //Init Task Detail
-                let inspectionView = InspectionViewInput.loadFromNibNamed("InspectionView")
-                inspectionView?.tag = _TASKINSPCATVIEWTAG
-                inspectionView?.pVC = self
-                
-                self.ScrollView.addSubview(inspectionView!)
-                self.inspCatAdded = true
-                self.ScrollView.bringSubviewToFront(self.ScrollView.viewWithTag(_TASKDETAILVIEWTAG)!)
-                */
- 
                 self.view.removeActivityIndicator()
                 
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadAllPhotosFromDB", object: nil, userInfo: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil, userInfo: nil)
             })
         })
     }
     
-    func startTask(currentPage:Int = 0) {
+    func startTask(_ currentPage:Int = 0) {
         
         if !inspCatAdded {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.view.showActivityIndicator()
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.view.removeActivityIndicator()
                     
-                    let inspectionView = InspectionViewInput.loadFromNibNamed("InspectionView")
-                    inspectionView?.tag = _TASKINSPCATVIEWTAG
-                    inspectionView?.pVC = self
-                    
-                    self.ScrollView.addSubview(inspectionView!)
-                    
-                    self.inspCatAdded = true
-                    
-                    inspectionView?.updateSectionHeader(currentPage)
-                    inspectionView?.scrollToPosition(currentPage, animation: false)
-                    
+                    if let inspectionView = InspectionViewInput.loadFromNibNamed("InspectionView") {
+                        inspectionView.tag = _TASKINSPCATVIEWTAG
+                        inspectionView.pVC = self
+                        inspectionView.currentPage = currentPage
+                        self.ScrollView.addSubview(inspectionView)
+                        self.inspCatAdded = true
+                    }
                     self.updateNaviBarMenu(self.backBtnText, leftBarActionName: "backToTaskDetail", rightBarTitle: MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), rightBarActionName: "updateTask:")
                     
                     self.ScrollView.contentOffset.y = 0
@@ -239,7 +232,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                     
                     self.displaySubViewTag = _TASKINSPCATVIEWTAG
                     
-                    self.ScrollView.scrollEnabled = false
+                    self.ScrollView.isScrollEnabled = false
                 })
             })
             
@@ -247,10 +240,10 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
             
             if let inspectionView = self.ScrollView.viewWithTag(_TASKINSPCATVIEWTAG) {
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.view.showActivityIndicator()
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.view.removeActivityIndicator()
                 
                         (inspectionView as! InspectionViewInput).updateSectionHeader(currentPage)
@@ -264,7 +257,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                 
                         self.displaySubViewTag = _TASKINSPCATVIEWTAG
                 
-                        self.ScrollView.scrollEnabled = false
+                        self.ScrollView.isScrollEnabled = false
                     })
                 })
             }
@@ -275,15 +268,15 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
         if let tastDetailView = view.viewWithTag(_TASKDETAILVIEWTAG) {
             let inspCatView = (tastDetailView as! TaskDetailViewInput).inptCatWrapperView
             
-            inspCatView.subviews.forEach({
+            inspCatView?.subviews.forEach({
                 if $0.classForCoder == InptCategoryCell.classForCoder() {
                     let icSecs = self.categoriesDetail
                     var itemsCount = 0
+                    let inspectionCategoryCell = $0 as? InptCategoryCell
                     
                     for icSec in icSecs {
                         
-                        //if icSec.inspSection?.sectionNameEn == ($0 as! InptCategoryCell).inptCatButton.titleLabel?.text || icSec.inspSection?.sectionNameCn == ($0 as! InptCategoryCell).inptCatButton.titleLabel?.text {
-                        if ($0 as! InptCategoryCell).inptCatButton.titleLabel?.text?.rangeOfString(icSec.inspSection!.sectionNameEn!) != nil || ($0 as! InptCategoryCell).inptCatButton.titleLabel?.text?.rangeOfString(icSec.inspSection!.sectionNameCn!) != nil {
+                        if inspectionCategoryCell?.sectionId == icSec.categoryIdx {
                             let resultSetValues = ($0 as! InptCategoryCell).resultSetValues
                             for resultSetValue in resultSetValues{
                                 resultSetValue.clear()
@@ -296,7 +289,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                                 for inputCell in inputCells {
                                     itemsCount += 1
                                     for resultSetValue in resultSetValues{
-                                        if resultSetValue.valueName.lowercaseString.rangeOfString((inputCell.cellResultInput.text?.lowercaseString)!) != nil {
+                                        if resultSetValue.valueName.lowercased().range(of: (inputCell.cellResultInput.text?.lowercased())!) != nil {
                                             resultSetValue.resultCount += 1
                                             break
                                         }
@@ -308,7 +301,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                                 for inputCell in inputCells {
                                     itemsCount += 1
                                     for resultSetValue in resultSetValues{
-                                        if resultSetValue.valueName.lowercaseString.rangeOfString((inputCell.cellResultInput.text?.lowercaseString)!) != nil {
+                                        if resultSetValue.valueName.lowercased().range(of: (inputCell.cellResultInput.text?.lowercased())!) != nil {
                                             resultSetValue.resultCount += 1
                                             break
                                         }
@@ -320,7 +313,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                                 for inputCell in inputCells {
                                     itemsCount += 1
                                     for resultSetValue in resultSetValues{
-                                        if resultSetValue.valueName.lowercaseString.rangeOfString((inputCell.cellResultInput.text?.lowercaseString)!) != nil {
+                                        if resultSetValue.valueName.lowercased().range(of: (inputCell.cellResultInput.text?.lowercased())!) != nil {
                                             resultSetValue.resultCount += 1
                                             break
                                         }
@@ -332,7 +325,7 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                                 for inputCell in inputCells {
                                     itemsCount += 1
                                     for resultSetValue in resultSetValues{
-                                        if resultSetValue.valueName.lowercaseString.rangeOfString((inputCell.subResultInput.text?.lowercaseString)!) != nil {
+                                        if resultSetValue.valueName.lowercased().range(of: (inputCell.subResultInput.text?.lowercased())!) != nil {
                                             resultSetValue.resultCount += 1
                                             break
                                         }
@@ -341,9 +334,9 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                             default:break
                             }
                             
-                            ($0 as! InptCategoryCell).updateSummaryResultValues(resultSetValues)
-                            let title = _ENGLISH ? icSec.inspSection!.sectionNameEn:icSec.inspSection!.sectionNameCn
-                            ($0 as! InptCategoryCell).inptCatButton.setTitle(title!+"(\(itemsCount))", forState: UIControlState.Normal)
+                            inspectionCategoryCell?.updateSummaryResultValues(resultSetValues)
+                            let title = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: icSec.inspSection!.sectionNameEn, .zh: icSec.inspSection!.sectionNameCn, .fr: icSec.inspSection!.sectionNameFr])
+                            inspectionCategoryCell?.inptCatButton.setTitle(title+"(\(itemsCount))", for: UIControl.State())
                         }
                     }
                 }
@@ -366,11 +359,11 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                             if photoDataHelper.existPhotoByInspItem(inputCell.taskInspDataRecordId!, dataType: PhotoDataType(caseId: "INSPECT").rawValue) || inputCell.inspPhotos.count>0 {
                                 
                                 if let image = UIImage(named: "taken_photo_icon") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }else{
                                 if let image = UIImage(named: "take_photo") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }
                         }
@@ -383,11 +376,11 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                             if photoDataHelper.existPhotoByInspItem(inputCell.taskInspDataRecordId!, dataType: PhotoDataType(caseId: "INSPECT").rawValue) || inputCell.inspPhotos.count>0 {
                                 
                                 if let image = UIImage(named: "taken_photo_icon") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }else{
                                 if let image = UIImage(named: "take_photo") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }
                         }
@@ -400,11 +393,11 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                             if photoDataHelper.existPhotoByInspItem(inputCell.taskInspDataRecordId!, dataType: PhotoDataType(caseId: "INSPECT").rawValue) || inputCell.inspPhotos.count>0 {
                                 
                                 if let image = UIImage(named: "taken_photo_icon") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }else{
                                 if let image = UIImage(named: "take_photo") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }
                         }
@@ -417,11 +410,11 @@ class TaskDetailsViewController: PopoverMaster, UIScrollViewDelegate {
                             if photoDataHelper.existPhotoByInspItem(inputCell.taskInspDataRecordId!, dataType: PhotoDataType(caseId: "INSPECT").rawValue) || inputCell.inspPhotos.count>0 {
                                     
                                 if let image = UIImage(named: "taken_photo_icon") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }else{
                                 if let image = UIImage(named: "take_photo") {
-                                    inputCell.takePhotoIcon.setImage(image, forState: .Normal)
+                                    inputCell.takePhotoIcon.setImage(image, for: UIControl.State())
                                 }
                             }
                         }

@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class TaskTableViewCell: UITableViewCell {
 
@@ -76,59 +100,59 @@ class TaskTableViewCell: UITableViewCell {
         self.setButtonCornerRadius(self.showAllPOLines)
         self.taskStatusDescLabel.layer.masksToBounds = true
         self.taskStatusDescLabel.layer.cornerRadius = 5
-        self.taskDeleteBtn.hidden = true
+        self.taskDeleteBtn.isHidden = true
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
         
     }
     
-    @IBAction func showAllPOLinesOnClick(sender: UIButton) {
+    @IBAction func showAllPOLinesOnClick(_ sender: UIButton) {
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,150 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)//CGSizeMake(320,150 + _NAVIBARHEIGHT)
+//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
         popoverContent.dataType = _POPOVERPOITEMTYPE
         popoverContent.selectedValue = poListText.text!//"hello world,new world,"
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.navigationBar.tintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRectMake(0,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
     }
 
-    @IBAction func showAllShipWinDatesOnClick(sender: UIButton) {
+    @IBAction func showAllShipWinDatesOnClick(_ sender: UIButton) {
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,150 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)//CGSizeMake(320,150 + _NAVIBARHEIGHT)
+//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
         popoverContent.dataType = _POPOVERPOITEMTYPESHIPWIN
         popoverContent.selectedValue = shipWinText.text!
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.navigationBar.tintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRectMake(0,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     
     
     
-    @IBAction func taskDeleteButton(sender: UIButton) {
+    @IBAction func taskDeleteButton(_ sender: UIButton) {
         
         self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Task?"),parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
             
@@ -139,14 +163,14 @@ class TaskTableViewCell: UITableViewCell {
                 if self.parentTaskSearchVC?.taskSet.count>0 {
                     for idx in 0...self.parentTaskSearchVC!.taskSet.count {
                         if self.parentTaskSearchVC?.taskSet[idx].taskId == self.taskId {
-                            self.parentTaskSearchVC?.taskSet.removeAtIndex(idx)
+                            self.parentTaskSearchVC?.taskSet.remove(at: idx)
                             break
                         }
                     }
                 
                     for idx in 0...self.parentTaskSearchVC!.tasks.count {
                         if self.parentTaskSearchVC?.tasks[idx].taskId == self.taskId {
-                            self.parentTaskSearchVC?.tasks.removeAtIndex(idx)
+                            self.parentTaskSearchVC?.tasks.remove(at: idx)
                             break
                         }
                     }
@@ -163,74 +187,74 @@ class TaskTableViewCell: UITableViewCell {
         })
     }
     
-    @IBAction func showTaskStatusDescOnClick(sender: UIButton) {
+    @IBAction func showTaskStatusDescOnClick(_ sender: UIButton) {
         
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,150 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)//CGSizeMake(320,150 + _NAVIBARHEIGHT)
+//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
         popoverContent.dataType = _POPOVERTASKSTATUSDESC
         popoverContent.selectedValue = dataRefuseDesc//(Cache_Task_On?.dataRefuseDesc)!
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.navigationBar.tintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRectMake(0,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
 
     }
     
-    @IBAction func showProdDescOnClick(sender: UIButton) {
+    @IBAction func showProdDescOnClick(_ sender: UIButton) {
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,150 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)//CGSizeMake(320,150 + _NAVIBARHEIGHT)
+//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
         popoverContent.dataType = _POPOVERPRODDESC
         popoverContent.selectedValue = prodDesc
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.navigationBar.tintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRectMake(0,sender.frame.minY - sender.frame.size.height,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     
-    @IBAction func showOpdRsdOnClick(sender: UIButton) {
+    @IBAction func showOpdRsdOnClick(_ sender: UIButton) {
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,150 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)//CGSizeMake(320,150 + _NAVIBARHEIGHT)
+//        popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
         popoverContent.dataType = _POPOVERPOPDRSD
         popoverContent.selectedValue = vendorLocationText.text!
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.navigationBar.tintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
         popover!.sourceView = sender
-        popover!.sourceRect = CGRectMake(0,sender.frame.minY - sender.frame.size.height,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
     }
     
-    func clearAllFilesTaskImages(taskFderName:String){
+    func clearAllFilesTaskImages(_ taskFderName:String){
         /*let fileManager = NSFileManager.defaultManager()
         let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first! as NSURL
         let documentsPath = documentsUrl.path
         */
-        let filemgr = NSFileManager.defaultManager()
+        let filemgr = FileManager.default
         //let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         //print("path: \(dirPaths)")
         //let dbDir = dirPaths[0] as String
@@ -240,24 +264,24 @@ class TaskTableViewCell: UITableViewCell {
         let taskThumbFilePath = taskFilePath+"/Thumbs"
         do {
             
-            let fileNames = try filemgr.contentsOfDirectoryAtPath("\(taskFilePath)")
+            let fileNames = try filemgr.contentsOfDirectory(atPath: "\(taskFilePath)")
             print("all files in cache: \(fileNames)")
             for fileName in fileNames {
                     
                 if (fileName.hasSuffix(".jpg"))
                 {
                     let filePathName = "\(taskFilePath)/\(fileName)"
-                    try filemgr.removeItemAtPath(filePathName)
+                    try filemgr.removeItem(atPath: filePathName)
                 }
             }
                 
-            let fileThumbs = try filemgr.contentsOfDirectoryAtPath("\(taskThumbFilePath)")
+            let fileThumbs = try filemgr.contentsOfDirectory(atPath: "\(taskThumbFilePath)")
             for fileName in fileThumbs {
                 
                 if (fileName.hasSuffix(".jpg"))
                 {
                     let filePathName = "\(taskThumbFilePath)/\(fileName)"
-                    try filemgr.removeItemAtPath(filePathName)
+                    try filemgr.removeItem(atPath: filePathName)
                 }
             }
         } catch {

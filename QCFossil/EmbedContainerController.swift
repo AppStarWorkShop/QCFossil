@@ -21,10 +21,9 @@ class EmbedContainerController: UIViewController {
             2. _SEGUEIDENTIFIERTASKDETAIL
         */
         self.currentSegueIdentifier = _SEGUEIDENTIFIERTASKSEARCH
-        self.performSegueWithIdentifier(self.currentSegueIdentifier, sender: nil)
+        self.performSegue(withIdentifier: self.currentSegueIdentifier, sender: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EmbedContainerController.switchToTaskSearch), name: "switchToTaskSearch", object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(EmbedContainerController.switchToTaskSearch), name: NSNotification.Name(rawValue: "switchToTaskSearch"), object: nil)
         //addClearDropdownListTapGesture()
     }
     
@@ -55,7 +54,7 @@ class EmbedContainerController: UIViewController {
         return false
     }
     */
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         print("Remove Observer From EmbedContainerVC Now")
         
         //NSNotificationCenter.defaultCenter().removeObserver(self, name: "switchToTaskSearch", object: nil)
@@ -69,17 +68,17 @@ class EmbedContainerController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         //self.view.subviews.forEach({ $0.removeFromSuperview() })
         
-        let destVC = segue.destinationViewController as! UINavigationController
-        let destVCChildVC = destVC.childViewControllers[0]
+        let destVC = segue.destination as! UINavigationController
+        let destVCChildVC = destVC.children[0]
         
         var added = false
-        for childVC in self.childViewControllers {
-            let childChildVC = childVC.childViewControllers[0]
+        for childVC in self.children {
+            let childChildVC = childVC.children[0]
                 
             if childChildVC.classForCoder == destVCChildVC.classForCoder {
                 added = true
@@ -87,17 +86,24 @@ class EmbedContainerController: UIViewController {
         }
         
         if !added {
-            self.addChildViewController(segue.destinationViewController)
+            self.addChild(segue.destination)
                 
-            let destView = segue.destinationViewController.view
-            destView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-            destView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-            self.view.addSubview(destView)
-            segue.destinationViewController.didMoveToParentViewController(self)
+            if let destView = segue.destination.view {
+                destView.autoresizingMask = UIView.AutoresizingMask.flexibleWidth
+                destView.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview(destView)
+                NSLayoutConstraint.activate([
+                    destView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    destView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    destView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
+                    destView.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
+                ])
                 
+                segue.destination.didMove(toParent: self)
+            }
         }else{
-            for childVC in self.childViewControllers {
-                let childChildVC = childVC.childViewControllers[0]
+            for childVC in self.children {
+                let childChildVC = childVC.children[0]
                 
                 if childChildVC.classForCoder == destVCChildVC.classForCoder {
                     self.view.addSubview(childVC.view)
@@ -135,22 +141,21 @@ class EmbedContainerController: UIViewController {
         }
     }
     
-    func switchSegue(segueIdentifier:String) {
+    func switchSegue(_ segueIdentifier:String) {
         //NSLog("Switch Segue: %@",segueIdentifier)
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.view.showActivityIndicator("Loading")
             
-            let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 1 * Int64(NSEC_PER_SEC))
-            dispatch_after(time, dispatch_get_main_queue()) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.currentSegueIdentifier = segueIdentifier
-                self.performSegueWithIdentifier(self.currentSegueIdentifier, sender: nil)
+                self.performSegue(withIdentifier: self.currentSegueIdentifier, sender: nil)
             }
         })
     }
     
-    func switchToTaskSearch() {
+    @objc func switchToTaskSearch() {
         self.currentSegueIdentifier = _SEGUEIDENTIFIERTASKSEARCH
-        self.performSegueWithIdentifier(self.currentSegueIdentifier, sender: nil)
+        self.performSegue(withIdentifier: self.currentSegueIdentifier, sender: nil)
     }
     
 }

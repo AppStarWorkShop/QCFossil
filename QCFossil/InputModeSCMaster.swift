@@ -22,16 +22,18 @@ class InputModeSCMaster:UIView {
     var optInspPostsMaster = [InspSectionPosition]()
     var optInspElms = [InspSectionElement]()
     var optInspPosts = [InspSectionPosition]()
+    var resultKeyValues = [String:Int]()
     
-    func initSegmentControlView(inputMode:String, apyToAllBtn:UIButton) {
+    func initSegmentControlView(_ inputMode:String, apyToAllBtn:UIButton) {
         let taskDataHelper = TaskDataHelper()
-        let otherInspSecTmp = Cache_Task_On?.inspSections.filter({$0.inputModeCode == inputMode})
-        var otherInspSec = otherInspSecTmp
+//        let otherInspSecTmp = Cache_Task_On?.inspSections.filter({$0.inputModeCode == inputMode})
+        var otherInspSec = Cache_Task_On?.inspSections
         
         if otherInspSec!.count > 0 {
             
             resultSetId = otherInspSec![0].resultSetId!
             resultValues = taskDataHelper.getResultSetValueBySetId(resultSetId)!
+            resultKeyValues = taskDataHelper.getResultKeyValueBySetId(resultSetId)!
             
             if resultValues.count>0 {
                 
@@ -42,78 +44,82 @@ class InputModeSCMaster:UIView {
                 segmentedControl.selectedSegmentIndex = 0
                 segmentedControl.layer.cornerRadius = 5.0
                 
-                let font = UIFont.systemFontOfSize(16)
-                segmentedControl.setTitleTextAttributes([NSFontAttributeName: font],
-                    forState: UIControlState.Normal)
+                let font = UIFont.boldSystemFont(ofSize: 12)
+                segmentedControl.setTitleTextAttributes([NSAttributedString.Key(rawValue: convertFromNSAttributedStringKey(NSAttributedString.Key.font)): font],
+                    for: UIControl.State())
                 
                 segmentedControl.backgroundColor = _FOSSILYELLOWCOLOR
                 segmentedControl.tintColor = _FOSSILBLUECOLOR
+                UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
+                let frame = UIScreen.main.bounds
+                segmentedControl.frame = CGRect(x: frame.minX + 5, y: frame.minY + 20,
+                                                width: frame.width*2/3, height: 40)
                 
-                let frame = UIScreen.mainScreen().bounds
-                segmentedControl.frame = CGRectMake(frame.minX + 5, frame.minY + 24,
-                    frame.width*2/3, 30)
-                
-                segmentedControl.addTarget(self, action: #selector(InputModeSCMaster.resultSelect(_:)), forControlEvents:.ValueChanged)
+                segmentedControl.addTarget(self, action: #selector(InputModeSCMaster.resultSelect(_:)), for:.valueChanged)
                 self.addSubview(segmentedControl)
                 
-                apyToAllBtn.frame = CGRectMake(segmentedControl.frame.size.width+20, frame.minY + 24, 120, 30)
-                apyToAllBtn.addTarget(self, action: Selector("applyRstToAll"), forControlEvents: UIControlEvents.TouchUpInside)
+                apyToAllBtn.frame = CGRect(x: segmentedControl.frame.size.width+10, y: frame.minY + 20, width: 135, height: 40)
                 self.addSubview(apyToAllBtn)
                 
-                apyToAllBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"), forState: UIControlState.Normal )
+                apyToAllBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"), for: UIControl.State() )
                 setButtonCornerRadius(apyToAllBtn)
             }
             
             if self.idx < 1 {
-                let moveRightBtn = UIButton()
+                let moveRightBtn = CustomButton()
                 let moveRightIcon = UIImage.init(named: "arrow_icon_right")
-                moveRightBtn.frame = CGRectMake(705, 0, 80, 80)
-                moveRightBtn.setImage(moveRightIcon, forState: UIControlState.Normal)
+                moveRightBtn.frame = CGRect(x: _DEVICE_WIDTH - 60, y: 0, width: 80, height: 80)
+                moveRightBtn.setImage(moveRightIcon, for: UIControl.State())
                 moveRightBtn.tintColor = _FOSSILBLUECOLOR
-                moveRightBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToRight(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                moveRightBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToRight(_:)), for: UIControl.Event.touchUpInside)
                 self.addSubview(moveRightBtn)
                 
-            }else if self.idx < 3 {
-                let moveLeftBtn = UIButton()
+            }else if self.idx < (otherInspSec?.count ?? 1) - 1 {
+                let moveLeftBtn = CustomButton()
                 let moveLeftIcon = UIImage.init(named: "arrow_icon_left")
-                moveLeftBtn.frame = CGRectMake(645, 0, 80, 80)
-                moveLeftBtn.setImage(moveLeftIcon, forState: UIControlState.Normal)
+                moveLeftBtn.frame = CGRect(x: _DEVICE_WIDTH - 115, y: 0, width: 80, height: 80)
+                moveLeftBtn.setImage(moveLeftIcon, for: UIControl.State())
                 moveLeftBtn.tintColor = _FOSSILBLUECOLOR
-                moveLeftBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToLeft(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                moveLeftBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToLeft(_:)), for: UIControl.Event.touchUpInside)
                 self.addSubview(moveLeftBtn)
                 
-                let moveRightBtn = UIButton()
+                let moveRightBtn = CustomButton()
                 let moveRightIcon = UIImage.init(named: "arrow_icon_right")
-                moveRightBtn.frame = CGRectMake(705, 0, 80, 80)
-                moveRightBtn.setImage(moveRightIcon, forState: UIControlState.Normal)
+                moveRightBtn.frame = CGRect(x: _DEVICE_WIDTH - 60, y: 0, width: 80, height: 80)
+                moveRightBtn.setImage(moveRightIcon, for: UIControl.State())
                 moveRightBtn.tintColor = _FOSSILBLUECOLOR
-                moveRightBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToRight(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                moveRightBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToRight(_:)), for: UIControl.Event.touchUpInside)
                 self.addSubview(moveRightBtn)
                 
-            }else{
-                let moveLeftBtn = UIButton()
+            }else {
+                let moveLeftBtn = CustomButton()
                 let moveLeftIcon = UIImage.init(named: "arrow_icon_left")
-                moveLeftBtn.frame = CGRectMake(645, 0, 80, 80)
-                moveLeftBtn.setImage(moveLeftIcon, forState: UIControlState.Normal)
+                moveLeftBtn.frame = CGRect(x: _DEVICE_WIDTH - 115, y: 0, width: 80, height: 80)
+                moveLeftBtn.setImage(moveLeftIcon, for: UIControl.State())
                 moveLeftBtn.tintColor = _FOSSILBLUECOLOR
-                moveLeftBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToLeft(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                moveLeftBtn.addTarget(self, action: #selector(InputModeSCMaster.moveToLeft(_:)), for: UIControl.Event.touchUpInside)
                 self.addSubview(moveLeftBtn)
             }
         }
     }
     
-    func moveToLeft(sender: UIButton) {
+    @objc func moveToLeft(_ sender: UIButton) {
         let parentView = (sender.parentVC as! TaskDetailsViewController).ScrollView.viewWithTag(_TASKINSPCATVIEWTAG)
         (parentView as! InspectionViewInput).scrollToPosition(self.idx-1)
     }
     
-    func moveToRight(sender: UIButton) {
+    @objc func moveToRight(_ sender: UIButton) {
         let parentView = (sender.parentVC as! TaskDetailsViewController).ScrollView.viewWithTag(_TASKINSPCATVIEWTAG)
         (parentView as! InspectionViewInput).scrollToPosition(self.idx+1)
     }
 
-    func resultSelect(sender: UISegmentedControl) {
-        resultForAll = sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)!
+    @objc func resultSelect(_ sender: UISegmentedControl) {
+        resultForAll = sender.titleForSegment(at: sender.selectedSegmentIndex)!
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

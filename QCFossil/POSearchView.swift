@@ -19,7 +19,7 @@ class POSearchView: UIView {
     }
     */
 
-    @IBAction func okButton(sender: UIButton) {
-        parentViewController.dismissViewControllerAnimated(true, completion:nil)
+    @IBAction func okButton(_ sender: UIButton) {
+        parentViewController.dismiss(animated: true, completion:nil)
     }
 }

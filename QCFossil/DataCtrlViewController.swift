@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate, SSZipArchiveDelegate, UITableViewDelegate, UITableViewDataSource {
+class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDownloadDelegate, SSZipArchiveDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var backupListTableView: UITableView!
     @IBOutlet weak var loginUserLabel: UILabel!
@@ -34,15 +34,16 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     @IBOutlet weak var backupHistoryLabel: UILabel!
     @IBOutlet weak var upperLine: UILabel!
     @IBOutlet weak var downLine: UILabel!
-
-    typealias CompletionHandler = (obj:AnyObject?, success: Bool?) -> Void
+    @IBOutlet weak var dataControlStatusDetailButton: UIButton!
+    
+    typealias CompletionHandler = (_ obj:AnyObject?, _ success: Bool?) -> Void
     var filePath = NSHomeDirectory() + "/Documents"
     var zipPath5 = NSHomeDirectory() + "/task.zip"
     var buffer:NSMutableData = NSMutableData()
     var expectedContentLength = 0
-    var bgSession: NSURLSession?
-    var fgSession: NSURLSession?
-    var sessionDownloadTask: NSURLSessionDownloadTask?
+    var bgSession: Foundation.URLSession?
+    var fgSession: Foundation.URLSession?
+    var sessionDownloadTask: URLSessionDownloadTask?
     var backupFileList = [BackupFile]()
     var selectedBackupFile:BackupFile!
     var pWInput:UITextField!
@@ -50,6 +51,8 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     let typeBackup = "B"
     let typeRestore = "R"
     var typeNow = ""
+    let keyValueDataHelper = KeyValueDataHelper()
+    var errorMessage = ""
     
     struct BackupFile {
         var appRealse:String
@@ -64,23 +67,39 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = .white
+        }
+        
         updateLocalizedString()
         
-        var configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        //bgSession = backgroundSession
+        //fgSession = defaultSession
+        var configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 300
         configuration.timeoutIntervalForResource = 300
-        configuration.sessionSendsLaunchEvents = false
-        configuration.discretionary = true
+        configuration.sessionSendsLaunchEvents = true
+        configuration.isDiscretionary = true
         
-        fgSession = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+        fgSession = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
-        configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.pacmobile.fossilqc")
+        configuration = URLSessionConfiguration.background(withIdentifier: "com.pacmobile.fossilqc")
         configuration.timeoutIntervalForRequest = 60
         configuration.timeoutIntervalForResource = 60
         configuration.sessionSendsLaunchEvents = true
-        configuration.discretionary = true
+        configuration.isDiscretionary = true
         
-        bgSession = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+        self.dataControlStatusDetailButton.isHidden = true
+        
+        bgSession = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
         if Cache_Inspector?.appUserName == "" {
             self.view.alertView("No Login User Found!")
@@ -90,47 +109,17 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         initPage()
     
     }
-    /*
-    var defaultSession: NSURLSession {
-        struct MydefaultSession {
-            static var defaultSessionStaticSelf: DataCtrlViewController!
-            static var defaultSessionInstance: NSURLSession = {
-                
-                var configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-                configuration.timeoutIntervalForRequest = 300
-                configuration.timeoutIntervalForResource = 300
-                configuration.sessionSendsLaunchEvents = true
-                configuration.discretionary = true
-                
-                return NSURLSession(configuration: configuration, delegate: defaultSessionStaticSelf, delegateQueue: nil)
-            }()
-        }
-        MydefaultSession.defaultSessionStaticSelf = self
-        return MydefaultSession.defaultSessionInstance
+    
+    func updateDataControlStatusDetailButton(_ isHidden: Bool = false) {
+        DispatchQueue.main.async(execute: {
+            self.dataControlStatusDetailButton.isHidden = isHidden
+        })
     }
     
-    var backgroundSession: NSURLSession {
-        struct MybackgroundSession {
-            static var backgroundSessionStaticSelf: DataCtrlViewController!
-            static var backgroundSessionInstance: NSURLSession = {
-                
-                var configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.pacmobile.fossilqc.dataCtrl")
-                configuration.timeoutIntervalForRequest = 60
-                configuration.timeoutIntervalForResource = 60
-                configuration.sessionSendsLaunchEvents = true
-                configuration.discretionary = true
-                
-                return NSURLSession(configuration: configuration, delegate: backgroundSessionStaticSelf, delegateQueue: nil)
-            }()
-        }
-        MybackgroundSession.backgroundSessionStaticSelf = self
-        return MybackgroundSession.backgroundSessionInstance
-    }*/
-    
-    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
         print("All tasks are finished")
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if let completionHandler = appDelegate.backgroundSessionCompletionHandler {
             appDelegate.backgroundSessionCompletionHandler = nil
             completionHandler()
@@ -139,29 +128,28 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         print("All tasks are finished")
     }
     
-    func updateButtonsStatus(status:Bool) {
-        self.backupBtn.enabled = status
-        self.removeBtn.enabled = status
-        self.restoreBtn.enabled = status
-        self.restoreDataBtn.enabled = status
-        
-        dispatch_async(dispatch_get_main_queue(), {
+    func updateButtonsStatus(_ status:Bool) {
+        DispatchQueue.main.async(execute: {
+            self.backupBtn.isEnabled = status
+            self.removeBtn.isEnabled = status
+            self.restoreBtn.isEnabled = status
+            self.restoreDataBtn.isEnabled = status
             
-        if status {
-            self.backupBtn.backgroundColor = _FOSSILBLUECOLOR
-            self.removeBtn.backgroundColor = _FOSSILBLUECOLOR
-            self.restoreBtn.backgroundColor = _FOSSILBLUECOLOR
-            self.restoreDataBtn.backgroundColor = _FOSSILBLUECOLOR
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
-        }else{
-            self.backupBtn.backgroundColor = UIColor.grayColor()
-            self.removeBtn.backgroundColor = UIColor.grayColor()
-            self.restoreBtn.backgroundColor = UIColor.grayColor()
-            self.restoreDataBtn.backgroundColor = UIColor.grayColor()
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":false])
-        }
+            if status {
+                self.backupBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.removeBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.restoreBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.restoreDataBtn.backgroundColor = _FOSSILBLUECOLOR
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+            }else{
+                self.backupBtn.backgroundColor = UIColor.gray
+                self.removeBtn.backgroundColor = UIColor.gray
+                self.restoreBtn.backgroundColor = UIColor.gray
+                self.restoreDataBtn.backgroundColor = UIColor.gray
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
+            }
             
         })
     }
@@ -176,15 +164,15 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         self.lastDownload.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Last Restore")
         self.lastUpdate.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Last Backup")
         self.passwordLabel.text = ""
-        self.backupBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Data"), forState: UIControlState.Normal)
-        self.restoreDataBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup History List"), forState: UIControlState.Normal)
-        self.restoreBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore"), forState: UIControlState.Normal)
+        self.backupBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Data"), for: UIControl.State())
+        self.restoreDataBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup History List"), for: UIControl.State())
+        self.restoreBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore"), for: UIControl.State())
         self.lastLoginDateInput.text = Cache_Inspector?.lastLoginDate
-        self.removeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Login User Data"), forState: UIControlState.Normal)
+        self.removeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Login User Data"), for: UIControl.State())
         
-        let keyValueDataHelper = KeyValueDataHelper()
-        self.lastUpdateInput.text = keyValueDataHelper.getLastBackupDatetimeByUserId(String(Cache_Inspector?.inspectorId))
-        self.lastDownloadInput.text = keyValueDataHelper.getLastRestoreDatetimeByUserId(String(Cache_Inspector?.inspectorId))
+//        let keyValueDataHelper = KeyValueDataHelper()
+        self.lastUpdateInput.text = keyValueDataHelper.getLastBackupDatetimeByUserId(String(describing: Cache_Inspector?.inspectorId))
+        self.lastDownloadInput.text = keyValueDataHelper.getLastRestoreDatetimeByUserId(String(describing: Cache_Inspector?.inspectorId))
         self.loginUserInput.text = Cache_Inspector?.appUserName!
         
         self.view.setButtonCornerRadius(self.backupBtn)
@@ -192,23 +180,23 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         self.view.setButtonCornerRadius(self.restoreBtn)
         self.view.setButtonCornerRadius(self.clearBtn)
         self.view.setButtonCornerRadius(self.removeBtn)
-        self.activityActor.hidden = true
+        self.activityActor.isHidden = true
         
-        let path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0]
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         zipPath5 = path + "/task.zip"
-        filePath = filePath + "/\((Cache_Inspector?.appUserName?.lowercaseString)!)"
+        filePath = filePath + "/\((Cache_Inspector?.appUserName?.lowercased())!)"
         
         self.backupListTableView.delegate = self
         self.backupListTableView.dataSource = self
         self.backupListTableView.rowHeight = 120
-        self.backupListTableView.hidden = true
-        self.backupHistoryLabel.hidden = true
-        self.restoreBtn.hidden = true
-        self.upperLine.hidden = true
-        self.downLine.hidden = true
+        self.backupListTableView.isHidden = true
+        self.backupHistoryLabel.isHidden = true
+        self.restoreBtn.isHidden = true
+        self.upperLine.isHidden = true
+        self.downLine.isHidden = true
         
         self.typeNow = self.typeListBackupFiles
-        self.buffer.setData(NSMutableData())
+        self.buffer.setData(NSMutableData() as Data)
     }
     
     override func didReceiveMemoryWarning() {
@@ -222,14 +210,13 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         
     }
     
-    func zipArchiveProgressEvent(loaded: UInt64, total: UInt64) {
+    func zipArchiveProgressEvent(_ loaded: UInt64, total: UInt64) {
         print("loaded: \(loaded) total: \(total)")
         
-        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
-        //dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.global(qos: .userInitiated).async {
             let percentageUploaded = Float(loaded) / Float(total)
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 
                 self.progressBar.progress = percentageUploaded
                 
@@ -237,17 +224,17 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                 //if lroundf(100*percentageUploaded) == 100 {
                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Complete")
                     
-                    let keyValueDataHelper = KeyValueDataHelper()
-                    keyValueDataHelper.updateLastRestoreDatetime(String(Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+//                    let keyValueDataHelper = KeyValueDataHelper()
+                    self.keyValueDataHelper.updateLastRestoreDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
                     
                     
                     self.lastDownloadInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
                     self.updateButtonsStatus(true)
-                    self.backupListTableView.hidden = true
-                    self.backupHistoryLabel.hidden = true
-                    self.restoreBtn.hidden = true
-                    self.upperLine.hidden = true
-                    self.downLine.hidden = true
+                    self.backupListTableView.isHidden = true
+                    self.backupHistoryLabel.isHidden = true
+                    self.restoreBtn.isHidden = true
+                    self.upperLine.isHidden = true
+                    self.downLine.isHidden = true
                     
                 }else{
                     self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Decompressing")) \(String(lroundf(100*percentageUploaded)))%"
@@ -259,24 +246,17 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     
     //在Caches文件夹下随机创建一个文件夹，并返回路径
     func tempDestPath() -> String? {
-        var path = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0]
-        path += "/\(NSUUID().UUIDString)"
-        let url = NSURL(fileURLWithPath: path)
+        var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        path += "/\(UUID().uuidString)"
+        let url = URL(fileURLWithPath: path)
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(url, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
             
+            return url.path
         } catch {
             return nil
-            
         }
-        
-        if let path = url.path {
-            print("path:\(path)")
-            return path
-        }
-        
-        return nil
     }
     
     /*
@@ -289,38 +269,38 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     }
     */
 
-    @IBAction func MenuButton(sender: UIBarButtonItem) {
+    @IBAction func MenuButton(_ sender: UIBarButtonItem) {
         NSLog("Toggle Menu")
         
-        NSNotificationCenter.defaultCenter().postNotificationName("toggleMenu", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "toggleMenu"), object: nil)
     }
     
-    @IBAction func backupDataClick(sender: UIButton) {
-        
+    @IBAction func backupDataClick(_ sender: UIButton) {
+        updateDataControlStatusDetailButton(true)
         self.typeNow = self.typeBackup
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Data")+"?",parentVC:self, handlerFun: { (action:UIAlertAction!) in
             
             if self.backupDesc.text == "" {
-                self.errorMsg.hidden = false
+                self.errorMsg.isHidden = false
                 return
                 
             }else{
-                self.errorMsg.hidden = true
+                self.errorMsg.isHidden = true
             }
             
-            dispatch_async(dispatch_get_main_queue(), {
-                self.activityActor.hidden = false
+            DispatchQueue.main.async(execute: {
+                self.activityActor.isHidden = false
                 self.activityActor.startAnimating()
                 self.updateButtonsStatus(false)
                 self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Compressing Data...")
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.activityActor.hidden = true
+                DispatchQueue.main.async(execute: {
+                    self.activityActor.isHidden = true
                     self.activityActor.stopAnimating()
                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
                     //---------------------------- Backup Data First ------------------------------
                     //需要压缩的文件夹啊
-                    SSZipArchive.createZipFileAtPath(self.zipPath5, withContentsOfDirectory: self.filePath)
+                    SSZipArchive.createZipFile(atPath: self.zipPath5, withContentsOfDirectory: self.filePath)
                     //-----------------------------------------------------------------------------
                     
                     var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
@@ -331,38 +311,35 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                     param["app_version"] = String(_VERSION)
                     param["app_release"] = _RELEASE
                     
-                    let request = self.createBackupRequest(param, url: NSURL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
-                    let state = UIApplication.sharedApplication().applicationState
-                    
-                    if state == .Background {
-                        
-                        // background
-                        self.sessionDownloadTask = self.bgSession?.downloadTaskWithRequest(request)
-                        self.sessionDownloadTask?.resume()
-                    }
-                    else if state == .Active {
+                    let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
+                    if UIApplication.shared.applicationState == .active {
                         
                         // foreground
-                        self.sessionDownloadTask = self.fgSession?.downloadTaskWithRequest(request)
+                        self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
                         self.sessionDownloadTask?.resume()
+                    } else {
+                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                        self.updateButtonsStatus(true)
+                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                        self.updateDataControlStatusDetailButton()
                     }
                 })
             })
         })
     }
     
-    func createBackupRequest (param: [String: String], url:NSURL) -> NSURLRequest {
+    func createBackupRequest (_ param: [String: String], url:URL) -> URLRequest {
         
         let boundary = self.generateBoundaryString()
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = createBackupBodyWithParameters(param, boundary: boundary)
+        request.httpBody = createBackupBodyWithParameters(param, boundary: boundary)
         
-        return request
+        return request as URLRequest
     }
     
-    func createBackupBodyWithParameters(parameters: [String: String], boundary: String) -> NSData {
+    func createBackupBodyWithParameters(_ parameters: [String: String], boundary: String) -> Data {
         let body = NSMutableData()
         
         //if parameters != nil {
@@ -373,12 +350,12 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                 body.appendString("\(value)\r\n")
             }else{
                 
-                let url = NSURL(fileURLWithPath: value)
-                let data = NSData(contentsOfURL: url)
+                let url = URL(fileURLWithPath: value)
+                let data = try? Data(contentsOf: url)
                 
                 if data == nil {
                     self.view.alertView("No Zip File Found!")
-                    return NSMutableData()
+                    return NSMutableData() as Data
                 }
                 
                 let mimetype = mimeTypeForPath(value)
@@ -386,26 +363,26 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                 body.appendString("--\(boundary)\r\n")
                 body.appendString("Content-Disposition: form-data; name=\"\(key)\"; filename=\"task.zip\"\r\n")
                 body.appendString("Content-Type: \(mimetype)\r\n\r\n")
-                body.appendData(data!)
+                body.append(data!)
                 body.appendString("\r\n")
             }
         }
         //}
         
         body.appendString("--\(boundary)--\r\n")
-        return body
+        return body as Data
     }
     
     func generateBoundaryString() -> String {
-        return "Boundary-\(NSUUID().UUIDString)"
+        return "Boundary-\(UUID().uuidString)"
     }
     
-    func mimeTypeForPath(path: String) -> String {
+    func mimeTypeForPath(_ path: String) -> String {
         return  "application/zip"
         //return "application/x-sqlite3";
     }
     
-    func createRequest (param:String, url: NSURL) -> NSURLRequest {
+    func createRequest (_ param:String, url: URL) -> URLRequest {
         
         let boundary = self.generateBoundaryString()
         let body = NSMutableData()
@@ -415,17 +392,17 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         body.appendString("\(param)\r\n")
         body.appendString("--\(boundary)--\r\n")
         
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(url: url)
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.HTTPMethod = "POST"
-        request.timeoutInterval = 300
-        request.HTTPBody = body
-        request.HTTPShouldHandleCookies = false
+        request.httpMethod = "POST"
+        request.timeoutInterval = 60
+        request.httpBody = body as Data
+        request.httpShouldHandleCookies = false
         
-        return request
+        return request as URLRequest
     }
     
-    @IBAction func removeOnClick(sender: UIButton) {
+    @IBAction func removeOnClick(_ sender: UIButton) {
         
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Data Cleanup?"),parentVC:self, handlerFun: { (action:UIAlertAction!) in
             
@@ -435,10 +412,10 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     }
     
     func handlePwChangeBeforeRedirect() {
-        let alert = UIAlertController(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Input Your Password"), message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        let saveAction = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: .Default, handler: { action in
+        let alert = UIAlertController(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Input Your Password"), message: "", preferredStyle: UIAlertController.Style.alert)
+        let saveAction = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: .default, handler: { action in
             switch action.style{
-            case .Default:
+            case .default:
                 print("default")
                 
                 let inspectorDataHelper = InspectorDataHelper()
@@ -449,30 +426,30 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                     return
                     
                 }else{
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.view.showActivityIndicator()
                         
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             //remove file before restortion
-                            let filemgr = NSFileManager.defaultManager()
+                            let filemgr = FileManager.default
                             let taskFilePath = self.filePath
                     
                             do {
-                                if filemgr.fileExistsAtPath(taskFilePath) {
-                                    let fileNames = try filemgr.contentsOfDirectoryAtPath("\(taskFilePath)")
+                                if filemgr.fileExists(atPath: taskFilePath) {
+                                    let fileNames = try filemgr.contentsOfDirectory(atPath: "\(taskFilePath)")
                                     print("all files in folder: \(fileNames)")
                                     for fileName in fileNames {
                                         let filePathName = "\(taskFilePath)/\(fileName)"
-                                        try filemgr.removeItemAtPath(filePathName)
+                                        try filemgr.removeItem(atPath: filePathName)
                                 
                                     }
                                     //delete folder
-                                    try filemgr.removeItemAtPath(taskFilePath)
+                                    try filemgr.removeItem(atPath: taskFilePath)
                                 }
                         
                                 self.view.removeActivityIndicator()
                                 self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Suceess."), handlerFun: { action in
-                                    self.dismissViewControllerAnimated(true, completion: nil)
+                                    self.dismiss(animated: true, completion: nil)
                             
                                 })
                             } catch {
@@ -482,35 +459,35 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                     })
                 }
  
-            case .Cancel:
+            case .cancel:
                 print("cancel")
                 
-            case .Destructive:
+            case .destructive:
                 print("destructive")
                 
             }
         })
         
-        alert.addTextFieldWithConfigurationHandler(self.configurationPwInputTextField)
+        alert.addTextField(configurationHandler: self.configurationPwInputTextField)
         alert.addAction(saveAction)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func configurationPwInputTextField(textField: UITextField!) {
+    func configurationPwInputTextField(_ textField: UITextField!) {
         print("configurat hire the TextField")
         
         self.pWInput = textField!        //Save reference to the UITextField
         self.pWInput.placeholder = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Input Your Password")
-        self.pWInput.secureTextEntry = true
+        self.pWInput.isSecureTextEntry = true
         
     }
     
-    @IBAction func restoreDataOnClick(sender: UIButton) {
-        
+    @IBAction func restoreDataOnClick(_ sender: UIButton) {
+        updateDataControlStatusDetailButton(true)
         self.typeNow = self.typeListBackupFiles
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Listing Backup Files..."))"
         })
         
@@ -531,57 +508,55 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                 
             }
             param += "}"
-            param = param.stringByReplacingOccurrencesOfString(",}", withString: "}")
+            param = param.replacingOccurrences(of: ",}", with: "}")
             self.updateButtonsStatus(false)
         
-            let request = self.createRequest(param, url: NSURL(string: _DS_LISTDBBACKUP["APINAME"] as! String)!)
-            let state = UIApplication.sharedApplication().applicationState
-        
-            if state == .Background {
-            
-                // background
-                self.sessionDownloadTask = self.bgSession?.downloadTaskWithRequest(request)
-                self.sessionDownloadTask?.resume()
-            }else if state == .Active {
+            let request = self.createRequest(param, url: URL(string: _DS_LISTDBBACKUP["APINAME"] as! String)!)
+            if UIApplication.shared.applicationState == .active {
             
                 // foreground
-                self.sessionDownloadTask = self.fgSession?.downloadTaskWithRequest(request)
+                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
                 self.sessionDownloadTask?.resume()
+            } else {
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                self.updateButtonsStatus(true)
+                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.updateDataControlStatusDetailButton()
             }
     }
-    
+
     //------------------------------------- Delegate Funcs --------------------------------------------------------
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+    func URLSession(_ session: Foundation.URLSession, dataTask: URLSessionDataTask, didReceiveResponse response: URLResponse, completionHandler: (Foundation.URLSession.ResponseDisposition) -> Void) {
         
         //here you can get full lenth of your content
         expectedContentLength = Int(response.expectedContentLength)
         print("expectedContentLength: \(expectedContentLength)")
-        completionHandler(NSURLSessionResponseDisposition.Allow)
+        completionHandler(Foundation.URLSession.ResponseDisposition.allow)
     }
     
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
         print("bytesSent: \(bytesSent) totalBytesSent: \(totalBytesSent) totalBytesExpectedToSend: \(totalBytesExpectedToSend)")
         
-        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
-            let percentageUploaded = 0.9 * Float(totalBytesSent) / Float(totalBytesExpectedToSend)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let percentageUploaded = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Uploading Backup File:")) \(String(lroundf(100*percentageUploaded)))%"
                 self.progressBar.progress = percentageUploaded
             })
         }
     }
     
-    func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?) {
+    func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
         self.bgSession!.finishTasksAndInvalidate()
         self.fgSession!.finishTasksAndInvalidate()
         print("Complete, Clear Session")
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         print("下载完成")
         
-        buffer.setData(NSData.init(contentsOfURL: location)!)
+        buffer.setData(try! Data.init(contentsOf: location))
         
         if self.typeNow == self.typeRestore {
         
@@ -590,67 +565,85 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
             return
         }
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Local Data...")
         })
         
         //dispatch_async(dispatch_get_main_queue(), {
         //---------------------------- Backup Data First ------------------------------
         //需要压缩的文件夹啊
-        SSZipArchive.createZipFileAtPath(self.zipPath5, withContentsOfDirectory: self.filePath)
+        SSZipArchive.createZipFile(atPath: self.zipPath5, withContentsOfDirectory: self.filePath)
             
         //remove file before restortion
-        let filemgr = NSFileManager.defaultManager()
+        let filemgr = FileManager.default
         let taskFilePath = self.filePath //+ "/Tasks/"
             
         do {
-            if filemgr.fileExistsAtPath(taskFilePath) {
-                let fileNames = try filemgr.contentsOfDirectoryAtPath("\(taskFilePath)")
+            if filemgr.fileExists(atPath: taskFilePath) {
+                let fileNames = try filemgr.contentsOfDirectory(atPath: "\(taskFilePath)")
                 print("all files in folder: \(fileNames)")
                 for fileName in fileNames {
                     let filePathName = "\(taskFilePath)/\(fileName)"
-                    try filemgr.removeItemAtPath(filePathName)
+                    try filemgr.removeItem(atPath: filePathName)
                     
                 }
                 //delete folder
-                try filemgr.removeItemAtPath(taskFilePath)
+                try filemgr.removeItem(atPath: taskFilePath)
             }
                 
         } catch {
             print("Could not clear temp folder: \(error)")
-            self.updateButtonsStatus(true)
+            let _error = error as NSError
+            self.errorMessage = "\(_error.localizedDescription ?? "" )"
+            self.updateDataControlStatusDetailButton()
         }
             
                     
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore In Progress...")
         })
         
         //begin restore
         do {
-            try SSZipArchive.unzipFileAtPath(location.path!, toDestination: self.filePath, overwrite: true, password: "", delegate: self)
-            
-            //Remove Zip File Here
-            self.removeLocalBackupZipFile()
-            
+            if try SSZipArchive.unzipFileAtPath(location.path, toDestination: self.filePath, overwrite: true, password: "", delegate: self) {
+                // Check DB version if low, then upgrade
+                let backupFile = self.selectedBackupFile
+                if (backupFile?.appVersion)! < _VERSION {
+                    let appUpgradeDataHelper = AppUpgradeDataHelper()
+                    appUpgradeDataHelper.appUpgradeCode(_VERSION, parentView: self.view, completion: { (result) in
+                        if result {
+                            self.keyValueDataHelper.updateDBVersionNum(_VERSION)
+                        }
+                    })
+                }
+                
+                //Remove Zip File Here
+                self.removeLocalBackupZipFile()
+            }
           
         } catch {
+            let _error = error as NSError
+            self.errorMessage = "\(_error.localizedDescription ?? "" )"
+            self.updateDataControlStatusDetailButton()
             
             do{
                 try SSZipArchive.unzipFileAtPath(self.zipPath5, toDestination: self.filePath, overwrite: true, password: "", delegate: self)
-                    
+                
                 //Remove Zip File Here
                 self.removeLocalBackupZipFile()
-                    
+                
             }catch{
                 print(error)
-                dispatch_async(dispatch_get_main_queue(), {
+                let _error = error as NSError
+                self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                self.updateDataControlStatusDetailButton()
+                DispatchQueue.main.async(execute: {
                     self.passwordLabel.text = "\(error)"
                 })
             }
             
             print(error)
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.passwordLabel.text = "\(error)"
             })
         }
@@ -662,15 +655,14 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     }
     
     //Download Task Process
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         print("正在下载 \(totalBytesWritten)/\(totalBytesExpectedToWrite)")
         
         print("totalBytesSent: \(totalBytesWritten) totalBytesExpectedToSend: \(totalBytesExpectedToWrite)")
-        
-        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+        DispatchQueue.global(qos: .userInitiated).async {
             let percentageUploaded = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 
                 if lroundf(100*percentageUploaded) >= 100 {
                     
@@ -698,36 +690,42 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
     }
     
     
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
         if(error != nil) {
             
-            buffer.setData(NSMutableData())
+            buffer.setData(NSMutableData() as Data)
+            var errorMsg = ""
             
-            if error?.code == NSURLErrorTimedOut {
-                let errorMsg = "The network connection was lost."
-                print("\(errorMsg)")
-                self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg))"
-                
-            }else if error?.code == NSURLErrorNotConnectedToInternet || error?.code == NSURLErrorCannotConnectToHost {
-                let errorMsg = "The internet connection appears to be offline."
-                
-                print("\(errorMsg)")
-                self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg))"
-                
-                
+            if error?._code == NSURLErrorTimedOut {
+                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue")
+                self.updateButtonsStatus(true)
+            }else if error?._code == NSURLErrorNotConnectedToInternet || error?._code == NSURLErrorCannotConnectToHost {
+                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("App is in Offline Mode and unable to proceed Data Download.")
             }else{
-                print("error: \(error!.localizedDescription), error code: \(error?.code)")
-                
-                self.passwordLabel.text = "\(error!.localizedDescription)"
+                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Network Request Failed with Unknown Reason!")
+            }
+            self.errorMessage = "\(error?.localizedDescription ?? "") with code: \(error?._code)"
+            
+            if UIApplication.shared.applicationState != .active {
+                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
             }
             
             self.updateButtonsStatus(true)
+            updateDataControlStatusDetailButton()
+            DispatchQueue.main.async(execute: {
+                self.progressBar.progress = 0
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg)
+            })
+            
+            //Remove Zip File Here
+            self.removeLocalBackupZipFile()
             
         }else if self.typeNow == self.typeListBackupFiles {
             
             do {
-                if let responseDictionary = try NSJSONSerialization.JSONObjectWithData(buffer, options: []) as? NSDictionary {
+                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
                     print("success == \(responseDictionary)")
                     
                     if responseDictionary.count > 0 {
@@ -740,105 +738,97 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                             self.backupFileList.append(backupFile)
                         }
                         
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self.updateButtonsStatus(true)
                             self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("List Backup History Complete")
+                            self.progressBar.progress = 100
                             self.backupListTableView.reloadData()
-                            self.backupListTableView.hidden = false
-                            self.backupHistoryLabel.hidden = false
-                            self.restoreBtn.hidden = false
-                            self.upperLine.hidden = false
-                            self.downLine.hidden = false
+                            self.backupListTableView.isHidden = false
+                            self.backupHistoryLabel.isHidden = false
+                            self.restoreBtn.isHidden = false
+                            self.upperLine.isHidden = false
+                            self.downLine.isHidden = false
                             
                         })
                     }
                 }
                 
             } catch {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     let error = error as NSError
                     self.updateButtonsStatus(true)
                     self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
-                    
+                    self.errorMessage = "\(error.localizedDescription ?? "" )"
+                    self.updateDataControlStatusDetailButton()
                 })
             }
-            
-            buffer.setData(NSMutableData())
-            
+            buffer.setData(NSMutableData() as Data)
         }else if self.typeNow == self.typeBackup {
             
             do {
-                
-                if let responseDictionary = try NSJSONSerialization.JSONObjectWithData(buffer, options: []) as? NSDictionary {
+                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
                     
                     if responseDictionary.count > 0 {
                         
-                        let result = (UIViewController.init().nullToNil(responseDictionary["ul_result"]) == nil) ? "": responseDictionary["ul_result"] as! String
-                        
-                        if result == "OK" {
-                            let keyValueDataHelper = KeyValueDataHelper()
-                            keyValueDataHelper.updateLastBackupDatetime(String(Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
-                            self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
-                            
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Complete")
-                                self.updateButtonsStatus(true)
-                                self.backupDesc.text = ""
-                                self.backupListTableView.hidden = true
-                                self.backupHistoryLabel.hidden = true
-                                self.upperLine.hidden = true
+                        if let result = responseDictionary["ul_result"] as? String {
+                            if result == "OK" {
+                                DispatchQueue.main.async(execute: {
+                                    let keyValueDataHelper = KeyValueDataHelper()
+                                    _ = keyValueDataHelper.updateLastBackupDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+                                    self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
+                                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Complete")
+                                    self.progressBar.progress = 100
+                                    self.updateButtonsStatus(true)
+                                    self.backupDesc.text = ""
+                                    self.backupListTableView.isHidden = true
+                                    self.backupHistoryLabel.isHidden = true
+                                    self.upperLine.isHidden = true
+                                    
+                                    //Send local notification for Task Done.
+                                    self.presentLocalNotification("Data Backup Complete.")
+                                })
                                 
-                                //Send local notification for Task Done.
-                                self.presentLocalNotification("Data Backup Complete.")
-                            })
-                            
-                            //Remove Zip File Here
-                            self.removeLocalBackupZipFile()
-                            
-                            
+                                //Remove Zip File Here
+                                self.removeLocalBackupZipFile()
+                            }
                         }
                     }
                 }
-                
             } catch {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     print(error)
                     
                     let error = error as NSError
-                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup failed."))\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
+                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Failed!"))\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
                     
                     self.removeLocalBackupZipFile()
-                    let responseString = NSString(data: self.buffer, encoding: NSUTF8StringEncoding)
+                    let responseString = NSString(data: self.buffer as Data, encoding: String.Encoding.utf8.rawValue)
                     print("responseString = \(responseString)")
+                    self.errorMessage = "\(error.localizedDescription ?? "" )"
+                    self.updateDataControlStatusDetailButton()
                 })
             }
             
-            buffer.setData(NSMutableData())
+            buffer.setData(NSMutableData() as Data)
         }
-        /*
-        dispatch_async(dispatch_get_main_queue(), {
-            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
-            self.progressBar.progress = 100
-            
-        })*/
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
         print("从 \(fileOffset) 处恢复下载，一共 \(expectedTotalBytes)")
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.backupFileList.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let backupFile = self.backupFileList[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("BackupFileCell", forIndexPath: indexPath) as! BackupTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BackupFileCell", for: indexPath) as! BackupTableViewCell
         
         cell.appReleaseInput.text = backupFile.appRealse
         cell.appVersionInput.text = backupFile.appVersion
@@ -847,17 +837,17 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
         cell.loginUserNameInput.text = Cache_Inspector?.appUserName
         
         if backupFile.backupProcessDate != "" {
-            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            let dateFormatter:DateFormatter = DateFormatter()
             dateFormatter.dateFormat = "\(_DATEFORMATTER) HH:mm"
             
-            let locale2:NSLocale = NSLocale(localeIdentifier: "en_US")
-            let timezone2:NSTimeZone = NSTimeZone(forSecondsFromGMT: 28800)
-            let dateFormatter2:NSDateFormatter = NSDateFormatter()
+            let locale2:Locale = Locale(identifier: "en_US")
+            let timezone2:TimeZone = TimeZone(secondsFromGMT: 28800)!
+            let dateFormatter2:DateFormatter = DateFormatter()
             dateFormatter2.dateFormat = "\(_DATEFORMATTER) hh:mm:ss a"
             dateFormatter2.locale = locale2
             dateFormatter2.timeZone = timezone2
             
-            cell.backupProcessDateInput.text = dateFormatter.stringFromDate(dateFormatter2.dateFromString(backupFile.backupProcessDate)!)
+            cell.backupProcessDateInput.text = dateFormatter.string(from: dateFormatter2.date(from: backupFile.backupProcessDate)!)
         }
         
         if backupFile.appRealse != "" {
@@ -867,25 +857,31 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
             if dateTmpArray.count>0 {
                 cell.appReleaseInput.text = dateTmpArray[0]
                 
-                let dateFormatter:NSDateFormatter = NSDateFormatter()
+                let dateFormatter:DateFormatter = DateFormatter()
                 dateFormatter.dateFormat = _DATEFORMATTER
-                cell.appReleaseInput.text = dateFormatter.stringFromDate(dateFormatter.dateFromString(cell.appReleaseInput.text!)!)
+                cell.appReleaseInput.text = dateFormatter.string(from: dateFormatter.date(from: cell.appReleaseInput.text!)!)
             }
         }
         
-        cell.backupRemarksInput.font = UIFont.systemFontOfSize(17)
+        cell.backupRemarksInput.font = UIFont.systemFont(ofSize: 17)
         
         return cell
     }
     
-    @IBAction func restoreBtnOnClick(sender: UIButton) {
-        
+    @IBAction func restoreBtnOnClick(_ sender: UIButton) {
+        updateDataControlStatusDetailButton(true)
         self.typeNow = self.typeRestore
         
         if self.selectedBackupFile == nil {
-            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Select Backup First"))
+            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Select One Backup Record"))
             return
         }
+        
+        if self.selectedBackupFile.appVersion > _VERSION {
+            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Current app version not support this DB version!"))
+            return
+        }
+
         
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Data")+"?",parentVC:self, handlerFun: { (action:UIAlertAction!) in
             
@@ -896,73 +892,92 @@ class DataCtrlViewController: UIViewController, NSURLSessionDelegate, NSURLSessi
                 
                 if key == "service_token" {
                     param += "\"\(key)\":\"\(_DS_SERVICETOKEN)\","
-                }else if key == "backup_sync_id" {
-                    param += "\"\(key)\":\"\(backupFile.backupSyncId)\","
+                }else if key == "backup_sync_id", let backupSyncId = backupFile?.backupSyncId {
+                    param += "\"\(key)\":\"\(backupSyncId)\","
                 }else{
                     param += "\"\(key)\":\"\(value)\","
                 }
                 
             }
             param += "}"
-            param = param.stringByReplacingOccurrencesOfString(",}", withString: "}")
+            param = param.replacingOccurrences(of: ",}", with: "}")
             
             self.updateButtonsStatus(false)
-            let request = self.createRequest(param, url: NSURL(string: _DS_DBBACKUPDOWNLOAD["APINAME"] as! String)!)
-            let state = UIApplication.sharedApplication().applicationState
-            
-            if state == .Background {
-                
-                // background
-                self.sessionDownloadTask = self.bgSession?.downloadTaskWithRequest(request)
-                self.sessionDownloadTask!.resume()
-            }else if state == .Active {
+            let request = self.createRequest(param, url: URL(string: _DS_DBBACKUPDOWNLOAD["APINAME"] as! String)!)
+            if UIApplication.shared.applicationState == .active {
                 
                 // foreground
-                self.sessionDownloadTask = self.fgSession?.downloadTaskWithRequest(request)
+                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
                 self.sessionDownloadTask!.resume()
+            } else {
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                self.updateButtonsStatus(true)
+                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                self.updateDataControlStatusDetailButton()
             }
-            
-            
             
             //self.sessionDownloadTask = self.session?.downloadTaskWithRequest(request)
             //self.sessionDownloadTask?.resume()
         })
     }
     
-    @IBAction func clearBackupHistory(sender: UIButton) {
-        self.backupListTableView.hidden = true
-        self.backupHistoryLabel.hidden = true
-        self.restoreBtn.hidden = true
-        self.upperLine.hidden = true
-        self.downLine.hidden = true
+    @IBAction func clearBackupHistory(_ sender: UIButton) {
+        self.backupListTableView.isHidden = true
+        self.backupHistoryLabel.isHidden = true
+        self.restoreBtn.isHidden = true
+        self.upperLine.isHidden = true
+        self.downLine.isHidden = true
+        updateDataControlStatusDetailButton(true)
     
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedBackupFile = self.backupFileList[indexPath.row]
     }
     
     func removeLocalBackupZipFile() {
         //Remove Zip File Here
-        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
+        let qualityOfServiceClass = DispatchQoS.QoSClass.background
+        let backgroundQueue = DispatchQueue.global(qos: qualityOfServiceClass)
+        backgroundQueue.async(execute: {
             print("Remove Zip File Here on the Background Queue.")
-            let filemgr = NSFileManager.defaultManager()
+            let filemgr = FileManager.default
             do {
                 
-                if filemgr.fileExistsAtPath(self.zipPath5) {
-                    try filemgr.removeItemAtPath(self.zipPath5)
+                if filemgr.fileExists(atPath: self.zipPath5) {
+                    try filemgr.removeItem(atPath: self.zipPath5)
                 }
                 
             } catch {
                 print("Could not clear Zip file: \(error)")
-                self.updateButtonsStatus(true)
+                let _error = error as NSError
+                self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                self.updateDataControlStatusDetailButton()
             }
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 print("Zip File has been Removed Successfully!")
             })
         })
+    }
+    
+    @IBAction func dataControlStatusDetailButtonDidPress(_ sender: UIButton) {
+        let popoverContent = PopoverViewController()
+        popoverContent.preferredContentSize = CGSize(width: 640, height: 320)
+        
+        popoverContent.dataType = _DOWNLOADTASKSTATUSDESC
+        popoverContent.selectedValue = self.errorMessage
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
+        
+        let popover = nav.popoverPresentationController
+        popover?.delegate = sender.parentVC as? PopoverMaster
+        popover?.sourceView = sender
+        popover?.sourceRect = sender.bounds
+        
+        sender.parentVC?.present(nav, animated: true, completion: nil)
     }
 }

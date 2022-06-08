@@ -12,12 +12,13 @@ class SignoffView: UIImageView {
 
     var mouseSwiped:Bool = false
     var touched:Bool = false
-    var lastPoint:CGPoint = CGPointMake(0.0, 0.0)
+    var lastPoint:CGPoint = CGPoint(x: 0.0, y: 0.0)
     var red:CGFloat = 0.0
     var green:CGFloat = 0.0
     var blue:CGFloat = 0.0
     var brush:CGFloat = 2.0
     var opacity:CGFloat = 1.0
+    var previewOnly = false
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -27,51 +28,59 @@ class SignoffView: UIImageView {
     }
     */
     
-    func setBrushStyle(red:CGFloat, green:CGFloat, blue:CGFloat, brush:CGFloat=2.0) {
+    func setBrushStyle(_ red:CGFloat, green:CGFloat, blue:CGFloat, brush:CGFloat=2.0) {
         self.red = red
         self.green = green
         self.blue = blue
         self.brush = brush
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         NSLog("Touches Begin")
+        
+        if previewOnly {
+            return
+        }
         
         mouseSwiped = false
         
         let touch = touches.first! as UITouch
-        lastPoint = touch.locationInView(self)
+        lastPoint = touch.location(in: self)
         
         for view in self.subviews {
-            if view.isKindOfClass(ShapeView) && CGRectContainsPoint(view.frame, lastPoint) {
+            if view.isKind(of: ShapeView.self) && view.frame.contains(lastPoint) {
                 return
             }
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if previewOnly {
+            return
+        }
         
         mouseSwiped = true
         let touch =  touches.first! as UITouch
-        let currentPoint = touch.locationInView(self)
+        let currentPoint = touch.location(in: self)
         
         for view in self.subviews {
-            if view.isKindOfClass(ShapeView) && CGRectContainsPoint(view.frame, lastPoint) {
+            if view.isKind(of: ShapeView.self) && view.frame.contains(lastPoint) {
                 return
             }
         }
         
         UIGraphicsBeginImageContext(self.frame.size)
-        self.image?.drawInRect(CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.image?.draw(in: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height))
         // self.image?.drawInRect(CGRectMake(0, 0, (self.image?.size.width)!, (self.image?.size.height)!))
-        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
-        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
-        CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush)
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, 1.0)
-        CGContextSetBlendMode(UIGraphicsGetCurrentContext(), CGBlendMode.Normal)
+        UIGraphicsGetCurrentContext()?.move(to: CGPoint(x: lastPoint.x, y: lastPoint.y))
+        UIGraphicsGetCurrentContext()?.addLine(to: CGPoint(x: currentPoint.x, y: currentPoint.y))
+        UIGraphicsGetCurrentContext()?.setLineCap(CGLineCap.round)
+        UIGraphicsGetCurrentContext()?.setLineWidth(brush)
+        UIGraphicsGetCurrentContext()?.setStrokeColor(red: red, green: green, blue: blue, alpha: 1.0)
+        UIGraphicsGetCurrentContext()?.setBlendMode(CGBlendMode.normal)
         
-        CGContextStrokePath(UIGraphicsGetCurrentContext())
+        UIGraphicsGetCurrentContext()?.strokePath()
         self.image = UIGraphicsGetImageFromCurrentImageContext()
         self.alpha = opacity
         UIGraphicsEndImageContext()
@@ -79,10 +88,14 @@ class SignoffView: UIImageView {
         lastPoint = currentPoint
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if previewOnly {
+            return
+        }
         
         for view in self.subviews {
-            if view.isKindOfClass(ShapeView) && CGRectContainsPoint(view.frame, lastPoint) {
+            if view.isKind(of: ShapeView.self) && view.frame.contains(lastPoint) {
                 return
             }
         }
@@ -91,15 +104,15 @@ class SignoffView: UIImageView {
             UIGraphicsBeginImageContext(self.frame.size)
 
             //UIGraphicsBeginImageContext((self.image?.size)!)
-            self.image?.drawInRect(CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+            self.image?.draw(in: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height))
             //self.image?.drawInRect(CGRectMake(0, 0, (self.image?.size.width)!, (self.image?.size.height)!))
-            CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
-            CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush)
-            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, opacity)
-            CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
-            CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
-            CGContextStrokePath(UIGraphicsGetCurrentContext())
-            CGContextFlush(UIGraphicsGetCurrentContext())
+            UIGraphicsGetCurrentContext()?.setLineCap(CGLineCap.round)
+            UIGraphicsGetCurrentContext()?.setLineWidth(brush)
+            UIGraphicsGetCurrentContext()?.setStrokeColor(red: red, green: green, blue: blue, alpha: opacity)
+            UIGraphicsGetCurrentContext()?.move(to: CGPoint(x: lastPoint.x, y: lastPoint.y))
+            UIGraphicsGetCurrentContext()?.addLine(to: CGPoint(x: lastPoint.x, y: lastPoint.y))
+            UIGraphicsGetCurrentContext()?.strokePath()
+            UIGraphicsGetCurrentContext()?.flush()
             self.image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
         }else{

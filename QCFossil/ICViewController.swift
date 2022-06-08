@@ -24,14 +24,14 @@ class ICViewController: UIViewController,UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         NSLog("IC View Will Disappear")
-        NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         NSLog("IC View Will Appear")
-        NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":false])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
     }
 
     /*
@@ -46,20 +46,20 @@ class ICViewController: UIViewController,UIScrollViewDelegate {
     
     var oldContentOffset = CGPoint(x: 0.0,y: 0.0)
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.oldContentOffset = scrollView.contentOffset
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.x != self.oldContentOffset.x {
-            scrollView.pagingEnabled = true
-            scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x,self.oldContentOffset.y)
+            scrollView.isPagingEnabled = true
+            scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x,y: self.oldContentOffset.y)
         } else {
-            scrollView.pagingEnabled = false
+            scrollView.isPagingEnabled = false
         }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.oldContentOffset = scrollView.contentOffset
     }
     

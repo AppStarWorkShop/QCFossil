@@ -50,8 +50,8 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.productTypeLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Product Type")
         self.inptTypeLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Inspection Type")
         self.templateTypeLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Template Type")
-        self.okBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), forState: UIControlState.Normal)
-        self.cancelBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), forState: UIControlState.Normal)
+        self.okBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), for: UIControl.State())
+        self.cancelBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), for: UIControl.State())
         self.messageLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please select Product Type and Inspection Type")
         
         self.view.setButtonCornerRadius(self.okBtn)
@@ -68,11 +68,11 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     }
     */
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return false
     }
 
-    @IBAction func okButton(sender: UIButton) {
+    @IBAction func okButton(_ sender: UIButton) {
         if self.inptType.text == ""{
             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please select a Inspection Type!"))
             return
@@ -86,16 +86,16 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         (pVC as! CreateTaskViewController).inspectTypeInput.text = self.inptType.text
         (pVC as! CreateTaskViewController).productTypeInput.text = self.productType.text
         (pVC as! CreateTaskViewController).tmplName = self.templateType.text!
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func cancelButton(sender: UIButton) {
-        NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
-        NSNotificationCenter.defaultCenter().postNotificationName("CreateTaskCancel", object: nil, userInfo: nil)
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelButton(_ sender: UIButton) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "CreateTaskCancel"), object: nil, userInfo: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func showProdTypes(sender: UITextField) {
+    @IBAction func showProdTypes(_ sender: UITextField) {
         print("Show Prod Types")
         /*
         let popoverContent = PopoverViewController()
@@ -128,28 +128,43 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         */
     }
     
-    @IBAction func showInptTypes(sender: UITextField) {
+    @IBAction func showInptTypes(_ sender: UITextField) {
         print("Show Inpt Types")
         
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(_POPOVERVIEWSIZE_S.width,_POPOVERVIEWSIZE_S.height+_NAVIBARHEIGHT)
+        popoverContent.preferredContentSize = CGSize(width: _POPOVERVIEWSIZE_S.width,height: _POPOVERVIEWSIZE_S.height+_NAVIBARHEIGHT)
 
         popoverContent.parentTextFieldView = sender
         popoverContent.sourceType = _INPTTYPE
+        popoverContent.didPickCompletion = {
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.blackColor()
+            Cache_Inspector?.selectedInspType = self.inptType.text!
+            let taskDataHelper = TaskDataHelper()
+            let templates = taskDataHelper.getAllTmplType()
+            
+            if templates.count < 1 {
+                self.templateType?.text = ""
+            } else if templates.count == 1 {
+                for template in templates {
+                    self.templateType?.text = template
+                }
+            }
+            
+        }
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = .popover
+        nav.navigationBar.barTintColor = .black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = self
-        popover!.sourceView = self.view
-        popover!.sourceRect = CGRectMake(sender.frame.midX,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
         
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
-    @IBAction func showTmlpTypes(sender: UITextField) {
+    @IBAction func showTmlpTypes(_ sender: UITextField) {
         print("show tmlp types")
         
         if self.inptType.text == "" || self.inptType.text == nil {
@@ -157,27 +172,25 @@ class TaskTypeViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
             return
         }
         
-        Cache_Inspector?.selectedInspType = self.inptType.text!
-        
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(_POPOVERVIEWSIZE_S.width,_POPOVERVIEWSIZE_S.height+_NAVIBARHEIGHT)
+        popoverContent.preferredContentSize = CGSize(width: _POPOVERVIEWSIZE_S.width,height: _POPOVERVIEWSIZE_S.height+_NAVIBARHEIGHT)
         
         popoverContent.parentTextFieldView = sender
         popoverContent.sourceType = _TMPLTYPE
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.blackColor()
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.black
         
         let popover = nav.popoverPresentationController
         popover!.delegate = self
-        popover!.sourceView = self.view
-        popover!.sourceRect = CGRectMake(sender.frame.midX,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
         
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("Forbidden editing")
         
         return false

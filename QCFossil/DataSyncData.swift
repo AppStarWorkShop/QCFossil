@@ -9,8 +9,10 @@
 import UIKit
 
 //Data Sync Server
-#if DEBUG
+#if UAT
 let dataSyncServerUsing = dataSyncUatServer
+#elseif TESTENV
+let dataSyncServerUsing = dataSyncTestServer
 #else
 let dataSyncServerUsing = dataSyncPrdServer
 #endif
@@ -38,6 +40,7 @@ var _DS_TOTALRECORDS_DB:Dictionary<String, String> = [
     "task_inspect_data_record_count" : "0",
     "inspect_task_item_count" : "0",
     "inspect_task_count" : "0",
+    "inspect_task_qc_info_count" : "0",
     "task_defect_data_record_count" : "0",
     "task_inspect_photo_file_count" : "0",
     "task_inspect_position_point_count" : "0",
@@ -45,22 +48,47 @@ var _DS_TOTALRECORDS_DB:Dictionary<String, String> = [
     "inspect_task_inspector_count" : "0"
 ]
 
+// App Program Version Check
+let _DS_APP_PROGRAM_VERSION_CHECK = [
+    "NAME" : "App Program Version Check",
+    "APINAME" : "\(dataSyncServerUsing)chk_app_ver.aspx",
+    "APIPARA" : [
+        "service_token": _DS_SERVICETOKEN,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
+        "app_version" : _VERSION,
+        "app_release" : _RELEASE
+    ],
+    "ACTIONNAMES" : [
+        "novalue"
+    ],
+    "ACTIONTABLES" : [
+        "novalue"
+    ],
+    "ACTIONFIELDS" : [
+        "nokey" : [
+            "novalue"
+        ]
+    ]
+] as [String : Any]
+
 //User Login, Forget Username, Forget Password
 let _DS_USERLOGIN = [
     "NAME" : "Inspector Authentication",
     "APINAME" : "\(dataSyncServerUsing)req_inspector_auth.aspx",
     "APIPARA" : [
         "service_type" : "Inspector Authentication",
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "action_type": "user_login",
         "app_username": _DS_USERNAME,
         "app_password": _DS_USERPASSWORD
     ],
     "ACTIONNAMES" : [
-        "inspector_mstr"
+        "inspector_mstr",
+        "prod_type_mstr"
     ],
     "ACTIONTABLES" : [
-        "inspector_mstr" : "inspector_mstr"
+        "inspector_mstr" : "inspector_mstr",
+        "prod_type_mstr" : "prod_type_mstr"
     ],
     "ACTIONFIELDS" : [
         "inspector_mstr" : [
@@ -83,16 +111,32 @@ let _DS_USERLOGIN = [
             "delete_date",
             "delete_user",
             "chg_pwd_req_date"
+        ],
+        "prod_type_mstr" : [
+            "type_id",
+            "type_code",
+            "type_name_en",
+            "type_name_cn",
+            "data_env",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user",
+            "type_name_fr"
         ]
     ]
-]
+] as [String : Any]
 
 let _DS_FORGET_UN = [
     "NAME" : "Inspector Authentication",
     "APINAME" : "\(dataSyncServerUsing)req_inspector_auth.aspx",
     "APIPARA" : [
         "service_type" : "Inspector Authentication",
-        "device_id" : UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
         "action_type": "forget_username",
         "email" : _DS_RESETEMAIL
     ],
@@ -107,14 +151,14 @@ let _DS_FORGET_UN = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 let _DS_FORGET_UNPW = [
     "NAME" : "Inspector Authentication",
     "APINAME" : "\(dataSyncServerUsing)req_inspector_auth.aspx",
     "APIPARA" : [
         "service_type" : "Inspector Authentication",
-        "device_id" : UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
         "action_type": "forget_password",
         "app_username": _DS_USERNAME,
         "email": _DS_RESETEMAIL
@@ -130,7 +174,7 @@ let _DS_FORGET_UNPW = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 let _DS_CHANGE_PW = [
     "NAME" : "Inspector Authentication",
@@ -138,7 +182,7 @@ let _DS_CHANGE_PW = [
     "APIPARA" : [
         "service_type" : "Inspector Authentication",
         "service_token": _DS_SERVICETOKEN,
-        "device_id" : UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
         "action_type" : "change_password",
         "decrypt_app_password" : "new_password"
     ],
@@ -153,7 +197,7 @@ let _DS_CHANGE_PW = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 //Master Data Download
 let _DS_MSTRDATA = [
@@ -162,7 +206,7 @@ let _DS_MSTRDATA = [
     "ACKNAME" : _DS_ACKMSTRDATA,
     "APIPARA" : [
         "service_token": _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type" : "Master Data Download"
     ],
     "ACTIONNAMES" : [
@@ -207,7 +251,8 @@ let _DS_MSTRDATA = [
             "type_code",
             "type_id",
             "type_name_en",
-            "type_name_cn"
+            "type_name_cn",
+            "type_name_fr"
         ],
         "vdr_brand_map_list" : [
             "brand_id",
@@ -254,7 +299,7 @@ let _DS_MSTRDATA = [
             "vdr_name"
         ]
     ]
-]
+] as [String : Any]
 
 //Master Data Download Acknowledgement
 let _DS_ACKMSTRDATA = [
@@ -280,7 +325,7 @@ let _DS_ACKMSTRDATA = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 //Inspection Setup Data Download
 let _DS_INPTSETUP = [
@@ -289,7 +334,7 @@ let _DS_INPTSETUP = [
     "ACKNAME" : _DS_ACKINPTSETUP,
     "APIPARA" : [
         "service_token": _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type" : "Inspection Setup Data Download"
     ],
     "ACTIONNAMES" : [
@@ -309,7 +354,17 @@ let _DS_INPTSETUP = [
         "inspect_element_detail_select_val_list",
         "result_value_mstr_list",
         "result_set_mstr_list",
-        "result_set_value_list"
+        "result_set_value_list",
+        "zone_value_mstr_list",
+        "zone_set_mstr_list",
+        "zone_set_value_list",
+        "case_value_mstr_list",
+        "case_set_mstr_list",
+        "case_set_value_list",
+        "defect_value_mstr_list",
+        "defect_set_mstr_list",
+        "defect_set_value_list",
+        "task_selection_option_mstr_list"
     ],
     "ACTIONTABLES" : [
         "inspect_type_mstr_list" : "inspect_type_mstr",
@@ -328,8 +383,17 @@ let _DS_INPTSETUP = [
         "inspect_task_tmpl_section_list" : "inspect_task_tmpl_section",
         "inspect_task_tmpl_position_list" : "inspect_task_tmpl_position",
         "inspect_section_element_list" : "inspect_section_element",
-        "inspect_position_element_list" : "inspect_position_element"
-        /*"inspect_task_list" : "inspect_task"*/
+        "inspect_position_element_list" : "inspect_position_element",
+        "zone_value_mstr_list" : "zone_value_mstr",
+        "zone_set_mstr_list" : "zone_set_mstr",
+        "zone_set_value_list" : "zone_set_value",
+        "case_value_mstr_list" : "case_value_mstr",
+        "case_set_mstr_list" : "case_set_mstr",
+        "case_set_value_list" : "case_set_value",
+        "defect_value_mstr_list" : "defect_value_mstr",
+        "defect_set_mstr_list" : "defect_set_mstr",
+        "defect_set_value_list" : "defect_set_value",
+        "task_selection_option_mstr_list" : "task_selection_option_mstr"
     ],
     "ACTIONFIELDS" : [
         "inspect_type_mstr_list" : [
@@ -344,7 +408,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "type_name_fr"
         ],
         "inspect_setup_mstr_list" : [
             "setup_id",
@@ -376,7 +441,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "tmpl_name_fr"
         ],
         "inspect_task_tmpl_field_list": [
             "tmpl_id",
@@ -422,7 +488,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "field_name_fr"
         ],
         "inspect_task_field_select_val_list": [
             "val_id",
@@ -435,7 +502,8 @@ let _DS_INPTSETUP = [
             "create_date",
             "create_user",
             "modify_date",
-            "modify_user"
+            "modify_user",
+            "select_text_fr"
         ],
         "inspect_section_mstr_list" : [
             "section_id",
@@ -455,7 +523,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "section_name_fr"
         ],
         "inspect_section_element_list" : [
             "inspect_section_id",
@@ -475,6 +544,7 @@ let _DS_INPTSETUP = [
             "current_level",
             "parent_position_id",
             "position_type",
+            "position_zone_set_id",
             "display_order",
             "rec_status",
             "create_date",
@@ -483,7 +553,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "position_name_fr"
         ],
         "inspect_position_element_list" : [
             "inspect_position_id",
@@ -506,6 +577,8 @@ let _DS_INPTSETUP = [
             "detail_default_value",
             "detail_required_result_set_id",
             "detail_suggest_flag",
+            "inspect_defect_set_id",
+            "inspect_case_set_id",
             "rec_status",
             "create_date",
             "create_user",
@@ -513,7 +586,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "element_name_fr"
         ],
         "inspect_element_detail_select_val_list" : [
             "val_id",
@@ -526,7 +600,8 @@ let _DS_INPTSETUP = [
             "create_date",
             "create_user",
             "modify_date",
-            "modify_user"
+            "modify_user",
+            "select_text_fr"
         ],
         "result_value_mstr_list" : [
             "value_id",
@@ -543,7 +618,8 @@ let _DS_INPTSETUP = [
             "modify_user",
             "deleted_flag",
             "delete_date",
-            "delete_user"
+            "delete_user",
+            "value_name_fr"
         ],
         "result_set_mstr_list" :[
             "set_id",
@@ -564,10 +640,137 @@ let _DS_INPTSETUP = [
             "create_user",
             "modify_date",
             "modify_user"
+        ],
+        "zone_value_mstr_list" : [
+            "value_id",
+            "value_code",
+            "value_name_en",
+            "value_name_cn",
+            "display_order",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user",
+            "value_name_fr"
+        ],
+        "zone_set_mstr_list" : [
+            "set_id",
+            "set_name",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user"
+        ],
+        "zone_set_value_list" : [
+            "set_id",
+            "value_id",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user"
+        
+        ],
+        "case_value_mstr_list" : [
+            "value_id",
+            "value_code",
+            "value_name_en",
+            "value_name_cn",
+            "display_order",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user",
+            "value_name_fr"
+        ],
+        "case_set_mstr_list" : [
+            "set_id",
+            "set_name",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user"
+        ],
+        "case_set_value_list" : [
+            "set_id",
+            "value_id",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user"
+        ],
+        "defect_value_mstr_list" : [
+            "value_id",
+            "value_code",
+            "value_name_en",
+            "value_name_cn",
+            "display_order",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user",
+            "value_name_fr"
+        ],
+        "defect_set_mstr_list" : [
+            "set_id",
+            "set_name",
+            "rec_status",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user",
+            "deleted_flag",
+            "delete_date",
+            "delete_user"
+        ],
+        "defect_set_value_list" : [
+            "set_id",
+            "value_id",
+            "create_date",
+            "create_user",
+            "modify_date",
+            "modify_user"
+        ],
+        "task_selection_option_mstr_list" : [
+            "option_id",
+            "data_env",
+            "selection_type",
+            "result_code_match_list",
+            "option_val",
+            "option_text_en",
+            "option_text_zh",
+            "display_order",
+            "rec_status",
+            "create_user",
+            "create_date",
+            "modify_user",
+            "modify_date",
+            "deleted_flag",
+            "delete_user",
+            "delete_date",
+            "option_text_fr"
         ]
     ]
-]
-
+] as [String : Any]
 
 //Inspection Setup Data Download Acknowledgement
 let _DS_ACKINPTSETUP = [
@@ -592,7 +795,17 @@ let _DS_ACKINPTSETUP = [
         "inspect_element_detail_select_val_count": "0",
         "result_value_mstr_count": "0",
         "result_set_mstr_count": "0",
-        "result_set_value_count": "0"
+        "result_set_value_count": "0",
+        "zone_value_mstr_count" : "0",
+        "zone_set_mstr_count" : "0",
+        "zone_set_value_count" : "0",
+        "case_value_mstr_count" : "0",
+        "case_set_mstr_count" : "0",
+        "case_set_value_count" : "0",
+        "defect_value_mstr_count" : "0",
+        "defect_set_mstr_count" : "0",
+        "defect_set_value_count" : "0",
+        "task_selection_option_mstr_count" : "0"
     ],
     "ACTIONNAMES" : [
         "novalue"
@@ -605,7 +818,7 @@ let _DS_ACKINPTSETUP = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 //FGPO Data Download Request
 let _DS_FGPODATA = [
@@ -614,7 +827,7 @@ let _DS_FGPODATA = [
     "ACKNAME" : _DS_ACKFGPODATA,
     "APIPARA" : [
         "service_token" : _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "FGPO Data Download",
         "init_service_session": ""
     ],
@@ -643,6 +856,7 @@ let _DS_FGPODATA = [
             "vdr_display_name",
             "ref_line_id",
             "po_line_no",
+            "ship_mode_name",
             "ref_prod_id",
             "sku_no",
             "prod_type_code",
@@ -680,10 +894,12 @@ let _DS_FGPODATA = [
             "modify_date",
             "deleted_flag",
             "delete_date",
-            "prod_desc"
+            "prod_desc",
+            "material_category",
+            "market"
         ]
     ]
-]
+] as [String : Any]
 //FGPO Data Download Acknowledgement
 let _DS_ACKFGPODATA = [
     "NAME" : "FGPO Data Download Acknowledgement",
@@ -705,7 +921,7 @@ let _DS_ACKFGPODATA = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 //Task Booking Data Download
 let _DS_TASKDATA = [
@@ -714,20 +930,22 @@ let _DS_TASKDATA = [
     "ACKNAME" : _DS_ACKTASKDATA,
     "APIPARA" : [
         "service_token" : _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "Task Booking Data Download",
     ],
     
     "ACTIONNAMES" : [
         "inspect_task_list",
         "inspect_task_inspector_list",
-        "inspect_task_item_list"
+        "inspect_task_item_list",
+        "inspect_task_qc_info_list"
     ],
     
     "ACTIONTABLES" : [
         "inspect_task_list" : "inspect_task",
         "inspect_task_inspector_list" : "inspect_task_inspector",
-        "inspect_task_item_list" : "inspect_task_item"
+        "inspect_task_item_list" : "inspect_task_item",
+        "inspect_task_qc_info_list" : "inspect_task_qc_info"
     ],
     
     "ACTIONFIELDS" : [
@@ -747,6 +965,8 @@ let _DS_TASKDATA = [
             "tmpl_id",
             "task_remarks",
             "vdr_notes",
+            "qc_remarks_option_list",
+            "additional_admin_item_option_list",
             "inspect_result_value_id",
             "inspector_sign_image_file",
             "vdr_sign_name",
@@ -778,14 +998,75 @@ let _DS_TASKDATA = [
             "avail_inspect_qty",
             "sampling_qty",
             "inspect_enable_flag",
+            "item_barcode",
+            "retail_price",
+            "currency",
             "create_date",
             "create_user",
             "modify_date",
-            "modify_user"
+            "modify_user",
+            "style_size",
+            "substr_style_size"
+        ],
+        "inspect_task_qc_info_list" : [
+            "ref_task_id",
+            "aql_qty",
+            "product_class",
+            "quality_standard",
+            "adjust_time",
+            "preinspect_detail",
+            "ca_form",
+            "caseback_marking",
+            "upc_orbid_status",
+            "ts_report_no",
+            "ts_submit_date",
+            "ts_result",
+            "qc_booking_ref_no",
+            "ss_comment_ready",
+            "ss_ready",
+            "ss_photo_name",
+            "battery_production_code",
+            "with_quesiton_pending",
+            "wth_same_po_rejected_bef",
+            "assortment",
+            "consigned_styles",
+            "qc_inspect_type",
+            "net_weight",
+            "inspect_method",
+            "length_requirement",
+            "inspection_sample_ready",
+            "fty_packing_info",
+            "fty_droptest_info",
+            "movt_origin",
+            "battery_type",
+            "pre_inspect_result",
+            "pre_inspect_remark",
+            "reliability_remark",
+            "jwl_marking",
+            "combine_qc_remarks",
+            "links_remarks",
+            "dusttest_remark",
+            "smartlink_remark",
+            "precise_report",
+            "smartlink_report",
+            "create_user",
+            "create_date",
+            "modify_user",
+            "modify_date",
+            "inspector_names",
+            "substr_inspector_names",
+            "substr_quality_standard",
+            "substr_length_requirement",
+            "substr_movt_origin",
+            "substr_combine_qc_remarks",
+            "substr_ss_ready",
+            "substr_pre_inspect_remark",
+            "substr_ss_comment_ready",
+            "substr_ca_form",
+            "substr_reliability_remark"
         ]
-        
     ]
-]
+] as [String : Any]
 
 //Task Booking Data Download Acknowledgement
 let _DS_ACKTASKDATA = [
@@ -796,7 +1077,8 @@ let _DS_ACKTASKDATA = [
         "service_session": _DS_SESSION,
         "inspect_task_count": "0",
         "inspect_task_inspector_count": "0",
-        "inspect_task_item_count": "0"
+        "inspect_task_item_count": "0",
+        "inspect_task_qc_info_count" : "0"
     ],
     
     "ACTIONNAMES" : [
@@ -810,17 +1092,16 @@ let _DS_ACKTASKDATA = [
             "novalue"
         ]
     ]
-]
-
+] as [String : Any]
 
 //Task Status Data Download Request
 let _DS_DL_TASK_STATUS = [
     "NAME" : "Task Status Data Download",
-    "APINAME" : "\(dataSyncServerUsing)dl_task_status_ws2.aspx",
+    "APINAME" : "\(dataSyncServerUsing)dl_task_status_ws3.aspx",
     "ACKNAME" : _DS_ACKTASKSTATUS,
     "APIPARA" : [
         "service_token" : _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "Task Status Data Download",
     ],
     
@@ -850,7 +1131,7 @@ let _DS_DL_TASK_STATUS = [
             "inspection_date"//add 0820
         ]
     ]
-]
+] as [String : Any]
 
 //Task Status Data Download Acknowledgement
 let _DS_ACKTASKSTATUS = [
@@ -873,7 +1154,62 @@ let _DS_ACKTASKSTATUS = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
+
+//Style Photo Data Download Request
+let _DS_DL_STYLE_PHOTO = [
+    "NAME" : "Style Photo Download",
+    "APINAME" : "\(dataSyncServerUsing)dl_style_photo.aspx",
+    "ACKNAME" : _DS_ACKSTYLEPHOTO,
+    "APIPARA" : [
+        "service_token" : _DS_SERVICETOKEN,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
+        "service_type": "Style Photo Download",
+    ],
+    "ACTIONNAMES" : [
+        "style_photo_list"
+    ],
+    "ACTIONTABLES" : [
+        "style_photo_list" : "style_photo"
+    ],
+    "ACTIONFIELDS" : [
+        "style_photo_list" : [
+            "photo_id",
+            "data_env",
+            "style_no",
+            "ss_photo_name",
+            "ss_photo_file",
+            "cb_photo_name",
+            "cb_photo_file",
+            "create_date",
+            "modify_date",
+            "deleted_flag",
+            "delete_date"
+        ]
+    ]
+] as [String : Any]
+
+//Style Photo Data Download Acknowledgement
+let _DS_ACKSTYLEPHOTO = [
+    "NAME" : "Style Photo Download Acknowledgement",
+    "APINAME" : "\(dataSyncServerUsing)ack_style_photo.aspx",
+    "APIPARA" : [
+        "service_token": _DS_SERVICETOKEN,
+        "service_session": _DS_SESSION,
+        "style_photo_count": "0"
+    ],
+    "ACTIONNAMES" : [
+        "novalue"
+    ],
+    "ACTIONTABLES" : [
+        "novalue"
+    ],
+    "ACTIONFIELDS" : [
+        "nokey" : [
+            "novalue"
+        ]
+    ]
+] as [String : Any]
 
 //App Database Backup Upload
 let _DS_UPLOADDBBACKUP = [
@@ -881,7 +1217,7 @@ let _DS_UPLOADDBBACKUP = [
     "APINAME" : "\(dataSyncServerUsing)ul_db_backup.aspx",
     "APIPARA" : [
         "service_token" : _DS_SERVICETOKEN,
-        "device_id" : UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
         "db_filename" : "fossil_qc_prd.sqlite",
         "db_file" : "fossil_qc_prd.sqlite",
         "backup_remarks" : "",
@@ -899,14 +1235,14 @@ let _DS_UPLOADDBBACKUP = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 let _DS_LISTDBBACKUP = [
     "NAME" : "App Database Backup History",
     "APINAME" : "\(dataSyncServerUsing)list_db_backup.aspx",
     "APIPARA" : [
         "service_token" : _DS_SERVICETOKEN,
-        "device_id" : UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
         "service_type" : "App Database Backup History",
         "app_version" : "",
         "app_release" : ""
@@ -930,14 +1266,14 @@ let _DS_LISTDBBACKUP = [
             "app_release"
         ]
     ]
-]
+] as [String : Any]
 
 let _DS_DBBACKUPDOWNLOAD = [
     "NAME" : "App Database Backup Download",
     "APINAME" : "\(dataSyncServerUsing)dl_db_backup.aspx",
     "APIPARA" : [
         "service_token" : _DS_SERVICETOKEN,
-        "device_id" : UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id" : UIDevice.current.identifierForVendor!.uuidString,
         "service_type" : "App Database Backup Download",
         "backup_sync_id" : ""
     ],
@@ -952,7 +1288,7 @@ let _DS_DBBACKUPDOWNLOAD = [
             "novalue"
         ]
     ]
-]
+] as [String : Any]
 
 //Task Result Data Upload
 let _DS_ULTASKDATA = [
@@ -960,7 +1296,7 @@ let _DS_ULTASKDATA = [
     "APINAME" : "\(dataSyncServerUsing)ul_task_data.aspx",
     "APIPARA" : [
         "service_token": _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "Task Result Data Upload",
     ],
     
@@ -1012,25 +1348,35 @@ let _DS_ULTASKDATA = [
             "report_running_no" : "",
             "inspection_no" : "",
             "inspection_date" : "",
-            "inspect_setup_id" : "",
-            "tmpl_id" : "",
             "task_remarks" : "",
             "vdr_notes" : "",
             "inspect_result_value_id" : "",
             "inspector_sign_image_file" : "",
             "vdr_sign_name" : "",
             "vdr_sign_image_file" : "",
-            "vdr_sign_date" : "",
             "task_status" : "",
+            "upload_inspector_id" : "",
             "ref_task_id" : "",
             "rec_status" : "",
-            "create_date" : "",
             "create_user" : "",
-            "modify_date" : "",
+            "create_date" : "",
             "modify_user" : "",
+            "modify_date" : "",
             "deleted_flag" : "",
+            "delete_user" : "",
             "delete_date" : "",
-            "delete_user" : ""
+            "inspect_setup_id" : "",
+            "vdr_sign_date" : "",
+            "tmpl_id" : "",
+            "data_refuse_desc" : "",
+            "app_ready_purge_date" : "",
+            "review_remarks" : "",
+            "review_user" : "",
+            "review_date" : "",
+            "cancel_date" : "",
+            "confirm_upload_date" : "",
+            "qc_remarks_option_list" : "",
+            "additional_admin_item_option_list" : ""
         ],
         "inspect_task_inspector_list": [
             "task_id" : "",
@@ -1044,15 +1390,20 @@ let _DS_ULTASKDATA = [
         "inspect_task_item_list": [
             "task_id" : "",
             "po_item_id" : "",
-            "ref_qc_plan_line_id" : "",
             "target_inspect_qty" : "",
             "avail_inspect_qty" : "",
-            "sampling_qty" : "",
             "inspect_enable_flag" : "",
-            "create_date" : "",
             "create_user" : "",
+            "create_date" : "",
+            "modify_user" : "",
             "modify_date" : "",
-            "modify_user" : ""
+            "ref_qc_plan_line_id" : "",
+            "sampling_qty" : "",
+            "item_barcode" : "",
+            "retail_price" : "",
+            "currency" : "",
+            "style_size" : "",
+            "substr_style_size" : ""
         ],
         "task_inspect_field_value_list": [
             "value_id" : "",
@@ -1072,6 +1423,7 @@ let _DS_ULTASKDATA = [
             "inspect_section_id" : "",
             "inspect_element_id" : "",
             "inspect_position_id" : "",
+            "inspect_position_zone_value_id" : "",
             "inspect_position_desc" : "",
             "request_section_id" : "",
             "request_element_desc" : "",
@@ -1097,7 +1449,11 @@ let _DS_ULTASKDATA = [
             "inspect_record_id" : "",
             "ref_record_id" : "",
             "inspect_element_id" : "",
+            "inspect_element_defect_value_id" : "",
+            "inspect_element_case_value_id" : "",
             "defect_desc" : "",
+            "defect_remarks_option_list" : "",
+            "other_remarks" : "",
             "defect_qty_critical" : "",
             "defect_qty_major" : "",
             "defect_qty_minor" : "",
@@ -1124,11 +1480,12 @@ let _DS_ULTASKDATA = [
         ],
         "task_status_list": [
             "task_id":"",
+            "ref_task_id":"", //add 0424 2019
             "task_status":"",
             "data_refuse_desc":"" //add 1107
         ]
     ]
-]
+] as [String : Any]
 
 //Task Photo Data Upload
 let _DS_ULTASKPHOTO = [
@@ -1136,14 +1493,15 @@ let _DS_ULTASKPHOTO = [
     "APINAME" : "\(dataSyncServerUsing)ul_task_photo.aspx",
     "APIPARA" : [
         "service_token": _DS_SERVICETOKEN,
-        "device_id": UIDevice.currentDevice().identifierForVendor!.UUIDString,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "Task Photo Data Upload",
         "task_id": "task_id",
         "photo_id" : "photo_id",
         "photo_file" : "photo_file",
         "photo_file_data" : "photo_file",
         "thumb_file": "thumb_file",
-        "thumb_file_data": "thumb_file"
+        "thumb_file_data": "thumb_file",
+        "ref_task_id": "ref_task_id"
     ],
     "ACTIONNAMES" : [
         "novalue"
@@ -1156,6 +1514,4 @@ let _DS_ULTASKPHOTO = [
             "novalue"
         ]
     ]
-]
-
-
+] as [String : Any]

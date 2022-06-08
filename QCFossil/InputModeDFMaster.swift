@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class InputModeDFMaster: UIView, UITextFieldDelegate {
     
@@ -29,27 +53,27 @@ class InputModeDFMaster: UIView, UITextFieldDelegate {
     var dfRemarkText = ""
     var dfQty = ""
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        if textField.keyboardType == UIKeyboardType.NumberPad {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.keyboardType == UIKeyboardType.numberPad {
             if textField.text == "" {
                 textField.text = "0"
             }
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if textField.keyboardType == UIKeyboardType.NumberPad {
+        if textField.keyboardType == UIKeyboardType.numberPad {
             return textField.numberOnlyCheck(textField, sourceText: string)
         }
         
         return true
     }
     
-    func savePhotoToLocal(photo:Photo) ->Photo? {
+    func savePhotoToLocal(_ photo:Photo) ->Photo? {
         if photo.photo?.image != nil {
             
-            let originName = String(photo.photo!.image!.imageAsset)
+            let originName = String(describing: photo.photo!.image!.imageAsset)
             
             //If record has been saved
             if self.taskDefectDataRecordId > 0 {
@@ -64,7 +88,7 @@ class InputModeDFMaster: UIView, UITextFieldDelegate {
         return nil
     }
     
-    func clearDefectPhotoDataAtIndex(index:Int) {
+    func clearDefectPhotoDataAtIndex(_ index:Int) {
         if index < photos.count {
             let photoRemoved = photos[index]
             
@@ -74,7 +98,7 @@ class InputModeDFMaster: UIView, UITextFieldDelegate {
                 photoDataHelper.updatePhotoDatas((photoRemoved?.photoId)!, dataType:PhotoDataType(caseId: "TASK").rawValue, dataRecordId:0)
                 
                 //Update Photo Album
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadAddPhotos", object: nil, userInfo: ["photoSelected":photoRemoved!])
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAddPhotos"), object: nil, userInfo: ["photoSelected":photoRemoved!])
                 
                 //Clear Photos
                 photos[index] = Photo(photo: nil, photoFilename: "", taskId: 0, photoFile: "")
@@ -103,7 +127,7 @@ class InputModeDFMaster: UIView, UITextFieldDelegate {
         return self.photos
     }
     
-    func updateDefectPhotoData(index:Int, photo:Photo, needSave:Bool=true) ->Photo? {
+    func updateDefectPhotoData(_ index:Int, photo:Photo, needSave:Bool=true) ->Photo? {
         if index < photos.count {
             
             //Save self to DB for TaskInspDefectRecordId
@@ -133,7 +157,7 @@ class InputModeDFMaster: UIView, UITextFieldDelegate {
         return nil
     }
     
-    func deleteTaskInspDefectDataRecord(id:Int) {
+    func deleteTaskInspDefectDataRecord(_ id:Int) {
         let taskDataHelper = TaskDataHelper()
         taskDataHelper.deleteTaskInspDefectDataRecordById(id)
     }
@@ -143,7 +167,7 @@ class InputModeDFMaster: UIView, UITextFieldDelegate {
         
     }
     
-    func setSelectedPhoto(photo:Photo, needSave:Bool=true) {
+    func setSelectedPhoto(_ photo:Photo, needSave:Bool=true) {
     
     }
 }

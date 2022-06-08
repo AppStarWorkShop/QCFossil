@@ -20,39 +20,39 @@ class ShapeView: UIView {
         return UIColor(hue: hue, saturation: 0.8, brightness: 1.0, alpha: 0.8)
     }
     
-    func pointFrom(angle: CGFloat, radius: CGFloat, offset: CGPoint) -> CGPoint {
-        return CGPointMake(radius * cos(angle) + offset.x, radius * sin(angle) + offset.y)
+    func pointFrom(_ angle: CGFloat, radius: CGFloat, offset: CGPoint) -> CGPoint {
+        return CGPoint(x: radius * cos(angle) + offset.x, y: radius * sin(angle) + offset.y)
     }
     
-    func regularPolygonInRect(rect:CGRect) -> UIBezierPath {
+    func regularPolygonInRect(_ rect:CGRect) -> UIBezierPath {
         let degree = arc4random() % 10 + 3
         
         let path = UIBezierPath()
         
-        let center = CGPointMake(rect.width / 2.0, rect.height / 2.0)
+        let center = CGPoint(x: rect.width / 2.0, y: rect.height / 2.0)
         
         var angle:CGFloat = -CGFloat(M_PI / 2.0)
         let angleIncrement = CGFloat(M_PI * 2.0 / Double(degree))
         let radius = rect.width / 2.0
         
-        path.moveToPoint(pointFrom(angle, radius: radius, offset: center))
+        path.move(to: pointFrom(angle, radius: radius, offset: center))
         
         for _ in 1...degree - 1 {
             angle += angleIncrement
-            path.addLineToPoint(pointFrom(angle, radius: radius, offset: center))
+            path.addLine(to: pointFrom(angle, radius: radius, offset: center))
         }
         
-        path.closePath()
+        path.close()
         
         return path
     }
     
-    func starPathInRect(rect: CGRect) -> UIBezierPath {
+    func starPathInRect(_ rect: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         
         let starExtrusion:CGFloat = 30.0
         
-        let center = CGPointMake(rect.width / 2.0, rect.height / 2.0)
+        let center = CGPoint(x: rect.width / 2.0, y: rect.height / 2.0)
         
         let pointsOnStar = 5 + arc4random() % 10
         
@@ -70,35 +70,35 @@ class ShapeView: UIView {
             
             if firstPoint {
                 firstPoint = false
-                path.moveToPoint(point)
+                path.move(to: point)
             }
             
-            path.addLineToPoint(midPoint)
-            path.addLineToPoint(nextPoint)
+            path.addLine(to: midPoint)
+            path.addLine(to: nextPoint)
             
             angle += angleIncrement
         }
         
-        path.closePath()
+        path.close()
         
         
         return path
     }
     
-    func trianglePathInRect(rect:CGRect) -> UIBezierPath {
+    func trianglePathInRect(_ rect:CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         
-        path.moveToPoint(CGPointMake(rect.width / 2.0, rect.origin.y))
-        path.addLineToPoint(CGPointMake(rect.width,rect.height))
-        path.addLineToPoint(CGPointMake(rect.origin.x,rect.height))
-        path.closePath()
+        path.move(to: CGPoint(x: rect.width / 2.0, y: rect.origin.y))
+        path.addLine(to: CGPoint(x: rect.width,y: rect.height))
+        path.addLine(to: CGPoint(x: rect.origin.x,y: rect.height))
+        path.close()
         
         return path
     }
     
     func randomPath() -> UIBezierPath {
         
-        let insetRect = CGRectInset(self.bounds,lineWidth,lineWidth)
+        let insetRect = self.bounds.insetBy(dx: lineWidth,dy: lineWidth)
         
         let shapeType = arc4random() % 5
         
@@ -107,7 +107,7 @@ class ShapeView: UIView {
         }
         
         if shapeType == 1 {
-            return UIBezierPath(ovalInRect: insetRect)
+            return UIBezierPath(ovalIn: insetRect)
         }
         
         if (shapeType == 2) {
@@ -121,16 +121,16 @@ class ShapeView: UIView {
         return starPathInRect(insetRect)
     }
     
-    func pathTypeById(shapeType:Int) -> UIBezierPath {
+    func pathTypeById(_ shapeType:Int) -> UIBezierPath {
         
-        let insetRect = CGRectInset(self.bounds,lineWidth,lineWidth)
+        let insetRect = self.bounds.insetBy(dx: lineWidth,dy: lineWidth)
         
         if shapeType == 0 {
             return UIBezierPath(roundedRect: insetRect, cornerRadius: 10.0)
         }
         
         if shapeType == 1 {
-            return UIBezierPath(ovalInRect: insetRect)
+            return UIBezierPath(ovalIn: insetRect)
         }
         
         if (shapeType == 2) {
@@ -147,59 +147,63 @@ class ShapeView: UIView {
         
         if (shapeType == 5) {
             if self.size < 200 {
-                return UIBezierPath(ovalInRect: CGRectMake(10, 35, 90, 40))
+                return UIBezierPath(ovalIn: CGRect(x: 10, y: 35, width: 90, height: 40))
             }else {
-                return UIBezierPath(ovalInRect: CGRectMake(10, 25, 180, 80))
+                return UIBezierPath(ovalIn: CGRect(x: 10, y: 25, width: 180, height: 80))
             }
         }
         
         if (shapeType == 6) {
             if self.size < 200 {
-                return UIBezierPath(ovalInRect: CGRectMake(10, 25, 90, 60))
+                return UIBezierPath(ovalIn: CGRect(x: 10, y: 25, width: 90, height: 60))
             }else {
-                return UIBezierPath(ovalInRect: CGRectMake(10, 25, 180, 120))
+                return UIBezierPath(ovalIn: CGRect(x: 10, y: 25, width: 180, height: 120))
             }
         }
         
         if (shapeType == 7) {
-            return arrowShape(CGPointMake(10, 100), to: CGPointMake(100, 10), tailWidth: 20, headWidth: 45, headLength: 80)
+            return arrowShape(CGPoint(x: 10, y: 100), to: CGPoint(x: 100, y: 10), tailWidth: 20, headWidth: 45, headLength: 80)
         }
         
         if (shapeType == 8) {
-            return arrowShape(CGPointMake(10, 100), to: CGPointMake(100, 10), tailWidth: 10, headWidth: 30, headLength: 60)
+            return arrowShape(CGPoint(x: 10, y: 100), to: CGPoint(x: 100, y: 10), tailWidth: 10, headWidth: 30, headLength: 60)
         }
         
         if (shapeType == 9) {
-            return arrowShape(CGPointMake(10, 100), to: CGPointMake(100, 10), tailWidth: 10, headWidth: 25, headLength: 40)
+            return arrowShape(CGPoint(x: 10, y: 100), to: CGPoint(x: 100, y: 10), tailWidth: 10, headWidth: 25, headLength: 40)
+        }
+        
+        if (shapeType == 10) {
+            return arrowShape(CGPoint(x: 100, y: 100), to: CGPoint(x: 10, y: 10), tailWidth: 10, headWidth: 25, headLength: 40)
         }
         
         return starPathInRect(insetRect)
     }
     
-    func regularPolygonInRectByDegree(rect:CGRect, degree:Int = 4) -> UIBezierPath {
+    func regularPolygonInRectByDegree(_ rect:CGRect, degree:Int = 4) -> UIBezierPath {
         //let degree = arc4random() % 10 + 3
         
         let path = UIBezierPath()
         
-        let center = CGPointMake(rect.width / 2.0, rect.height / 2.0)
+        let center = CGPoint(x: rect.width / 2.0, y: rect.height / 2.0)
         
         var angle:CGFloat = -CGFloat(M_PI / 2.0)
         let angleIncrement = CGFloat(M_PI * 2.0 / Double(degree))
         let radius = rect.width / 2.0
         
-        path.moveToPoint(pointFrom(angle, radius: radius, offset: center))
+        path.move(to: pointFrom(angle, radius: radius, offset: center))
         
         for _ in 1...degree - 1 {
             angle += angleIncrement
-            path.addLineToPoint(pointFrom(angle, radius: radius, offset: center))
+            path.addLine(to: pointFrom(angle, radius: radius, offset: center))
         }
         
-        path.closePath()
+        path.close()
         
         return path
     }
     
-    func arrowShape(from:CGPoint, to:CGPoint, tailWidth:CGFloat, headWidth:CGFloat, headLength:CGFloat) -> UIBezierPath {
+    func arrowShape(_ from:CGPoint, to:CGPoint, tailWidth:CGFloat, headWidth:CGFloat, headLength:CGFloat) -> UIBezierPath {
         return UIBezierPath.arrow(from: from, to: to,
                                    tailWidth: tailWidth, headWidth: headWidth, headLength: headLength)
     }
@@ -207,19 +211,19 @@ class ShapeView: UIView {
     init(origin: CGPoint, shapeType:Int, shapeSize:CGFloat = 205) {
         self.size = shapeSize
         
-        super.init(frame: CGRectMake(0.0, 0.0, size, size))
+        super.init(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size))
         
-        if shapeType == 7 || shapeType == 8 || shapeType == 9 {
+        if shapeType == 7 || shapeType == 8 || shapeType == 9 || shapeType == 10 {
             self.fillColor = UIColor.init(red: CGFloat(_BRUSHSTYLE["red"]!), green: CGFloat(_BRUSHSTYLE["green"]!), blue: CGFloat(_BRUSHSTYLE["blue"]!), alpha: 1.0)
         }else{
-            self.fillColor = UIColor.clearColor()//randomColor()
+            self.fillColor = UIColor.clear//randomColor()
         }
         
         self.path = pathTypeById(shapeType) //UIBezierPath(roundedRect: CGRectInset(self.bounds,lineWidth,lineWidth), cornerRadius: 10.0)
         
         self.center = origin
         
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
         
         initGestureRecognizers()
     }
@@ -239,44 +243,44 @@ class ShapeView: UIView {
 
     }
 
-    func didRemove(rmvGR: UILongPressGestureRecognizer) {
+    @objc func didRemove(_ rmvGR: UILongPressGestureRecognizer) {
         self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Shape?"),parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
             self.removeFromSuperview()
         })
     }
     
-    func didPan(panGR: UIPanGestureRecognizer) {
+    @objc func didPan(_ panGR: UIPanGestureRecognizer) {
         
         self.superview!.bringSubviewToFront(self)
         
-        var translation = panGR.translationInView(self)
+        var translation = panGR.translation(in: self)
         
-        translation = CGPointApplyAffineTransform(translation, self.transform)
+        translation = translation.applying(self.transform)
         
         self.center.x += translation.x
         self.center.y += translation.y
         
-        panGR.setTranslation(CGPointZero, inView: self)
+        panGR.setTranslation(CGPoint.zero, in: self)
     }
     
-    func didPinch(pinchGR: UIPinchGestureRecognizer) {
+    @objc func didPinch(_ pinchGR: UIPinchGestureRecognizer) {
         
         self.superview!.bringSubviewToFront(self)
         
         let scale = pinchGR.scale
         
-        self.transform = CGAffineTransformScale(self.transform, scale, scale)
+        self.transform = self.transform.scaledBy(x: scale, y: scale)
         
         pinchGR.scale = 1.0
     }
     
-    func didRotate(rotationGR: UIRotationGestureRecognizer) {
+    @objc func didRotate(_ rotationGR: UIRotationGestureRecognizer) {
         
         self.superview!.bringSubviewToFront(self)
         
         let rotation = rotationGR.rotation
         
-        self.transform = CGAffineTransformRotate(self.transform, rotation)
+        self.transform = self.transform.rotated(by: rotation)
         
         rotationGR.rotation = 0.0
     }
@@ -285,7 +289,7 @@ class ShapeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         self.fillColor.setFill()
         

@@ -14,10 +14,12 @@ class InputMode01View: InputModeSCMaster {
     @IBOutlet weak var applyToAllButton: UIButton!
     @IBOutlet weak var result: UITextField!
     @IBOutlet weak var addCellButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    
     var inputCells = [InputMode01CellView]()
     let inputCellCount = 6
-    let cellWidth = 768
-    let cellHeight = 140
+    let cellWidth = Int(_DEVICE_WIDTH)
+    let cellHeight = 200
 
     
     /*
@@ -28,12 +30,49 @@ class InputMode01View: InputModeSCMaster {
     }
     */
     
+    override func awakeFromNib() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    @objc func parentScrollEnable() {
+        scrollCellView.isScrollEnabled = true
+    }
+    
+    @objc func parentScrollDisable() {
+        scrollCellView.isScrollEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        guard let touch:UITouch = touches.first else
+        {
+            return
+        }
+        
+        if touch.view!.isKind(of: UITextField().classForCoder) || String(describing: touch.view!.classForCoder) == "UITableViewCellContentView" {
+            self.resignFirstResponderByTextField(self)
+            
+        }else {
+            self.clearDropdownviewForSubviews(self)
+            
+        }
+    }
+    
     override func didMoveToSuperview() {
         if (self.parentVC == nil) {
             // a removeFromSuperview situation
             
             return
         }
+
+        self.applyToAllButton.addTarget(self, action: #selector(applyRstToAll), for: UIControl.Event.touchUpInside)
         
         let photoDataHelper = PhotoDataHelper()
         let taskDataHelper = TaskDataHelper()
@@ -47,7 +86,7 @@ class InputMode01View: InputModeSCMaster {
         var inspElmNames = [String]()
         for taskInspDataRecord in (inspSection?.taskInspDataRecords)! {
             
-            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspItemText: (_ENGLISH ? taskInspDataRecord.elmtObj?.elementNameEn:taskInspDataRecord.elmtObj?.elementNameCn)!,inspDetailText: taskInspDataRecord.inspectDetail!, inspRemarksText: taskInspDataRecord.inspectRemarks!,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId:taskInspDataRecord.postnObj!.positionId, resultValueObj: taskInspDataRecord.resultObj!, taskInspDataRecordId: taskInspDataRecord.recordId!, inspItemInputText:"" , requiredElementFlag: taskInspDataRecord.elmtObj!.reqElmtFlag)
+            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspItemText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.elmtObj?.elementNameEn, .zh: taskInspDataRecord.elmtObj?.elementNameCn, .fr: taskInspDataRecord.elmtObj?.elementNameFr]),inspDetailText: taskInspDataRecord.inspectDetail!, inspRemarksText: taskInspDataRecord.inspectRemarks!,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId:taskInspDataRecord.postnObj!.positionId, resultValueObj: taskInspDataRecord.resultObj!, taskInspDataRecordId: taskInspDataRecord.recordId!, inspItemInputText:"" , requiredElementFlag: taskInspDataRecord.elmtObj!.reqElmtFlag, optionEnableFlag: inspSection?.optionalEnableFlag ?? 1)
             
             
             inputCell.photoAdded = photoDataHelper.checkPhotoAddedByInspDataRecordId(taskInspDataRecord.recordId!)
@@ -59,9 +98,9 @@ class InputMode01View: InputModeSCMaster {
                 defectItem.inspElmt = inputCell
             }
             
-            self.optInspElms = self.optInspElms.filter({ $0.elementId != taskInspDataRecord.elmtObj?.elementId})
+            //self.optInspElms = self.optInspElms.filter({ $0.elementId != taskInspDataRecord.elmtObj?.elementId})
             inputCells.append(inputCell)
-            inspElmNames.append(_ENGLISH ? (taskInspDataRecord.elmtObj?.elementNameEn)! : (taskInspDataRecord.elmtObj?.elementNameCn)!)
+            inspElmNames.append(MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.elmtObj?.elementNameEn, .zh: taskInspDataRecord.elmtObj?.elementNameCn, .fr: taskInspDataRecord.elmtObj?.elementNameFr]))
         
             idx += 1
         }
@@ -75,26 +114,31 @@ class InputMode01View: InputModeSCMaster {
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.applyToAllButton)
     }
     
-    func applyRstToAll() {
-        let taskDataHelper = TaskDataHelper()
-        let resultValueId = taskDataHelper.getResultValueIdByResultValue(resultForAll, prodTypeId: (Cache_Task_On?.prodTypeId)!, inspTypeId: (Cache_Task_On?.inspectionTypeId)!)
+    @objc func applyRstToAll() {
+        self.alertConfirmView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"))?",parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
+
+            let taskDataHelper = TaskDataHelper()
+            let resultValueId = taskDataHelper.getResultValueIdByResultValue(self.resultForAll, prodTypeId: (Cache_Task_On?.prodTypeId)!, inspTypeId: (Cache_Task_On?.inspectionTypeId)!)
         
-        for cell in inputCells {
-            cell.cellResultInput.text = resultForAll
-            cell.updatePhotoAddediConStatus(resultForAll,photoTakenIcon: cell.photoAddedIcon)
-            cell.resultValueId = resultValueId
-        }
+            for cell in self.inputCells {
+                cell.cellResultInput.text = self.resultForAll
+                cell.updatePhotoAddediConStatus(self.resultForAll,photoTakenIcon: cell.photoAddedIcon)
+                cell.resultValueId = resultValueId
+            }
         
-        Cache_Task_On?.didModify = true
-        updateContentView()
+            Cache_Task_On?.didModify = true
+            self.updateContentView()
+        })
     }
     
     func updateContentView() {
+        self.stackView.arrangedSubviews.forEach({
+            $0.removeFromSuperview()
+        })
         
-        if inputCells.count < 1 {
-            return
-        }
-        
+        if inputCells.count > 0 {
+            //return
+            
         for index in 0...inputCells.count-1 {
             let cell = inputCells[index]
             cell.updateCellIndex(cell,index: index)
@@ -108,23 +152,46 @@ class InputMode01View: InputModeSCMaster {
             }
             
             if cell.cellPhysicalIdx < inputCells.count {
-                self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
+                
+                stackView.addArrangedSubview(cell)
+                cell.translatesAutoresizingMaskIntoConstraints = false
+                cell.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+                cell.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+                cell.heightAnchor.constraint(equalToConstant: CGFloat(cellHeight)).isActive = true
+//                self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
             }
         }
+        }
         
-        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
-        self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: self.scrollCellView.frame.size.width, height: CGFloat(inputCells.count*cellHeight+500)))
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separator)
+        separator.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+        stackView.addArrangedSubview(addCellButton)
+        addCellButton.translatesAutoresizingMaskIntoConstraints = false
+        addCellButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
+        addCellButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addCellButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        let separatorDown = UIView()
+        separatorDown.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separatorDown)
+        separatorDown.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+//        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 50, height: 50)
+//        self.scrollCellView.addSubview(self.addCellButton)
+//        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+500)))
     }
     
-    func resizeScrollView(size:CGSize) {
+    func resizeScrollView(_ size:CGSize) {
         self.scrollCellView.contentSize = size
     }
     
-    func inputCellInit(index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=false, requiredElementFlag:Int=0) -> InputMode01CellView {
+    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspItemText:String, inspDetailText:String,inspRemarksText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: ""), taskInspDataRecordId:Int=0, inspItemInputText:String="", userInteractive:Bool=true, requiredElementFlag:Int=0, optionEnableFlag:Int=1) -> InputMode01CellView {
         
         let inputCellViewObj = InputMode01CellView.loadFromNibNamed("InputMode01Cell")
-        
+        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: CGFloat(cellHeight))
         inputCellViewObj?.parentView = self
         inputCellViewObj?.cellIndexLabel.text = idxLabelText
         inputCellViewObj?.cellCatIdx = sectionId
@@ -132,10 +199,10 @@ class InputMode01View: InputModeSCMaster {
         inputCellViewObj?.cellIdx = index
         inputCellViewObj?.cellPhysicalIdx = index-1
         inputCellViewObj?.elementDbId = elementDbId
-        inputCellViewObj?.inptItemInput.text = inspItemText
-        inputCellViewObj?.inptDetailInput.text = inspDetailText
+        inputCellViewObj?.inptItemInputTextView.text = inspItemText
+        inputCellViewObj?.inptDetailInputTextView.text = inspDetailText
         inputCellViewObj?.cellRemarksInput.text = inspRemarksText
-        inputCellViewObj?.cellResultInput.text = _ENGLISH ? resultValueObj.resultValueNameEn : resultValueObj.resultValueNameCn
+        inputCellViewObj?.cellResultInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: resultValueObj.resultValueNameEn, .zh: resultValueObj.resultValueNameCn, .fr: resultValueObj.resultValueNameFr])
         
         //for Save DB
         inputCellViewObj?.refRecordId = refRecordId
@@ -146,53 +213,36 @@ class InputMode01View: InputModeSCMaster {
         inputCellViewObj?.inspReqCatText = sectionName
         inputCellViewObj?.inspAreaText = inspItemText
         inputCellViewObj?.inspItemText = inspItemInputText
+        inputCellViewObj?.requiredElementFlag = requiredElementFlag
         
         if !userInteractive {
-            inputCellViewObj?.inptItemInput.userInteractionEnabled = false
+            inputCellViewObj?.inptItemInputTextView.isUserInteractionEnabled = false
         }
         
-        if !dismissBtnHidden || requiredElementFlag < 1{
+        if !dismissBtnHidden || (requiredElementFlag < 1 && optionEnableFlag > 0) {
             inputCellViewObj?.showDismissButton()
         }
         
         return inputCellViewObj!
     }
     
-    @IBAction func addCellBtnOnClick(sender: UIButton) {
+    @IBAction func addCellBtnOnClick(_ sender: UIButton) {
         NSLog("Add Cell")
         
-        if self.optInspElms.count > 0 {
-            let usedInspItems = self.inputCells.filter({ $0.requiredElementFlag == 0 })
-            var usedInspItemNames = [String]()
-            
-            for usedInspItem in usedInspItems {
-                usedInspItemNames.append(usedInspItem.inptItemInput.text!)
-            }
-            
-            let optInspElm = self.optInspElms[0]
-            usedInspItemNames.append((_ENGLISH ? optInspElm.elementNameEn:optInspElm.elementNameCn)!)
-            
-            let inputCell = inputCellInit(inputCells.count+1, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(inputCells.count+1),inspItemText: (_ENGLISH ? optInspElm.elementNameEn:optInspElm.elementNameCn)!, inspDetailText: "", inspRemarksText: "", dismissBtnHidden: false, elementDbId: 0, refRecordId: 0, inspElmId: optInspElm.elementId!, inspPostId: 0, userInteractive: true)
-            inputCells.append(inputCell)
-            
-            inputCell.inspReqCatText = categoryName
-            inputCell.inspAreaText = (_ENGLISH ? optInspElm.elementNameEn:optInspElm.elementNameCn)!
-            //inputCell.inspItemText = (_ENGLISH ? optInspElm.elementNameEn:optInspElm.elementNameCn)!
-            self.updateContentView()
-            self.updateOptionalInspElmts(usedInspItemNames)
-        }
+        let inputCell = inputCellInit(inputCells.count+1, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(inputCells.count+1),inspItemText: "", inspDetailText: "", inspRemarksText: "", dismissBtnHidden: false, elementDbId: 0, refRecordId: 0, inspElmId: 0, inspPostId: 0, userInteractive: true)
+        
+        inputCell.saveMyselfToGetId()
+        inputCells.append(inputCell)
+        self.updateContentView()
     }
 
-    func updateOptionalInspElmts(inspElmtNames:[String]=[], action:String="filter") {
+    func updateOptionalInspElmts(_ inspElmtNames:[String]=[], action:String="filter") {
         
         if action == "filter" {
-            self.optInspElms = self.optInspElmsMaster
-            for inspElmtName in inspElmtNames {
-                self.optInspElms = self.optInspElms.filter({ _ENGLISH ? $0.elementNameEn != inspElmtName : $0.elementNameCn != inspElmtName })
-            }
+
         }else{
             for inspElmtName in inspElmtNames {
-                let inspElmt = self.optInspElmsMaster.filter({ _ENGLISH ? $0.elementNameEn == inspElmtName : $0.elementNameCn == inspElmtName })
+                let inspElmt = self.optInspElmsMaster.filter({ MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: $0.elementNameEn, .zh: $0.elementNameCn, .fr: $0.elementNameFr]) == inspElmtName })
                 
                 if inspElmt.count>0{
                     self.optInspElms.append(inspElmt[0])
@@ -201,9 +251,9 @@ class InputMode01View: InputModeSCMaster {
         }
         
         if self.optInspElms.count < 1 {
-            self.addCellButton.hidden = true
+            self.addCellButton.isHidden = true
         }else{
-            self.addCellButton.hidden = false
+            self.addCellButton.isHidden = false
         }
     }
 }

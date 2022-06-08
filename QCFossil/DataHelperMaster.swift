@@ -12,7 +12,7 @@ import UIKit
 class DataHelperMaster {
     var db = DatabaseManager.sharedDatabaseManager.db
     
-    func notNilObject(value : AnyObject?) -> AnyObject? {
+    func notNilObject(_ value : AnyObject?) -> AnyObject? {
         if value == nil {
             return NSNull()
         } else {

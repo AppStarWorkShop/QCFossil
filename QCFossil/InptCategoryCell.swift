@@ -17,6 +17,7 @@ class InptCategoryCell: UIView {
     @IBOutlet weak var resultValue5: UILabel!
     @IBOutlet weak var resultValueTotal: UILabel!
     
+    @IBOutlet weak var result4Divider: UILabel!
     @IBOutlet weak var inptCatButton: CustomButton!
     weak var parentView:TaskDetailViewInput!
     var resultSetValueFrames = [ResultValueFrame]()
@@ -25,6 +26,7 @@ class InptCategoryCell: UIView {
     var frameWidth:CGFloat = 90.0
     var frameHeight:CGFloat = 21.0
     var frameTop:CGFloat = 9
+    var sectionId:Int?
     
     let marginX1:CGFloat = 191
     let marginX2:CGFloat = 289
@@ -48,43 +50,48 @@ class InptCategoryCell: UIView {
     }
     */
     override func awakeFromNib() {
-        let resultValueFrame1 = ResultValueFrame(xPos: marginX1, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame2 = ResultValueFrame(xPos: marginX2, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame3 = ResultValueFrame(xPos: marginX3, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame4 = ResultValueFrame(xPos: marginX4, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame5 = ResultValueFrame(xPos: marginX5, yPos: frameTop, width: frameWidth, height: frameHeight)
-        let resultValueFrame6 = ResultValueFrame(xPos: marginX6, yPos: frameTop, width: frameWidth, height: frameHeight)
+        resultValue1.numberOfLines = 2
+//        resultValue1.adjustsFontSizeToFitWidth = true
+//        resultValue1.lineBreakMode = .byClipping
+        resultValue1.lineBreakMode = .byWordWrapping
         
-        resultSetValueFrames.append(resultValueFrame1)
-        resultSetValueFrames.append(resultValueFrame2)
-        resultSetValueFrames.append(resultValueFrame3)
-        resultSetValueFrames.append(resultValueFrame4)
-        resultSetValueFrames.append(resultValueFrame5)
-        resultSetValueFrames.append(resultValueFrame6)
+        resultValue2.numberOfLines = 2
+//        resultValue2.adjustsFontSizeToFitWidth = true
+//        resultValue2.lineBreakMode = .byClipping
+        resultValue2.lineBreakMode = .byWordWrapping
         
-        resultValue1.frame = CGRectMake(marginX1, frameTop, frameWidth, frameHeight)
-        resultValue1.textAlignment = .Center
+        resultValue3.numberOfLines = 2
+//        resultValue3.adjustsFontSizeToFitWidth = true
+//        resultValue3.lineBreakMode = .byClipping
+        resultValue3.lineBreakMode = .byWordWrapping
+        
+        resultValue4.numberOfLines = 2
+//        resultValue4.adjustsFontSizeToFitWidth = true
+//        resultValue4.lineBreakMode = .byClipping
+        resultValue4.lineBreakMode = .byWordWrapping
+        
+        resultValue5.numberOfLines = 2
+//        resultValue5.adjustsFontSizeToFitWidth = true
+//        resultValue5.lineBreakMode = .byClipping
+        resultValue5.lineBreakMode = .byWordWrapping
+        
+        resultValueTotal.numberOfLines = 2
+//        resultValueTotal.adjustsFontSizeToFitWidth = true
+//        resultValueTotal.lineBreakMode = .byClipping
+        resultValueTotal.lineBreakMode = .byWordWrapping
+        
         resultValueLabels.append(resultValue1)
-        
-        resultValue2.frame = CGRectMake(marginX2, frameTop, frameWidth, frameHeight)
-        resultValue2.textAlignment = .Center
         resultValueLabels.append(resultValue2)
-        
-        resultValue3.frame = CGRectMake(marginX3, frameTop, frameWidth, frameHeight)
-        resultValue3.textAlignment = .Center
         resultValueLabels.append(resultValue3)
-        
-        resultValue4.frame = CGRectMake(marginX4, frameTop, frameWidth, frameHeight)
-        resultValue4.textAlignment = .Center
         resultValueLabels.append(resultValue4)
-        
-        resultValue5.frame = CGRectMake(marginX5, frameTop, frameWidth, frameHeight)
-        resultValue5.textAlignment = .Center
         resultValueLabels.append(resultValue5)
-        
-        resultValueTotal.frame = CGRectMake(marginX6, frameTop, frameWidth, frameHeight)
-        resultValueTotal.textAlignment = .Center
         resultValueLabels.append(resultValueTotal)
+        
+        if TypeCode.LEATHER.rawValue == Cache_Inspector?.typeCode || TypeCode.PACKAGING.rawValue == Cache_Inspector?.typeCode {
+            resultValueTotal.isHidden = true
+            resultValue5.superview?.isHidden = true
+            result4Divider.isHidden = true
+        }
     }
     
     override func didMoveToSuperview() {
@@ -96,36 +103,26 @@ class InptCategoryCell: UIView {
         updateSummaryResultValues(resultSetValues)
     }
     
-    func updateSummaryResultValues(resultSetValues:[SummaryResultValue]) {
-        
+    func updateSummaryResultValues(_ resultSetValues:[SummaryResultValue]) {
         var totalCount = 0
         for idx in 0...resultSetValues.count {
             if idx < resultValueLabels.count {
-            let resultValueLabel = resultValueLabels[idx]
-            
-            resultValueLabel.font = resultValueTotal.font.fontWithSize(14)
-            if idx == resultSetValues.count {
+                let resultValueLabel = resultValueLabels[idx]
                 
-                if resultSetValues.count < 5 {
-                    resultValueLabel.frame.origin.x = marginX6
+                resultValueLabel.font = resultValueTotal.font.withSize(12)
+                if idx == resultSetValues.count {
+                    resultValueLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Total"))(\(totalCount))"
+                }else{
+                    let resultSetValue = resultSetValues[idx]
+                    
+                    resultValueLabel.text = "\(resultSetValue.valueName)(\(resultSetValue.resultCount))"
+                    totalCount += resultSetValue.resultCount
                 }
-                
-                resultValueLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Total"))(\(totalCount))"
-                
-            }else{
-                let resultSetValue = resultSetValues[idx]
-                
-                resultValueLabel.text = "\(resultSetValue.valueName)(\(resultSetValue.resultCount))"
-                totalCount += resultSetValue.resultCount
-            }
-            
-            self.addSubview(resultValueLabel)
             }
         }
-        
     }
     
-    @IBAction func inptCatButton(sender: UIButton) {
+    @IBAction func inptCatButton(_ sender: UIButton) {
         let myParentVC = self.parentVC as! TaskDetailsViewController
         myParentVC.startTask(sender.tag)
     }

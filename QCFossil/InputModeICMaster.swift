@@ -7,6 +7,19 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class InputModeICMaster:UIView {
     
@@ -16,6 +29,7 @@ class InputModeICMaster:UIView {
     var inspPostId:Int?=0
     var resultValueId:Int = 0
     var requiredElementFlag:Int = 0
+    var inspectZoneValueId:Int?
     
     //UI
     var photoAdded = false
@@ -37,51 +51,54 @@ class InputModeICMaster:UIView {
     var inspAreaText = ""
     var inspItemText = ""
     
-    func updatePhotoNeededStatus(resultValue:String) {
-        if resultValue.lowercaseString.rangeOfString("c.a.") != nil || resultValue.lowercaseString.rangeOfString("fail") != nil || resultValue.lowercaseString.rangeOfString("hold") != nil || resultValue.lowercaseString.rangeOfString("有条件批准") != nil || resultValue.lowercaseString.rangeOfString("不合格") != nil || resultValue.lowercaseString.rangeOfString("保留") != nil {
-            self.photoNeeded = true
-        }else{
-            self.photoNeeded = false
-        }
+    func updatePhotoNeededStatus(_ resultValue:String) {
+        let taskDataHelper = TaskDataHelper()
+        self.photoNeeded = taskDataHelper.isNeedAddPhotoForInspectItem(resultValue)
+//        self.photoNeeded = Cache_NegativeResultValues.contains(resultValue)
+//        if resultValue.lowercased().range(of: "c.a.") != nil || resultValue.lowercased().range(of: "fail") != nil || resultValue.lowercased().range(of: "hold") != nil || resultValue.lowercased().range(of: "有条件批准") != nil || resultValue.lowercased().range(of: "不合格") != nil || resultValue.lowercased().range(of: "保留") != nil {
+//            self.photoNeeded = true
+//        }else{
+//            self.photoNeeded = false
+//        }
     }
     
-    func updateCellIndex(cell:InputModeICMaster, index:Int) {
+    func updateCellIndex(_ cell:InputModeICMaster, index:Int) {
         cell.cellIdx = index+1
         cell.cellPhysicalIdx = index
     }
     
-    func updatePhotoAddediConStatus(resultValue:String="", photoTakenIcon:UIImageView) {
+    func updatePhotoAddediConStatus(_ resultValue:String="", photoTakenIcon:UIImageView) {
         if resultValue != "" {
             self.updatePhotoNeededStatus(resultValue)
         }
         
         //need photo and photo added
         if self.photoAdded && self.photoNeeded {
-            photoTakenIcon.hidden = false
+            photoTakenIcon.isHidden = false
             if let image = UIImage(named: "have_photo") {
                 photoTakenIcon.image = image
             }
         }else if self.photoNeeded && !self.photoAdded{//need photo but not yet added
-            photoTakenIcon.hidden = false
+            photoTakenIcon.isHidden = false
             if let image = UIImage(named: "need_photo_icon") {
                 photoTakenIcon.image = image
             }
         }else if self.photoAdded{
-            photoTakenIcon.hidden = false
+            photoTakenIcon.isHidden = false
             if let image = UIImage(named: "have_photo") {
                 photoTakenIcon.image = image
             }
         }else{
-            photoTakenIcon.hidden = true
+            photoTakenIcon.isHidden = true
         }
     }
     
-    func deleteTaskInspDataRecord(id:Int) {
+    func deleteTaskInspDataRecord(_ id:Int) {
         let taskDataHelper = TaskDataHelper()
         taskDataHelper.deleteTaskInspDataRecordById(id)
     }
     
-    func deleteTaskPhotos(deletePhoto:Bool=false) {
+    func deleteTaskPhotos(_ deletePhoto:Bool=false) {
         if deletePhoto {
             //Delete Relative Photos
             let photoDataHelper = PhotoDataHelper()
@@ -113,7 +130,7 @@ class InputModeICMaster:UIView {
         }
     }
     
-    func isDefectItemAdded(defectListVC:DefectListViewController) ->Bool {
+    func isDefectItemAdded(_ defectListVC:DefectListViewController) ->Bool {
         let defectItems = Cache_Task_On?.defectItems
         let isDCAddedCheck = defectItems!.filter({ $0.inspectRecordId == taskInspDataRecordId })
         

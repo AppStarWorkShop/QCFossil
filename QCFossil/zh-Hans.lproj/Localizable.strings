@@ -116,7 +116,7 @@
 
 "Inspection Information" = "检查资料";
 
-"Inspection Item" = "检查项目";
+"Inspection Item" = "不良项目位置点及位置描述";
 
 "PO Line No." = "订单行号";
 
@@ -208,7 +208,7 @@
 
 "Empty/Previous Section"="空白/上一项目";
 
-"Inspection Area"="检查范围 ";
+"Inspection Area"="不良项目位置";
 
 "Inspect Item"="检查项目";
 
@@ -280,7 +280,7 @@
 
 "Remove Photo" = "移除相片";
 
-"Defect Description" = "不良项目描述";
+"Defect Description" = "备注";
 
 "Defect Qty" = "不良项目数量";
 
@@ -416,7 +416,7 @@
 
 "OPD/RSD" = "OPD/RSD";
 
-"OS QC Qty" = "未预约验货数";
+"OS QC Qty" = "待检查数(成品)";
 
 "User Login" = "用户登录";
 
@@ -424,7 +424,7 @@
 
 "Save Success!" = "保存成功！";
 
-"Save fail!" = "保存失败！";
+"Save Failed!" = "保存失败！";
 
 "Please Select Inspect Area and Inspect Item" = "请选择检查范畴以及检查项目";
 
@@ -434,7 +434,7 @@
 
 "Please Select Inspect Defect Position and Points" = "请选择检查问题位置以及细项";
 
-"No Po Items!" = "请先选择订单项目！";
+"No PO Item Selected!" = "请先选择订单项目！";
 
 "Photo(s) of this inspection item will be deleted!" = "此檢查項目中的相片將被刪除!";
 
@@ -452,17 +452,33 @@
 
 "-Master Data" = "-主要数据";
 
+"Master Data" = "主要数据";
+
 "-Inspection Setup Data" = "-检查设置数据";
+
+"Inspection Setup Data" = "检查设置数据";
 
 "-FGPO Data" = "-订单数据";
 
+"FGPO Data" = "订单数据";
+
 "-Task Booking Data" = "-任务预定数据";
+
+"Task Booking Data" = "任务预定数据";
 
 "-Task Status Data" = "-任务状态数据";
 
+"Task Status Data" = "任务状态数据";
+
 "-Task Result Data" = "-任务结果数据";
 
+"Task Result Data" = "任务结果数据";
+
 "-Task Result Photo" = "-任务结果照片";
+
+"Task Result Photo" = "任务结果照片";
+
+"Task Photo Upload" = "任务照片上传";
 
 "Data Download" = "数据下载";
 
@@ -524,17 +540,17 @@
 
 "NO" = "否";
 
-"ALL" = "全部";
+"All" = "全部";
 
 "Ship Win" = "SW/要求出厂日";
 
 "SW/Req. Ex-fty Date" = "SW/要求出厂日";
 
-"Cant Update Task Inspector!" = "不能关联任务与检查人员！";
+"Cannot Update Task Inspector!" = "不能关联任务与检查人员！";
 
 "Reviewed" = "已检阅";
 
-"Cancel Ad-hoc Task?" = "取消突发任务？";
+"Cancel Task?" = "取消任务？";
 
 "Device ID:" = "机身编号:";
 
@@ -624,9 +640,9 @@
 
 "Downloading Data..." = "数据下载中...";
 
-"The network connection was lost." = "网络连接丢失！";
+"Network Connection Lost!" = "网络连接丢失！";
 
-"The internet connection appears to be offline." = "无网络连接！";
+"Network Connection Cannot Established!" = "无网络连接！";
 
 "Clear Signature?" = "清空签名？";
 
@@ -636,7 +652,7 @@
 
 "Inspector Signature" = "检查员签署";
 
-"Login information incorrect!" = "登入資料錯誤!";
+"Login Information Not Correct" = "登入資料錯誤";
 
 "Update Signature" = "更新簽署";
 
@@ -644,19 +660,19 @@
 
 "Delete Shape?" = "删除图形？";
 
-"New password should be 8-15 charators!" = "请输入8到15位新密码！";
+"New Password should be 8-15 Characters" = "请输入8到15位新密码";
 
-"New password need to include Numbers!" = "新密码必须包含数字！";
+"New Password need to include Numbers" = "新密码必须包含数字";
 
-"New password need to include Letters!" = "新密码必须包含字母！";
+"New Password need to include Letters" = "新密码必须包含字母";
 
 "New password reset Successfully!" = "新密码设置成功！";
 
-"Confirm password is different from the New password!" = "两次输入密码必须一致！";
+"Confirm Password and New Password Not Matched" = "两次输入密码必须一致";
 
-"Old password is not Correct!" = "当前密码不正确！";
+"Old Password Not Correct" = "当前密码不正确";
 
-"Cant use login name as new password!" = "不能使用登入名称作为新密码！";
+"Login Name Cannot Be Used As New Password" = "不能使用登入名称作为新密码";
 
 "Please Change Your Password Now" = "请现在更改你的密码";
 
@@ -676,13 +692,13 @@
 
 "Password update failed." = "密码更改失败";
 
-"Update failed. Please check internet connection." = "更改失敗。請檢查網絡連接狀況";
+"Update failed. Please check internet connection" = "更改失敗… 請檢查網絡連接狀況";
 
 "Password has been reset! Please check your Email!" = "密碼已發送至閣下的電郵地址";
 
-"Username or Password is not correct!" = "用户名字或密码不正确";
+"Username / Password Not Correct" = "用户名字或密码不正确";
 
-"Please Select Backup First" = "请先选择一个备份文件";
+"Please Select One Backup Record" = "请先选择一个备份文件";
 
 "Please Input Your Password" = "输入密码";
 
@@ -700,11 +716,11 @@
 
 "Preparing For Restortion..." = "还原工作准备中...";
 
-"New Password Update Fail..." = "密码更新失败...";
+"Update New Password Failed" = "密码更新失败";
 
 "Username has been reset! Please check your Email!" = "用户名称已发送, 请检查电邮。";
 
-"Username or Email is not correct!" = "用户名称或电邮不正确";
+"Username / Email Not Correct" = "用户名称或电邮不正确";
 
 "Backup Description" = "备份备注";
 
@@ -714,11 +730,9 @@
 
 "Restore" = "恢复备份";
 
-"The Internet connection appears to be offline." = "请检查网络连接状况。";
-
 "Could not connect to the server." = "请检查网络连接状况。";
 
-"Backup failed." = "备份失败。";
+"Backup Failed!" = "备份失败！";
 
 "App Version" = "App版本";
 
@@ -774,9 +788,15 @@
 
 "No Data Response." = "沒有回传数据。";
 
+"Sync Failed due to Network Issue" = "由于网络问题而同步失败";
+
+"App is in Offline Mode and unable to proceed Data Download." = "应用程式处于离线状态，不能进行数据下载。";
+
+"Sync Failed due to Data Error Occurred" = "由于发生数据错误而同步失败";
+
 "OPD/RSD From" = "OPD/RSD由";
 
-"Inspection Type or Product Type or Template can't be null!" = "检查设置数据, 产品类型或者模版不能为空";
+"Inspection Type / Product Type / Template Not Allow Empty!" = "检查设置数据, 产品类型或者模版不能为空";
 
 "Delete all invalid tasks?" = "删除所有无效之任务？";
 
@@ -785,3 +805,189 @@
 "Task Cleaning..." = "数据清理中...";
 
 "Deleting..." = "删除中...";
+
+"Defect Zone" = "问题区域";
+
+"Defect Desc. 1" = "不良描述一";
+
+"Defect Desc. 2" = "不良描述二";
+
+"Network Request Failed with Unknown Reason!" = "网络请求失败，原因不明！";
+
+"Please enter defect quantity" = "请输入缺陷数目";
+
+"Please enter defect point info" = "请先输入不良项目资料";
+
+"QC Remark" = "品检备注";
+
+"Additional Administrative Item" = "附加行政项目";
+
+"QC Info" = "检查标准";
+
+"Other Remark" = "其他备注";
+
+"Product Info" = "产品资讯";
+
+"Vendor" = "供应商";
+
+"QC Internal No" = "预约单编号";
+
+"Brand" = "品牌";
+
+"TS Report No" = "技术办报告编号";
+
+"Material Category" = "产品类别";
+
+"Assortment" = "是否混装";
+
+"Inspector" = "检查员";
+
+"Assortment Style" = "混装型号";
+
+"Season" = "季度";
+
+"Update datetime" = "资讯更新日期/时间";
+
+"QC Info" = "品检资讯";
+
+"Order Qty" = "订单数量";
+
+"Quality Standard" = "品质收货标准";
+
+"Booked Qty" = "验货数量";
+
+"Marking" = "字印";
+
+"AQL Qty" = "抽数数量";
+
+"Weight" = "重量(g)";
+
+"Adjust Time" = "调较时间";
+
+"Length Req." = "要求长度";
+
+"Product Grade" = "等级";
+
+"Movt(Origin)" = "机芯型号";
+
+"UPC-Orbid Status" = "UPC-Orbid Mark状态";
+
+"Combine QC Remark" = "合抽备注";
+
+"SS/TS Info" = "销售办/技术办状况";
+
+"SS Ready" = "有销售办";
+
+"SS Comment Ready" = "评语资料";
+
+"TS Submit Date" = "技术样办交办日期";
+
+"TS Result" = "技术样办结果";
+
+"Same PO with Reject" = "相同PO是否拒收过";
+
+"Inspect Sample Ready" = "有验货办";
+
+"Link Test Qty" = "调换珠测试";
+
+"Dust Test Qty" = "防尘测试";
+
+"Smart Link Test Qty" = "Smart Link测试";
+
+"Other Test Qty" = "其他功能测试";
+
+"CA Form" = "CA Form";
+
+"Precision Report" = "精确度报告";
+
+"Smart Link Report" = "Smart Link测试";
+
+"Reliability Test Remark" = "上次功能测试";
+
+"Fty Pack Info" = "厂方提供包装图片/日期";
+
+"Fty Droptest Info" = "厂方提供堕箱测试报告/日期";
+
+"PO No" = "订单编号";
+
+"SAP PO No" = "SAP单号";
+
+"Style, Size" = "款式型号/尺寸";
+
+"Additional Info" = "附加报告/资料";
+
+"Style" = "款式型号";
+
+"Ship To" = "目的地";
+
+"Ship Mode" = "装运模式";
+
+"Retail Price" = "UPC挂牌价钱";
+
+"Barcode" = "UPC挂牌编号";
+
+"-Style Photo" = "-产品图片";
+
+"Style Photo" = "产品图片";
+
+"-Clean Style Photo" = "-清理产品图片";
+
+"Salesman Photo" = "销售办图片";
+
+"Case Back" = "底盖外字印";
+
+"Only x photos please!" = "最多%d张相片";
+
+"Okay" = "确定";
+
+"You can only send 5 photos at a time." = "只允许加入最多5张图片";
+
+"Select an Album" = "选择图库";
+
+"Pick Photos" = "选择图片";
+
+"Loading..." = "加载中...";
+
+"Current app version not support this DB version!" = "当前App版本不支持此DB版本！";
+
+"Master Data Download" = "主要数据下载";
+
+"Master Data Download Acknowledgement" = "主要数据下载反馈";
+
+"Inspection Setup Data Download" = "检查设置数据下载";
+
+"Inspection Setup Data Download Acknowledgement" = "检查设置数据下载反馈";
+
+"FGPO Data Download" = "订单数据下载";
+
+"FGPO Data Download Acknowledgement" = "订单数据下载反馈";
+
+"Task Booking Data Download" = "任务预定数据下载";
+
+"Task Booking Data Download Acknowledgement" = "任务预定数据下载反馈";
+
+"Task Status Data Download" = "任务状态数据下载";
+
+"Task Status Data Download Acknowledgement" = "任务状态数据下载反馈";
+
+"Style Photo Download" = "产品图片下载";
+
+"Style Photo Download Acknowledgement" = "产品图片下载反馈";
+
+"App Database Backup Upload" = "应用程式数据库备份上传";
+
+"Task Result Data Upload" = "任务结果数据上传";
+
+"Task Photo Data Upload" = "任务照片上传";
+
+"Sync Failed when iPad in Sleep Mode" = "iPad在睡眠模式下同步失败";
+
+"Retry" = "重试";
+
+"Sync Failed No Original or Thumb Photo Found!" = "找不到原始照片同步失败";
+
+"Please avoid to press home/power button or show up control center when data sync in progress." = "在同步过程中请不要点击home/power按钮或者显示控制中心。";
+
+"Please enter defect item for" = "請輸入不良项目";
+
+"app program version check alert message" = "版本已到期, 請更新至最新版本 (v%@), 才進行數據同步。";

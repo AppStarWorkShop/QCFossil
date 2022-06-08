@@ -44,8 +44,8 @@ class LeatherFinalViewController: UIViewController {
         }
     }
     */
-    @IBAction func signoffButtonClick(sender: UIButton) {
+    @IBAction func signoffButtonClick(_ sender: UIButton) {
         
-        self.performSegueWithIdentifier("ToSignoffSegue", sender:self)
+        self.performSegue(withIdentifier: "ToSignoffSegue", sender:self)
     }
 }

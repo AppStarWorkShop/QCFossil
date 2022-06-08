@@ -7,28 +7,79 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 class TabBarViewController: UITabBarController {
     
     weak var taskDetalViewContorller:TaskDetailsViewController!
     weak var photoAlbumViewController:PhotoAlbumViewController!
     weak var defectListViewController:DefectListViewController!
+    weak var qcInfoViewController:QCInfoViewController? = nil
+    var handler:(()->(Bool))?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TabBarViewController.switchTabViewToDL), name: "switchTabViewToDL", object: nil)
         
+//        vc is: TaskDetailsViewController
+//        vc is: DefectListViewController
+//        vc is: PhotoAlbumViewController
+//        vc is: QCInfoViewController
+        
         //selected index 2: DefectListViewController
-        defectListViewController = self.childViewControllers[2].childViewControllers[0] as? DefectListViewController
-        defectListViewController?.initNotificationCenter()
+        defectListViewController = self.viewControllers?[2] as? DefectListViewController
         defectListViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Findings")
         
         //selected index 1: photoAlbumViewController
-        photoAlbumViewController = self.childViewControllers[1].childViewControllers[0] as? PhotoAlbumViewController
+        photoAlbumViewController = self.viewControllers?[1] as? PhotoAlbumViewController
         photoAlbumViewController?.initPhotoTakerNotification()
         photoAlbumViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
+        
+        let taskDataHelper = TaskDataHelper()
+        let isShowQCInfoPage = taskDataHelper.isNeedShowQCInfoPage(Cache_Task_On?.refTaskId ?? 0)
+        if isShowQCInfoPage {
+            qcInfoViewController = self.viewControllers?[3] as? QCInfoViewController
+            qcInfoViewController?.tabBarItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("QC Info")
+        } else {
+            self.children[3].removeFromParent()
+        }
+        
+//        print("tabBar height is: \(self.tabBar.frame.size.height)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,36 +87,67 @@ class TabBarViewController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-    func switchTabViewToDL() {
-        defectListViewController?.updateContentView()
-        self.selectedIndex = 2
-    }*/
-    
-    func setLeftBarItem(title:String, actionName:String) {
+    func setLeftBarItem(_ title:String, actionName:String) {
         
-        let leftButton=UIBarButtonItem()
-        leftButton.title=title
+        let leftButton = UIBarButtonItem()
+        leftButton.title = title
         leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-        leftButton.style=UIBarButtonItemStyle.Plain
-        leftButton.target=self
-        leftButton.action=Selector(actionName)
-        self.navigationItem.leftBarButtonItem=leftButton
+        leftButton.style = UIBarButtonItem.Style.plain
+        leftButton.target = self
+        
+        switch actionName {
+        case "backToTaskDetail":
+            leftButton.action = #selector(backToTaskDetail)
+        case "backToTaskDetailFromPADF":
+            leftButton.action = #selector(backToTaskDetailFromPADF)
+        case "backTaskSearch:":
+            leftButton.action = #selector(backTaskSearch)
+        case "backToTaskDetailFromSignOffPage":
+            leftButton.action = #selector(backToTaskDetailFromSignOffPage)
+        default:
+            leftButton.action = nil
+        }
+        
+        self.navigationItem.leftBarButtonItem = leftButton
     }
     
-    func setRightBarItem(title:String, actionName:String) {
-        let rightButton=UIBarButtonItem()
-        rightButton.title=title
+    func setRightBarItem(_ title:String, actionName:String) {
+        let rightButton = UIBarButtonItem()
+        rightButton.title = title
         rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-        rightButton.style=UIBarButtonItemStyle.Plain
-        rightButton.target=self
-        rightButton.action=Selector(actionName)
-        self.navigationItem.rightBarButtonItem=rightButton
+        rightButton.style = UIBarButtonItem.Style.plain
+        rightButton.target = self
+        
+        switch actionName {
+        case "confirmTask":
+            rightButton.action = #selector(confirmTask)
+        case "updateTask:":
+            rightButton.action = #selector(updateTask)
+        default:
+            rightButton.action = nil
+        }
+
+        self.navigationItem.rightBarButtonItem = rightButton
     }
     
-    func updateRightBarItem(title:String, actionName:String) {
-        self.navigationItem.rightBarButtonItem?.title = title
-        self.navigationItem.rightBarButtonItem?.action = Selector(actionName)
+    func setRightBarItemWithHandler(_ title:String, actionName:String, handler:(()->(Bool))?) {
+        let rightButton = UIBarButtonItem()
+        rightButton.title = title
+        rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+        rightButton.style = UIBarButtonItem.Style.plain
+        rightButton.target = self
+        
+        switch actionName {
+        case "confirmTask":
+            rightButton.action = #selector(confirmTask)
+        case "updateTask:":
+            rightButton.action = #selector(updateTask)
+        default:
+            rightButton.action = nil
+        }
+        
+        self.navigationItem.rightBarButtonItem = rightButton
+        self.handler = handler
     }
     
     func startInspectionCategory() {
@@ -73,27 +155,14 @@ class TabBarViewController: UITabBarController {
         taskDetalViewContorller!.startTask()
     }
     
-    func saveIC() {
-        print("Save Inspection Category")
-        /*
-        var title = "Save success."
-        
-        if !saveICItems() {
-            title = "Save fail."
-        }
-        
-        self.view.alertView(title)
-        */
-    }
-    
-    func saveICItems(needValidate:Bool) ->Bool {
+    func saveICItems(_ needValidate:Bool) ->Bool {
         let taskDataHelper = TaskDataHelper()
         let dpDataHelper = DPDataHelper()
         let icSecs = self.taskDetalViewContorller?.categoriesDetail
         var icItemDatas = [TaskInspDataRecord]()
         var dppDatas = [TaskInspPosinPoint]()
         let currentDate = self.view.getCurrentDateTime()
-        
+
         if icSecs?.count > 0 {
             
             for idx in 0...(icSecs?.count)!-1 {
@@ -105,17 +174,23 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.inptItemInput.text == "") && needValidate {
+                    
+                        if ((icElm.resultValueId < 1 || icElm.inptItemInputTextView.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
                         
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
+                            return false
+                        }
+                        
                         //if icElm.inptItemInput.text != "" && icElm.resultValueId > 0 {
-                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInput.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInputTextView.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
                         
                             icItemDatas.append(icItemData!)
                         
-                            if icElm.requiredElementFlag < 1 || icElm.inptItemInput.text != "" || icElm.resultValueId > 0 {
+                            if icElm.requiredElementFlag < 1 || icElm.inptItemInputTextView.text != "" || icElm.resultValueId > 0 {
                                 Cache_Task_On?.didKeepPending = false
                             }
                         
@@ -127,19 +202,24 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.dpInput.text == "" || icElm.cellDPPInput.text == "") && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.dpInput.text == "" || icElm.cellDPPInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
                             return false
                         }
                         
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
+                            return false
+                        }
+                        
                         //if icElm.dpInput.text != "" && icElm.cellDPPInput.text != "" && icElm.resultValueId > 0 {
-                            var icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.dpDescInput.text, inspectDetail: "", inspectRemarks: "", resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                        var icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.dpDescInput.text, inspectDetail: "", inspectRemarks: "", resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", inspectPositionZoneValueId: icElm.inspectZoneValueId, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
                             
                             //Save To DB
                             icItemData = taskDataHelper.updateInspDataRecord(icItemData!)
                             
                             
-                            if icItemData!.recordId>0 && icElm.myDefectPositPoints.count>0 {
+                            if icItemData!.recordId>0 /*&& icElm.myDefectPositPoints.count>0*/ {
                                 for dpp in icElm.myDefectPositPoints {
                                     let dppData = TaskInspPosinPoint.init(inspRecordId: icItemData!.recordId!, inspPosinId: dpp.positionId, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
                                     
@@ -161,8 +241,13 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.iiInput.text == "") && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.iiInput.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
+                            return false
+                        }
+                        
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
@@ -180,8 +265,13 @@ class TabBarViewController: UITabBarController {
                     let icElms = icItemTmp.inputCells
                     
                     for icElm in icElms {
-                        if (icElm.resultValueId < 1 || icElm.inspectionAreaLabel.text == "" || icElm.inspectionItemLabel.text == "") && needValidate {
+                        if ((icElm.resultValueId < 1 || icElm.inspectionAreaLabel.text == "" || icElm.inspectionItemLabel.text == "") || (icElm.photoNeeded && !icElm.photoAdded)) && needValidate {
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter all Inspection Item results."))
+                            return false
+                        }
+                        
+                        if taskDataHelper.isNeedCompleteDefectPoint(icElm.resultValueId) && Cache_Task_On?.defectItems.first(where: { $0.inspectRecordId == icElm.taskInspDataRecordId }) == nil {
+                            self.view.alertView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Please enter defect item for"))  \(icElm.inspCatText)/\(icElm.inspAreaText)/\(icElm.inspItemText).")
                             return false
                         }
                         
@@ -219,17 +309,17 @@ class TabBarViewController: UITabBarController {
         return true
     }
     
-    func backToTaskDetailFromSignOffPage() {
-        self.taskDetalViewContorller!.navigationController?.popViewControllerAnimated(true)
+    @objc func backToTaskDetailFromSignOffPage() {
+        self.taskDetalViewContorller!.navigationController?.popViewController(animated: true)
     }
     
-    func backToTaskDetail() {
+    @objc func backToTaskDetail() {
         print("Back to task detail")
         
         self.taskDetalViewContorller!.displaySubViewTag = _TASKDETAILVIEWTAG
         self.taskDetalViewContorller!.scrollToPosition(self.taskDetalViewContorller!.scrollViewOffset)
         
-        self.taskDetalViewContorller!.ScrollView.scrollEnabled = true
+        self.taskDetalViewContorller!.ScrollView.isScrollEnabled = true
         self.taskDetalViewContorller!.ScrollView.bringSubviewToFront(self.taskDetalViewContorller!.view.viewWithTag(_TASKDETAILVIEWTAG)!)
         self.setLeftBarItem("< \(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Search"))",actionName: "backTaskSearch:")
         //self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
@@ -243,9 +333,9 @@ class TabBarViewController: UITabBarController {
         
     }
     
-    func backToTaskDetailFromPADF() {
+    @objc func backToTaskDetailFromPADF() {
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
         
             self.view.showActivityIndicator()
         })
@@ -261,7 +351,7 @@ class TabBarViewController: UITabBarController {
         print("Save Defect List")
     }
     
-    func saveDFItems(needValidate:Bool = false) ->Bool {
+    func saveDFItems(_ needValidate:Bool = false) ->Bool {
         
         let taskDataHelper = TaskDataHelper()
         let defects = Cache_Task_On?.defectItems
@@ -292,18 +382,30 @@ class TabBarViewController: UITabBarController {
         return true
     }
     
-    func updateTask(taskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
+    @objc func updateTask(_ taskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue) {
+        
+        if self.view.disableFuns() {
+            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cannot update Confirmed or Cancelled Task!"))
+            return
+        }
+        
+        if let handler = self.handler {
+            if !handler() {
+                return
+            }
+        }
+        
+        DispatchQueue.main.async(execute: {
+            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving"))
         })
         
         //-------------------- Clear Blank Records --------------------------------------
         let defectDataHelper = DefectDataHelper()
-        var needReloadData = false
+//        var needReloadData = false
         
         for defectItem in (Cache_Task_On?.defectItems)! {
             
-            if defectItem.defectDesc == "" && defectItem.defectQtyCritical<1 && defectItem.defectQtyMajor<1 && defectItem.defectQtyMinor<1 && defectItem.defectQtyTotal<1 {
+            if needRemoveCheck(defectItem) {
                 var noPhotos = true
                 
                 for name in defectItem.photoNames! {
@@ -312,38 +414,38 @@ class TabBarViewController: UITabBarController {
                         break
                     }
                 }
-                
+    
                 if noPhotos {
-                    let index = Cache_Task_On?.defectItems.indexOf({ $0.inspElmt.cellCatIdx == defectItem.inspElmt.cellCatIdx && $0.inspElmt.cellIdx == defectItem.inspElmt.cellIdx && $0.cellIdx == defectItem.cellIdx })
+                    let index = Cache_Task_On?.defectItems.index(where: { $0.inspElmt.cellCatIdx == defectItem.inspElmt.cellCatIdx && $0.inspElmt.cellIdx == defectItem.inspElmt.cellIdx && $0.cellIdx == defectItem.cellIdx })
                 
                     defectDataHelper.deleteDefectItemById(defectItem.recordId!)
-                    Cache_Task_On?.defectItems.removeAtIndex(index!)
+                    Cache_Task_On?.defectItems.remove(at: index!)
                     
-                    needReloadData = true
+//                    needReloadData = true
                 }
             }
         }
         
-        if needReloadData {
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadDefectItems", object: nil, userInfo: nil)
+//        if needReloadData {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadDefectItems"), object: nil, userInfo: nil)
             
             if self.defectListViewController?.defectTableView != nil {
                 self.defectListViewController?.defectTableView.reloadData()
             }
-        }
+//        }
         //--------------------------------------------------------------------------------
         
         let taskStatusCurr = GetTaskStatusId(caseId: "Draft").rawValue
         
         if saveTask(taskStatusCurr) {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.view.removeActivityIndicator()
                 self.view.resignFirstResponderByTextField(self.view)
             })
             
             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Success!"))
         }else{
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.view.removeActivityIndicator()
                 self.view.resignFirstResponderByTextField(self.view)
             })
@@ -351,17 +453,38 @@ class TabBarViewController: UITabBarController {
             if Cache_Task_On?.errorCode > 0 {
                 self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("No active PO line!"))
             }else{
-                self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save fail!"))
+                self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Failed!"))
             }
         }
+        
+        handler = nil
     }
     
-    func confirmTask() {
+    func needRemoveCheck(_ defectItem:TaskInspDefectDataRecord) ->Bool {
+        
+        switch defectItem.inputMode ?? "" {
+        case _INPUTMODE01, _INPUTMODE02:
+            if defectItem.inspectElementDefectValueId < 1 && defectItem.inspectElementCaseValueId < 1 && (defectItem.defectType == nil || defectItem.defectType == "") && defectItem.defectRemarksOptionList == "" && defectItem.defectDesc == "" && defectItem.defectQtyCritical<1 && defectItem.defectQtyMajor<1 && defectItem.defectQtyMinor<1 && defectItem.defectQtyTotal<1 {
+                return true
+            }
+            break
+        case _INPUTMODE03, _INPUTMODE04:
+            if defectItem.defectDesc == "" && defectItem.defectQtyCritical<1 && defectItem.defectQtyMajor<1 && defectItem.defectQtyMinor<1 && defectItem.defectQtyTotal<1 {
+                return true
+            }
+            break
+        default:break
+        }
+        
+        return false
+    }
+    
+    @objc func confirmTask() {
         print("Confirm Task")
-        dispatch_async(dispatch_get_main_queue(), {
-            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
+        DispatchQueue.main.async(execute: {
+            self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving"))
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
         
                 if Cache_Task_On?.vdrSignName == nil || Cache_Task_On?.vdrSignName == "" {
                     self.view.removeActivityIndicator()
@@ -398,35 +521,36 @@ class TabBarViewController: UITabBarController {
                     self.view.removeActivityIndicator()
                     self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Success!"), handlerFun: { (action:UIAlertAction!) in
                         
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Redirecting"))
                             
-                            dispatch_async(dispatch_get_main_queue(), {
-                                NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
-                                self.navigationController?.popViewControllerAnimated(true)
+                            DispatchQueue.main.async(execute: {
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "taskConfirmed"), object: nil)
+                                self.navigationController?.popViewController(animated: true)
                             })
                         })
                     })
             
                 }else{
                     self.view.removeActivityIndicator()
-                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save fail!"))
+                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Failed!"))
             
                 }
             })
         })
     }
     
-    func backTaskSearch(alert: UIAlertAction! = nil) {
+    @objc func backTaskSearch(_ alert: UIAlertAction! = nil) {
         
         if Cache_Task_On?.didModify == true && (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Draft").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Pending").rawValue) {
             
             self.view.alertConfirmViewStyle3(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Task")+"?",parentVC:self, handlerFunYes: { (action:UIAlertAction!) in
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving..."))
+                DispatchQueue.main.async(execute: {
+                    self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Saving"))
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         
                         let taskStatusCurr = GetTaskStatusId(caseId: "Draft").rawValue
                         
@@ -434,12 +558,12 @@ class TabBarViewController: UITabBarController {
                             self.view.removeActivityIndicator()
                             
                             self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Success!"), handlerFun: { (action:UIAlertAction!) in
-                                dispatch_async(dispatch_get_main_queue(), {
+                                DispatchQueue.main.async(execute: {
                                     self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Redirecting"))
                                     
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
-                                        self.navigationController?.popViewControllerAnimated(true)
+                                    DispatchQueue.main.async(execute: {
+                                        NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+                                        self.navigationController?.popViewController(animated: true)
                                     })
                                 })
                             })
@@ -449,7 +573,7 @@ class TabBarViewController: UITabBarController {
                             if Cache_Task_On?.errorCode > 0 {
                                 self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("No active PO line!"))
                             }else{
-                                self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save fail!"))
+                                self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save Failed!"))
                             }
                         }
                     })
@@ -458,8 +582,8 @@ class TabBarViewController: UITabBarController {
                 
             }, handlerFunNo:{ (action:UIAlertAction!) in
                     
-                NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
-                self.navigationController?.popViewControllerAnimated(true)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+                self.navigationController?.popViewController(animated: true)
                     
             }, handlerFunCancel: { (action:UIAlertAction!) in
                 //Cancel Here, Not Need Any Update
@@ -490,13 +614,13 @@ class TabBarViewController: UITabBarController {
                 }
             }
             
-            NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":true])
-            self.navigationController?.popViewControllerAnimated(true)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
+            self.navigationController?.popViewController(animated: true)
             
         }
     }
     
-    func saveTask(TaskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue, needValidate:Bool=false) ->Bool {
+    func saveTask(_ TaskStatus:Int=GetTaskStatusId(caseId: "Draft").rawValue, needValidate:Bool=false) ->Bool {
                 
         var rs = false
         

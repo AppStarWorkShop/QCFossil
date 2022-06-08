@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
     
@@ -27,6 +51,10 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
     var defectDBId = 0
     weak var inspItem:InputModeICMaster?
     var taskDefectDataRecordId:Int?
+    var inspectElementId:Int?
+    var inspectElementDefectValueId:Int?
+    var inspectElementCaseValueId:Int?
+    var defectRemarksOptionList:String? 
     
     //UI
     var dfCatText = ""
@@ -35,9 +63,9 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
     var dfRemarkText = ""
     var dfQty = ""
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
                 
-        if textField.keyboardType == UIKeyboardType.NumberPad {
+        if textField.keyboardType == UIKeyboardType.numberPad {
             if textField.text == "" {
                 textField.text = ""
             }
@@ -54,7 +82,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         textField.resignFirstResponder()
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         Cache_Task_On?.didModify = true
         var inputValue = ""
         if textField.text!.characters.count < 2 && string == "" {
@@ -67,7 +95,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         
         let defectItemFilter = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
         
-        if textField.keyboardType == UIKeyboardType.NumberPad {
+        if textField.keyboardType == UIKeyboardType.numberPad {
             if defectItemFilter?.count>0 {
                 let defectItem = defectItemFilter![0]
                 
@@ -89,10 +117,10 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         return true
     }
     
-    func savePhotoToLocal_bak(photo:Photo) ->Photo? {
+    func savePhotoToLocal_bak(_ photo:Photo) ->Photo? {
         if photo.photo?.image != nil {
             
-            let originName = String(photo.photo!.image!.imageAsset)
+            let originName = String(describing: photo.photo!.image!.imageAsset)
             
             //If record has been saved
             if self.taskDefectDataRecordId > 0 {
@@ -107,7 +135,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         return nil
     }
     
-    func savePhotoToLocal(photo:Photo) ->Photo? {
+    func savePhotoToLocal(_ photo:Photo) ->Photo? {
         if photo.photo?.image != nil {
             
             let originName = "originName"//String(photo.photo!.image!.imageAsset)
@@ -125,17 +153,17 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         return nil
     }
 
-    func clearDefectPhotoDataByPhotoName(photoName:String) {
+    func clearDefectPhotoDataByPhotoName(_ photoName:String) {
         
         //Remove defect photo to Photo Album
         let photoDataHelper = PhotoDataHelper()
         let photo = photoDataHelper.updatePhotoDatasByPhotoName(photoName, dataType:PhotoDataType(caseId: "TASK").rawValue, dataRecordId:0)
             
         //Update Photo Album
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadAddPhotos", object: nil, userInfo: ["photoSelected":photo!])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAddPhotos"), object: nil, userInfo: ["photoSelected":photo!])
     }
     
-    func clearDefectPhotoData(photo:Photo) {
+    func clearDefectPhotoData(_ photo:Photo) {
         
         if photo.photoId > 0 {
             //Remove defect photo to Photo Album
@@ -143,11 +171,11 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
             photoDataHelper.updatePhotoDatas((photo.photoId)!, dataType:PhotoDataType(caseId: "TASK").rawValue, dataRecordId:0)
                 
             //Update Photo Album
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadAddPhotos", object: nil, userInfo: ["photoSelected":photo])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAddPhotos"), object: nil, userInfo: ["photoSelected":photo])
         }
     }
     
-    func clearDefectPhotoDataAtIndex(index:Int) {
+    func clearDefectPhotoDataAtIndex(_ index:Int) {
         
         let photoName = photoNameAtIndex[index]
         
@@ -181,7 +209,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         return self.photos
     }
     
-    func updateDefectPhotoData(index:Int, photo:Photo, needSave:Bool=true) ->Photo? {
+    func updateDefectPhotoData(_ index:Int, photo:Photo, needSave:Bool=true) ->Photo? {
         if index < photos.count {
             
             //Save self to DB for TaskInspDefectRecordId
@@ -218,7 +246,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         return nil
     }
     
-    func getNameByUpdateDefectPhotoData(index:Int, photo:Photo, needSave:Bool=true) ->String {
+    func getNameByUpdateDefectPhotoData(_ index:Int, photo:Photo, needSave:Bool=true) ->String {
         
         //Save self to DB for TaskInspDefectRecordId
         if self.taskDefectDataRecordId<1 {
@@ -243,7 +271,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         return photo.photoFile
     }
     
-    func deleteTaskInspDefectDataRecord(id:Int) {
+    func deleteTaskInspDefectDataRecord(_ id:Int) {
         let taskDataHelper = TaskDataHelper()
         taskDataHelper.deleteTaskInspDefectDataRecordById(id)
     }
@@ -253,7 +281,7 @@ class InputModeDFMaster2: UITableViewCell, UITextFieldDelegate {
         
     }
     
-    func setSelectedPhoto(photo:Photo, needSave:Bool=true) {
+    func setSelectedPhoto(_ photo:Photo, needSave:Bool=true) {
         
     }
 }

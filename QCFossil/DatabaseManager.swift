@@ -13,7 +13,7 @@ private let sharedDbMgr = DatabaseManager()
 class DatabaseManager {
     var db = FMDatabase()
     
-    func initDbObj(inspectorName:String = "")  {
+    func initDbObj(_ inspectorName:String = "")  {
         var database = _DBNAME_USING
         
         if inspectorName != "" {
@@ -22,25 +22,33 @@ class DatabaseManager {
             
         }
         
-        let filemgr = NSFileManager.defaultManager()
-        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let filemgr = FileManager.default
+        let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         print("path: \(dirPaths)")
         let dbDir = dirPaths[0] as String
         
         let foderPath = _TASKSPHYSICALPATHPREFIX + inspectorName
-        let databasePath = dbDir.stringByAppendingString("/\(inspectorName)\(database)")
+        let databasePath = dbDir + "/\(inspectorName)\(database)"
+        let databaseJourneyPath = "\(databasePath)-journal"
         
-        if !filemgr.fileExistsAtPath(databasePath) {
+        if !filemgr.fileExists(atPath: databasePath) {
             print("Database File No Exist! Copy From Code")
             
             do {
-                try NSFileManager.defaultManager().createDirectoryAtPath(foderPath, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: foderPath, withIntermediateDirectories: true, attributes: nil)
                 
-                let srcPath = NSBundle.mainBundle().pathForResource(_DBNAME_USING, ofType: "sqlite")
+                let srcPath = Bundle.main.path(forResource: _DBNAME_USING, ofType: "sqlite")
                 
-                try filemgr.copyItemAtPath(srcPath!, toPath: databasePath)
+                try filemgr.copyItem(atPath: srcPath!, toPath: databasePath)
             } catch let error as NSError {
                 print("initDbObj: "+error.localizedDescription)
+            }
+        } else if filemgr.fileExists(atPath: databaseJourneyPath) {
+            do {
+                // remove dummy database
+                try filemgr.removeItem(atPath: databaseJourneyPath)
+            } catch let error as NSError {
+                print("initDbObj-removeItem: "+error.localizedDescription)
             }
         }
         
@@ -49,7 +57,7 @@ class DatabaseManager {
         _INSPECTORWORKINGPATH = foderPath
     }
     
-    func openLocalDB(inspectorName:String = "") ->Bool {
+    func openLocalDB(_ inspectorName:String = "") ->Bool {
         var database = _DBNAME_USING
         
         if inspectorName != "" {
@@ -58,15 +66,15 @@ class DatabaseManager {
             
         }
         
-        let filemgr = NSFileManager.defaultManager()
-        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let filemgr = FileManager.default
+        let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         print("path: \(dirPaths)")
         let dbDir = dirPaths[0] as String
         
         let foderPath = _TASKSPHYSICALPATHPREFIX + inspectorName
-        let databasePath = dbDir.stringByAppendingString("/\(inspectorName)\(database)")
+        let databasePath = dbDir + "/\(inspectorName)\(database)"
         
-        if !filemgr.fileExistsAtPath(databasePath) {
+        if !filemgr.fileExists(atPath: databasePath) {
             print("No this Username")
             
             return false

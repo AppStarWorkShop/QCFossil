@@ -24,75 +24,80 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         createSession()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         prevLayer?.frame.size = myView.frame.size
     }
     
     func createSession() {
-        session = AVCaptureSession()
-        device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+        guard let aDevice = AVCaptureDevice.default(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video))) else { return }
+        let aSession = AVCaptureSession()
+        session = aSession
+        device = aDevice
         
         do {
-            try input = AVCaptureDeviceInput(device: device)
-            session?.addInput(input)
+            try input = AVCaptureDeviceInput(device: aDevice)
+            if let inputValue = input {
+                aSession.addInput(inputValue)
+                if let aPrevLayer = AVCaptureVideoPreviewLayer(session: aSession) as? AVCaptureVideoPreviewLayer {
+                    aPrevLayer.frame.size = myView.frame.size
+                    aPrevLayer.videoGravity = AVLayerVideoGravity(rawValue: convertFromAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill))
+                    
+                    aPrevLayer.connection?.videoOrientation = transformOrientation(UIInterfaceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)!)
+                    
+                    myView.layer.addSublayer(aPrevLayer)
+                    aSession.startRunning()
+                    
+                    prevLayer = aPrevLayer
+                }
+            }
         } catch let error as NSError {
             print("camera input error: \(error)")
         }
-        
-        prevLayer = AVCaptureVideoPreviewLayer(session: session)
-        prevLayer?.frame.size = myView.frame.size
-        prevLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        
-        prevLayer?.connection.videoOrientation = transformOrientation(UIInterfaceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)!)
-        
-        myView.layer.addSublayer(prevLayer!)
-        
-        session?.startRunning()
     }
     
-    func cameraWithPosition(position: AVCaptureDevicePosition) -> AVCaptureDevice? {
-        let devices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
+    func cameraWithPosition(_ position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+        let devices = AVCaptureDevice.devices(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video)))
         for device in devices {
-            if device.position == position {
-                return device as? AVCaptureDevice
+            if (device as AnyObject).position == position {
+                return device as AVCaptureDevice
             }
         }
         return nil
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animateAlongsideTransition({ (context) -> Void in
-            self.prevLayer?.connection.videoOrientation = self.transformOrientation(UIInterfaceOrientation(rawValue: UIApplication.sharedApplication().statusBarOrientation.rawValue)!)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) -> Void in
+            self.prevLayer?.connection?.videoOrientation = self.transformOrientation(UIInterfaceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue)!)
             self.prevLayer?.frame.size = self.myView.frame.size
             }, completion: { (context) -> Void in
                 
         })
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        super.viewWillTransition(to: size, with: coordinator)
     }
     
-    func transformOrientation(orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
+    func transformOrientation(_ orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation {
         switch orientation {
-        case .LandscapeLeft:
-            return .LandscapeLeft
-        case .LandscapeRight:
-            return .LandscapeRight
-        case .PortraitUpsideDown:
-            return .PortraitUpsideDown
+        case .landscapeLeft:
+            return .landscapeLeft
+        case .landscapeRight:
+            return .landscapeRight
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
         default:
-            return .Portrait
+            return .portrait
         }
     }
     
-    @IBAction func switchCameraSide(sender: AnyObject) {
+    @IBAction func switchCameraSide(_ sender: AnyObject) {
         if let sess = session {
-            let currentCameraInput: AVCaptureInput = sess.inputs[0] as! AVCaptureInput
+            let currentCameraInput: AVCaptureInput = sess.inputs[0] 
             sess.removeInput(currentCameraInput)
             var newCamera: AVCaptureDevice
-            if (currentCameraInput as! AVCaptureDeviceInput).device.position == .Back {
-                newCamera = self.cameraWithPosition(.Front)!
+            if (currentCameraInput as! AVCaptureDeviceInput).device.position == .back {
+                newCamera = self.cameraWithPosition(.front)!
             } else {
-                newCamera = self.cameraWithPosition(.Back)!
+                newCamera = self.cameraWithPosition(.back)!
             }
             
             do {
@@ -106,4 +111,14 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         }
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVMediaType(_ input: AVMediaType) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVLayerVideoGravity(_ input: AVLayerVideoGravity) -> String {
+	return input.rawValue
 }

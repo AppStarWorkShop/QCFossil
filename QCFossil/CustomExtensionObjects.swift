@@ -9,241 +9,272 @@
 import UIKit
 import AssetsLibrary
 import ImageIO
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 /* Input Mode 04 */
 extension InputMode04View {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode04View? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode04View? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode04View
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode04View
     }
 }
 
 extension InputMode04CellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode04CellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode04CellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode04CellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode04CellView
     }
 }
 
 extension DefectHeaderView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> DefectHeaderView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> DefectHeaderView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? DefectHeaderView
+            ).instantiate(withOwner: nil, options: nil)[0] as? DefectHeaderView
     }
 }
 
 extension InputMode04DefectCellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode04DefectCellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode04DefectCellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode04DefectCellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode04DefectCellView
     }
 }
 
 extension CreateTaskView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> CreateTaskView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> CreateTaskView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? CreateTaskView
+            ).instantiate(withOwner: nil, options: nil)[0] as? CreateTaskView
     }
 }
 
 extension POSearchView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> POSearchView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> POSearchView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? POSearchView
+            ).instantiate(withOwner: nil, options: nil)[0] as? POSearchView
     }
 }
 
 extension PopoverViewsInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> PopoverViewsInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> PopoverViewsInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? PopoverViewsInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? PopoverViewsInput
     }
 }
 
 extension InptCategoryCell {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InptCategoryCell? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InptCategoryCell? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InptCategoryCell
+            ).instantiate(withOwner: nil, options: nil)[0] as? InptCategoryCell
     }
 }
 
 extension TaskDetailViewInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> TaskDetailViewInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> TaskDetailViewInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? TaskDetailViewInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? TaskDetailViewInput
+    }
+}
+
+extension TaskQCInfoView {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> TaskQCInfoView? {
+        return UINib(
+            nibName: nibNamed,
+            bundle: bundle
+            ).instantiate(withOwner: nil, options: nil)[0] as? TaskQCInfoView
+    }
+}
+
+extension POInfoView {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> POInfoView? {
+        return UINib(
+            nibName: nibNamed,
+            bundle: bundle
+            ).instantiate(withOwner: nil, options: nil)[0] as? POInfoView
     }
 }
 
 /* Input Mode 01 */
 extension InputMode01View {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode01View? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode01View? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode01View
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode01View
     }
 }
 
 extension InputMode01CellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode01CellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode01CellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode01CellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode01CellView
     }
 }
 
 extension InputMode01DefectCellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode01DefectCellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode01DefectCellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode01DefectCellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode01DefectCellView
     }
 }
 
 
 /* Input Mode 02 */
 extension InputMode02View {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode02View? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode02View? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode02View
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode02View
     }
 }
 
 extension InputMode02CellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode02CellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode02CellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode02CellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode02CellView
     }
 }
 
 extension InputMode02DefectCellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode02DefectCellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode02DefectCellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode02DefectCellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode02DefectCellView
     }
 }
 
 
 /* Input Mode 03 */
 extension InputMode03View {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode03View? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode03View? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode03View
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode03View
     }
 }
 
 extension InputMode03CellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode03CellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode03CellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode03CellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode03CellView
     }
 }
 
 extension InputMode03DefectCellView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InputMode03DefectCellView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InputMode03DefectCellView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InputMode03DefectCellView
+            ).instantiate(withOwner: nil, options: nil)[0] as? InputMode03DefectCellView
     }
 }
 
 extension DropdownListViewControl {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> DropdownListViewControl? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> DropdownListViewControl? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? DropdownListViewControl
+            ).instantiate(withOwner: nil, options: nil)[0] as? DropdownListViewControl
     }
 }
 
 extension InspectionViewInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> InspectionViewInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> InspectionViewInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? InspectionViewInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? InspectionViewInput
     }
 }
 
 extension POCellViewInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> POCellViewInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> POCellViewInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? POCellViewInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? POCellViewInput
     }
 }
 
 extension ImagePreviewViewInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> ImagePreviewViewInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> ImagePreviewViewInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? ImagePreviewViewInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? ImagePreviewViewInput
     }
 }
 
 extension CalenderPickerViewInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> CalenderPickerViewInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> CalenderPickerViewInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? CalenderPickerViewInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? CalenderPickerViewInput
     }
 }
 
 extension DataControlView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> DataControlView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> DataControlView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? DataControlView
+            ).instantiate(withOwner: nil, options: nil)[0] as? DataControlView
     }
 }
 
 extension ShapePreviewViewInput {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> ShapePreviewViewInput? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> ShapePreviewViewInput? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? ShapePreviewViewInput
+            ).instantiate(withOwner: nil, options: nil)[0] as? ShapePreviewViewInput
     }
 }
 
-class DownloadRequester:NSObject, NSURLSessionDelegate, NSURLSessionDownloadDelegate {
+class DownloadRequester:NSObject, URLSessionDelegate, URLSessionDownloadDelegate {
     
-    var session: NSURLSession?
+    var session: Foundation.URLSession?
     var buffer:NSMutableData = NSMutableData()
     var expectedContentLength = 0
     var dsDataObj:AnyObject?
@@ -259,16 +290,16 @@ class DownloadRequester:NSObject, NSURLSessionDelegate, NSURLSessionDownloadDele
         session?.downloadTaskWithURL(imageURL).resume()
         */
         
-        session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
+        session = Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
     }
     
-    func makeDLRequest(dsData:AnyObject) {
-        let task = session?.dataTaskWithRequest(createDLRequest(dsData))
+    func makeDLRequest(_ dsData:AnyObject) {
+        let task = session?.dataTask(with: createDLRequest(dsData))
         task!.resume()
     }
     
-    func createDLRequest(dsData:AnyObject) -> NSURLRequest {
+    func createDLRequest(_ dsData:AnyObject) -> URLRequest {
         self.dsDataObj = dsData
         
         var param = "\(_DS_PREFIX){"
@@ -276,48 +307,48 @@ class DownloadRequester:NSObject, NSURLSessionDelegate, NSURLSessionDownloadDele
             param += "\"\(key)\":\"\(value)\","
         }
         param += "}"
-        param = param.stringByReplacingOccurrencesOfString(",}", withString: "}")
+        param = param.replacingOccurrences(of: ",}", with: "}")
         
-        let request = NSMutableURLRequest(URL: NSURL(string: dsData["APINAME"] as! String)!)
-        request.HTTPMethod = "POST"
+        let request = NSMutableURLRequest(url: URL(string: dsData["APINAME"] as! String)!)
+        request.httpMethod = "POST"
         request.timeoutInterval = 60
-        request.HTTPBody = param.dataUsingEncoding(NSUTF8StringEncoding)
-        request.HTTPShouldHandleCookies = false
+        request.httpBody = param.data(using: String.Encoding.utf8)
+        request.httpShouldHandleCookies = false
         
-        return request
+        return request as URLRequest
     }
     
     //------------------------------------- Delegate Funcs --------------------------------------------------------
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+    func URLSession(_ session: Foundation.URLSession, dataTask: URLSessionDataTask, didReceiveData data: Data) {
         
-        buffer.appendData(data)
+        buffer.append(data)
         
         let percentageDownloaded = Float(buffer.length) / Float(expectedContentLength)
         print("progress: \(Float(buffer.length)) \(percentageDownloaded)")
         //progress.progress =  percentageDownloaded
     }
     
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+    func URLSession(_ session: Foundation.URLSession, dataTask: URLSessionDataTask, didReceiveResponse response: URLResponse, completionHandler: (Foundation.URLSession.ResponseDisposition) -> Void) {
         
         //here you can get full lenth of your content
         expectedContentLength = Int(response.expectedContentLength)
         print("expectedContentLength: \(expectedContentLength)")
-        completionHandler(NSURLSessionResponseDisposition.Allow)
+        completionHandler(Foundation.URLSession.ResponseDisposition.allow)
     }
     
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         //use buffer here.Download is done
         //progress.progress = 1.0   // download 100% complete
         
         if(error != nil) {
             print(error!.localizedDescription)
-            let jsonStr = NSString(data: buffer, encoding: NSUTF8StringEncoding)
+            let jsonStr = NSString(data: buffer as Data, encoding: String.Encoding.utf8.rawValue)
             print("Error could not parse JSON: '\(jsonStr)'")
         }
         else {
             
             do {
-                let jsonData = try NSJSONSerialization.JSONObjectWithData(buffer, options: .AllowFragments) as! NSDictionary
+                let jsonData = try JSONSerialization.jsonObject(with: buffer as Data, options: .allowFragments) as! NSDictionary
                 let actionNames = self.dsDataObj!["ACTIONNAMES"] as! [String]
                 let actionFields:Dictionary<String, [String]> = self.dsDataObj!["ACTIONFIELDS"] as! Dictionary
             
@@ -364,15 +395,15 @@ class DownloadRequester:NSObject, NSURLSessionDelegate, NSURLSessionDownloadDele
         
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         print("下载完成")
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         print("正在下载 \(totalBytesWritten)/\(totalBytesExpectedToWrite)")
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
         
         print("从 \(fileOffset) 处恢复下载，一共 \(expectedTotalBytes)")
         
@@ -380,7 +411,7 @@ class DownloadRequester:NSObject, NSURLSessionDelegate, NSURLSessionDownloadDele
 }
 
 extension UIViewController {
-    func nullToNil(value : AnyObject?) -> AnyObject? {
+    func nullToNil(_ value : AnyObject?) -> AnyObject? {
         if value is NSNull {
             return nil
         } else {
@@ -419,39 +450,39 @@ extension UIViewController {
      kCFURLErrorNoPermissionsToReadFile    = -1102,
      kCFURLErrorDataLengthExceedsMaximum   = -1103
      */
-    func makePostRequest(urlPath:String, dataInJson:String, method:String="POST", actionNames:[String]=[], actionFields:Dictionary<String, [String]>, type:String="DL", handler:(result:[Dictionary<String, String>]?,response:String,totalRecords:Int)-> Void) {
+    func makePostRequest(_ urlPath:String, dataInJson:String, method:String="POST", actionNames:[String]=[], actionFields:Dictionary<String, [String]>, type:String="DL", handler:@escaping (_ result:[Dictionary<String, String>]?,_ response:String,_ totalRecords:Int)-> Void) {
         
         let urlPath = urlPath
-        let url = NSURL(string: urlPath)
-        let request = NSMutableURLRequest(URL: url!)
+        let url = URL(string: urlPath)
+        let request = NSMutableURLRequest(url: url!)
         
-        request.HTTPMethod = method
+        request.httpMethod = method
         let jsonStringPost = dataInJson
-        let data = jsonStringPost.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = jsonStringPost.data(using: String.Encoding.utf8)
         
         request.timeoutInterval = 60
-        request.HTTPBody = data
-        request.HTTPShouldHandleCookies = false
+        request.httpBody = data
+        request.httpShouldHandleCookies = false
         
-        let queue:NSOperationQueue = NSOperationQueue()
+        let queue:OperationQueue = OperationQueue()
         
-        NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{
+        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: queue, completionHandler:{
             (response, data, error) in
             
             if error != nil {
                 //Handle Error here
                 print("error data \(data) , response \(response)")
                 
-                if (error?.code)! == NSURLErrorCannotConnectToHost {
-                    handler(result: nil, response: "Fail", totalRecords: 0)
-                }else if (error?.code)! == NSURLErrorNotConnectedToInternet {
-                    handler(result: nil, response: "Fail", totalRecords: 0)
-                }else if (error?.code)! == NSURLErrorCannotFindHost {
-                    handler(result: nil, response: "Fail", totalRecords: 0)
-                }else if (error?.code)! == NSURLErrorNetworkConnectionLost {
-                    handler(result: nil, response: "Fail", totalRecords: 0)
+                if (error?._code)! == NSURLErrorCannotConnectToHost {
+                    handler(nil, "Fail", 0)
+                }else if (error?._code)! == NSURLErrorNotConnectedToInternet {
+                    handler(nil, "Fail", 0)
+                }else if (error?._code)! == NSURLErrorCannotFindHost {
+                    handler(nil, "Fail", 0)
+                }else if (error?._code)! == NSURLErrorNetworkConnectionLost {
+                    handler(nil, "Fail", 0)
                 }else{
-                    handler(result: nil, response: "Fail", totalRecords: 0)
+                    handler(nil, "Fail", 0)
                     //self.view.alertView("Login Error: \(error) Error Code: \((error?.code)!)")
                 }
             }else{
@@ -465,16 +496,16 @@ extension UIViewController {
         })
     }
     
-    func sendRequestData(actionNames:[String], actionFields:Dictionary<String, [String]>, data:NSData, handler:(result:[Dictionary<String, String>]?,response:String)-> Void) {
+    func sendRequestData(_ actionNames:[String], actionFields:Dictionary<String, [String]>, data:Data, handler:(_ result:[Dictionary<String, String>]?,_ response:String)-> Void) {
     }
     
-    func getResponseData(actionNames:[String], actionFields:Dictionary<String, [String]>, data:NSData, handler:(result:[Dictionary<String, String>]?,response:String,totalRecords:Int)-> Void) {
+    func getResponseData(_ actionNames:[String], actionFields:Dictionary<String, [String]>, data:Data, handler:(_ result:[Dictionary<String, String>]?,_ response:String,_ totalRecords:Int)-> Void) {
         
         //Handle data in NSData type
         var dataSet = [Dictionary<String, String>]()
         
         do {
-            let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as! NSDictionary
+            let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
             var recordCount = 0
             
             if actionNames.count > 0 {
@@ -506,15 +537,15 @@ extension UIViewController {
                     }
                 }
                 
-                var session_result = (jsonData["service_session"] == nil) ? "": jsonData["service_session"] as! String
-                session_result += (self.nullToNil(jsonData["action_result"]) == nil) ? "": jsonData["action_result"] as! String
+                var session_result = jsonData["service_session"] as? String ?? ""
+                session_result += jsonData["action_result"] as? String ?? ""
                 
-                handler(result: dataSet, response: session_result, totalRecords: recordCount)
+                handler(dataSet, session_result, recordCount)
             } else{
-                var session_result = (jsonData["action_result"] == nil) ? "": jsonData["action_result"] as! String
-                session_result += (self.nullToNil(jsonData["ack_result"]) == nil) ? "": jsonData["ack_result"] as! String
+                var session_result = jsonData["action_result"] as? String ?? ""
+                session_result += jsonData["ack_result"] as? String ?? ""
                 
-                handler(result: dataSet, response: session_result, totalRecords: 0)
+                handler(dataSet, session_result, 0)
             }
             
             //resultSet = dataSet
@@ -524,13 +555,13 @@ extension UIViewController {
         
     }
     
-    func getULResponseData(actionFields:[String], data:NSData, handler:(result:[Dictionary<String, String>]?,response:String,totalRecords:Int)-> Void) {
+    func getULResponseData(_ actionFields:[String], data:Data, handler:(_ result:[Dictionary<String, String>]?,_ response:String,_ totalRecords:Int)-> Void) {
         
         //Handle data in NSData type
         var dataSet = [Dictionary<String, String>]()
         
         do {
-            let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as! NSDictionary
+            let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
             var recordCount = 0
             
             if jsonData.count > 0 {
@@ -544,15 +575,15 @@ extension UIViewController {
                 
                 dataSet.append(dataObj)
                 
-                var result = (jsonData["service_session"] == nil) ? "": jsonData["service_session"] as! String
-                result += (self.nullToNil(jsonData["action_result"]) == nil) ? "": jsonData["action_result"] as! String
+                var result = jsonData["service_session"] as? String ?? ""
+                result += jsonData["action_result"] as? String ?? ""
                 
-                handler(result: dataSet, response: result, totalRecords: recordCount)
+                handler(dataSet, result, recordCount)
             } else{
-                var result = (jsonData["action_result"] == nil) ? "": jsonData["action_result"] as! String
-                result += (self.nullToNil(jsonData["ack_result"]) == nil) ? "": jsonData["ack_result"] as! String
+                var result = jsonData["action_result"] as? String ?? ""
+                result += jsonData["ack_result"] as? String ?? ""
                 
-                handler(result: dataSet, response: result, totalRecords: 0)
+                handler(dataSet, result, 0)
             }
             
             //resultSet = dataSet
@@ -562,11 +593,11 @@ extension UIViewController {
         
     }
     
-    func requestUrl(urlString: String){
-        let url: NSURL = NSURL(string: urlString)!
-        let request: NSURLRequest = NSURLRequest(URL: url)
+    func requestUrl(_ urlString: String){
+        let url: URL = URL(string: urlString)!
+        let request: URLRequest = URLRequest(url: url)
         
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler:{
+        NSURLConnection.sendAsynchronousRequest(request, queue: OperationQueue.main, completionHandler:{
             (response, data, error) -> Void in
             
             if error != nil {
@@ -580,14 +611,17 @@ extension UIViewController {
         })
     }
     
-    func presentLocalNotification(message:String) {
+    func presentLocalNotification(_ message:String) {
         //Send local notification for Task Done.
         let localNotification = UILocalNotification()
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
+        localNotification.fireDate = Date(timeIntervalSinceNow: 0)
         localNotification.alertBody = MylocalizedString.sharedLocalizeManager.getLocalizedString(message)
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        localNotification.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
-        UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
+        localNotification.timeZone = TimeZone.current
+        
+        DispatchQueue.main.async(execute: {
+            localNotification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
+            UIApplication.shared.presentLocalNotificationNow(localNotification)
+        })
     }
 }
 
@@ -595,7 +629,7 @@ extension UIView {
     weak var parentVC: UIViewController? {
         var parentResponder: UIResponder? = self
         while parentResponder != nil {
-            parentResponder = parentResponder!.nextResponder()
+            parentResponder = parentResponder!.next
             if let viewController = parentResponder as? UIViewController {
                 return viewController
             }
@@ -603,33 +637,33 @@ extension UIView {
         return nil
     }
     
-    func getCurrentDate(dateFormat:String=_DATEFORMATTER) ->String {
-        let todaysDate:NSDate = NSDate()
-        let dateFormatter:NSDateFormatter = NSDateFormatter()
+    func getCurrentDate(_ dateFormat:String=_DATEFORMATTER) ->String {
+        let todaysDate:Date = Date()
+        let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
        // dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        let locale:NSLocale = NSLocale(localeIdentifier: "en_US")
-        let timezone:NSTimeZone = NSTimeZone(forSecondsFromGMT: 28800)
+        let locale:Locale = Locale(identifier: "en_US")
+        let timezone:TimeZone = TimeZone(secondsFromGMT: 28800)!
         dateFormatter.locale = locale
         dateFormatter.timeZone = timezone
         
-        return dateFormatter.stringFromDate(todaysDate)
+        return dateFormatter.string(from: todaysDate)
     }
     
-    func getCurrentDateTime(dateFormat:String=_DATEFORMATTER + " HH:mm:ss a") ->String {
+    func getCurrentDateTime(_ dateFormat:String=_DATEFORMATTER + " hh:mm:ss a") ->String {
         
         
-        let todaysDate:NSDate = NSDate()
-        let dateFormatter:NSDateFormatter = NSDateFormatter()
+        let todaysDate:Date = Date()
+        let dateFormatter:DateFormatter = DateFormatter()
         //dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat = dateFormat //dateFormat + " HH:mm a"
         
-        let locale:NSLocale = NSLocale(localeIdentifier: "en_US")
-        let timezone:NSTimeZone = NSTimeZone(forSecondsFromGMT: 28800)
+        let locale:Locale = Locale(identifier: "en_US")
+        let timezone:TimeZone = TimeZone(secondsFromGMT: 28800)!
         dateFormatter.locale = locale
         dateFormatter.timeZone = timezone
 
-        return dateFormatter.stringFromDate(todaysDate)
+        return dateFormatter.string(from: todaysDate)
         
         /*
         var timestamp = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
@@ -657,35 +691,65 @@ extension UIView {
         return timestamp*/
     }
     
-    func showActivityIndicator(title:String="Loading") {
+    func getFormattedStringByDateString(_ dateString: String) ->String {
+        
+        let dateFormatter = DateFormatter()
+        var localeId = dateFormatter.locale.identifier
+        if !localeId.hasSuffix("_POSIX") {
+            localeId = localeId + ("_POSIX")
+            dateFormatter.locale = Locale(identifier: localeId)
+        }
+        dateFormatter.dateFormat = "\(_DATEFORMATTER) hh:mm:ss a"
+        
+        let formattedDate = dateFormatter.date(from: dateString)
+        /*
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "\(_DATEFORMATTER) hh:mm:ss a"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_HK_POSIX")
+        dateFormatter.timeZone = NSTimeZone.init(forSecondsFromGMT: 0)
+        
+        dateFormatter.dateFormat = "\(_DATEFORMATTER) hh:mm:ss a"
+        let formattedDate = dateFormatter.dateFromString(dateString)
+        */
+        let dfmatter2 = DateFormatter()
+        dfmatter2.dateFormat = "\(_DATEFORMATTER) HH:mm:ss a"
+ 
+        guard let newFormattedDate = formattedDate else{
+            return ""
+        }
+        
+        return dfmatter2.string(from: newFormattedDate)
+    }
+    
+    func showActivityIndicator(_ title:String="Loading") {
         let container: UIView = UIView()
         container.tag = _MASKVIEWTAG
-        container.hidden = false
+        container.isHidden = false
         container.frame = self.frame
         container.center = self.center
-        container.backgroundColor = UIColor.clearColor()
+        container.backgroundColor = UIColor.clear
         container.alpha = 0.7
         //container.backgroundColor = UIColor.whiteColor()
         
         let loadingView: UIView = UIView()
-        loadingView.frame = CGRectMake(0, 0, 80, 80)
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
         loadingView.center = self.center
-        loadingView.backgroundColor = UIColor.blackColor()
+        loadingView.backgroundColor = UIColor.black
         loadingView.alpha = 1.0
         loadingView.clipsToBounds = true
         loadingView.layer.cornerRadius = 10
         
-        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-        label.textColor = UIColor.whiteColor()
-        label.textAlignment = NSTextAlignment.Center
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+        label.textColor = UIColor.white
+        label.textAlignment = NSTextAlignment.center
         label.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(title)
-        label.font =  label.font.fontWithSize(14)
-        label.center = CGPointMake(loadingView.frame.size.width / 2, loadingView.frame.size.height / 2+25)
+        label.font =  label.font.withSize(14)
+        label.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2+25)
         
         let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
-        actInd.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
-        actInd.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        actInd.center = CGPointMake(loadingView.frame.size.width / 2, loadingView.frame.size.height / 2)
+        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        actInd.style = UIActivityIndicatorView.Style.whiteLarge
+        actInd.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
         
         loadingView.addSubview(actInd)
         loadingView.addSubview(label)
@@ -698,43 +762,43 @@ extension UIView {
         self.subviews.forEach({if $0.tag == _MASKVIEWTAG {$0.removeFromSuperview()} })
     }
     
-    func alertView(title:String, handlerFun:((UIAlertAction)->Void)?=nil) {
+    func alertView(_ title:String, handlerFun:((UIAlertAction)->Void)?=nil) {
         let alertController = UIAlertController(title: title, message:
-            "", preferredStyle: UIAlertControllerStyle.Alert)
+            "", preferredStyle: UIAlertController.Style.alert)
         
-        alertController.addAction(UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: UIAlertActionStyle.Default,handler: handlerFun))
+        alertController.addAction(UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: UIAlertAction.Style.default,handler: handlerFun))
         
-        self.parentVC?.presentViewController(alertController, animated: true, completion: nil)
+        self.parentVC?.present(alertController, animated: true, completion: nil)
     }
     
-    func alertConfirmView(title:String, message:String="",parentVC:UIViewController, handlerFun:((UIAlertAction)->Void)?=nil, handlerFunCancel:((UIAlertAction)->Void)?=nil) {
+    func alertConfirmView(_ title:String, message:String="",parentVC:UIViewController, handlerFun:((UIAlertAction)->Void)?=nil, handlerFunCancel:((UIAlertAction)->Void)?=nil) {
         let alertController = UIAlertController(title: title, message:
-            message, preferredStyle: UIAlertControllerStyle.Alert)
+            message, preferredStyle: UIAlertController.Style.alert)
         
-        let okButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: UIAlertActionStyle.Default, handler: handlerFun)
-        let cancelButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), style: .Cancel, handler: handlerFunCancel)
+        let okButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: UIAlertAction.Style.default, handler: handlerFun)
+        let cancelButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), style: .cancel, handler: handlerFunCancel)
         alertController.addAction(cancelButton)
         alertController.addAction(okButton)
         
-        parentVC.presentViewController(alertController, animated: true, completion: nil)
+        parentVC.present(alertController, animated: true, completion: nil)
     }
     
-    func alertConfirmViewStyle3(title:String, message:String="",parentVC:UIViewController, handlerFunYes:((UIAlertAction)->Void)?=nil, handlerFunNo:((UIAlertAction)->Void)?=nil, handlerFunCancel:((UIAlertAction)->Void)?=nil) {
+    func alertConfirmViewStyle3(_ title:String, message:String="",parentVC:UIViewController, handlerFunYes:((UIAlertAction)->Void)?=nil, handlerFunNo:((UIAlertAction)->Void)?=nil, handlerFunCancel:((UIAlertAction)->Void)?=nil) {
         let alertController = UIAlertController(title: title, message:
-            message, preferredStyle: UIAlertControllerStyle.Alert)
+            message, preferredStyle: UIAlertController.Style.alert)
         
-        let yesButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Yes"), style: UIAlertActionStyle.Default, handler: handlerFunYes)
-        let noButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("No"), style: UIAlertActionStyle.Default, handler: handlerFunNo)
-        let cancelButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), style: UIAlertActionStyle.Default/*.Cancel*/, handler: handlerFunCancel)
+        let yesButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Yes"), style: UIAlertAction.Style.default, handler: handlerFunYes)
+        let noButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("No"), style: UIAlertAction.Style.default, handler: handlerFunNo)
+        let cancelButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), style: UIAlertAction.Style.default/*.Cancel*/, handler: handlerFunCancel)
         
         alertController.addAction(yesButton)
         alertController.addAction(noButton)
         alertController.addAction(cancelButton)
         
-        parentVC.presentViewController(alertController, animated: true, completion: nil)
+        parentVC.present(alertController, animated: true, completion: nil)
     }
     
-    func clearDropdownviewForSubviews(view:UIView) {
+    func clearDropdownviewForSubviews(_ view:UIView) {
         Cache_Dropdown_Instance = nil
         
         // Get the subviews of the view
@@ -749,6 +813,7 @@ extension UIView {
             if $0.classForCoder == DropdownListViewControl.classForCoder() {
                 ($0 as! DropdownListViewControl).myParentTextField?.endEditing(true)
                 $0.removeFromSuperview()
+                
             }else if $0.classForCoder == UITextField.classForCoder() /*|| $0.classForCoder == UITextView.classForCoder()*/ {
                 $0.resignFirstResponder()
             }
@@ -757,7 +822,16 @@ extension UIView {
         })
     }
     
-    func resignFirstResponderByTextField(view:UIView) {
+    func ifExistingSubviewByViewTag(_ view:UIView, tag:Int) ->Bool {
+        
+        if (view.viewWithTag(tag) != nil) {
+            return true
+        }
+        
+        return false
+    }
+    
+    func resignFirstResponderByTextField(_ view:UIView) {
         
         // Get the subviews of the view
         let subviews = view.subviews
@@ -776,7 +850,7 @@ extension UIView {
         })
     }
     
-    func disableAllFunsForView(view:UIView) {
+    func disableAllFunsForView(_ view:UIView) {
         // Get the subviews of the view
         let subviews = view.subviews
         
@@ -795,36 +869,36 @@ extension UIView {
         })
     }
     
-    func disableFuns(obj:AnyObject = UIButton()) ->Bool {
-        if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Confirmed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Cancelled").rawValue) && !_DEBUG_MODE {
+    func disableFuns(_ obj:AnyObject = UIButton()) ->Bool {
+        if ((Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Confirmed").rawValue && Cache_Task_On?.confirmUploadDate == nil) || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Cancelled").rawValue) && !_DEBUG_MODE {
             if obj.classForCoder == UIButton.classForCoder() {
-                (obj as! UIButton).removeTarget(nil, action:nil, forControlEvents:UIControlEvents.AllEvents)
-                (obj as! UIButton).addTarget(self, action: #selector(UIView.btnFunDisble), forControlEvents: UIControlEvents.TouchUpInside)
+                (obj as! UIButton).removeTarget(nil, action:nil, for:UIControl.Event.allEvents)
+                (obj as! UIButton).addTarget(self, action: #selector(UIView.btnFunDisble), for: UIControl.Event.touchUpInside)
             }else if obj.classForCoder == UITextField.classForCoder() {
-                (obj as! UITextField).userInteractionEnabled = false
+                (obj as! UITextField).isUserInteractionEnabled = false
             }else if obj.classForCoder == SignoffView.classForCoder() {
-                (obj as! SignoffView).userInteractionEnabled = false
+                (obj as! SignoffView).isUserInteractionEnabled = false
             }else if obj.classForCoder == CustomTextView.classForCoder() {
-                (obj as! CustomTextView).userInteractionEnabled = false
+                (obj as! CustomTextView).isUserInteractionEnabled = false
             }
 
             return true
-        }else if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
+        }else if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Confirmed").rawValue && Cache_Task_On?.confirmUploadDate != nil) || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue {
             
             if obj.classForCoder == UIButton.classForCoder() {
-                (obj as! UIButton).removeTarget(nil, action:nil, forControlEvents:UIControlEvents.AllEvents)
-                (obj as! UIButton).addTarget(self, action: #selector(UIView.btnFunDisbleForUploaded), forControlEvents: UIControlEvents.TouchUpInside)
+                (obj as! UIButton).removeTarget(nil, action:nil, for:UIControl.Event.allEvents)
+                (obj as! UIButton).addTarget(self, action: #selector(UIView.btnFunDisbleForUploaded), for: UIControl.Event.touchUpInside)
                 
             }else if obj.classForCoder == CustomControlButton.classForCoder() {
-                (obj as! CustomControlButton).removeTarget(nil, action:nil, forControlEvents:UIControlEvents.AllEvents)
-                (obj as! CustomControlButton).addTarget(self, action: #selector(UIView.btnFunDisbleForUploaded), forControlEvents: UIControlEvents.TouchUpInside)
+                (obj as! CustomControlButton).removeTarget(nil, action:nil, for:UIControl.Event.allEvents)
+                (obj as! CustomControlButton).addTarget(self, action: #selector(UIView.btnFunDisbleForUploaded), for: UIControl.Event.touchUpInside)
             
             }else if obj.classForCoder == UITextField.classForCoder() {
-                (obj as! UITextField).userInteractionEnabled = false
+                (obj as! UITextField).isUserInteractionEnabled = false
             }else if obj.classForCoder == SignoffView.classForCoder() {
-                (obj as! SignoffView).userInteractionEnabled = false
+                (obj as! SignoffView).isUserInteractionEnabled = false
             }else if obj.classForCoder == CustomTextView.classForCoder() {
-                (obj as! CustomTextView).userInteractionEnabled = false
+                (obj as! CustomTextView).isUserInteractionEnabled = false
             }
             
             return true
@@ -833,24 +907,24 @@ extension UIView {
         return false
     }
     
-    func setButtonCornerRadius(button:UIButton) {
+    func setButtonCornerRadius(_ button:UIButton) {
         button.layer.cornerRadius = 6
     }
     
-    func btnFunDisble() {
+    @objc func btnFunDisble() {
         self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cannot update Confirmed or Cancelled Task!"))
     }
     
-    func btnFunDisbleForUploaded() {
+    @objc func btnFunDisbleForUploaded() {
         self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cannot update Uploaded, Reviewed or Refused Task!"))
     }
     
-    func createTaskFolderById(bookingNo:String) ->Bool {
+    func createTaskFolderById(_ bookingNo:String) ->Bool {
         
         let taskPath = _TASKSPHYSICALPATH+bookingNo
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(taskPath, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: taskPath, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             print(error.localizedDescription);
         }
@@ -858,7 +932,7 @@ extension UIView {
         let taskThumbsPath = taskPath + "/" + _THUMBSPHYSICALNAME
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(taskThumbsPath, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: taskThumbsPath, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             print(error.localizedDescription);
         }
@@ -866,7 +940,7 @@ extension UIView {
         return true
     }
     
-    func deleteTask(taskId:Int){
+    func deleteTask(_ taskId:Int){
         
         let taskDataHelper = TaskDataHelper()
         
@@ -877,38 +951,38 @@ extension UIView {
             return
         }
         
-        let filemgr = NSFileManager.defaultManager()
+        let filemgr = FileManager.default
         let taskFilePath = _TASKSPHYSICALPATH+"\(taskFderName)"
         let taskThumbFilePath = taskFilePath+"/Thumbs"
         do {
             
-            if filemgr.fileExistsAtPath(taskFilePath) {
-                let fileNames = try filemgr.contentsOfDirectoryAtPath("\(taskFilePath)")
+            if filemgr.fileExists(atPath: taskFilePath) {
+                let fileNames = try filemgr.contentsOfDirectory(atPath: "\(taskFilePath)")
                 print("all files in folder: \(fileNames)")
                 for fileName in fileNames {
                     
                     if (fileName.hasSuffix(".jpg"))
                     {
                         let filePathName = "\(taskFilePath)/\(fileName)"
-                        try filemgr.removeItemAtPath(filePathName)
+                        try filemgr.removeItem(atPath: filePathName)
                     }
                 }
                 //delete folder
-                try filemgr.removeItemAtPath(taskFilePath)
+                try filemgr.removeItem(atPath: taskFilePath)
             }
             
-            if filemgr.fileExistsAtPath(taskThumbFilePath) {
-                let fileThumbs = try filemgr.contentsOfDirectoryAtPath("\(taskThumbFilePath)")
+            if filemgr.fileExists(atPath: taskThumbFilePath) {
+                let fileThumbs = try filemgr.contentsOfDirectory(atPath: "\(taskThumbFilePath)")
                 for fileName in fileThumbs {
                 
                     if (fileName.hasSuffix(".jpg"))
                     {
                         let filePathName = "\(taskThumbFilePath)/\(fileName)"
-                        try filemgr.removeItemAtPath(filePathName)
+                        try filemgr.removeItem(atPath: filePathName)
                     }
                 }
                 //delete folder
-                try filemgr.removeItemAtPath(taskThumbFilePath)
+                try filemgr.removeItem(atPath: taskThumbFilePath)
             }
             
             let taskDataHelper = TaskDataHelper()
@@ -922,7 +996,7 @@ extension UIView {
     }
     
     func currentFirstResponder() -> UIResponder? {
-        if self.isFirstResponder() {
+        if self.isFirstResponder {
             return self
         }
         
@@ -937,44 +1011,42 @@ extension UIView {
     
     //Get File in Preferences
     func getPreferencesFilePath() ->String? {
-        let path = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0]
-        let url = NSURL(fileURLWithPath: path)
+        let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] + "/Preferences"
+        let url = URL(fileURLWithPath: path)
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(url, withIntermediateDirectories: true, attributes: nil)
-            
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+            return url.path
         } catch {
             return nil
             
         }
-        
-        if let path = url.path {
-            
-            return "\(path)/Preferences"
-        }
-        
-        return nil
+    }
+    
+    func sortStringArrayByName(_ arrayString:[String]) ->[String] {
+        let locale = MylocalizedString.sharedLocalizeManager.getCurrentLocale()
+        return arrayString.sorted(by: {$0.compare($1, locale: locale) == .orderedAscending})
     }
 }
 
 extension UIImageView {
-    func previewImage(index:Int,imageName:String,senderImageView:UIImageView,parentItem:InputModeDFMaster2) {
-        let container: UIView = UIView()
+    func previewImage(_ index:Int,imageName:String,senderImageView:UIImageView,parentItem:InputModeDFMaster2) {
+        let container = UIScrollView()
         container.tag = _MASKVIEWTAG
-        container.hidden = false
+        container.isHidden = false
         container.frame = self.parentVC!.view.frame
         container.center = self.parentVC!.view.center
-        container.backgroundColor = UIColor.clearColor()
+        container.backgroundColor = UIColor.clear
         
         let layer = UIView()
         layer.frame = self.parentVC!.view.frame
         layer.center = self.parentVC!.view.center
-        layer.backgroundColor = UIColor.blackColor()
+        layer.backgroundColor = UIColor.black
         layer.alpha = 0.7
         container.addSubview(layer)
         
         let preview = ImagePreviewViewInput.loadFromNibNamed("ImagePreviewView")
-        preview!.frame = CGRectMake(0,0,600,850)
+        preview!.frame = CGRect(x: 0,y: 0,width: 600,height: 850)
         preview?.center = container.center
         preview?.photoIndex = index
         preview?.parentView = container
@@ -996,21 +1068,21 @@ extension UIImageView {
         self.parentVC?.view.addSubview(container)
     }
     
-    func saveEndEditImage(image:UIImage) ->UIImage {
+    func saveEndEditImage(_ image:UIImage) ->UIImage {
         UIGraphicsBeginImageContext(image.size)
-        image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
+        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
         
         let resultImage = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
         
-        return resultImage
+        return resultImage!
     }
 }
 
 extension UIImage {
     
-    func initPhotoObj(image:UIImageView?, photoId:Int=0, taskId:Int, refPhotoId:Int?, orgFileName:String?, imageName:String, photoDesc:String?,dataRecordId:Int?,createUser:String?,createDate:String?,modifyUser:String?,modifyDate:String?,dataType:Int?) ->Photo? {
+    func initPhotoObj(_ image:UIImageView?, photoId:Int=0, taskId:Int, refPhotoId:Int?, orgFileName:String?, imageName:String, photoDesc:String?,dataRecordId:Int?,createUser:String?,createDate:String?,modifyUser:String?,modifyDate:String?,dataType:Int?) ->Photo? {
         
         let photo = Photo(photo: image,photoFilename: imageName,taskId: taskId, photoFile: imageName)
         
@@ -1057,7 +1129,7 @@ extension UIImage {
         
     }*/
     
-    func rotateImage(image:UIImage, angle:CGFloat, flipVertical:CGFloat, flipHorizontal:CGFloat) -> UIImage? {
+    func rotateImage(_ image:UIImage, angle:CGFloat, flipVertical:CGFloat, flipHorizontal:CGFloat) -> UIImage? {
         let ciImage = CoreImage.CIImage(image: image)
         
         let filter = CIFilter(name: "CIAffineTransform")
@@ -1073,18 +1145,18 @@ extension UIImage {
         
         let affineTransform = CATransform3DGetAffineTransform(transform)
         
-        filter?.setValue(NSValue(CGAffineTransform: affineTransform), forKey: "inputTransform")
+        filter?.setValue(NSValue(cgAffineTransform: affineTransform), forKey: "inputTransform")
         
-        let contex = CIContext(options: [kCIContextUseSoftwareRenderer:true])
+        let contex = CIContext(options: convertToOptionalCIContextOptionDictionary([convertFromCIContextOption(CIContextOption.useSoftwareRenderer):true]))
         
         let outputImage = filter?.outputImage
-        let cgImage = contex.createCGImage(outputImage!, fromRect: (outputImage?.extent)!)
+        let cgImage = contex.createCGImage(outputImage!, from: (outputImage?.extent)!)
         
-        let result = UIImage(CGImage: cgImage)
+        let result = UIImage(cgImage: cgImage!)
         return result
     }
     
-    func resizeImage(image:UIImage, imageWidth:CGFloat=_RESIZEIMAGEWIDTH, imageHeight:CGFloat=_RESIZEIMAGEHEIGHT) ->UIImage {
+    func resizeImage(_ image:UIImage, imageWidth:CGFloat=_RESIZEIMAGEWIDTH, imageHeight:CGFloat=_RESIZEIMAGEHEIGHT) ->UIImage {
         var sourceImage = image
         sourceImage = sourceImage.fixOrientation()
         
@@ -1098,15 +1170,15 @@ extension UIImage {
         let newWidth = scale * sourceImage.size.width
         let newHeight = scale * sourceImage.size.height
         
-        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
-        sourceImage.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        sourceImage.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage!
     }
     
-    func rotateImage(image:UIImage) ->UIImage {
+    func rotateImage(_ image:UIImage) ->UIImage {
         var sourceImage = image
         sourceImage = sourceImage.fixOrientation()
         
@@ -1117,9 +1189,9 @@ extension UIImage {
         return sourceImage
     }
     
-    func cropToBounds(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
+    func cropToBounds(_ image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         
-        let contextImage: UIImage = UIImage(CGImage: image.CGImage!)
+        let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
         
         let contextSize: CGSize = contextImage.size
         
@@ -1141,18 +1213,18 @@ extension UIImage {
             cgheight = contextSize.width
         }
         
-        let rect: CGRect = CGRectMake(posX, posY, cgwidth, cgheight)
+        let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
         
         // Create bitmap image from context using the rect
-        let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)!
+        let imageRef: CGImage = contextImage.cgImage!.cropping(to: rect)!
         
         // Create a new image based on the imageRef and rotate back to the original orientation
-        let image: UIImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
         
         return image
     }
     
-    func saveImageToLocal(sourceImage:UIImage, photoFileName:String="",photoId:Int?=0, savePath:String, taskId:Int, bookingNo:String, inspectorName:String, dataRecordId:Int?=0, dataType:Int, currentDate:String, originFileName:String="", sourceThumbImage:UIImage = UIImage.init()) ->Photo {
+    func saveImageToLocal(_ sourceImage:UIImage, photoFileName:String="",photoId:Int?=0, savePath:String, taskId:Int, bookingNo:String, inspectorName:String, dataRecordId:Int?=0, dataType:Int, currentDate:String, originFileName:String="", sourceThumbImage:UIImage = UIImage.init()) ->Photo {
         
         //Resize Image
         var image = sourceImage
@@ -1167,8 +1239,8 @@ extension UIImage {
         let thumbImageBefore = cropToBounds(image, width: _THUMBNAILWIDTH, height: _THUMBNAILHEIGHT)
         let thumbImage = resizeImage(thumbImageBefore, imageWidth: _THUMBNAILWIDTH, imageHeight: _THUMBNAILHEIGHT)
         
-        let dataInPNG:NSData = UIImageJPEGRepresentation(image, 1.0)!
-        let dataInPNG_thumb:NSData = UIImageJPEGRepresentation(thumbImage, 0.1)!
+        let dataInPNG:Data = image.jpegData(compressionQuality: 1.0)!
+        let dataInPNG_thumb:Data = thumbImage.jpegData(compressionQuality: 0.1)!
         
         var imageName = ""
         var saveObjFullPath = ""
@@ -1182,8 +1254,8 @@ extension UIImage {
             saveObjFullPath = savePath+"/"+photoFileName
             saveObjFullThumbPath = savePath+"/"+_THUMBSPHYSICALNAME+"/"+photoFileName
             
-            dataInPNG.writeToFile(saveObjFullPath, atomically: true)
-            dataInPNG_thumb.writeToFile(saveObjFullThumbPath, atomically: true)
+            try? dataInPNG.write(to: URL(fileURLWithPath: saveObjFullPath), options: [.atomic])
+            try? dataInPNG_thumb.write(to: URL(fileURLWithPath: saveObjFullThumbPath), options: [.atomic])
             
             let photo =  photoDataHelper.updatePhotoDatas(photoId!, dataType: dataType, dataRecordId: dataRecordId!)!
             
@@ -1214,15 +1286,15 @@ extension UIImage {
             saveObjFullPath = savePath+"/"+imageName
             saveObjFullThumbPath = savePath+"/"+_THUMBSPHYSICALNAME+"/"+imageName
             
-            dataInPNG.writeToFile(saveObjFullPath, atomically: true)
-            dataInPNG_thumb.writeToFile(saveObjFullThumbPath, atomically: true)
+            try? dataInPNG.write(to: URL(fileURLWithPath: saveObjFullPath), options: [.atomic])
+            try? dataInPNG_thumb.write(to: URL(fileURLWithPath: saveObjFullThumbPath), options: [.atomic])
             
             return photo!
         }
     }
 
     
-    func getNameBySaveImageToLocal(sourceImage:UIImage, photoFileName:String="",photoId:Int?=0, savePath:String, taskId:Int, bookingNo:String, inspectorName:String, dataRecordId:Int?=0, dataType:Int, currentDate:String, originFileName:String="", sourceThumbImage:UIImage = UIImage.init()) ->String {
+    func getNameBySaveImageToLocal(_ sourceImage:UIImage, photoFileName:String="",photoId:Int?=0, savePath:String, taskId:Int, bookingNo:String, inspectorName:String, dataRecordId:Int?=0, dataType:Int, currentDate:String, originFileName:String="", sourceThumbImage:UIImage = UIImage.init()) ->String {
     
         //Resize Image
         var image = sourceImage
@@ -1237,8 +1309,8 @@ extension UIImage {
         let thumbImageBefore = cropToBounds(image, width: _THUMBNAILWIDTH, height: _THUMBNAILHEIGHT)
         let thumbImage = resizeImage(thumbImageBefore, imageWidth: _THUMBNAILWIDTH, imageHeight: _THUMBNAILHEIGHT)
         
-        let dataInPNG:NSData = UIImageJPEGRepresentation(image, 1.0)!
-        let dataInPNG_thumb:NSData = UIImageJPEGRepresentation(thumbImage, 0.1)!
+        let dataInPNG:Data = image.jpegData(compressionQuality: 1.0)!
+        let dataInPNG_thumb:Data = thumbImage.jpegData(compressionQuality: 0.1)!
         
         var imageName = ""
         var saveObjFullPath = ""
@@ -1252,8 +1324,8 @@ extension UIImage {
             saveObjFullPath = savePath+"/"+photoFileName
             saveObjFullThumbPath = savePath+"/"+_THUMBSPHYSICALNAME+"/"+photoFileName
             
-            dataInPNG.writeToFile(saveObjFullPath, atomically: true)
-            dataInPNG_thumb.writeToFile(saveObjFullThumbPath, atomically: true)
+            try? dataInPNG.write(to: URL(fileURLWithPath: saveObjFullPath), options: [.atomic])
+            try? dataInPNG_thumb.write(to: URL(fileURLWithPath: saveObjFullThumbPath), options: [.atomic])
             
             if (photoDataHelper.updatePhotoDatas(photoId!, dataType: dataType, dataRecordId: dataRecordId!) != nil) {
                 
@@ -1268,8 +1340,6 @@ extension UIImage {
             var photo = initPhotoObj(nil,taskId: taskId, refPhotoId: 0, orgFileName: "", imageName: "", photoDesc: "",dataRecordId:dataRecordId,createUser:inspectorName,createDate:currentDate,modifyUser:Cache_Inspector?.appUserName,modifyDate:currentDate, dataType: dataType)
             
             photo = photoDataHelper.savePhoto(photo!)
-            //photo!.photo = UIImageView.init(image: thumbImage)
-            
             
             //Update Photo Name
             imageName = String((photo?.photoId)!)+".jpg"
@@ -1290,8 +1360,8 @@ extension UIImage {
                 saveObjFullPath = savePath+"/"+imageName
                 saveObjFullThumbPath = savePath+"/"+_THUMBSPHYSICALNAME+"/"+imageName
             
-                dataInPNG.writeToFile(saveObjFullPath, atomically: true)
-                dataInPNG_thumb.writeToFile(saveObjFullThumbPath, atomically: true)
+                try? dataInPNG.write(to: URL(fileURLWithPath: saveObjFullPath), options: [.atomic])
+                try? dataInPNG_thumb.write(to: URL(fileURLWithPath: saveObjFullThumbPath), options: [.atomic])
             
                 return imageName
             }else{
@@ -1299,18 +1369,102 @@ extension UIImage {
             }
         }
     }
+    
+    func getNamesBySaveImageToLocal(_ sourceImages:[Photo], savePath:String, taskId:Int, bookingNo:String, inspectorName:String, dataRecordId:Int?=0, dataType:Int, currentDate:String, originFileName:String="", sourceThumbImage:UIImage = UIImage.init()) ->[String] {
+        
+        var images = [String]()
+        for sourceImage in sourceImages {
+        
+        //Resize Image
+        guard let imageOrigin = sourceImage.photo?.image else {
+            return images
+        }
+        var image = imageOrigin
+        if _NEEDRESIZEIMAGE {
+            image = resizeImage(imageOrigin)
+            
+        }else{
+            image = rotateImage(imageOrigin)
+            
+        }
+        
+        let thumbImageBefore = cropToBounds(image, width: _THUMBNAILWIDTH, height: _THUMBNAILHEIGHT)
+        let thumbImage = resizeImage(thumbImageBefore, imageWidth: _THUMBNAILWIDTH, imageHeight: _THUMBNAILHEIGHT)
+        
+        let dataInPNG:Data = image.jpegData(compressionQuality: 1.0)!
+        let dataInPNG_thumb:Data = thumbImage.jpegData(compressionQuality: 0.1)!
+        
+        var imageName = ""
+        var saveObjFullPath = ""
+        var saveObjFullThumbPath = ""
+        
+        //let fileManager:NSFileManager = NSFileManager.defaultManager()
+        let photoDataHelper = PhotoDataHelper()
+        
+       
+            //Update db and Get the photo Id, then using the photo id as name
+            //Update DB
+            var photo = initPhotoObj(nil,taskId: taskId, refPhotoId: 0, orgFileName: "", imageName: "", photoDesc: "",dataRecordId:dataRecordId,createUser:inspectorName,createDate:currentDate,modifyUser:Cache_Inspector?.appUserName,modifyDate:currentDate, dataType: dataType)
+            
+            photo = photoDataHelper.savePhoto(photo!)
+            
+            
+            
+            //Update Photo Name
+            imageName = String((photo?.photoId)!)+".jpg"
+            var prefixs = 14
+            let nameLen = imageName.characters.count
+            
+            while prefixs - nameLen > 0 {
+                imageName = "0"+imageName
+                prefixs -= 1
+            }
+            
+            photo?.orgFileName = originFileName
+            photo?.photoFilename = imageName
+            photo?.photoFile = imageName
+            photo?.thumbFile = imageName
+            if (photoDataHelper.savePhoto(photo!) != nil) {
+                
+                saveObjFullPath = savePath+"/"+imageName
+                saveObjFullThumbPath = savePath+"/"+_THUMBSPHYSICALNAME+"/"+imageName
+                
+                try? dataInPNG.write(to: URL(fileURLWithPath: saveObjFullPath), options: [.atomic])
+                try? dataInPNG_thumb.write(to: URL(fileURLWithPath: saveObjFullThumbPath), options: [.atomic])
+                
+                images.append(imageName)
+            }
+        }
+        
+        return images
+    }
 
-    func removeImageFromLocal(photo:Photo, path:String) ->Bool {
+    func removeImageFromLocalByPath(_ path:String) ->Bool {
+        let fileManager = FileManager.default
+        
+        if fileManager.fileExists(atPath: path) {
+            do {
+                try fileManager.removeItem(atPath: path)
+                return true
+            }catch _ as NSError {
+                return false
+            }
+        }
+        
+        return false
+    }
+    
+    func removeImageFromLocal(_ photo:Photo, path:String) ->Bool {
         //Remove From DB
         let photoDataHelper = PhotoDataHelper()
         photoDataHelper.deletePhotoByPhotoId(photo.photoId!)
         
         //Remove From Local
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         
         do {
             let fullImagePath = path+"/"+photo.photoFile
-            try fileManager.removeItemAtPath(fullImagePath)
+            try fileManager.removeItem(atPath: fullImagePath)
             
             print("Removed Image With Path: \(fullImagePath)")
         }
@@ -1320,7 +1474,7 @@ extension UIImage {
         
         do {
             let fullImagePath = path+"/"+_THUMBSPHYSICALNAME+"/"+photo.photoFile
-            try fileManager.removeItemAtPath(fullImagePath)
+            try fileManager.removeItem(atPath: fullImagePath)
             
             print("Removed Thumb Image With Path: \(fullImagePath)")
         }
@@ -1333,17 +1487,17 @@ extension UIImage {
     
     func toBase64()->String{
         
-        if let imageData = UIImagePNGRepresentation(self) {
-            let base64String = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        if let imageData = self.pngData() {
+            let base64String = imageData.base64EncodedString(options: .lineLength64Characters)
             return base64String
         }
         
         return ""
     }
     
-    func fromBase64(base64String:String) ->UIImage {
+    func fromBase64(_ base64String:String) ->UIImage {
         
-        if let decodedData = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters) {
+        if let decodedData = Data(base64Encoded: base64String, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters) {
             if let decodedimage = UIImage(data: decodedData) {
                 return decodedimage
             }
@@ -1352,77 +1506,95 @@ extension UIImage {
         return UIImage.init()
     }
     
+    func saveImageToLocal(_ savePath:String, image:UIImage, imageName:String) {
+        let dataInPNG:Data = image.jpegData(compressionQuality: 1.0)!
+        let path = savePath+imageName
+        let filemgr = FileManager.default
+        
+        if !filemgr.fileExists(atPath: savePath) {
+            
+            do {
+                try filemgr.createDirectory(atPath: savePath, withIntermediateDirectories: true, attributes: nil)
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
+        
+        try? dataInPNG.write(to: URL(fileURLWithPath: path), options: [.atomic])
+    }
+    
     convenience init(view: UIView) {
         UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.init(CGImage: image.CGImage!)
+        self.init(cgImage: (image?.cgImage!)!)
     }
     
     func fixOrientation() -> UIImage {
         
         // No-op if the orientation is already correct
-        if ( self.imageOrientation == UIImageOrientation.Up ) {
-            return UIImage(CGImage: CGImage!, scale: scale, orientation: imageOrientation)
+        if ( self.imageOrientation == UIImage.Orientation.up ) {
+            return UIImage(cgImage: cgImage!, scale: scale, orientation: imageOrientation)
         }
         
         // We need to calculate the proper transformation to make the image upright.
         // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        var transform: CGAffineTransform = CGAffineTransformIdentity
+        var transform: CGAffineTransform = CGAffineTransform.identity
         
-        if ( self.imageOrientation == UIImageOrientation.Down || self.imageOrientation == UIImageOrientation.DownMirrored ) {
-            transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
+        if ( self.imageOrientation == UIImage.Orientation.down || self.imageOrientation == UIImage.Orientation.downMirrored ) {
+            transform = transform.translatedBy(x: self.size.width, y: self.size.height)
+            transform = transform.rotated(by: CGFloat(M_PI))
         }
         
-        if ( self.imageOrientation == UIImageOrientation.Left || self.imageOrientation == UIImageOrientation.LeftMirrored ) {
-            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
+        if ( self.imageOrientation == UIImage.Orientation.left || self.imageOrientation == UIImage.Orientation.leftMirrored ) {
+            transform = transform.translatedBy(x: self.size.width, y: 0)
+            transform = transform.rotated(by: CGFloat(M_PI_2))
         }
         
-        if ( self.imageOrientation == UIImageOrientation.Right || self.imageOrientation == UIImageOrientation.RightMirrored ) {
-            transform = CGAffineTransformTranslate(transform, 0, self.size.height);
-            transform = CGAffineTransformRotate(transform,  CGFloat(-M_PI_2));
+        if ( self.imageOrientation == UIImage.Orientation.right || self.imageOrientation == UIImage.Orientation.rightMirrored ) {
+            transform = transform.translatedBy(x: 0, y: self.size.height);
+            transform = transform.rotated(by: CGFloat(-M_PI_2));
         }
         
-        if ( self.imageOrientation == UIImageOrientation.UpMirrored || self.imageOrientation == UIImageOrientation.DownMirrored ) {
-            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
+        if ( self.imageOrientation == UIImage.Orientation.upMirrored || self.imageOrientation == UIImage.Orientation.downMirrored ) {
+            transform = transform.translatedBy(x: self.size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
         }
         
-        if ( self.imageOrientation == UIImageOrientation.LeftMirrored || self.imageOrientation == UIImageOrientation.RightMirrored ) {
-            transform = CGAffineTransformTranslate(transform, self.size.height, 0);
-            transform = CGAffineTransformScale(transform, -1, 1);
+        if ( self.imageOrientation == UIImage.Orientation.leftMirrored || self.imageOrientation == UIImage.Orientation.rightMirrored ) {
+            transform = transform.translatedBy(x: self.size.height, y: 0);
+            transform = transform.scaledBy(x: -1, y: 1);
         }
         
         // Now we draw the underlying CGImage into a new context, applying the transform
         // calculated above.
-        let ctx: CGContextRef = CGBitmapContextCreate(nil, Int(self.size.width), Int(self.size.height), CGImageGetBitsPerComponent(self.CGImage), 0, CGImageGetColorSpace(self.CGImage), CGImageGetBitmapInfo(self.CGImage).rawValue)!
+        let ctx: CGContext = CGContext(data: nil, width: Int(self.size.width), height: Int(self.size.height), bitsPerComponent: self.cgImage!.bitsPerComponent, bytesPerRow: 0, space: self.cgImage!.colorSpace!, bitmapInfo: self.cgImage!.bitmapInfo.rawValue)!
         
-        CGContextConcatCTM(ctx, transform)
+        ctx.concatenate(transform)
         
-        if ( self.imageOrientation == UIImageOrientation.Left ||
-            self.imageOrientation == UIImageOrientation.LeftMirrored ||
-            self.imageOrientation == UIImageOrientation.Right ||
-            self.imageOrientation == UIImageOrientation.RightMirrored ) {
-            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.height,self.size.width), self.CGImage)
+        if ( self.imageOrientation == UIImage.Orientation.left ||
+            self.imageOrientation == UIImage.Orientation.leftMirrored ||
+            self.imageOrientation == UIImage.Orientation.right ||
+            self.imageOrientation == UIImage.Orientation.rightMirrored ) {
+            ctx.draw(self.cgImage!, in: CGRect(x: 0,y: 0,width: self.size.height,height: self.size.width))
         } else {
-            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.width,self.size.height), self.CGImage)
+            ctx.draw(self.cgImage!, in: CGRect(x: 0,y: 0,width: self.size.width,height: self.size.height))
         }
         
         // And now we just create a new UIImage from the drawing context and return it
-        return UIImage(CGImage: CGBitmapContextCreateImage(ctx)!)
+        return UIImage(cgImage: ctx.makeImage()!)
     }
 }
 
-extension NSDate {
-    func isGreaterThanDate(dateToCompare: NSDate) -> Bool {
+extension Date {
+    func isGreaterThanDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isGreater = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending {
+        if self.compare(dateToCompare) == ComparisonResult.orderedDescending {
             isGreater = true
         }
         
@@ -1430,12 +1602,12 @@ extension NSDate {
         return isGreater
     }
     
-    func isLessThanDate(dateToCompare: NSDate) -> Bool {
+    func isLessThanDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isLess = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedAscending {
+        if self.compare(dateToCompare) == ComparisonResult.orderedAscending {
             isLess = true
         }
         
@@ -1443,12 +1615,12 @@ extension NSDate {
         return isLess
     }
     
-    func equalToDate(dateToCompare: NSDate) -> Bool {
+    func equalToDate(_ dateToCompare: Date) -> Bool {
         //Declare Variables
         var isEqualTo = false
         
         //Compare Values
-        if self.compare(dateToCompare) == NSComparisonResult.OrderedSame {
+        if self.compare(dateToCompare) == ComparisonResult.orderedSame {
             isEqualTo = true
         }
         
@@ -1456,59 +1628,60 @@ extension NSDate {
         return isEqualTo
     }
     
-    func addDays(daysToAdd: Int) -> NSDate {
-        let secondsInDays: NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
-        let dateWithDaysAdded: NSDate = self.dateByAddingTimeInterval(secondsInDays)
+    func addDays(_ daysToAdd: Int) -> Date {
+        let secondsInDays: TimeInterval = Double(daysToAdd) * 60 * 60 * 24
+        let dateWithDaysAdded: Date = self.addingTimeInterval(secondsInDays)
         
         //Return Result
         return dateWithDaysAdded
     }
     
-    func addHours(hoursToAdd: Int) -> NSDate {
-        let secondsInHours: NSTimeInterval = Double(hoursToAdd) * 60 * 60
-        let dateWithHoursAdded: NSDate = self.dateByAddingTimeInterval(secondsInHours)
+    func addHours(_ hoursToAdd: Int) -> Date {
+        let secondsInHours: TimeInterval = Double(hoursToAdd) * 60 * 60
+        let dateWithHoursAdded: Date = self.addingTimeInterval(secondsInHours)
         
         //Return Result
         return dateWithHoursAdded
     }
     
-    func returnDateForMonth(month:NSInteger, year:NSInteger, day:NSInteger)->NSDate{
-        let comp = NSDateComponents()
+    func returnDateForMonth(_ month:NSInteger, year:NSInteger, day:NSInteger)->Date{
+        var comp = DateComponents()
         comp.month = month
         comp.year = year
         comp.day = day
         
-        let grego = NSCalendar.currentCalendar()
-        return grego.dateFromComponents(comp)!
+        let grego = Calendar.current
+        return grego.date(from: comp)!
     }
     
-    func firstDateOfMonth(date:NSDate=NSDate()) -> String {
-        let calendar = NSCalendar.currentCalendar()
-        let dateComponents = calendar.components([NSCalendarUnit.Month, NSCalendarUnit.Year], fromDate: date)
-        let firstDay = self.returnDateForMonth(dateComponents.month, year: dateComponents.year, day: 1)
-        let dateFormatter = NSDateFormatter()
+    func firstDateOfMonth(_ date:Date=Date()) -> String {
+        let calendar = Calendar.current
+        let dateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.month, NSCalendar.Unit.year], from: date)
+        let firstDay = self.returnDateForMonth(dateComponents.month!, year: dateComponents.year!, day: 1)
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = _DATEFORMATTER
         
-        return dateFormatter.stringFromDate(firstDay)
+        return dateFormatter.string(from: firstDay)
     }
     
-    func getWeekDateByDate(date:String) ->Int {
-        let dateStyler = NSDateFormatter()
+    func getWeekDateByDate(_ date:String) ->Int {
+        let dateStyler = DateFormatter()
         dateStyler.dateFormat = _DATEFORMATTER
         
-        let myDate = dateStyler.dateFromString(date)!
+        let myDate = dateStyler.date(from: date)!
         
-        let myWeekday = NSCalendar.currentCalendar().components(NSCalendarUnit.Weekday, fromDate: myDate).weekday
+        let myWeekday = (Calendar.current as NSCalendar).components(NSCalendar.Unit.weekday, from: myDate).weekday
         
-        return myWeekday
+        return myWeekday!
     }
 }
 
-extension UITextField {
-    func showListData(sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=250, height:CGFloat=250, allowMulpSel:Bool=false) /*->DropdownListViewControl*/ {
-        
+extension UITextView {
+    
+    func showListData(_ sender: UITextView, parent:UIView, handle:((UITextView)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=250, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
+        let width = sender.frame.size.width < 250 ? 250 : sender.frame.size.width
         if listData.count > 0 {
-            //return Cache_Dropdown_Instance!
+
             Cache_Dropdown_Instance?.removeFromSuperview()
             
             if Cache_Dropdown_Instance == nil {
@@ -1517,26 +1690,115 @@ extension UITextField {
             
             Cache_Dropdown_Instance!.dropdownData = listData as! [String]
             
-            let adjustheight = listData.count*50 < 650 ? listData.count*50 : 650
+            // for fix auto layout position in stackview
+            let frame = sender.superview?.convert(sender.frame, to: parent)
             
-            if (sender.frame.minX + width) > 768 {
-                Cache_Dropdown_Instance!.frame = CGRect.init(x: 768-width, y: sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height, width: width, height: CGFloat(listData.count*50))
-            }else{
-                Cache_Dropdown_Instance!.frame = CGRect.init(x: sender.frame.minX, y: sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height, width: width, height: CGFloat(adjustheight))
+            let actualHeight = CGFloat(listData.count*50)
+            let adjustheight = actualHeight < height ? (actualHeight - 1) : (height - 1)
+            var actualMinX = frame?.origin.x ?? 0
+            
+            if actualMinX + width > _DEVICE_WIDTH {
+                actualMinX = _DEVICE_WIDTH - width
             }
             
+//            var minY = sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+            var minY = (frame?.origin.y ?? 0) + (frame?.size.height ?? 0)
+            
+            if String(describing: sender.superview!.classForCoder) != nil {
+                let classCode = String(describing: sender.superview!.classForCoder)
+                
+                if classCode == "UITableViewCellContentView" {
+//                    minY = sender.superview!.superview!.frame.minY+sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+                    minY = sender.superview!.superview!.frame.minY+minY
+                }
+            }
+            
+            let absolutePoint = sender.convert(sender.bounds, to: nil)
+            let adjustMinY = absolutePoint.origin.y + 80 + sender.frame.size.height + adjustheight
+            if adjustMinY > _DEVICE_HEIGHT {
+                minY -= adjustMinY - _DEVICE_HEIGHT
+            }
+
+            Cache_Dropdown_Instance!.frame = CGRect.init(x: actualMinX, y: minY, width: width, height: adjustheight)
+            
             Cache_Dropdown_Instance!.sizeWidth = Int(width)
-            Cache_Dropdown_Instance!.sizeHeight = adjustheight //Int(height)
+            Cache_Dropdown_Instance!.sizeHeight = Int(adjustheight) //Int(height)
+            
+            Cache_Dropdown_Instance!.myParentTextView = sender
+            Cache_Dropdown_Instance!.layer.cornerRadius = 5.0
+            Cache_Dropdown_Instance!.tableView.allowsMultipleSelection = allowMulpSel
+            Cache_Dropdown_Instance?.allowManuallyInput = allowManuallyInput
+            Cache_Dropdown_Instance!.tableView.rowHeight = 50
+            Cache_Dropdown_Instance!.handleFunTextView = handle
+            Cache_Dropdown_Instance?.tag = tag
+            Cache_Dropdown_Instance?.keyValues = keyValues
+            Cache_Dropdown_Instance?.selectedValues = selectedValues
+            
+            parent.addSubview(Cache_Dropdown_Instance!)
+        }else{
+            Cache_Dropdown_Instance?.removeFromSuperview()
+        }
+    }
+}
+
+extension UITextField {
+    
+    func showListData(_ sender: UITextField, parent:UIView, handle:((UITextField)->(Void))?=nil, listData:NSArray, width:CGFloat=_DEVICE_WIDTH/3, height:CGFloat=500, allowMulpSel:Bool=false, tag:Int = 100000, allowManuallyInput:Bool=false, keyValues:[String:Int] = [String:Int](), selectedValues:[Int]=[Int]()) /*->DropdownListViewControl*/ {
+        let width = sender.frame.size.width < 250 ? 250 : sender.frame.size.width
+        let height = 500.0
+        if listData.count > 0 {
+
+            Cache_Dropdown_Instance?.removeFromSuperview()
+            
+            if Cache_Dropdown_Instance == nil {
+                Cache_Dropdown_Instance = DropdownListViewControl.loadFromNibNamed("DropdownListView")!
+            }
+            
+            Cache_Dropdown_Instance!.dropdownData = listData as! [String]
+            
+            // for fix auto layout position in stackview
+            let frame = sender.superview?.convert(sender.frame, to: parent)
+            
+            let actualHeight = CGFloat(listData.count*50)
+            let adjustheight = actualHeight < height ? (actualHeight - 1) : (height - 1)
+            var actualMinX = frame?.origin.x ?? 0
+            
+            if actualMinX + width > _DEVICE_WIDTH {
+                actualMinX = _DEVICE_WIDTH - width
+            }
+            
+//            var minY = sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+            var minY = (frame?.origin.y ?? 0) + (frame?.size.height ?? 0)
+            
+            if String(describing: sender.superview!.classForCoder) != nil {
+                let classCode = String(describing: sender.superview!.classForCoder)
+                
+                if classCode == "UITableViewCellContentView" {
+//                    minY = sender.superview!.superview!.frame.minY+sender.superview!.frame.minY+sender.frame.minY+sender.frame.size.height
+                    minY = sender.superview!.superview!.frame.minY+minY
+                }
+            }
+            
+            let absolutePoint = sender.convert(sender.bounds, to: nil)
+            let adjustMinY = absolutePoint.origin.y + 80 + sender.frame.size.height + adjustheight
+            if adjustMinY > _DEVICE_HEIGHT {
+                minY -= adjustMinY - _DEVICE_HEIGHT
+            }
+
+            Cache_Dropdown_Instance!.frame = CGRect.init(x: actualMinX, y: minY, width: width, height: adjustheight)
+            
+            Cache_Dropdown_Instance!.sizeWidth = Int(width)
+            Cache_Dropdown_Instance!.sizeHeight = Int(adjustheight) //Int(height)
             
             Cache_Dropdown_Instance!.myParentTextField = sender
             Cache_Dropdown_Instance!.layer.cornerRadius = 5.0
             Cache_Dropdown_Instance!.tableView.allowsMultipleSelection = allowMulpSel
+            Cache_Dropdown_Instance?.allowManuallyInput = allowManuallyInput
             Cache_Dropdown_Instance!.tableView.rowHeight = 50
             Cache_Dropdown_Instance!.handleFun = handle
-            
-            if CGFloat(adjustheight) < height {
-                Cache_Dropdown_Instance!.tableView.scrollEnabled = false
-            }
+            Cache_Dropdown_Instance?.tag = tag
+            Cache_Dropdown_Instance?.keyValues = keyValues
+            Cache_Dropdown_Instance?.selectedValues = selectedValues
             
             parent.addSubview(Cache_Dropdown_Instance!)
         }else{
@@ -1544,7 +1806,7 @@ extension UITextField {
         }
     }
  
-    func numberOnlyCheck(textField:UITextField, sourceText:String) ->Bool {
+    func numberOnlyCheck(_ textField:UITextField, sourceText:String) ->Bool {
         if textField.text!.characters.count >= _MAXIMUNINT {
             textField.text = String(textField.text!.characters.dropLast())
             return false
@@ -1563,39 +1825,80 @@ extension UITextField {
             return false
         }
         
-        let aSet = NSCharacterSet(charactersInString:"0123456789").invertedSet
-        let compSepByCharInSet = sourceText.componentsSeparatedByCharactersInSet(aSet)
-        let numberFiltered = compSepByCharInSet.joinWithSeparator("")
+        let aSet = CharacterSet(charactersIn:"0123456789").inverted
+        let compSepByCharInSet = sourceText.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
         
         return sourceText == numberFiltered
     }
     
-    func showDatePicker(sender: UITextField) {
+    func showDatePicker(_ sender: UITextField) {
         let popoverContent = PopoverViewController()
-        popoverContent.preferredContentSize = CGSizeMake(320,350 + _NAVIBARHEIGHT)
-        
+        popoverContent.preferredContentSize = CGSize(width: 365, height: 350 + _NAVIBARHEIGHT+20)// CGSizeMake(320,350 + _NAVIBARHEIGHT)
         popoverContent.parentTextFieldView = sender
         popoverContent.sourceType = _BOOKINGDATEFROMDATETYPE
         popoverContent.dataType = _POPOVERDATETPYE
         
-        let nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-        nav.navigationBar.barTintColor = UIColor.blackColor()
-        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = .popover
+        nav.view.translatesAutoresizingMaskIntoConstraints = false
+        nav.navigationBar.barTintColor = .black
+
         let popover = nav.popoverPresentationController
         popover!.delegate = sender.parentVC as! PopoverMaster
-        popover!.sourceView = sender.parentVC?.view
-        popover!.sourceRect = CGRectMake(sender.frame.midX,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
         
-        sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+        sender.parentVC!.present(nav, animated: true, completion: nil)
+    }
+    
+    func showMultiDropdownValues(_ dataSource: String, textField: UITextField, keyValues: [String:Int]) ->String {
+        var dataSource = dataSource, textField = textField
+        
+        textField.text = ""
+        var keys = [String]()
+        var values = [Int]()
+        
+        if Cache_Dropdown_Instance?.selectedValues != nil {
+            values = (Cache_Dropdown_Instance?.selectedValues)!
+        } else {
+            let defaultValues = dataSource.characters.split{$0 == ","}.map(String.init)
+            defaultValues.forEach({
+                if let v = Int($0) {
+                    values.append(v)
+                }
+            })
+        }
+        
+        dataSource = ""
+
+        for value in values {
+            dataSource += String(format: "%d,", value)
+            let allKeys = keyValues.allKeysForValue(value)
+            keys.append(allKeys.first ?? "")
+            
+        }
+        
+        keys.sort(by: { $0 < $1 })
+        keys.forEach({ key in
+            textField.text! += String(format: "%@,", key)
+        })
+        
+        if let tempStr = textField.text {
+            if tempStr.characters.count > 0 {
+                textField.text = tempStr.substring(to: tempStr.characters.index(before: tempStr.endIndex))
+            }
+        }
+        
+        return dataSource
     }
 }
 
 extension String {
     func md5() -> String {
-        var digest = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
-        if let data = self.dataUsingEncoding(NSUTF8StringEncoding) {
-            CC_MD5(data.bytes, CC_LONG(data.length), &digest)
+        var digest = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+        if let data = self.data(using: String.Encoding.utf8) {
+            CC_MD5((data as NSData).bytes, CC_LONG(data.count), &digest)
         }
         
         var digestHex = ""
@@ -1608,12 +1911,12 @@ extension String {
     
     // url encode
     var urlEncode:String? {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
     }
     
     // url decode
     var urlDecode :String? {
-        return self.stringByRemovingPercentEncoding
+        return self.removingPercentEncoding
     }
 }
 
@@ -1626,9 +1929,9 @@ extension NSMutableData {
     ///
     /// - parameter string:       The string to be added to the `NSMutableData`.
     
-    func appendString(string: String) {
-        let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-        appendData(data!)
+    func appendString(_ string: String) {
+        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
+        append(data!)
     }
 }
 
@@ -1651,8 +1954,8 @@ extension UIBezierPath {
         let length = hypot(end.x - start.x, end.y - start.y)
         let tailLength = length - headLength
         
-        func p(x: CGFloat, _ y: CGFloat) -> CGPoint { return CGPoint(x: x, y: y) }
-        var points: [CGPoint] = [
+        func p(_ x: CGFloat, _ y: CGFloat) -> CGPoint { return CGPoint(x: x, y: y) }
+        let points: [CGPoint] = [
             p(0, tailWidth / 2),
             p(tailLength, tailWidth / 2),
             p(tailLength, headWidth / 2),
@@ -1664,44 +1967,103 @@ extension UIBezierPath {
         
         let cosine = (end.x - start.x) / length
         let sine = (end.y - start.y) / length
-        var transform = CGAffineTransform(a: cosine, b: sine, c: -sine, d: cosine, tx: start.x, ty: start.y)
+        let transform = CGAffineTransform(a: cosine, b: sine, c: -sine, d: cosine, tx: start.x, ty: start.y)
         
-        let path = CGPathCreateMutable()
-        CGPathAddLines(path, &transform, &points, points.count)
-        CGPathCloseSubpath(path)
-        
-        return self.init(CGPath: path)
+        let path = CGMutablePath()
+        path.addLines(between: points, transform: transform )
+        path.closeSubpath()
+        return self.init(cgPath: path)
     }
     
 }
-/*
-class BackgroundTask {
-    private let application: UIApplication
-    private var identifier = UIBackgroundTaskInvalid
-    
-    init(application: UIApplication) {
-        self.application = application
+
+extension Dictionary where Value : Equatable {
+    func allKeysForValue(_ val : Value) -> [Key] {
+        return self.filter { $1 == val }.map { $0.0 }
     }
-    
-    class func run(application: UIApplication, handler: (BackgroundTask) -> ()) {
-        // NOTE: The handler must call end() when it is done
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalCIContextOptionDictionary(_ input: [String: Any]?) -> [CIContextOption: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (CIContextOption(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCIContextOption(_ input: CIContextOption) -> String {
+	return input.rawValue
+}
+
+extension UIView {
+    func showTextFieldFullTextButton(textField: UITextField) {
+        let detailButton = CustomButton()
+        detailButton.setTitleColor(.systemBlue, for: .normal)
+        detailButton.setTitle("+", for: .normal)
+        detailButton.translatesAutoresizingMaskIntoConstraints = false
+        detailButton.addTarget(self, action: #selector(showDetailDidPress(_:)), for: .touchUpInside)
+        detailButton.destinationTextField = textField
+        self.addSubview(detailButton)
         
-        let backgroundTask = BackgroundTask(application: application)
-        backgroundTask.begin()
-        handler(backgroundTask)
+        NSLayoutConstraint.activate([
+            detailButton.widthAnchor.constraint(equalToConstant: 20),
+            detailButton.heightAnchor.constraint(equalToConstant: 20),
+            detailButton.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            detailButton.bottomAnchor.constraint(equalTo: textField.topAnchor, constant: -8)
+        ])
     }
     
-    func begin() {
-        self.identifier = application.beginBackgroundTaskWithExpirationHandler {
-            self.end()
+    @objc func showDetailDidPress(_ sender: UIButton) {
+        let popoverContent = PopoverViewController()
+        popoverContent.preferredContentSize = CGSize(width: 320, height: 150 + _NAVIBARHEIGHT)
+        popoverContent.dataType = _POPOVERNOTITLE
+        if let customButton = sender as? CustomButton {
+            popoverContent.selectedValue = customButton.destinationTextField?.text ?? ""
+        } else {
+            popoverContent.selectedValue = ""
+        }
+        
+        let nav = CustomNavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        nav.navigationBar.barTintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor.black
+        
+        let popover = nav.popoverPresentationController
+        popover!.delegate = sender.parentVC as! PopoverMaster
+        popover!.sourceView = sender
+        popover!.sourceRect = sender.bounds
+        
+        sender.parentVC!.present(nav, animated: true, completion: nil)
+    }
+}
+
+extension UITextField {
+    func isTruncated() -> Bool {
+        if let font = self.font, let text = self.text {
+            let fontAttributes = [NSAttributedString.Key.font: font]
+            let size = (text as NSString).size(withAttributes: fontAttributes)
+            let textFieldWidth = self.frame.size.width - 24
+            return size.width > textFieldWidth
+        }
+        return false
+    }
+}
+
+extension UISegmentedControl {
+    func updateSegmentWidthAtIndex(index: Int) {
+        if let text = self.titleForSegment(at: index) {
+            let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+            let size = (text as NSString).size(withAttributes: fontAttributes)
+            let segmentWidth:CGFloat = self.frame.size.width / CGFloat(self.numberOfSegments)
+            if size.width > (segmentWidth - 6) {
+                let newSegmentWidth = (self.frame.size.width - size.width - 10.0) / CGFloat(self.numberOfSegments-1)
+                for newIndex in 0...self.numberOfSegments-1 {
+                    if newIndex != index {
+                        self.setWidth(newSegmentWidth - 0.4, forSegmentAt: newIndex)
+                    }
+                }
+                self.setWidth(size.width + 10.0, forSegmentAt: index)
+            }
         }
     }
-    
-    func end() {
-        if (identifier != UIBackgroundTaskInvalid) {
-            application.endBackgroundTask(identifier)
-        }
-        
-        identifier = UIBackgroundTaskInvalid
-    }
-}*/
+}
+

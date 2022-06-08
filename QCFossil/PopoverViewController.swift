@@ -19,25 +19,28 @@ class PopoverViewController: UIViewController {
     var sourceType:String!
     var dataType:String! = _POPOVERDATATPYE
     var selectedValue:String = ""
-    
+    var didPickCompletion:(()->(Void))?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+
         if dataType == _POPOVERDATETPYE {
             calenderview = CalenderPickerViewInput.loadFromNibNamed("CalenderPickerView")!
-            calenderview.frame = CGRectMake(0, _NAVIBARHEIGHT, 325, 350+_NAVIBARHEIGHT)
-            
+            calenderview.translatesAutoresizingMaskIntoConstraints = false
+            calenderview.frame = CGRect(x: 20, y: _NAVIBARHEIGHT + 20, width: 325, height: 350+_NAVIBARHEIGHT+20)
             self.view.addSubview(calenderview)
- 
             
         }else if dataType == _POPOVERPRODDESC {
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Prod Desc")
             
-            let descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            var descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            if #available(iOS 13.0, *) {
+                descView = UITextView.init(frame: CGRect(x: 0,y: _NAVIBARHEIGHT,width: 325,height: 500))
+            }
             descView.text = selectedValue
-            descView.userInteractionEnabled = false
+            descView.isUserInteractionEnabled = false
             
             self.view.addSubview(descView)
             
@@ -70,8 +73,8 @@ class PopoverViewController: UIViewController {
             
             let rightButton=UIBarButtonItem()
             rightButton.title=MylocalizedString.sharedLocalizeManager.getLocalizedString("Close")
-            rightButton.tintColor = UIColor.blackColor()
-            rightButton.style=UIBarButtonItemStyle.Plain
+            rightButton.tintColor = UIColor.black
+            rightButton.style=UIBarButtonItem.Style.plain
             rightButton.target=self
             rightButton.action=#selector(PopoverViewController.cancelPick)
             self.navigationItem.rightBarButtonItem=rightButton
@@ -80,9 +83,9 @@ class PopoverViewController: UIViewController {
         }else if dataType == _POPOVERTASKSTATUSDESC {
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Refused")
             
-            let descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            let descView = UITextView.init(frame: CGRect(x: 0,y: _NAVIBARHEIGHT + 20,width: 325,height: 500))
             descView.text = selectedValue
-            descView.userInteractionEnabled = false 
+            descView.isUserInteractionEnabled = false 
             
             self.view.addSubview(descView)
             
@@ -119,8 +122,8 @@ class PopoverViewController: UIViewController {
             
             let rightButton=UIBarButtonItem()
             rightButton.title=MylocalizedString.sharedLocalizeManager.getLocalizedString("Close")
-            rightButton.tintColor = UIColor.blackColor()
-            rightButton.style=UIBarButtonItemStyle.Plain
+            rightButton.tintColor = UIColor.black
+            rightButton.style=UIBarButtonItem.Style.plain
             rightButton.target=self
             rightButton.action=#selector(PopoverViewController.cancelPick)
             self.navigationItem.rightBarButtonItem=rightButton
@@ -128,42 +131,121 @@ class PopoverViewController: UIViewController {
             return
         }else if dataType == _SHAPEDATATYPE {
             shapepreview = ShapePreviewViewInput.loadFromNibNamed("ShapePreviewView")!
-            shapepreview.frame = CGRectMake(0, _NAVIBARHEIGHT, 330, 220+_NAVIBARHEIGHT/*330+_NAVIBARHEIGHT*/)
+            shapepreview.frame = CGRect(x: 10, y: _NAVIBARHEIGHT, width: 350, /*220+_NAVIBARHEIGHT*/height: 350+_NAVIBARHEIGHT)
             shapepreview.parentView = self.parentView
             self.view.addSubview(shapepreview)
-            
             self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Shape Types")
             
             let rightButton=UIBarButtonItem()
             rightButton.title=MylocalizedString.sharedLocalizeManager.getLocalizedString("Close")
-            rightButton.tintColor = UIColor.blackColor()
-            rightButton.style=UIBarButtonItemStyle.Plain
+            rightButton.tintColor = UIColor.black
+            rightButton.style=UIBarButtonItem.Style.plain
             rightButton.target=self
             rightButton.action=#selector(PopoverViewController.cancelPick)
             self.navigationItem.rightBarButtonItem=rightButton
             
             return
-        }else{
+        }else if dataType == _DEFECTPPDESC {
+        
+            self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Position Point(s)")
+            self.automaticallyAdjustsScrollViewInsets = false
+            
+            let scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: _NAVIBARHEIGHT+10, width: 325, height: 150+_NAVIBARHEIGHT))
+            scrollView.contentSize = CGSize.init(width: 325, height: 150+_NAVIBARHEIGHT)
+            
+            self.view.addSubview(scrollView)
+            
+            let poItemString = selectedValue
+            let poItemNames = poItemString.characters.split{$0 == ","}.map(String.init)
+            
+            if poItemNames.count>0 {
+                for idx in 0...poItemNames.count-1 {
+                    
+                    let poItem = UILabel.init(frame: CGRect(x: 5,y: idx*50+10,width: 320,height: 50))
+                    poItem.numberOfLines = 0
+                    
+                    if idx < 1 {
+                        poItem.text = "\((idx+1)).  \(poItemNames[idx])"
+                    }else{
+                        poItem.text = "\((idx+1)). \(poItemNames[idx])"
+                    }
+                    
+                    scrollView.addSubview(poItem)
+                }
+                
+                let newHeight:CGFloat = CGFloat(poItemNames.count*50)
+                scrollView.contentSize = CGSize.init(width: 325, height: newHeight+_NAVIBARHEIGHT)
+            }
+            
+            return
+        }else if dataType == _POPOVERNOTITLE {
+            if let nav = self.parent as? UINavigationController {
+                nav.setNavigationBarHidden(true, animated: false)
+            }
+            
+            let descView = UITextView()// UITextView.init(frame: CGRect(x: 0,y: 0,width: 325,height: 500))
+            descView.translatesAutoresizingMaskIntoConstraints = false
+            descView.text = selectedValue
+            descView.isUserInteractionEnabled = false
+            descView.font = UIFont.systemFont(ofSize: 18.0)
+            
+            self.view.addSubview(descView)
+            if #available(iOS 11.0, *) {
+                descView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+                descView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+                descView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+                descView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            } else {
+                descView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+                descView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+                descView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+                descView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            }
+            return
+        } else if dataType == _DOWNLOADTASKSTATUSDESC {
+            if let nav = self.parent as? UINavigationController {
+                nav.setNavigationBarHidden(true, animated: false)
+            }
+            
+            let descView = UITextView.init(frame: CGRect(x: 0,y: 0,width: 640, height: 320))
+            descView.text = selectedValue
+            descView.isUserInteractionEnabled = true
+            descView.font = UIFont.systemFont(ofSize: 18.0)
+            self.view.addSubview(descView)
+        
+        } else{
             inputview = PopoverViewsInput.loadFromNibNamed("PopoverViews")!
             inputview.initData(sourceType)
-            inputview.typeSelection.frame = CGRectMake(0, _NAVIBARHEIGHT, _POPOVERVIEWSIZE_S.width, _POPOVERVIEWSIZE_S.height)
             inputview.addSubview((inputview.typeSelection)!)
             self.view.addSubview(inputview)
+            inputview.typeSelection.translatesAutoresizingMaskIntoConstraints = false
+            inputview.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                inputview.typeSelection.centerXAnchor.constraint(equalTo: inputview.centerXAnchor),
+                inputview.typeSelection.centerYAnchor.constraint(equalTo: inputview.centerYAnchor),
+                inputview.typeSelection.heightAnchor.constraint(equalTo: inputview.heightAnchor),
+                inputview.typeSelection.widthAnchor.constraint(equalTo: inputview.widthAnchor),
+
+                inputview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                inputview.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                inputview.topAnchor.constraint(equalTo: view.topAnchor),
+                inputview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
             
         }
         
         let leftButton=UIBarButtonItem()
         leftButton.title=MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
-        leftButton.tintColor = UIColor.whiteColor()
-        leftButton.style=UIBarButtonItemStyle.Plain
+        leftButton.tintColor = UIColor.white
+        leftButton.style=UIBarButtonItem.Style.plain
         leftButton.target=self
         leftButton.action=#selector(PopoverViewController.cancelPick)
         self.navigationItem.leftBarButtonItem=leftButton
         
         let rightButton=UIBarButtonItem()
         rightButton.title=MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
-        rightButton.tintColor = UIColor.whiteColor()
-        rightButton.style=UIBarButtonItemStyle.Plain
+        rightButton.tintColor = UIColor.white
+        rightButton.style=UIBarButtonItem.Style.plain
         rightButton.target=self
         rightButton.action=#selector(PopoverViewController.didPick)
         self.navigationItem.rightBarButtonItem=rightButton
@@ -184,12 +266,12 @@ class PopoverViewController: UIViewController {
     }
     */
     
-    func cancelPick() {
+    @objc func cancelPick() {
         print("cancel pick")
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func didPick() {
+    @objc func didPick() {
         print("did pick: \(self.selectedValue)")
         //pVC.productType.text = self.inputview.selectedValue
         
@@ -198,6 +280,8 @@ class PopoverViewController: UIViewController {
         /*if self.selectedValue != nil {
             setValueBySourceType(sourceType, selectedValue: self.selectedValue)
         }*/
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.didPickCompletion?()
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }

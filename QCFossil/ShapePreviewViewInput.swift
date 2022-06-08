@@ -38,40 +38,40 @@ class ShapePreviewViewInput: UIView {
         }
         
         let shapeView1 = ShapeView(origin: self.parentView.center, shapeType: 1, shapeSize: 105)
-        shapeView1.frame = CGRect(x: 0, y: 20, width: 110, height: 110)
-        shapeView1.userInteractionEnabled = false
+        shapeView1.frame = CGRect(x: 10, y: 20, width: 110, height: 110)
+        shapeView1.isUserInteractionEnabled = false
         self.addSubview(shapeView1)
         
         let shapeView2 = ShapeView(origin: self.parentView.center, shapeType: 2, shapeSize: 105)
-        shapeView2.frame = CGRect(x: 110, y: 20, width: 110, height: 110)
-        shapeView2.userInteractionEnabled = false
+        shapeView2.frame = CGRect(x: 120, y: 20, width: 110, height: 110)
+        shapeView2.isUserInteractionEnabled = false
         self.addSubview(shapeView2)
         
         let shapeView3 = ShapeView(origin: self.parentView.center, shapeType: 3, shapeSize: 105)
-        shapeView3.frame = CGRect(x: 220, y: 20, width: 110, height: 110)
-        shapeView3.userInteractionEnabled = false
+        shapeView3.frame = CGRect(x: 230, y: 20, width: 110, height: 110)
+        shapeView3.isUserInteractionEnabled = false
         self.addSubview(shapeView3)
         
         let shapeView4 = ShapeView(origin: self.parentView.center, shapeType: 0, shapeSize: 105)
-        shapeView4.frame = CGRect(x: 0, y: 140, width: 110, height: 110)
-        shapeView4.userInteractionEnabled = false
+        shapeView4.frame = CGRect(x: 10, y: 140, width: 110, height: 110)
+        shapeView4.isUserInteractionEnabled = false
         self.addSubview(shapeView4)
         
         let shapeView5 = ShapeView(origin: self.parentView.center, shapeType: 6, shapeSize: 105)
-        shapeView5.frame = CGRect(x: 110, y: 140, width: 110, height: 110)
-        shapeView5.userInteractionEnabled = false
+        shapeView5.frame = CGRect(x: 120, y: 140, width: 110, height: 110)
+        shapeView5.isUserInteractionEnabled = false
         self.addSubview(shapeView5)
         
         let shapeView6 = ShapeView(origin: self.parentView.center, shapeType: 9, shapeSize: 105)
-        shapeView6.frame = CGRect(x: 220, y: 140, width: 110, height: 110)
-        shapeView6.userInteractionEnabled = false
+        shapeView6.frame = CGRect(x: 230, y: 140, width: 110, height: 110)
+        shapeView6.isUserInteractionEnabled = false
         self.addSubview(shapeView6)
-        /*
-        let shapeView7 = ShapeView(origin: self.parentView.center, shapeType: 7, shapeSize: 105)
-        shapeView7.frame = CGRect(x: 0, y: 260, width: 110, height: 110)
-        shapeView7.userInteractionEnabled = false
-        self.addSubview(shapeView7)
         
+        let shapeView7 = ShapeView(origin: self.parentView.center, shapeType: 10, shapeSize: 105)
+        shapeView7.frame = CGRect(x: 10, y: 260, width: 110, height: 110)
+        shapeView7.isUserInteractionEnabled = false
+        self.addSubview(shapeView7)
+        /*
         let shapeView8 = ShapeView(origin: self.parentView.center, shapeType: 8, shapeSize: 105)
         shapeView8.frame = CGRect(x: 110, y: 260, width: 110, height: 110)
         shapeView8.userInteractionEnabled = false
@@ -91,61 +91,61 @@ class ShapePreviewViewInput: UIView {
         
     }
     
-    @IBAction func ShapeOnClick(sender: UIButton) {
+    @IBAction func ShapeOnClick(_ sender: UIButton) {
         
         switch sender.tag {
         case 1:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 1)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 1)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 2:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 2)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 2)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 3:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 3)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 3)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 4:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 0)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 0)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 5:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 6)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 6)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 6:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 9)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 9)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 7:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 7)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 10)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 8:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 8)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 8)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         case 9:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 9)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 9)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
             break
         default:
-            let shapeView = ShapeView(origin: CGPointMake(self.parentView.center.x - 100, self.parentView.center.y - 100), shapeType: 0)
+            let shapeView = ShapeView(origin: CGPoint(x: self.parentView.center.x - 100, y: self.parentView.center.y - 100), shapeType: 0)
             shapeView.tag = _SHAPEVIEWTAG
             (self.parentView as! ImagePreviewViewInput).imageView.addSubview(shapeView)
         }
         
-        self.parentVC!.dismissViewControllerAnimated(true, completion: nil)
+        self.parentVC!.dismiss(animated: true, completion: nil)
     }
     
     

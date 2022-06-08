@@ -19,6 +19,13 @@ class TaskItem {
     var modifyUser:String?
     var modifyDate:String?
     var samplingQty:Int?
+    var ref_qc_plan_line_id:Int?
+    var sampling_qty:Int?
+    var item_barcode:String?
+    var retail_price:String?
+    var currency:String?
+    var style_size:String?
+    var substr_style_size:String?
     
     init(taskId:Int, poItemId:Int, targetInspectQty:Int, availInspectQty:Int, inspectEnableFlag:Int, createUser:String?, createDate:String?, modifyUser:String?, modifyDate:String?, samplingQty:Int?) {
         

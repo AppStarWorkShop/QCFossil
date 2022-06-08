@@ -43,6 +43,8 @@ class Task {
     var vdrSignDate:String?
     var tmplId:Int?
     var opdRsd:String? //add 08222018
+    var qcRemarks:String?
+    var additionalAdministrativeItems:String?
     
     //extension
     var vendor:String?
@@ -59,6 +61,7 @@ class Task {
     var sortingNum:Int = 0
     var errorCode:Int = 0
     var prodDesc:String?
+    var confirmUploadDate:String?
     
     //inspection result
     var inspCatResuts = [InspCatResult]()
@@ -72,7 +75,7 @@ class Task {
     //Defect Items
     var defectItems = [TaskInspDefectDataRecord]()
     
-    init?(taskId:Int,prodTypeId:Int,inspectionTypeId:Int,bookingNo:String,bookingDate:String,vdrLocationId:Int,reportInspectorId:Int,reportPrefix:String,reportRunningNo:String="",inspectionNo:String,inspectionDate:String,taskRemarks:String,vdrNotes:String,inspectionResultValueId:Int,inspectionSignImageFile:String?,vdrSignName:String,vdrSignImageFile:String?,taskStatus:Int,uploadInspectorId:Int,uploadDeviceId:String?,refTaskId:Int,recStatus:Int,createUser:String,createDate:String,modifyUser:String,modifyDate:String,deleteFlag:Int,deleteUser:String?,deleteDate:String?,inspectSetupId:Int=1) {
+    init?(taskId:Int,prodTypeId:Int,inspectionTypeId:Int,bookingNo:String,bookingDate:String,vdrLocationId:Int,reportInspectorId:Int,reportPrefix:String,reportRunningNo:String="",inspectionNo:String,inspectionDate:String,taskRemarks:String,vdrNotes:String,inspectionResultValueId:Int,inspectionSignImageFile:String?,vdrSignName:String,vdrSignImageFile:String?,taskStatus:Int,uploadInspectorId:Int,uploadDeviceId:String?,refTaskId:Int,recStatus:Int,createUser:String,createDate:String,modifyUser:String,modifyDate:String,deleteFlag:Int,deleteUser:String?,deleteDate:String?,inspectSetupId:Int=1,qcRemarks:String?,additionalAdministrativeItems:String?) {
         
         self.taskId = taskId
         self.prodTypeId = prodTypeId
@@ -104,5 +107,7 @@ class Task {
         self.deleteUser = deleteUser
         self.deleteDate = deleteDate
         self.inspectSetupId = inspectSetupId
+        self.qcRemarks = qcRemarks
+        self.additionalAdministrativeItems = additionalAdministrativeItems
     }
 }

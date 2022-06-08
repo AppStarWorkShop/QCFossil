@@ -7,8 +7,43 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+
+class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var BackgroundView: UIView!
     weak var parentView:UIView?
@@ -17,6 +52,9 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
     var imageName:String?
     var photoIndex:Int?
     var inactiveAlpha:CGFloat = 0.2
+    var totalScale:CGFloat = 1.0
+    var scrollView:UIScrollView?
+    var previewOnly = false
     
     @IBOutlet weak var imageView: SignoffView!
     @IBOutlet weak var closeBtn: CustomButton!
@@ -48,9 +86,9 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
     }
     
     func updateLocalizeString() {
-        self.startEditBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit"), forState: UIControlState.Normal)
-        self.closeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Close")+" X", forState: UIControlState.Normal)
-        self.saveImageBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), forState: UIControlState.Normal)
+        self.startEditBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit"), for: UIControl.State())
+        self.closeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Close")+" X", for: UIControl.State())
+//        self.saveImageBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Save"), for: UIControl.State())
         
         updateBrushColor()
         updateBrushSize()
@@ -96,66 +134,79 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
         }
     }
     
-    func setEnableEditing(enable:Bool) {
-        self.brushClearBtn.hidden = enable
-        self.brushColorBlue.hidden = enable
-        self.brushColorGreen.hidden = enable
-        self.brushColorRed.hidden = enable
-        self.brushColorYellow.hidden = enable
-        self.brushSize_s.hidden = enable
-        self.brushSize_m.hidden = enable
-        self.brushSize_l.hidden = enable
-        self.saveImageBtn.hidden = enable
-        self.imageView.userInteractionEnabled = !enable
+    func setEnableEditing(_ enable:Bool) {
+        self.brushClearBtn.isHidden = enable
+        self.brushColorBlue.isHidden = enable
+        self.brushColorGreen.isHidden = enable
+        self.brushColorRed.isHidden = enable
+        self.brushColorYellow.isHidden = enable
+        self.brushSize_s.isHidden = enable
+        self.brushSize_m.isHidden = enable
+        self.brushSize_l.isHidden = enable
+        self.saveImageBtn.isHidden = enable
+        self.imageView.isUserInteractionEnabled = !enable
     }
 
     override func didMoveToSuperview() {
         setEnableEditing(true)
+        
+        if previewOnly {
+            guard let imageView = self.imageView else {return}
+            
+            imageView.previewOnly = true
+            
+            scrollView?.minimumZoomScale = 1.0
+            scrollView?.maximumZoomScale = 3.0
+            scrollView?.zoomScale = 1.0
+            scrollView?.bouncesZoom = true
+            scrollView?.contentSize = CGSize(width: 600, height: 800)
+            scrollView?.delegate = self
+        }
     }
     
-    @IBAction func startEditOnClick(sender: UIButton) {
+    @IBAction func startEditOnClick(_ sender: UIButton) {
         /*if self.disableFuns(self) {
             self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Cannot update Confirmed or Cancelled Task!"))
             return
         }*/
         
         if sender.tag < 1 {
-            sender.setTitle("+", forState: UIControlState.Normal)
+            sender.setTitle("+", for: UIControl.State())
             sender.tag = 1
-            sender.titleLabel?.font = UIFont.systemFontOfSize(30)
+            sender.titleLabel?.font = UIFont.systemFont(ofSize: 30)
             setEnableEditing(false)
             
         }else{
             
             let popoverContent = PopoverViewController()
-            popoverContent.preferredContentSize = CGSizeMake(320,240 + _NAVIBARHEIGHT/*350 + _NAVIBARHEIGHT*/)
-            
+            popoverContent.preferredContentSize = CGSize(width: 350, height: 350 + _NAVIBARHEIGHT)//CGSizeMake(320,/*240 + _NAVIBARHEIGHT*/350 + _NAVIBARHEIGHT)
+//            popoverContent.view.translatesAutoresizingMaskIntoConstraints = false
             popoverContent.parentTextFieldView = nil
             popoverContent.sourceType = _SHAPEPREVIEWTYPE
             popoverContent.dataType = _SHAPEDATATYPE
             popoverContent.parentView = self
-            
-            let nav = UINavigationController(rootViewController: popoverContent)
-            nav.modalPresentationStyle = UIModalPresentationStyle.Popover
-            nav.navigationBar.barTintColor = UIColor.whiteColor()
+
+            let nav = CustomNavigationController(rootViewController: popoverContent)
+            nav.modalPresentationStyle = UIModalPresentationStyle.popover
+            nav.navigationBar.barTintColor = UIColor.white
             
             let popover = nav.popoverPresentationController
             popover!.delegate = self
             popover!.sourceView = sender //sender.parentVC?.view
-            popover!.sourceRect = CGRectMake(sender.frame.minX,sender.frame.minY,sender.frame.size.width,sender.frame.size.height)
+            popover!.sourceRect = sender.bounds
             
-            sender.parentVC!.presentViewController(nav, animated: true, completion: nil)
+            sender.parentVC!.present(nav, animated: true, completion: nil)
             
         }
     }
 
-    @IBAction func closeBtnOnClick(sender: CustomButton) {
+    @IBAction func closeBtnOnClick(_ sender: CustomButton) {
         if (self.parentView != nil) {
             self.parentView!.removeFromSuperview()
         }
     }
     
-    @IBAction func saveBtnOnClick(sender: CustomButton) {
+    @IBAction func saveBtnOnClick(_ sender: CustomButton) {
         self.imageView.image = UIImage.init(view: self.imageView)
         let endEditImage = imageView.saveEndEditImage(imageView.image!)
         //let endEditImageView = UIImageView.init(image: UIImage.init(view: self.imageView))
@@ -178,7 +229,7 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
         self.imageView.subviews.forEach({if $0.tag == _SHAPEVIEWTAG {$0.removeFromSuperview()} })
     }
 
-    @IBAction func clearBtnOnClick(sender: CustomButton) {
+    @IBAction func clearBtnOnClick(_ sender: CustomButton) {
         //imageDrawView.image = nil
         //Use the Regular Size Image
         let path = Cache_Task_Path!+"/"+imageName!
@@ -187,7 +238,7 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
         self.imageView.subviews.forEach({if $0.tag == _SHAPEVIEWTAG {$0.removeFromSuperview()} })
     }
     
-    @IBAction func setBrushStyle(sender: CustomButton) {
+    @IBAction func setBrushStyle(_ sender: CustomButton) {
     
         switch sender.tag {
             case 1://red brush
@@ -226,5 +277,20 @@ class ImagePreviewViewInput: UIView, UIPopoverPresentationControllerDelegate {
         updateBrushColor()
         imageView.setBrushStyle(CGFloat(_BRUSHSTYLE["red"]!), green: CGFloat(_BRUSHSTYLE["green"]!), blue: CGFloat(_BRUSHSTYLE["blue"]!), brush: CGFloat(_BRUSHSTYLE["brush"]!))
     }
+}
+
+extension ImagePreviewViewInput {
     
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        if (self.scrollView?.zoomScale > 1) {
+            imageView.center = CGPoint(x: self.scrollView!.contentSize.width / 2, y: self.scrollView!.contentSize.height / 2)
+        }
+        else {
+            imageView.center = self.scrollView?.center ?? self.center
+        }
+    }
 }

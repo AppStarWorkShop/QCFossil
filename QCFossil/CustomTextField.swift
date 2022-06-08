@@ -18,11 +18,26 @@ class CustomTextField: UITextField {
     }
     */
     
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return false
     }
     
-    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+}
+
+class NoActionTextField: UITextField {
+    
+//    override func caretRectForPosition(position: UITextPosition) -> CGRect {
+//        return CGRect.zero
+//    }
+//    
+//    override func selectionRectsForRange(range: UITextRange) -> [AnyObject] {
+//        return []
+//    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return false
     }
 }

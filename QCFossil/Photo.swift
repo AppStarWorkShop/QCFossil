@@ -15,6 +15,7 @@ class Photo {
     //db
     var photoId:Int?
     var taskId:Int
+    var refTaskId:Int?
     var refPhotoId:Int?
     var orgFileName:String?
     var photoFile:String
@@ -36,10 +37,11 @@ class Photo {
     //parentInspElmt
     var inspElmt:InputModeICMaster?
     
-    init?(photo:UIImageView?, photoFilename:String, taskId:Int, photoFile:String) {
+    init?(photo:UIImageView?, photoFilename:String, taskId:Int, photoFile:String, refTaskId:Int? = nil) {
         self.photo = photo
         self.photoFilename = photoFilename
         self.taskId = taskId
         self.photoFile = photoFile
+        self.refTaskId = refTaskId
     }
 }

@@ -21,6 +21,7 @@ class TaskInspDataRecord {
     var resultValueId:Int=0
     var requestSectionId:Int=0
     var requestElementDesc:String=""
+    var inspectPositionZoneValueId:Int?
     var createUser:String?
     var createDate:String?
     var modifyUser:String?
@@ -33,7 +34,7 @@ class TaskInspDataRecord {
     var postnObj:PositObj?
     var resultObj:ResultValueObj?
     
-    init?(recordId:Int?=0, taskId:Int, refRecordId:Int?, inspectSectionId:Int, inspectElementId:Int, inspectPositionId:Int, inspectPositionDesc:String?, inspectDetail:String?, inspectRemarks:String?, resultValueId:Int, requestSectionId:Int, requestElementDesc:String, createUser:String="", createDate:String="", modifyUser:String="", modifyDate:String="") {
+    init?(recordId:Int?=0, taskId:Int, refRecordId:Int?, inspectSectionId:Int, inspectElementId:Int, inspectPositionId:Int, inspectPositionDesc:String?, inspectDetail:String?, inspectRemarks:String?, resultValueId:Int, requestSectionId:Int, requestElementDesc:String, inspectPositionZoneValueId:Int?=nil, createUser:String="", createDate:String="", modifyUser:String="", modifyDate:String="") {
         
         self.recordId = recordId
         self.taskId = taskId
@@ -47,6 +48,7 @@ class TaskInspDataRecord {
         self.resultValueId = resultValueId
         self.requestSectionId = requestSectionId
         self.requestElementDesc = requestElementDesc
+        self.inspectPositionZoneValueId = inspectPositionZoneValueId
         self.createUser = createUser
         self.createDate = createDate
         self.modifyUser = modifyUser

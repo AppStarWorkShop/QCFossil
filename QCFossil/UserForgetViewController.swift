@@ -48,11 +48,11 @@ class UserForgetViewController: UIViewController {
     
     func updateLocalizeString() {
         if (self.forgetPwBackBtn != nil) {
-            self.forgetPwBackBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Back"), forState: UIControlState.Normal)
+            self.forgetPwBackBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Back"), for: UIControl.State())
         }
         
         if (self.forgetPwOKBtn != nil) {
-            self.forgetPwOKBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), forState: UIControlState.Normal)
+            self.forgetPwOKBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), for: UIControl.State())
         }
         
         if (self.forgetPwEmailLabel != nil) {
@@ -60,11 +60,11 @@ class UserForgetViewController: UIViewController {
         }
         
         if (self.forgetUsernameBackBtn != nil) {
-            self.forgetUsernameBackBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Back"), forState: UIControlState.Normal)
+            self.forgetUsernameBackBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Back"), for: UIControl.State())
         }
         
         if (self.forgetUsernameOKBtn != nil) {
-            self.forgetUsernameOKBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), forState: UIControlState.Normal)
+            self.forgetUsernameOKBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), for: UIControl.State())
         }
         
         if (self.forgetUsernameEmailLabel != nil) {
@@ -100,7 +100,7 @@ class UserForgetViewController: UIViewController {
     }
     */
     
-    @IBAction func resetUserNameEmailOKBtn(sender: UIButton) {
+    @IBAction func resetUserNameEmailOKBtn(_ sender: UIButton) {
         print("reset password by username & email")
         
         //Data Sync Forget Username
@@ -109,29 +109,29 @@ class UserForgetViewController: UIViewController {
             data += "\"\(key)\":\"\(value)\","
         }
         data += "}"
-        data = data.stringByReplacingOccurrencesOfString(",}", withString: "}")
-        data = data.stringByReplacingOccurrencesOfString(_DS_RESETEMAIL, withString: self.forgetUsernameEmailInput.text!)
-        data = data.stringByReplacingOccurrencesOfString(_DS_USERNAME, withString: self.forgetUsernameUsernameInput.text!)
+        data = data.replacingOccurrences(of: ",}", with: "}")
+        data = data.replacingOccurrences(of: _DS_RESETEMAIL, with: self.forgetUsernameEmailInput.text!)
+        data = data.replacingOccurrences(of: _DS_USERNAME, with: self.forgetUsernameUsernameInput.text!)
         
         self.makePostRequest(_DS_FORGET_UNPW["APINAME"] as! String, dataInJson: data, actionFields: _DS_FORGET_UNPW["ACTIONFIELDS"] as! Dictionary,  handler: { (result, response, totalRecords) -> Void in
             
             if response == "SUCCESS"{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Password has been reset! Please check your Email!"))
                 })
             }else if response == "Fail"{
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update failed. Please check internet connection."))
+                DispatchQueue.main.async(execute: {
+                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update failed. Please check internet connection"))
                 })
             }else{
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username or Email is not correct!"))
+                DispatchQueue.main.async(execute: {
+                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username / Email Not Correct"))
                 })
             }
         })
     }
     
-    @IBAction func resetEmailOKBtn(sender: UIButton) {
+    @IBAction func resetEmailOKBtn(_ sender: UIButton) {
         print("reset username")
         
         //Data Sync Forget Username
@@ -140,28 +140,28 @@ class UserForgetViewController: UIViewController {
             data += "\"\(key)\":\"\(value)\","
         }
         data += "}"
-        data = data.stringByReplacingOccurrencesOfString(",}", withString: "}")
-        data = data.stringByReplacingOccurrencesOfString(_DS_RESETEMAIL, withString: self.forgetPwEmailInput.text!)
+        data = data.replacingOccurrences(of: ",}", with: "}")
+        data = data.replacingOccurrences(of: _DS_RESETEMAIL, with: self.forgetPwEmailInput.text!)
         
         self.makePostRequest(_DS_FORGET_UN["APINAME"] as! String, dataInJson: data, actionFields: _DS_FORGET_UN["ACTIONFIELDS"] as! Dictionary,  handler: { (result, response, totalRecords) -> Void in
             
             if response == "SUCCESS"{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username has been reset! Please check your Email!"))
                 })
             }else if response == "Fail"{
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update failed. Please check internet connection."))
+                DispatchQueue.main.async(execute: {
+                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update failed. Please check internet connection"))
                 })
             }else{
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username or Password is not correct!"))
+                DispatchQueue.main.async(execute: {
+                    self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username / Password Not Correct"))
                 })
             }
         })
     }
 
-    @IBAction func backButton(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backButton(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 }

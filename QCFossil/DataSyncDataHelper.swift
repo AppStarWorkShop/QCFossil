@@ -11,13 +11,14 @@ import UIKit
 
 class DataSyncDataHelper:DataHelperMaster {
     
-    func cleanDBTableByName(tableName:String) ->Bool {
+    @discardableResult
+    func cleanDBTableByName(_ tableName:String) ->Bool {
         let sql = "DELETE FROM " + tableName
         var result = false
         
         let noDeleteTables = ["inspect_task_item","inspect_task"]
         
-        if noDeleteTables.contains(tableName) || db.executeUpdate(sql, withArgumentsInArray: nil) {
+        if noDeleteTables.contains(tableName) || db.executeUpdate(sql, withArgumentsIn: []) {
                 result = true
         }
         
@@ -50,7 +51,7 @@ class DataSyncDataHelper:DataHelperMaster {
     }*/
     
     
-    func clearDBTables(_DS_TABLES:Dictionary<String, String>) ->Bool {
+    func clearDBTables(_ _DS_TABLES:Dictionary<String, String>) ->Bool {
         if db.open() {
             db.beginTransaction()
             
@@ -74,57 +75,49 @@ class DataSyncDataHelper:DataHelperMaster {
         return true
     }
     
-    func updateTableRecordsByScript(vc:DataSyncViewController, apiName:String, sqlScript:[String], handler:()-> Void) ->Bool {
+    func updateTableRecordsByScript(_ vc:DataSyncViewController, apiName:String, sqlScript:[String], handler:(Bool)-> Void) {
         
         if db.open() {
             db.beginTransaction()
             
-            print("apiName: \(apiName)")
             if apiName == "_DS_FGPODATA" {
-                print("clear po data")
-                self.cleanDBTableByName("fgpo_line_item WHERE item_id NOT IN (SELECT fli.item_id FROM fgpo_line_item fli INNER JOIN inspect_task_item iti WHERE fli.item_id = iti.po_item_id)")
-        
+                cleanDBTableByName("fgpo_line_item WHERE item_id NOT IN (SELECT po_item_id FROM inspect_task_item)")
                 vc.updateProgressBar(0.7)
-                vc.updateDLProcessLabel(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear Data Done..."))
-                sleep(1)
-                print("PO Download 0.7")
-            
+            } else if apiName == "_DS_MSTRDATA" {
+//                let alterSql = "CREATE TABLE vdr_brand_map2 (data_env varchar(30) not null, vdr_id numeric(10,0) not null, brand_id numeric(10,0) not null, create_user varchar(30) not null, create_date datetime not null, modify_user varchar(30) not null, modify_date datetime not null);INSERT INTO vdr_brand_map2 (data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date) SELECT data_env, vdr_id, brand_id, create_user, create_date, modify_user, modify_date FROM vdr_brand_map; DROP TABLE vdr_brand_map; ALTER TABLE vdr_brand_map2 RENAME TO vdr_brand_map;"
+//                db.executeStatements(alterSql)
             }
             
             for sql in sqlScript {
-                //1. skip no data record
-                if sql == "" {
-                    continue
-                }
-                
-                //2. update table records
-                if !db.executeUpdate(sql, withArgumentsInArray: nil) {
-                    print("Error, DB Rollback!")
+            
+            // batch update
+                if !db.executeUpdate(sql, withArgumentsIn: []) {
+    //            if db.executeStatements(sqlScript.joined(separator:";")) {
+
+                    vc.errorMsg += "Error in \(apiName)\n"
+                    vc.errorMsg += "Error Sql Script: \(sql)\n"
+                    vc.errorMsg += "Sqlite Error: \(db.lastError())\n ErrorCode: \(db.lastErrorCode())\n ErrorMessage: \(db.lastErrorMessage())"
+                    
                     db.rollback()
                     db.close()
-                    
-                    if apiName == "_DS_DL_TASK_STATUS" {
-                        handler()
-                    }
-                    
-                    return false
+                        
+                    handler(false)
                 }
             }
             
             db.commit()
             db.close()
+            
+            handler(true)
         }
-        
-        handler()
-        return true
     }
     
-    func shouldSkipTaskData(objId:Int) ->Bool {
+    func shouldSkipTaskData(_ objId:Int) ->Bool {
         
         if db.open() {
             let sql = "SELECT 1 FROM inspect_task WHERE ref_task_id = ?"
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [objId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [objId]) {
                 
                 if rs.next() {
                     
@@ -146,10 +139,10 @@ class DataSyncDataHelper:DataHelperMaster {
             
             let sql = "SELECT task_id FROM inspect_task WHERE task_status <> ? AND app_ready_purge_date <> ? AND app_ready_purge_date IS NOT NULL"
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [GetTaskStatusId(caseId: "Confirmed").rawValue, ""]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [GetTaskStatusId(caseId: "Confirmed").rawValue, ""]) {
                 
                 while rs.next() {
-                    let taskId = Int(rs.intForColumn("task_id"))
+                    let taskId = Int(rs.int(forColumn: "task_id"))
                     taskIds.append(taskId)
                 }
             }
@@ -160,19 +153,20 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskIds
     }
     
-    func getAllInspectTasks(var tasklist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTasks(_ tasklist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var tasklist = tasklist
         let sql = "SELECT * FROM inspect_task WHERE ((task_status = ? AND confirm_upload_date IS NULL) OR task_status = ?) AND report_inspector_id = ?"
         var tasks = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue, (Cache_Inspector?.inspectorId)!]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue, (Cache_Inspector?.inspectorId)!]) {
                 
                 while rs.next() {
                     
                     for (key,_) in tasklist {
                         
-                        tasklist[key] = rs.stringForColumn(key)
+                        tasklist[key] = rs.string(forColumn: key)
                         
                     }
                     
@@ -186,19 +180,20 @@ class DataSyncDataHelper:DataHelperMaster {
         return tasks
     }
     
-    func getAllInspectTaskInspectors(var taskInspectorlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskInspectors(_ taskInspectorlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskInspectorlist = taskInspectorlist
         let sql = "SELECT * FROM inspect_task_inspector iti INNER JOIN inspect_task it ON iti.task_id = it.task_id WHERE inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)"
         var taskInspectors = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskInspectorlist {
                         
-                        taskInspectorlist[key] = rs.stringForColumn(key)
+                        taskInspectorlist[key] = rs.string(forColumn: key)
                         
                     }
                     
@@ -212,19 +207,25 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskInspectors
     }
  
-    func getAllInspectTaskItems(var taskItemlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskItems(_ taskItemlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskItemlist = taskItemlist
         //let sql = "SELECT * FROM inspect_task_item"
         let sql = "SELECT iti.* FROM inspect_task_item iti INNER JOIN inspect_task it ON iti.task_id = it.task_id WHERE it.report_inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)"
         var taskItems = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskItemlist {
-                        taskItemlist[key] = rs.stringForColumn(key)
+                        
+                        if let value = rs.string(forColumn: key) {
+                            taskItemlist[key] = value
+                        } else {
+                            taskItemlist[key] = ""
+                        }
                     }
                     
                     taskItems.append(taskItemlist)
@@ -237,19 +238,20 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskItems
     }
     
-    func getAllInspectTaskIFVs(var taskIFVlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskIFVs(_ taskIFVlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskIFVlist = taskIFVlist
         let sql = "SELECT * FROM task_inspect_field_value tifv INNER JOIN inspect_task it ON tifv.task_id = it.task_id WHERE it.report_inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)"
         var taskIFVs = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskIFVlist {
                         
-                        taskIFVlist[key] = rs.stringForColumn(key)
+                        taskIFVlist[key] = rs.string(forColumn: key)
                         
                     }
                     
@@ -263,21 +265,25 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskIFVs
     }
     
-    func getAllInspectTaskIDRs(var taskIDRlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskIDRs(_ taskIDRlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskIDRlist = taskIDRlist
         //let sql = "SELECT * FROM task_inspect_data_record"
         let sql = "SELECT tidr.* FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE it.report_inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)"
         var taskIDRs = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskIDRlist {
                         
-                        taskIDRlist[key] = rs.stringForColumn(key)
-                        
+                        if let value = rs.string(forColumn: key) {
+                            taskIDRlist[key] = value
+                        } else {
+                            taskIDRlist[key] = ""
+                        }
                     }
                     
                     taskIDRs.append(taskIDRlist)
@@ -290,19 +296,20 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskIDRs
     }
     
-    func getAllInspectTaskIPPs(var taskIPPlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskIPPs(_ taskIPPlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskIPPlist = taskIPPlist
         let sql = "SELECT tipp.* FROM task_inspect_position_point tipp INNER JOIN task_inspect_data_record tidr ON tipp.inspect_record_id = tidr.record_id INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE it.report_inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)"
         var taskIPPs = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskIPPlist {
                         
-                        taskIPPlist[key] = rs.stringForColumn(key)
+                        taskIPPlist[key] = rs.string(forColumn: key)
                         
                     }
                     
@@ -316,20 +323,21 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskIPPs
     }
     
-    func getAllInspectTaskDDRs(var taskDDRlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskDDRs(_ taskDDRlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskDDRlist = taskDDRlist
         //let sql = "SELECT * FROM task_defect_data_record"
         let sql = "SELECT tddr.* FROM task_defect_data_record tddr INNER JOIN inspect_task it ON tddr.task_id = it.task_id WHERE it.report_inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)"
         var taskDDRs = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskDDRlist {
                         
-                        taskDDRlist[key] = rs.stringForColumn(key)
+                        taskDDRlist[key] = rs.string(forColumn: key)
                         
                     }
                     
@@ -343,20 +351,21 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskDDRs
     }
     
-    func getAllInspectTaskIPFs(var taskIPFlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+    func getAllInspectTaskIPFs(_ taskIPFlist:Dictionary<String,String>) -> [Dictionary<String,String>] {
+        var taskIPFlist = taskIPFlist
         //let sql = "SELECT * FROM task_inspect_photo_file"
         let sql = "SELECT tipf.* FROM task_inspect_photo_file tipf INNER JOIN inspect_task it ON tipf.task_id = it.task_id WHERE it.report_inspector_id = ? AND ((it.task_status = ? AND it.confirm_upload_date IS NULL) OR it.task_status = ?)";
         var taskIPFs = [Dictionary<String,String>]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [(Cache_Inspector?.inspectorId)!, GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue]) {
                 
                 while rs.next() {
                     
                     for (key,_) in taskIPFlist {
                         
-                        taskIPFlist[key] = rs.stringForColumn(key)
+                        taskIPFlist[key] = rs.string(forColumn: key)
                         
                     }
                     
@@ -371,18 +380,15 @@ class DataSyncDataHelper:DataHelperMaster {
     }
     
     func getAllConfirmedTaskIds() ->[Int] {
-
-        //let sql = "SELECT task_id FROM inspect_task WHERE task_status = ? OR task_status = ?"
-        let sql = "SELECT task_id FROM inspect_task WHERE task_status = ?"
-        
+        let sql = "SELECT task_id FROM inspect_task WHERE task_status = ? AND confirm_upload_date IS NULL ORDER BY modify_date ASC"
         var taskIds = [Int]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [GetTaskStatusId(caseId: "Confirmed").rawValue/*, GetTaskStatusId(caseId: "Uploaded").rawValue*/]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [GetTaskStatusId(caseId: "Confirmed").rawValue/*, GetTaskStatusId(caseId: "Uploaded").rawValue*/]) {
                 
                 while rs.next() {
-                    let taskId = Int(rs.intForColumn("task_id"))
+                    let taskId = Int(rs.int(forColumn: "task_id"))
                     taskIds.append(taskId)
                 }
             }
@@ -393,37 +399,37 @@ class DataSyncDataHelper:DataHelperMaster {
         return taskIds
     }
     
-    func getAllPhotos(includeTaskIds:String, excludeTaskIds:String) ->[Photo]? {
+    func getAllPhotos() ->[Photo] {
         //Task Status is 2, mean Confirmed Task
-        //let sql = "SELECT * FROM inspect_task it INNER JOIN task_inspect_photo_file tipf ON it.task_id = tipf.task_id WHERE it.report_inspector_id = ? AND it.task_id NOT IN \(excludeTaskIds) AND it.task_id IN \(includeTaskIds) AND (tipf.upload_date = '' OR tipf.upload_date IS NULL) ORDER BY it.confirm_upload_date ASC, tipf.photo_id ASC"
-        let sql = "SELECT * FROM inspect_task it INNER JOIN task_inspect_photo_file tipf ON it.task_id = tipf.task_id WHERE it.report_inspector_id = ? AND it.task_id NOT IN \(excludeTaskIds) AND it.task_id IN \(includeTaskIds) AND (tipf.upload_date = '' OR tipf.upload_date IS NULL) ORDER BY it.vdr_sign_date ASC, tipf.create_date ASC"
+        let sql = "SELECT * FROM task_inspect_photo_file tipf INNER JOIN inspect_task it ON it.task_id = tipf.task_id WHERE tipf.upload_date IS NULL AND EXISTS (SELECT 1 FROM inspect_task it WHERE it.task_id = tipf.task_id AND it.confirm_upload_date IS NOT NULL AND it.task_status = 4) ORDER BY tipf.task_id ASC, tipf.create_date ASC"
         var photos = [Photo]()
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [/*GetTaskStatusId(caseId: "Confirmed").rawValue, GetTaskStatusId(caseId: "Cancelled").rawValue,*/ (Cache_Inspector?.inspectorId)!]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {
                     
                     //Photo Table Data
-                    let photoId = Int(rs.intForColumn("photo_id"))
-                    let taskId = Int(rs.intForColumn("task_id"))
-                    let refPhotoId = Int(rs.intForColumn("ref_photo_id"))
-                    let orgFileName = rs.stringForColumn("org_filename")
-                    let photoFile = rs.stringForColumn("photo_file")
-                    let thumbFile = rs.stringForColumn("thumb_file")
-                    let photoDesc = rs.stringForColumn("photo_desc")
-                    let dataRecordId = Int(rs.intForColumn("data_record_id"))
-                    let createUser = rs.stringForColumn("create_user")
-                    let createDate = rs.stringForColumn("create_date")
-                    let modifyUser = rs.stringForColumn("modify_user")
-                    let modifyDate = rs.stringForColumn("modify_date")
-                    let dataType = Int(rs.intForColumn("data_type"))
+                    let photoId = Int(rs.int(forColumn: "photo_id"))
+                    let taskId = Int(rs.int(forColumn: "task_id"))
+                    let refPhotoId = Int(rs.int(forColumn: "ref_photo_id"))
+                    let orgFileName = rs.string(forColumn: "org_filename")
+                    let photoFile = rs.string(forColumn: "photo_file")
+                    let thumbFile = rs.string(forColumn: "thumb_file")
+                    let photoDesc = rs.string(forColumn: "photo_desc")
+                    let dataRecordId = Int(rs.int(forColumn: "data_record_id"))
+                    let createUser = rs.string(forColumn: "create_user")
+                    let createDate = rs.string(forColumn: "create_date")
+                    let modifyUser = rs.string(forColumn: "modify_user")
+                    let modifyDate = rs.string(forColumn: "modify_date")
+                    let dataType = Int(rs.int(forColumn: "data_type"))
+                    let refTaskId = Int(rs.int(forColumn: "ref_task_id"))
                     
                     //Task Data
-                    let taskBookingNo = rs.stringForColumn("booking_no") != "" ? rs.stringForColumn("booking_no") : rs.stringForColumn("inspection_no")
+                    let taskBookingNo = rs.string(forColumn: "booking_no") != "" ? rs.string(forColumn: "booking_no") : rs.string(forColumn: "inspection_no")
                     
-                    let photo = Photo(photo: nil, photoFilename: photoFile, taskId: taskId, photoFile: photoFile)
+                    let photo = Photo(photo: nil, photoFilename: photoFile!, taskId: taskId, photoFile: photoFile!, refTaskId: refTaskId)
                     
                     photo?.photoId = photoId
                     photo?.refPhotoId = refPhotoId
@@ -443,38 +449,67 @@ class DataSyncDataHelper:DataHelperMaster {
             }
             
             db.close()
-            
-            return photos
         }
         
-        return nil
+        return photos
     }
     
-    func updateTaskStatus(taskId:Int, status:Int, refuseDesc:String) ->Bool {
-        
-        let sql = "UPDATE inspect_task SET task_status = ?, data_refuse_desc = ? WHERE task_id = ?"
-        var result = false
-        
+    func updateTaskStatus(_ taskId:Int, status:Int, refuseDesc:String, ref_task_id:Int) ->Int {
+        /*
+            If status = 5 (Uploaded) from Data Upload WS JSON, run below SQL to check any photo(s) under the task...
+                SELECT COUNT(1) FROM task_inspect_photo_file WHERE task_id = ?
+                If COUNT > 0, change status = 4 (Confirmed) for below UPDATE SQL
+        */
+        var taskStatus = status
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: [status, refuseDesc, taskId]) {
-                
-                result = true
+            if taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue {
+                let updateStatusSql = "SELECT COUNT(1) AS photoExist FROM task_inspect_photo_file WHERE task_id = ?"
+                if let rs = db.executeQuery(updateStatusSql, withArgumentsIn: [taskId]) {
+                    if rs.next() {
+                        if Int(rs.int(forColumn: "photoExist")) > 0 {
+                            taskStatus = GetTaskStatusId(caseId: "Confirmed").rawValue
+                        }
+                    }
+                }
+            }
+            
+            let sql = "UPDATE inspect_task SET task_status = ?, data_refuse_desc = ? WHERE task_id = ? AND task_status <> ?"
+            let sqlUpdateRefTaskId = "UPDATE inspect_task SET ref_task_id = ? WHERE task_id = ? AND (ref_task_id is NULL OR ref_task_id < 1)"
+            
+            if db.executeUpdate(sql, withArgumentsIn: [taskStatus, refuseDesc, taskId, taskStatus]) {
+                if db.executeUpdate(sqlUpdateRefTaskId, withArgumentsIn: [ref_task_id, taskId]) {
+                    
+                }
             }
             
             db.close()
         }
         
+        return taskStatus
+    }
+    
+    @discardableResult
+    func updateTaskStatusAfterPhotoUploaded() -> Bool {
+        let sql = "UPDATE inspect_task SET task_status = \(GetTaskStatusId(caseId: "Uploaded").rawValue) WHERE task_id IN (SELECT it.task_id FROM inspect_task it WHERE it.task_status = \(GetTaskStatusId(caseId: "Confirmed").rawValue) AND it.confirm_upload_date IS NOT NULL AND NOT EXISTS (SELECT 1 FROM task_inspect_photo_file tipf WHERE tipf.task_id = it.task_id AND tipf.upload_date IS NULL))"
+        var result = false
+        
+        if db.open() {
+            if db.executeUpdate(sql, withArgumentsIn: []) {
+                result = true
+            }
+            db.close()
+        }
         return result
     }
     
-    func shouldPhysicalDeleteTask(taskId:Int) ->Bool {
+    func shouldPhysicalDeleteTask(_ taskId:Int) ->Bool {
         let sql = "SELECT task_status FROM inspect_task WHERE task_id = ? AND (task_status = ? OR task_status = ?)"
         var result = false
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [taskId, GetTaskStatusId(caseId: "Pending").rawValue, GetTaskStatusId(caseId: "Draft").rawValue]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, GetTaskStatusId(caseId: "Pending").rawValue, GetTaskStatusId(caseId: "Draft").rawValue]) {
                 
                 if rs.next() {
                     result = true
@@ -487,13 +522,13 @@ class DataSyncDataHelper:DataHelperMaster {
         return result
     }
     
-    func existInTaskItemTable(poItemId:Int) ->Bool {
+    func existInTaskItemTable(_ poItemId:Int) ->Bool {
         let sql = "SELECT 1 FROM inspect_task_item WHERE po_item_id = ?"
         var result = false
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsInArray: [poItemId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [poItemId]) {
                 
                 if rs.next() {
                     result = true
@@ -506,13 +541,13 @@ class DataSyncDataHelper:DataHelperMaster {
         return result
     }
     
-    func updatePhotoUploadDateByPhotoId(photoId:Int) ->Bool {
-        let sql = "UPDATE task_inspect_photo_file SET upload_date = datetime('now', 'localtime') WHERE photo_id = ?"
+    func updatePhotoUploadDateByPhotoId(_ photoId:Int, taskId:Int) ->Bool {
+        let sql = "UPDATE task_inspect_photo_file SET upload_date = datetime('now', 'localtime') WHERE photo_id = ? AND task_id = ?"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: [photoId]) {
+            if db.executeUpdate(sql, withArgumentsIn: [photoId, taskId]) {
                 result = true
             }
             
@@ -522,13 +557,14 @@ class DataSyncDataHelper:DataHelperMaster {
         return result
     }
     
-    func updateInspectTaskConfirmUploadDate(taskId:Int) ->Bool {
+    @discardableResult
+    func updateInspectTaskConfirmUploadDate(_ taskId:Int) ->Bool {
         let sql = "UPDATE inspect_task SET confirm_upload_date = datetime('now', 'localtime') WHERE task_id = ? AND task_status = ?"
         var result = false
         
         if db.open() {
             
-            if db.executeUpdate(sql, withArgumentsInArray: [taskId, GetTaskStatusId(caseId: "Confirmed").rawValue]) {
+            if db.executeUpdate(sql, withArgumentsIn: [taskId, GetTaskStatusId(caseId: "Confirmed").rawValue]) {
                 result = true
             }
             

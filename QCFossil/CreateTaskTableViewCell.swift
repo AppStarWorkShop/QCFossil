@@ -54,17 +54,17 @@ class CreateTaskTableViewCell: UITableViewCell {
         self.shipWinLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("SW/Req. Ex-fty Date")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
-    @IBAction func removePoItem(sender: UIButton) {
+    @IBAction func removePoItem(_ sender: UIButton) {
         
-        let index = self.pVC!.poItems.indexOf({ $0.poNo == self.poNoText.text && $0.poLineNo == self.poLineNoText.text })
+        let index = self.pVC!.poItems.index(where: { $0.poNo == self.poNoText.text && $0.poLineNo == self.poLineNoText.text })
         
-        self.pVC!.poItems.removeAtIndex(index!)
+        self.pVC!.poItems.remove(at: index!)
         self.pVC?.createTaskTableview.reloadData()
     }
     

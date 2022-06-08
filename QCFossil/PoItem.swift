@@ -66,6 +66,15 @@ class PoItem {
     var reportInspectorId:Int? //add 12/20
     var samplingQty:Int
     var prodDesc:String?
+    var market:String?
+    var materialCategory:String?
+    var shipModeName:String?
+    var itemBarCode:String?
+    var retailPrice:String?
+    var targetInspectQty:String?
+    var currency:String?
+    var styleSize:String?
+    var substrStyleSize:String?
     
     //UI
     var availableQty:Int
@@ -123,22 +132,22 @@ class PoItem {
         //self.outStandQty = outStandQty
         //self.reportInspectorId = reportInspectorId
         /*
-        self.refBuyerId = refBuyerId
-        self.buyerCode = buyerCode
-        self.buyerName = buyerName
-        self.buyerDisplayName = buyerDisplayName
-        self.refBuyerLocationId = refBuyerLocationId
-        self.promisedShipDateStart = promisedShipDateStart
-        self.promisedShipDateEnd = promisedShipDateEnd
-        self.schedShipDateStart = schedShipDateStart
-        self.schedShipDateEnd = schedShipDateEnd
-        
-        self.lineSchedDateStart = lineSchedDateStart
-        self.lineSchedText = lineSchedText
-        self.lineSchedDateEnd = lineSchedDateEnd
-        self.appReadyPrugeDate = appReadyPrugeDate
-        
-*/
+         self.refBuyerId = refBuyerId
+         self.buyerCode = buyerCode
+         self.buyerName = buyerName
+         self.buyerDisplayName = buyerDisplayName
+         self.refBuyerLocationId = refBuyerLocationId
+         self.promisedShipDateStart = promisedShipDateStart
+         self.promisedShipDateEnd = promisedShipDateEnd
+         self.schedShipDateStart = schedShipDateStart
+         self.schedShipDateEnd = schedShipDateEnd
+         
+         self.lineSchedDateStart = lineSchedDateStart
+         self.lineSchedText = lineSchedText
+         self.lineSchedDateEnd = lineSchedDateEnd
+         self.appReadyPrugeDate = appReadyPrugeDate
+         
+         */
     }
     
     

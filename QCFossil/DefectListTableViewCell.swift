@@ -7,9 +7,34 @@
 //
 
 import UIKit
+import BSImagePicker
+import Photos
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ELCImagePickerControllerDelegate {
     @IBOutlet weak var indexLabel: UILabel!
     @IBOutlet weak var iaLabel: UILabel!
     @IBOutlet weak var iaInput: UITextField!
@@ -37,6 +62,7 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
     @IBOutlet weak var addDefectPhotoByCamera: CustomControlButton!
     @IBOutlet weak var addDefectPhotoByAlbum: CustomControlButton!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     weak var pVC:DefectListViewController!
     
     override func awakeFromNib() {
@@ -49,37 +75,39 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         defectPhoto4.image = nil
         defectPhoto5.image = nil
         
-        dismissPhotoButton1.hidden = true
-        dismissPhotoButton2.hidden = true
-        dismissPhotoButton3.hidden = true
-        dismissPhotoButton4.hidden = true
-        dismissPhotoButton5.hidden = true
+        dismissPhotoButton1.isHidden = true
+        dismissPhotoButton2.isHidden = true
+        dismissPhotoButton3.isHidden = true
+        dismissPhotoButton4.isHidden = true
+        dismissPhotoButton5.isHidden = true
         
         self.dfQtyInput.delegate = self
         self.dfDescInput.delegate = self
+        
+        self.activityIndicator.isHidden = true
         //imagePicker.delegate = self
         
         updateLocalizedString()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto1.addGestureRecognizer(tap)
-        defectPhoto1.userInteractionEnabled = true
+        defectPhoto1.isUserInteractionEnabled = true
         
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto2.addGestureRecognizer(tap2)
-        defectPhoto2.userInteractionEnabled = true
+        defectPhoto2.isUserInteractionEnabled = true
         
-        let tap3 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto3.addGestureRecognizer(tap3)
-        defectPhoto3.userInteractionEnabled = true
+        defectPhoto3.isUserInteractionEnabled = true
         
-        let tap4 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap4 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto4.addGestureRecognizer(tap4)
-        defectPhoto4.userInteractionEnabled = true
+        defectPhoto4.isUserInteractionEnabled = true
         
-        let tap5 = UITapGestureRecognizer(target: self, action: #selector(DefectListTableViewCell.previewTapOnClick(_:)))
+        let tap5 = UITapGestureRecognizer(target: self, action: #selector(previewTapOnClick))
         defectPhoto5.addGestureRecognizer(tap5)
-        defectPhoto5.userInteractionEnabled = true
+        defectPhoto5.isUserInteractionEnabled = true
         
     }
     
@@ -94,15 +122,49 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         self.dfQtyLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Defect Qty")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
-    @IBAction func addDefectPhotoButton(sender: CustomButton) {
+    /**
+     * Called with the picker the images were selected from, as well as an array of dictionary's
+     * containing keys for ALAssetPropertyLocation, ALAssetPropertyType,
+     * UIImagePickerControllerOriginalImage, and UIImagePickerControllerReferenceURL.
+     * @param picker
+     * @param info An NSArray containing dictionary's with the key UIImagePickerControllerOriginalImage, which is a rotated, and sized for the screen 'default representation' of the image selected. If you want to get the original image, use the UIImagePickerControllerReferenceURL key.
+     */
+    func elcImagePickerController(_ picker: ELCImagePickerController!, didFinishPickingMediaWithInfo info: [Any]!) {
+        var photos = [Photo]()
+        
+        for object in info {
+            
+            if let dictionary = object as? NSDictionary {
+                
+                if let image = dictionary.object(forKey: convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)) as? UIImage {
+                    
+                    let imageView = UIImageView.init(image: image)
+                    
+                    if let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "") {
+                        
+                        photos.append(photo)
+                        
+                    }
+                }
+            }
+        }
+        
+        updateInspItemPhotoStatus(photos: photos)
+    }
+    
+    func elcImagePickerControllerDidCancel(_ picker: ELCImagePickerController!) {
+        self.parentVC?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addDefectPhotoButton(_ sender: CustomButton) {
         print("add Cell photo")
-        NSNotificationCenter.defaultCenter().postNotificationName(UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
         
         if self.defectPhoto1.image != nil && self.defectPhoto2.image != nil && self.defectPhoto3.image != nil && self.defectPhoto4.image != nil && self.defectPhoto5.image != nil {
             
@@ -113,53 +175,120 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         self.dfDescInput.resignFirstResponder()
         self.dfQtyInput.resignFirstResponder()
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .Popover
+        let availableCount = self.photoNameAtIndex.filter({$0 == ""})
         
-        let ppc = imagePicker.popoverPresentationController
-        ppc?.sourceView = sender
-        ppc?.sourceRect = sender.bounds
-        ppc?.permittedArrowDirections = .Any
+//        let imagePicker = ELCImagePickerController(imagePicker: ())
+//        imagePicker?.maximumImagesCount = availableCount.count
+//        imagePicker?.returnsOriginalImage = true
+//        imagePicker?.returnsImage = true
+//        imagePicker?.onOrder = true
+//        imagePicker?.imagePickerDelegate = self
+//        self.parentVC?.present(imagePicker!, animated: true, completion: nil)
         
-        self.parentVC!.presentViewController(imagePicker, animated: true, completion: nil)
+        let imagePicker = ImagePickerController()
+        imagePicker.settings.selection.max = availableCount.count
+        imagePicker.settings.theme.selectionStyle = .numbered
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
+        imagePicker.settings.selection.unselectOnReachingMax = true
+
+        self.parentVC?.presentImagePicker(imagePicker, select: nil, deselect: nil, cancel: nil, finish: { (assets) in
+            self.setAllImages(selectedAssets: assets)
+        }, completion: nil)
     }
     
-    @IBAction func addDefectPhotoFromCamera(sender: UIButton) {
-        NSNotificationCenter.defaultCenter().postNotificationName(UIKeyboardWillHideNotification, object: nil)
+    func setAllImages(selectedAssets: [PHAsset]) -> Void {
+        if selectedAssets.count != 0{
+            var photos = [Photo]()
+            for i in 0..<selectedAssets.count{
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var image = UIImage()
+                
+                option.isNetworkAccessAllowed = true
+                option.isSynchronous = true
+                manager.requestImage(for: selectedAssets[i], targetSize: CGSize(width: _RESIZEIMAGEWIDTH, height: _RESIZEIMAGEHEIGHT), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                    image = result!
+                })
+                
+                let imageView = UIImageView.init(image: image)
+                if let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "") {
+                    photos.append(photo)
+                }
+            }
+            
+            updateInspItemPhotoStatus(photos: photos)
+        }
+    }
+    
+    func updateInspItemPhotoStatus(photos: [Photo]) {
+        let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
+        
+        //Update InspItem PhotoAdded Status
+        self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
+        self.updatePhotoAddedStatus("yes")
+        
+        self.parentVC?.dismiss(animated: true, completion: {
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+            DispatchQueue.main.async(execute: {
+                let photoNames = self.getNamesBySaveDefectPhotos(photos)
+                if defectItem?.count > 0 {
+                    let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
+                    
+                    if defectCell.photoNames == nil {
+                        defectCell.photoNames = [String]()
+                    }
+                    
+                    photoNames.forEach({
+                        defectCell.photoNames?.append(String($0))
+                    })
+                    
+                }
+                
+                photos.forEach({
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":$0])
+                })
+                
+                self.pVC?.updateContentView()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            })
+        })
+    }
+    
+    @IBAction func addDefectPhotoFromCamera(_ sender: UIButton) {
+        NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
         
         if !self.photoNameAtIndex.contains("") {
             self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Maximun 5 Defect Photos!"))
             return
         }
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            imagePicker.sourceType = .Camera
-            self.pVC!.presentViewController(imagePicker, animated: true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+
+            imagePicker.sourceType = .camera
+            self.pVC?.present(imagePicker, animated: true, completion: nil)
             
         }else{
-            imagePicker.modalPresentationStyle = .Popover
-            imagePicker.sourceType = .PhotoLibrary
+            let availableCount = self.photoNameAtIndex.filter({$0 == ""})
             
-            let ppc = imagePicker.popoverPresentationController
-            ppc?.sourceView = sender
-            ppc?.sourceRect = sender.bounds
-            ppc?.permittedArrowDirections = .Any
+            let imagePicker = ELCImagePickerController(imagePicker: ())
+            imagePicker?.maximumImagesCount = availableCount.count
+            imagePicker?.returnsOriginalImage = true
+            imagePicker?.returnsImage = true
+            imagePicker?.onOrder = true
             
-            imagePicker.sourceType = .PhotoLibrary
-            
-            self.pVC!.presentViewController(imagePicker, animated: true, completion: nil)
+            imagePicker?.imagePickerDelegate = self
+            self.pVC?.present(imagePicker!, animated: true, completion: nil)
         }
         
         
     }
     
-    @IBAction func addDefectPhotoFromAlbum(sender: UIButton) {
-        NSNotificationCenter.defaultCenter().postNotificationName(UIKeyboardWillHideNotification, object: nil)
+    @IBAction func addDefectPhotoFromAlbum(_ sender: UIButton) {
+        NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
         
         if !self.photoNameAtIndex.contains("") {
             self.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Maximun 5 Defect Photos!"))
@@ -167,10 +296,10 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         }
         
         self.pVC?.currentCell = self
-        self.parentVC?.performSegueWithIdentifier("PhotoAlbumSegueFromDF", sender: self)
+        self.parentVC?.performSegue(withIdentifier: "PhotoAlbumSegueFromDF", sender: self)
     }
     
-    @IBAction func dismissDfPhotoButton(sender: CustomButton) {
+    @IBAction func dismissDfPhotoButton(_ sender: CustomButton) {
         self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Photo?"),parentVC:self.pVC!, handlerFun: { (action:UIAlertAction!) in
             
             let defectsByItemId = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
@@ -179,14 +308,14 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
                 let defectCell = defectsByItemId![0]
                 
                 self.clearDefectPhotoDataByPhotoName(defectCell.photoNames![sender.tag-1])
-                defectCell.photoNames?.removeAtIndex(sender.tag-1)
+                defectCell.photoNames?.remove(at: sender.tag-1)
                 self.photoNameAtIndex[sender.tag-1] = ""
             }
             
             let selfPhotoAdded = defectsByItemId!.filter({$0.photoNames?.count > 0})
             
             if selfPhotoAdded.count<1 {
-                self.photoAdded = String(PhotoAddedStatus.init(caseId: "no"))
+                self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "no"))
             }
             
             let defectsByItemIdFilter = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && self.cellIdx>=0})
@@ -200,7 +329,7 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         })
     }
     
-    @IBAction func addDefectCellButton(sender: UIButton) {
+    @IBAction func addDefectCellButton(_ sender: UIButton) {
         print("add cell")
         
         if self.iaInput.text == "" || self.iiInput.text == "" {
@@ -212,10 +341,10 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         self.pVC!.addDefectCellWithSection(_INPUTMODE04, idxLabel: "\(self.itemId).\((defectsByItemId?.count)!)",iaLabel: iaInput.text!,iiLabel: iiInput.text!,sectionId: sectionId, itemId: itemId, inspItem: inspItem!, cellIdx: (defectsByItemId?.count)!)
     }
     
-    @IBAction func dismissDefectCellButton(sender: UIButton) {
+    @IBAction func dismissDefectCellButton(_ sender: UIButton) {
         self.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Defect Item?"),parentVC:self.pVC!, handlerFun: { (action:UIAlertAction!) in
             
-            self.photoAdded = String(PhotoAddedStatus.init(caseId: "no"))
+            self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "no"))
             
             let defectsByItemIdFilter = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && self.cellIdx>=0})
             let ifPhotoAdded = defectsByItemIdFilter!.filter({$0.photoNames?.count > 0})
@@ -241,8 +370,8 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
                 }
             }
             
-            let index = Cache_Task_On?.defectItems.indexOf({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
-            Cache_Task_On?.defectItems.removeAtIndex(index!)
+            let index = Cache_Task_On?.defectItems.index(where: {$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
+            Cache_Task_On?.defectItems.remove(at: index!)
             
             //Delete Record From DB
             if self.taskDefectDataRecordId > 0 {
@@ -252,87 +381,88 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
             self.pVC?.updateContentView()
             
             //Update Photo Album
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadAllPhotosFromDB", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil)
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.pVC!.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.pVC!.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         NSLog("Image Pick")
         
-        //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            self.pVC!.dismissViewControllerAnimated(true, completion: nil)
-        
-            let imageView = UIImageView.init(image: image)
-        
-            let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
-            
-            let photoName = self.getNameBySaveDefectPhotoData(0, photo: photo!)
-            
-            let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
-            if defectItem?.count > 0 {
-                let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
+        picker.dismiss(animated: true, completion: {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                let imageView = UIImageView.init(image: image)
                 
-                if defectCell.photoNames == nil {
-                    defectCell.photoNames = [String]()
+                let photo = Photo(photo: imageView, photoFilename: "", taskId: (Cache_Task_On?.taskId)!, photoFile: "")
+                
+                let photoName = self.getNameBySaveDefectPhotoData(0, photo: photo!)
+                
+                let defectItem = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
+                if defectItem?.count > 0 {
+                    let defectCell = (defectItem![0] as TaskInspDefectDataRecord)
+                    
+                    if defectCell.photoNames == nil {
+                        defectCell.photoNames = [String]()
+                    }
+                    
+                    if defectCell.photoNames!.count<=5 {
+                        defectCell.photoNames!.append(photoName)
+                    }
                 }
                 
-                if defectCell.photoNames!.count<=5 {
-                    defectCell.photoNames!.append(photoName)
-                }
+                //Update InspItem PhotoAdded Status
+                self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
+                self.updatePhotoAddedStatus("yes")
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":photo!])
+                
+                self.pVC!.updateContentView()
             }
-        
-            //Update InspItem PhotoAdded Status
-            self.photoAdded = String(PhotoAddedStatus.init(caseId: "yes"))
-            updatePhotoAddedStatus("yes")
-        
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadPhotos", object: nil, userInfo: ["photoSelected":photo!])
-        
-            self.pVC!.updateContentView()
+        })
     }
     
-    override func setSelectedPhoto(photo:Photo, needSave:Bool=true) {
+    override func setSelectedPhoto(_ photo:Photo, needSave:Bool=true) {
         
         if defectPhoto1.image == nil {
             let resizePhoto = updateDefectPhotoData(0, photo: photo, needSave: needSave)
             defectPhoto1.image = resizePhoto!.photo?.image
-            dismissPhotoButton1.hidden = false
+            dismissPhotoButton1.isHidden = false
             
         }else if defectPhoto2.image == nil {
             let resizePhoto = updateDefectPhotoData(1, photo: photo, needSave: needSave)
             defectPhoto2.image = resizePhoto!.photo?.image
-            dismissPhotoButton2.hidden = false
+            dismissPhotoButton2.isHidden = false
             
         }else if defectPhoto3.image == nil {
             let resizePhoto = updateDefectPhotoData(2, photo: photo, needSave: needSave)
             defectPhoto3.image = resizePhoto!.photo?.image
-            dismissPhotoButton3.hidden = false
+            dismissPhotoButton3.isHidden = false
             
         }else if defectPhoto4.image == nil {
             let resizePhoto = updateDefectPhotoData(3, photo: photo, needSave: needSave)
             defectPhoto4.image = resizePhoto!.photo?.image
-            dismissPhotoButton4.hidden = false
+            dismissPhotoButton4.isHidden = false
             
         }else if defectPhoto5.image == nil {
             let resizePhoto = updateDefectPhotoData(4, photo: photo, needSave: needSave)
             defectPhoto5.image = resizePhoto!.photo?.image
-            dismissPhotoButton5.hidden = false
+            dismissPhotoButton5.isHidden = false
             
         }
         
         //Update InspItem PhotoAdded Status
-        self.photoAdded = String(PhotoAddedStatus.init(caseId: "yes"))
+        self.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
         updatePhotoAddedStatus("yes")
         
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadPhotos", object: nil, userInfo: ["photoSelected":photo])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadPhotos"), object: nil, userInfo: ["photoSelected":photo])
         
         //
     }
     
-    func saveDefectPhotoData(index:Int, photo:Photo, needSave:Bool=true) ->Photo {
+    func saveDefectPhotoData(_ index:Int, photo:Photo, needSave:Bool=true) ->Photo {
         
         //Save self to DB for TaskInspDefectRecordId
         if self.taskDefectDataRecordId<1 {
@@ -352,7 +482,7 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         return UIImage.init().saveImageToLocal((photo.photo?.image)!, photoFileName: photo.photoFilename, photoId: photo.photoId, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.taskDefectDataRecordId, dataType: PhotoDataType(caseId: "DEFECT").rawValue, currentDate: self.getCurrentDateTime(), originFileName: "test")
     }
     
-    func getNameBySaveDefectPhotoData(index:Int, photo:Photo, needSave:Bool=true) ->String {
+    func getNameBySaveDefectPhotoData(_ index:Int, photo:Photo, needSave:Bool=true) ->String {
         
         //Save self to DB for TaskInspDefectRecordId
         if self.taskDefectDataRecordId<1 {
@@ -372,7 +502,27 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         return UIImage.init().getNameBySaveImageToLocal((photo.photo?.image)!, photoFileName: photo.photoFilename, photoId: photo.photoId, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.taskDefectDataRecordId, dataType: PhotoDataType(caseId: "DEFECT").rawValue, currentDate: self.getCurrentDateTime(), originFileName: "test")
     }
     
-    override func updateDefectPhotoData(index:Int, photo:Photo, needSave:Bool=true) ->Photo? {
+    func getNamesBySaveDefectPhotos(_ photos:[Photo], needSave:Bool=true) ->[String] {
+        
+        //Save self to DB for TaskInspDefectRecordId
+        if self.taskDefectDataRecordId<1 {
+            let taskDataHelper = TaskDataHelper()
+            let defectItem = TaskInspDefectDataRecord(recordId: self.taskDefectDataRecordId,taskId: (Cache_Task_On?.taskId)!, inspectRecordId: self.inspItem?.taskInspDataRecordId, refRecordId: 0, inspectElementId: self.inspItem?.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.getCurrentDateTime())
+            self.taskDefectDataRecordId = taskDataHelper.updateInspDefectDataRecord(defectItem!)
+            
+            let defectItemFilter = Cache_Task_On?.defectItems.filter({$0.inspElmt.cellCatIdx == self.sectionId && $0.inspElmt.cellIdx == self.itemId && $0.cellIdx == self.cellIdx})
+            
+            if defectItemFilter?.count > 0 {
+                let defectItem = defectItemFilter![0]
+                defectItem.recordId = self.taskDefectDataRecordId
+            }
+        }
+        
+        //Save Photo to Local
+        return UIImage.init().getNamesBySaveImageToLocal(photos, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.taskDefectDataRecordId, dataType: PhotoDataType(caseId: "DEFECT").rawValue, currentDate: self.getCurrentDateTime(), originFileName: "originFileNameMode1")
+    }
+    
+    override func updateDefectPhotoData(_ index:Int, photo:Photo, needSave:Bool=true) ->Photo? {
             
         //Save self to DB for TaskInspDefectRecordId
         if self.taskDefectDataRecordId<1 {
@@ -404,7 +554,7 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         }
     }
     
-    func updatePhotoAddedStatus(newStatus:String) {
+    func updatePhotoAddedStatus(_ newStatus:String) {
         if self.inspItem != nil {
             if newStatus == "yes" {
                 (self.inspItem as! InputMode04CellView).photoAdded = true
@@ -416,27 +566,27 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
         }
     }
     
-    func closePreviewLayer() {
-        let maskView = self.parentVC?.parentViewController!.view.viewWithTag(_MASKVIEWTAG)
+    @objc func closePreviewLayer() {
+        let maskView = self.parentVC?.parent!.view.viewWithTag(_MASKVIEWTAG)
         maskView?.removeFromSuperview()
     }
     
-    func previewTapOnClick(sender: UITapGestureRecognizer) {
+    @objc func previewTapOnClick(_ sender: UITapGestureRecognizer) {
         if (sender.view as! UIImageView).image != nil {
             let imageView = sender.view as! UIImageView
             
             if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
                 let container:UIView = UIView()
                 container.tag = _MASKVIEWTAG
-                container.hidden = false
-                container.frame = (self.parentVC?.parentViewController!.view.frame)!
-                container.center = (self.parentVC?.parentViewController!.view.center)!
-                container.backgroundColor = UIColor.clearColor()
+                container.isHidden = false
+                container.frame = (self.parentVC?.parent!.view.frame)!
+                container.center = (self.parentVC?.parent!.view.center)!
+                container.backgroundColor = UIColor.clear
                 
                 let layer = UIView()
-                layer.frame = (self.parentVC?.parentViewController!.view.frame)!
-                layer.center = (self.parentVC?.parentViewController!.view.center)!
-                layer.backgroundColor = UIColor.blackColor()
+                layer.frame = (self.parentVC?.parent!.view.frame)!
+                layer.center = (self.parentVC?.parent!.view.center)!
+                layer.backgroundColor = UIColor.black
                 layer.alpha = 0.7
                 container.addSubview(layer)
                 
@@ -444,22 +594,22 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
                 let imageView = UIImageView(image:image)
                 
                 imageView.frame = CGRect(x: 0,y: 0,width: 600,height: 800)
-                imageView.center = (self.parentVC?.parentViewController!.view.center)!
+                imageView.center = (self.parentVC?.parent!.view.center)!
                 
                 container.addSubview(imageView)
                 
-                let button = UIButton(type: UIButtonType.System) as UIButton
-                button.frame = (self.parentVC?.parentViewController!.view.frame)!
-                button.backgroundColor = UIColor.clearColor()
+                let button = UIButton(type: UIButton.ButtonType.system) as UIButton
+                button.frame = (self.parentVC?.parent!.view.frame)!
+                button.backgroundColor = UIColor.clear
                 button.titleLabel!.font = UIFont(name: "", size: 20)
-                button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                button.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Tap Anywhere To Close"), forState: UIControlState.Normal)
-                button.contentEdgeInsets = UIEdgeInsetsMake(400 + (self.parentVC?.parentViewController!.view.center.y)!-30, 0, 0, 0);
-                button.addTarget(self, action: #selector(DefectListTableViewCell.closePreviewLayer), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitleColor(UIColor.white, for: UIControl.State())
+                button.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Tap Anywhere To Close"), for: UIControl.State())
+                button.contentEdgeInsets = UIEdgeInsets.init(top: 400 + (self.parentVC?.parent!.view.center.y)!-30, left: 0, bottom: 0, right: 0);
+                button.addTarget(self, action: #selector(closePreviewLayer), for: UIControl.Event.touchUpInside)
                 
                 container.addSubview(button)
                 
-                self.parentVC?.parentViewController!.view.addSubview(container)
+                self.parentVC?.parent!.view.addSubview(container)
             
             }else if imageView.tag-1 >= 0 && imageView.tag-1 < self.photos.count {
                 imageView.previewImage(imageView.tag-1,imageName:self.photoNameAtIndex[imageView.tag-1],senderImageView: imageView, parentItem: self)
@@ -488,4 +638,9 @@ class DefectListTableViewCell: InputModeDFMaster2, UIImagePickerControllerDelega
             savePhotoToLocal(self.photos[4]!)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

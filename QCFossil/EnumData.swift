@@ -8,49 +8,7 @@
 
 import Foundation
 import UIKit
-/*
-enum TaskStatus:String {
-    case Cancelled = "Cancelled"
-    case Draft = "Draft"
-    case Pending = "Pending"
-    case Confirmed = "Confirmed"
-    case Uploaded = "Uploaded"
-    case Refused = "Refuserd"
-    
-    init(caseId:Int) {
-        switch caseId {
-            case -1: self = .Cancelled
-            case 0: self = .Draft
-            case 1: self = .Pending
-            case 2: self = .Confirmed
-            case 3: self = .Uploaded
-            case 4: self = .Refused
-            default:self = .Draft
-        }
-    }
-}
 
-enum GetTaskStatusId:Int {
-    case Cancelled = -1
-    case Draft = 0
-    case Pending = 1
-    case Confirmed = 2
-    case Uploaded = 3
-    case Refused = 4
-    
-    init(caseId:String) {
-        switch caseId {
-        case "Cancelled": self = .Cancelled
-        case "Draft": self = .Draft
-        case "Pending": self = .Pending
-        case "Confirmed": self = .Confirmed
-        case "Uploaded": self = .Uploaded
-        case "Refuserd": self = .Refused
-        default:self = .Draft
-        }
-    }
-}
-*/
 enum TaskStatus:String {
     case Cancelled = "Cancelled"
     case Booking = "Booking"
@@ -81,30 +39,30 @@ enum TaskStatus:String {
 }
 
 enum GetTaskStatusId:Int {
-    case Cancelled = 0
-    case Booking = 1
-    case Pending = 2
-    case Draft = 3
-    case Confirmed = 4
-    case Uploaded = 5
-    case Refused = 6
-    case PendingForReview = 7
-    case Reviewed = 8
-    case Skipped = 9
+    case cancelled = 0
+    case booking = 1
+    case pending = 2
+    case draft = 3
+    case confirmed = 4
+    case uploaded = 5
+    case refused = 6
+    case pendingForReview = 7
+    case reviewed = 8
+    case skipped = 9
     
     init(caseId:String) {
         switch caseId {
-        case "Cancelled": self = .Cancelled
-        case "Booking": self = .Booking
-        case "Pending": self = .Pending
-        case "Draft": self = .Draft
-        case "Confirmed": self = .Confirmed
-        case "Uploaded": self = .Uploaded
-        case "Refused": self = .Refused
-        case "PendingForReview": self = .PendingForReview
-        case "Reviewed": self = .Reviewed
-        case "Skipped": self = .Skipped
-        default:self = .Draft
+        case "Cancelled": self = .cancelled
+        case "Booking": self = .booking
+        case "Pending": self = .pending
+        case "Draft": self = .draft
+        case "Confirmed": self = .confirmed
+        case "Uploaded": self = .uploaded
+        case "Refused": self = .refused
+        case "PendingForReview": self = .pendingForReview
+        case "Reviewed": self = .reviewed
+        case "Skipped": self = .skipped
+        default:self = .draft
         }
     }
 }
@@ -140,25 +98,33 @@ enum InspTypeValue:String {
 }
 
 enum PhotoDataType:Int {
-    case TASK = 0
-    case INSPECT = 1
-    case DEFECT = 2
+    case task = 0
+    case inspect = 1
+    case defect = 2
     
     init(caseId:String) {
         switch caseId {
-        case "TASK": self = .TASK
-        case "INSPECT": self = .INSPECT
-        case "DEFECT": self = .DEFECT
-        default: self = .TASK
+        case "TASK": self = .task
+        case "INSPECT": self = .inspect
+        case "DEFECT": self = .defect
+        default: self = .task
         }
         
     }
+}
+
+enum TypeCode:String {
+    case WATCH = "WATCH"
+    case JEWELRY = "JEWELRY"
+    case LEATHER = "LEATHER"
+    case PACKAGING = "PACKAGING"
 }
 
 struct ElmtObj{
     var elementId:Int
     var elementNameEn:String
     var elementNameCn:String
+    var elementNameFr:String
     var reqElmtFlag:Int
 }
 
@@ -166,6 +132,7 @@ struct PositObj{
     var positionId:Int
     var positionNameEn:String
     var positionNameCn:String
+    var positionNameFr:String
 }
 
 struct PositPointObj{
@@ -173,6 +140,7 @@ struct PositPointObj{
     var parentId:Int
     var positionNameEn:String
     var positionNameCn:String
+    var positionNameFr:String
 }
 
 
@@ -180,6 +148,7 @@ struct SectObj{
     var sectionId:Int
     var sectionNameEn:String
     var sectionNameCn:String
+    var sectionNameFr:String
     var inputMode:String
 }
 
@@ -187,11 +156,18 @@ struct ResultValueObj{
     var resultValueId:Int
     var resultValueNameEn:String
     var resultValueNameCn:String
+    var resultValueNameFr:String
 }
 
 struct DefectPhoto {
     var image:UIImage
     var photoFileName:String
+}
+
+
+struct StylePhoto {
+    var ssPhotoName:String
+    var cbPhotoName:String
 }
 
 /*

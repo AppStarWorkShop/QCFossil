@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
 
@@ -31,6 +55,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
     @IBOutlet weak var versionCode: UILabel!
     @IBOutlet weak var databaseUsingCode: UILabel!
     
+    @IBOutlet weak var logoImage: UIImageView!
+    
     var newPwInput:UITextField!
     var confirmPwInput:UITextField!
     var validateStatus:Bool = false
@@ -41,39 +67,37 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //print("\(UIDevice.currentDevice().systemVersion)")
         // Do any additional setup after loading the view, typically from a nib.
         self.language.selectedSegmentIndex = 1
-        MylocalizedString.sharedLocalizeManager.setLanguage("zh-Hans")
+        MylocalizedString.sharedLocalizeManager.setMyLanguage(.zh)
         updateLocalizedString()
         // DatabaseManager.sharedDatabaseManager.initDbObj()
         
         //------------------------------------------ Do Any Updating Here before Login if Needed ------------------------------------------
         if _NEEDDATAUPDATE {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.view.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("Updating"))
                 
-                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 2 * Int64(NSEC_PER_SEC))
-                dispatch_after(time, dispatch_get_main_queue()) {
-                    
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     //Upgrade to support multiple inspectors
-                    let filemgr = NSFileManager.defaultManager()
-                    let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+                    let filemgr = FileManager.default
+                    let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                     let dbDir = dirPaths[0] as String
                     let dbDir2 = dirPaths[0] as String
                     
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    if defaults.objectForKey("lastLoginUsername") != nil {
-                        let inspectorName = defaults.objectForKey("lastLoginUsername")! as? String
-                        let folderPath = _TASKSPHYSICALPATHPREFIX + (inspectorName?.lowercaseString)!
-                        let databasePath = dbDir.stringByAppendingString("\(_DBNAME_USING)")
-                        let taskPhotosPath = dbDir2.stringByAppendingString("/Tasks")
+                    let defaults = UserDefaults.standard
+                    if defaults.object(forKey: "lastLoginUsername") != nil {
+                        let inspectorName = defaults.object(forKey: "lastLoginUsername")! as? String
+                        let folderPath = _TASKSPHYSICALPATHPREFIX + (inspectorName?.lowercased())!
+                        let databasePath = dbDir + "\(_DBNAME_USING)"
+                        let taskPhotosPath = dbDir2 + "/Tasks"
                         
-                        if !filemgr.fileExistsAtPath(folderPath) && filemgr.fileExistsAtPath(databasePath) {
+                        if !filemgr.fileExists(atPath: folderPath) && filemgr.fileExists(atPath: databasePath) {
                             
                             do {
-                                try NSFileManager.defaultManager().createDirectoryAtPath(folderPath, withIntermediateDirectories: true, attributes: nil)
-                                try filemgr.moveItemAtPath(databasePath, toPath: folderPath+"/\(_DBNAME_USING)_\((inspectorName?.lowercaseString)!)")
+                                try FileManager.default.createDirectory(atPath: folderPath, withIntermediateDirectories: true, attributes: nil)
+                                try filemgr.moveItem(atPath: databasePath, toPath: folderPath+"/\(_DBNAME_USING)_\((inspectorName?.lowercased())!)")
                                 
-                                if filemgr.fileExistsAtPath(taskPhotosPath) {
-                                    try filemgr.moveItemAtPath(taskPhotosPath, toPath: folderPath+"/Tasks")
+                                if filemgr.fileExists(atPath: taskPhotosPath) {
+                                    try filemgr.moveItem(atPath: taskPhotosPath, toPath: folderPath+"/Tasks")
                                 }
                                 
                             } catch let error as NSError {
@@ -97,59 +121,49 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         self.view.setButtonCornerRadius(self.forgetPasswordButton)
         self.view.setButtonCornerRadius(self.forgetUserNameButton)
         self.versionCode.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Version")+" \(_VERSION)"
-        
+        _VERSIONCODE = MylocalizedString.sharedLocalizeManager.getLocalizedString("Version")+" \(_VERSION)"
         //self.username.text = "delicate01"
         //self.password.text = "g3271952"
         //self.username.text = "jy01"
         //self.password.text = "wE$6T+8a"
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let releaseDate = "04142019"//self.view.getCurrentDate("MMdd")
+        let defaults = UserDefaults.standard
+        let releaseDate = "20220607"
         _RELEASE = releaseDate as String
-        defaults.setObject(releaseDate, forKey: "release_preference")
+        defaults.set(releaseDate, forKey: "release_preference")
         
-        #if DEBUG
-            self.databaseUsingCode.text = "UAT " + releaseDate
-            defaults.setObject("UAT", forKey: "serverEnv_preference")
-            defaults.setObject(dataSyncUatServer, forKey: "webServiceUrl_preference")
+        var releaseCode = ""
+        #if UAT
+            releaseCode = "UAT " + releaseDate
+            defaults.set("UAT", forKey: "serverEnv_preference")
+            defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")
+        #elseif TESTENV
+            releaseCode = "TEST " + releaseDate
+            defaults.set("TEST", forKey: "serverEnv_preference")
+            defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")
         #else
-            self.databaseUsingCode.text = "PRD " + releaseDate
-            defaults.setObject("PRD", forKey: "serverEnv_preference")
-            defaults.setObject(dataSyncPrdServer, forKey: "webServiceUrl_preference")
+            releaseCode = "PRD " + releaseDate
+            defaults.set("PRD", forKey: "serverEnv_preference")
+            defaults.set(dataSyncPrdServer, forKey: "webServiceUrl_preference")
         #endif
+        _RELEASECODE = releaseCode
+        self.databaseUsingCode.text = releaseCode
         
-        /*
-        if dataSyncUatServer == dataSyncServerUsing {
-            self.databaseUsingCode.text = "UAT " + releaseDate
-            defaults.setObject("UAT", forKey: "serverEnv_preference")
-            defaults.setObject(dataSyncUatServer, forKey: "webServiceUrl_preference")
-            
-        }else if dataSyncPrdServer == dataSyncServerUsing {
-            self.databaseUsingCode.text = "PRD " + releaseDate
-            defaults.setObject("PRD", forKey: "serverEnv_preference")
-            defaults.setObject(dataSyncPrdServer, forKey: "webServiceUrl_preference")
-            
-        }else{
-            self.databaseUsingCode.text = "TEST " + releaseDate
-            defaults.setObject("TEST", forKey: "serverEnv_preference")
-            defaults.setObject(dataSyncTestServer, forKey: "webServiceUrl_preference")
-            
-        }*/
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.defaultsChanged), name: NSUserDefaultsDidChangeNotification, object: nil)
+        setupView()
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
-    func defaultsChanged(){
+    @objc func defaultsChanged(){
         updateDisplayFromDefaults()
     }
     
     func updateDisplayFromDefaults(){
         
         //Get the defaults, Update Version No.
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
                 
         //Set the controls to the default values.
-        if let imagesize = defaults.stringForKey("imagesize_preference"){
+        if let imagesize = defaults.string(forKey: "imagesize_preference"){
             
             if Int(imagesize) > 1 {
                 _RESIZEIMAGEWIDTH = 1200
@@ -173,65 +187,62 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
     }
     
     func initLoginStatus() {
-        self.loginIndicator.hidden = true
+        self.loginIndicator.isHidden = true
         self.loginStatusMsg.text = ""
         self.password.text = ""
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.objectForKey("lastLoginUsername") != nil {
-            self.username.text = defaults.objectForKey("lastLoginUsername")! as? String
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "lastLoginUsername") != nil {
+            self.username.text = defaults.object(forKey: "lastLoginUsername")! as? String
         }
         
         updateDisplayFromDefaults()
     }
     
-    func startLoginStatus(loginMsg:String = "", textColor:UIColor = _DEFAULTBUTTONTEXTCOLOR){
-        self.loginIndicator.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initLoginStatus()
+    }
+    
+    func startLoginStatus(_ loginMsg:String = "", textColor:UIColor = _DEFAULTBUTTONTEXTCOLOR){
+        self.loginIndicator.isHidden = false
         self.loginIndicator.startAnimating()
         self.loginStatusMsg.textColor = textColor
         self.loginStatusMsg.text = loginMsg
     }
     
-    func stopLoginStatus(loginMsg:String = "", textColor:UIColor = UIColor.redColor()) {
-        self.loginIndicator.hidden = true
+    func stopLoginStatus(_ loginMsg:String = "", textColor:UIColor = UIColor.red) {
+        self.loginIndicator.isHidden = true
         self.loginIndicator.stopAnimating()
         self.loginStatusMsg.textColor = textColor
         self.loginStatusMsg.text = loginMsg
     }
     
-    override func viewWillAppear(animated: Bool) {
-        initLoginStatus()
-    }
-    
-    @IBAction func changeLanguage(sender: UISegmentedControl) {
+    @IBAction func changeLanguage(_ sender: UISegmentedControl) {
         /*
         selectedSegment: 0 - English
         selectedSegment: 1 - Chinese
         */
         let selectedSegment = sender.selectedSegmentIndex;
         
-        if (selectedSegment > 0) {
-            NSLog("Change language to: %@","中文")
-            //singleton instance MylocalizedString.sharedLocalizeManager
-            MylocalizedString.sharedLocalizeManager.setLanguage("zh-Hans")
-            _ENGLISH = false
-        }
-        else{
-            NSLog("Change language to: %@","English")
-            //singleton instance MylocalizedString.sharedLocalizeManager
-            MylocalizedString.sharedLocalizeManager.setLanguage("en")
-            _ENGLISH = true
+        switch selectedSegment {
+        case 1:
+            MylocalizedString.sharedLocalizeManager.setMyLanguage(.zh)
+        case 2:
+            MylocalizedString.sharedLocalizeManager.setMyLanguage(.fr)
+        default:
+            MylocalizedString.sharedLocalizeManager.setMyLanguage(.en)
         }
         
         //switch language
         updateLocalizedString()
     }
     
-    @IBAction func userLogin(sender: UIButton) {
+    @IBAction func userLogin(_ sender: UIButton) {
         NSLog("userLogin")
         
         if _DEBUG_MODE {
-            self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+            self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
             return
         }
         
@@ -250,19 +261,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                 data += "\"\(key)\":\"\(value)\","
             }
             data += "}"
-            data = data.stringByReplacingOccurrencesOfString(",}", withString: "}")
-            data = data.stringByReplacingOccurrencesOfString(_DS_USERNAME, withString: self.username.text!)
-            data = data.stringByReplacingOccurrencesOfString(_DS_USERPASSWORD, withString: self.password.text!.md5())
+            data = data.replacingOccurrences(of: ",}", with: "}")
+            data = data.replacingOccurrences(of: _DS_USERNAME, with: self.username.text!)
+            data = data.replacingOccurrences(of: _DS_USERPASSWORD, with: self.password.text!.md5())
                 
             print("password: \(self.password.text!.md5())")
                 
             self.makePostRequest(_DS_USERLOGIN["APINAME"] as! String, dataInJson: data, actionNames: _DS_USERLOGIN["ACTIONNAMES"] as! [String], actionFields: _DS_USERLOGIN["ACTIONFIELDS"] as! Dictionary,  handler: { (result, response, totalRecords) -> Void in
                     
                 if response == "SUCCESS"{
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         
                         if result![0]["inspector_id"] != nil && result![0]["prod_type_id"] != nil && result![0]["rec_status"] != nil {
-                            let inspector = Inspector(inspectorId: Int(result![0]["inspector_id"]!), inspectorName: result![0]["inspector_name"]!, prodTypeId: Int(result![0]["prod_type_id"]!), appUserName: result![0]["app_username"]!, appPassword: result![0]["app_password"]!, serviceToken: result![0]["service_token"]!, reportPrefix: result![0]["report_prefix"]!, reportRunningNo: result![0]["report_running_no"]!, phoneNo: result![0]["phone_no"]!, emailAddr: result![0]["email_addr"]!)
+                            let inspector = Inspector(inspectorId: Int(result![0]["inspector_id"]!), inspectorName: result![0]["inspector_name"]!, prodTypeId: Int(result![0]["prod_type_id"]!), appUserName: result![0]["app_username"]!, appPassword: result![0]["app_password"]!, serviceToken: result![0]["service_token"]!, reportPrefix: result![0]["report_prefix"]!, reportRunningNo: result![0]["report_running_no"]!, phoneNo: result![0]["phone_no"]!, emailAddr: result![0]["email_addr"]!, typeCode: "")
                                 
                             inspector.recStatus = Int(result![0]["rec_status"]!)
                             inspector.createUser = result![0]["create_user"]
@@ -274,6 +285,63 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                             inspector.deleteDate = result![0]["delete_date"]
                             inspector.chgPwdReqDate = result![0]["chg_pwd_req_date"]!
                             
+                            var prodType = ProdType()
+                            if let typeId = result![1]["type_id"] {
+                                prodType.typeId = typeId
+                            }
+                            
+                            if let typeCode = result![1]["type_code"] {
+                                prodType.typeCode = typeCode
+                            }
+                            
+                            if let typeNameEn = result![1]["type_name_en"] {
+                                prodType.typeNameEn = typeNameEn
+                            }
+                            
+                            if let typeNameCn = result![1]["type_name_cn"] {
+                                prodType.typeNameCn = typeNameCn
+                            }
+                            
+                            if let typeNameFr = result![1]["type_name_fr"] {
+                                prodType.typeNameFr = typeNameFr
+                            }
+                            
+                            if let dataEnv = result![1]["data_env"] {
+                                prodType.dataEnv = dataEnv
+                            }
+                            
+                            if let recStatus = result![1]["rec_status"] {
+                                prodType.recStatus = recStatus
+                            }
+                            
+                            if let createDate = result![1]["create_date"] {
+                                prodType.createDate = createDate
+                            }
+                            
+                            if let createUser = result![1]["create_user"] {
+                                prodType.createUser = createUser
+                            }
+                            
+                            if let modifyDate = result![1]["modify_date"] {
+                                prodType.modifyDate = modifyDate
+                            }
+                            
+                            if let modifyUser = result![1]["modify_user"] {
+                                prodType.modifyUser = modifyUser
+                            }
+                            
+                            if let deletedFlag = result![1]["deleted_flag"] {
+                                prodType.deletedFlag = deletedFlag
+                            }
+                            
+                            if let deleteDate = result![1]["delete_date"] {
+                                prodType.deleteDate = deleteDate
+                            }
+                            
+                            if let deleteUser = result![1]["delete_user"] {
+                                prodType.deleteUser = deleteUser
+                            }
+                            
                             //Update Service Token
                             _DS_SERVICETOKEN = result![0]["service_token"]!
                                 
@@ -281,12 +349,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                             //DatabaseManager.sharedDatabaseManager.initDbObj("\(_DBNAME_USING)_\((inspector.appUserName?.lowercaseString)!)")
                             
                             //update local DB for Multi User
-                            DatabaseManager.sharedDatabaseManager.initDbObj("\((inspector.appUserName?.lowercaseString)!)")
+                            DatabaseManager.sharedDatabaseManager.initDbObj("\((inspector.appUserName?.lowercased())!)")
                             
                             let inspectorDataHelper = InspectorDataHelper()
                             inspectorDataHelper.updateInspector(inspector)
-                                
-                            Cache_Inspector = inspector
+                            inspectorDataHelper.updateProdType(prodType)
+                            
+                            Cache_Inspector = inspectorDataHelper.getInspectorById(inspector.inspectorId ?? 0)
+                            if Cache_Inspector == nil {
+                                Cache_Inspector = inspector
+                                Cache_Inspector?.typeCode = prodType.typeCode
+                            }
                             Cache_Inspector?.lastLoginDate = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
                                 
                             let keyValueDataHelper = KeyValueDataHelper()
@@ -295,8 +368,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                             _DS_SERVICETOKEN = (Cache_Inspector?.serviceToken)!
                             //7029c6d9-7933-4be7-86e6-8bbc0aac1cb8
                             
-                            let defaults = NSUserDefaults.standardUserDefaults()
-                            defaults.setObject(Cache_Inspector?.appUserName, forKey: "lastLoginUsername")
+                            let defaults = UserDefaults.standard
+                            defaults.set(Cache_Inspector?.appUserName, forKey: "lastLoginUsername")
                             
                             
                             //------------- Checking Any Update for DB ----------------
@@ -310,7 +383,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                             }else if _VERSION != currDBVersion {
                             
                                 let appUpgradeDataHelper = AppUpgradeDataHelper()
-                                appUpgradeDataHelper.appUpgradeCode(self.view, completion: { (result) in
+                                appUpgradeDataHelper.appUpgradeCode(_VERSION, parentView: self.view, completion: { (result) in
                                     
                                     if result {
                                         keyValueDataHelper.updateDBVersionNum(_VERSION)
@@ -332,9 +405,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                         inspectorDataHelper.updateInspector(Cache_Inspector!)
                                     
                                     }else{
-                                        self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                        self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-
                                 })
                             }else{
                                 
@@ -350,12 +422,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                     
                                     if self.isBackupDateOverNdays() {
                                         self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("You haven't done data sync over 3 days!"), handlerFun: { (UIAlertAction) in
-                                            self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                            self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                         })
                                     }else{
-                                        self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                        self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-                                    
                                 }
                             }
                             //------------------------------------------------
@@ -364,9 +435,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                     })
                 }else{
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.startLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login through Local Database..."))
-                        if DatabaseManager.sharedDatabaseManager.openLocalDB(self.username.text!.lowercaseString) {
+                        if DatabaseManager.sharedDatabaseManager.openLocalDB(self.username.text!.lowercased()) {
                             
                             let inspectorDataHelper = InspectorDataHelper()
                             Cache_Inspector = inspectorDataHelper.getInspector(self.username.text!, password: self.password.text!.md5())
@@ -379,8 +450,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                 let keyValueDataHelper = KeyValueDataHelper()
                                 keyValueDataHelper.updateLastLoginDatetime(String((Cache_Inspector?.inspectorId)!), datetime: self.view.getCurrentDateTime())
                             
-                                let defaults = NSUserDefaults.standardUserDefaults()
-                                defaults.setObject(Cache_Inspector?.appUserName, forKey: "lastLoginUsername")
+                                let defaults = UserDefaults.standard
+                                defaults.set(Cache_Inspector?.appUserName, forKey: "lastLoginUsername")
                                 
                                 //------------- Checking Any Update for DB ----------------
                                 //add column for vdr_location_mstr table
@@ -393,7 +464,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                 }else if _VERSION != currDBVersion {
                                     
                                     let appUpgradeDataHelper = AppUpgradeDataHelper()
-                                    appUpgradeDataHelper.appUpgradeCode(self.view, completion: { (result) in
+                                    appUpgradeDataHelper.appUpgradeCode(_VERSION, parentView: self.view, completion: { (result) in
                                         
                                         let keyValueDataHelper = KeyValueDataHelper()
                                         if result {
@@ -416,7 +487,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                             inspectorDataHelper.updateInspector(Cache_Inspector!)
                                         
                                         }else{
-                                            self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                            self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                         }
                                     })
                                 }else{
@@ -424,12 +495,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                     self.copyAppInfoFile()
                                     if self.isBackupDateOverNdays() {
                                         self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("You haven't done data sync over 3 days!"), handlerFun: { (UIAlertAction) in
-                                            self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                            self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                         })
                                     }else{
-                                        self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                        self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-                                    
                                     self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login success, Redirect..."), textColor: _DEFAULTBUTTONTEXTCOLOR)
                                     if Cache_Inspector?.chgPwdReqDate != "" && Cache_Inspector?.chgPwdReqDate != nil {
                                         self.handlePwChangeBeforeRedirect()
@@ -438,9 +508,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                         inspectorDataHelper.updateInspector(Cache_Inspector!)
                                         
                                     }else{
-                                        self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                                        self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                                     }
-                                    
                                 }
                                 //------------------------------------------------
                                 
@@ -448,14 +517,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                 
                             }else{
                             
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username or Password is not correct!"))
+                                DispatchQueue.main.async(execute: {
+                                    self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Username / Password Not Correct"))
                                 
                                 })
                             }
                         }else{
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login information incorrect!"))
+                            DispatchQueue.main.async(execute: {
+                                self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login Information Not Correct"))
                             
                             })
                         }
@@ -466,10 +535,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
     }
     
     func handlePwChangeBeforeRedirect() {
-        let alert = UIAlertController(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Change Your Password Now"), message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        let saveAction = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: .Default, handler: { action in
+        let alert = UIAlertController(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Please Change Your Password Now"), message: "", preferredStyle: UIAlertController.Style.alert)
+        let saveAction = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("OK"), style: .default, handler: { action in
             switch action.style{
-            case .Default:
+            case .default:
                 print("default")
                 
                 var data = "\(_DS_PREFIX){"
@@ -477,82 +546,82 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                     data += "\"\(key)\":\"\(value)\","
                 }
                 data += "}"
-                data = data.stringByReplacingOccurrencesOfString(",}", withString: "}")
-                data = data.stringByReplacingOccurrencesOfString("new_password", withString: self.newPwInput.text!)
+                data = data.replacingOccurrences(of: ",}", with: "}")
+                data = data.replacingOccurrences(of: "new_password", with: self.newPwInput.text!)
                     
                 self.makePostRequest(_DS_CHANGE_PW["APINAME"] as! String, dataInJson: data, actionNames: _DS_CHANGE_PW["ACTIONNAMES"] as! [String], actionFields: _DS_CHANGE_PW["ACTIONFIELDS"] as! Dictionary,  handler: { (result, response, totalRecords) -> Void in
                         
                     if response == "SUCCESS"{
                         
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             let style = NSMutableParagraphStyle()
-                            style.alignment = NSTextAlignment.Center
-                            let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New password reset Successfully!"), attributes: [
-                                NSParagraphStyleAttributeName: style,
-                                NSFontAttributeName : UIFont.systemFontOfSize(15),
-                                NSForegroundColorAttributeName : _DEFAULTBUTTONTEXTCOLOR
-                                ])
+                            style.alignment = NSTextAlignment.center
+                            let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New password reset Successfully!"), attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                                convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                                convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                                convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : _DEFAULTBUTTONTEXTCOLOR
+                                ]))
                             alert.setValue(attributedString, forKey: "attributedMessage")
                             
                             let inspectorDataHelper = InspectorDataHelper()
                             Cache_Inspector?.appPassword = self.newPwInput.text!.md5()
                             inspectorDataHelper.updateInspector(Cache_Inspector!)
                             
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: "TaskSearchNavigatorSegue", sender: self)
                             }
                         }
                         
                     }else{
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update failed. Please check internet connection."), handlerFun: { (action:UIAlertAction!) in
+                        DispatchQueue.main.async {
+                            self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update failed. Please check internet connection"), handlerFun: { (action:UIAlertAction!) in
                                 //self.performSegueWithIdentifier("TaskSearchNavigatorSegue", sender: self)
-                                self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("New Password Update Fail..."))
+                                self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Update New Password Failed"))
                             })
                         }
                     }
                         
                 })
                 
-            case .Cancel:
+            case .cancel:
                 print("cancel")
                 
-            case .Destructive:
+            case .destructive:
                 print("destructive")
                 
             }
         })
         
-        saveAction.enabled = false
+        saveAction.isEnabled = false
         
-        alert.addTextFieldWithConfigurationHandler(self.configurationNewPwInputTextField)
-        alert.addTextFieldWithConfigurationHandler(self.configurationConfirmPwInputTextField)
+        alert.addTextField(configurationHandler: self.configurationNewPwInputTextField)
+        alert.addTextField(configurationHandler: self.configurationConfirmPwInputTextField)
         alert.addAction(saveAction)
         
         // Adding the notification observer here
-        NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidEndEditingNotification, object:alert.textFields?[0], queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
+        NotificationCenter.default.addObserver(forName: UITextField.textDidEndEditingNotification, object:alert.textFields?[0], queue: OperationQueue.main) { (notification) -> Void in
             
             let newPwInput = alert.textFields![0]
             self.isValidPw(newPwInput.text!, alert: alert)
         }
         
-        NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object:alert.textFields?[0], queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object:alert.textFields?[0], queue: OperationQueue.main) { (notification) -> Void in
             
             let newPwInput = alert.textFields![0]
             let confirmPwInput = alert.textFields![1]
             
-            saveAction.enabled = self.isValidPw(newPwInput.text!, alert: alert) && self.isValidConfirmPw(newPwInput.text!, confirmPwInput: confirmPwInput.text!, alert: alert)
+            saveAction.isEnabled = self.isValidPw(newPwInput.text!, alert: alert) && self.isValidConfirmPw(newPwInput.text!, confirmPwInput: confirmPwInput.text!, alert: alert)
         }
         
-        NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object:alert.textFields?[1], queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object:alert.textFields?[1], queue: OperationQueue.main) { (notification) -> Void in
                                                                     
             let newPwInput = alert.textFields![0]
             let confirmPwInput = alert.textFields![1]
             
-            saveAction.enabled = self.isValidConfirmPw(newPwInput.text!, confirmPwInput: confirmPwInput.text!, alert: alert)
+            saveAction.isEnabled = self.isValidConfirmPw(newPwInput.text!, confirmPwInput: confirmPwInput.text!, alert: alert)
         }
         
-        NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidBeginEditingNotification, object:alert.textFields?[1], queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
+        NotificationCenter.default.addObserver(forName: UITextField.textDidBeginEditingNotification, object:alert.textFields?[1], queue: OperationQueue.main) { (notification) -> Void in
             
             let newPwInput = alert.textFields![0]
             let confirmPwInput = alert.textFields![1]
@@ -560,21 +629,21 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
             self.isValidConfirmPw(newPwInput.text!, confirmPwInput: confirmPwInput.text!, alert: alert)
         }
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func isValidConfirmPw(pwInput:String, confirmPwInput:String, alert:UIAlertController) ->Bool {
+    func isValidConfirmPw(_ pwInput:String, confirmPwInput:String, alert:UIAlertController) ->Bool {
         
         if pwInput != confirmPwInput {
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let style = NSMutableParagraphStyle()
-                style.alignment = NSTextAlignment.Center
-                let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm password is different from the New password!"), attributes: [
-                    NSParagraphStyleAttributeName: style,
-                    NSFontAttributeName : UIFont.systemFontOfSize(15),
-                    NSForegroundColorAttributeName : UIColor.redColor()
-                    ])
+                style.alignment = NSTextAlignment.center
+                let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm Password and New Password Not Matched"), attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                    ]))
                 alert.setValue(attributedString, forKey: "attributedMessage")
                 
             }
@@ -584,14 +653,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
             
             return false
         }else{
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let style = NSMutableParagraphStyle()
-                style.alignment = NSTextAlignment.Center
-                let attributedString = NSAttributedString(string: "", attributes: [
-                    NSParagraphStyleAttributeName: style,
-                    NSFontAttributeName : UIFont.systemFontOfSize(15),
-                    NSForegroundColorAttributeName : UIColor.redColor()
-                    ])
+                style.alignment = NSTextAlignment.center
+                let attributedString = NSAttributedString(string: "", attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                    ]))
                 alert.setValue(attributedString, forKey: "attributedMessage")
                 
             }
@@ -600,36 +669,34 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         return true
     }
     
-    func isValidPw(pwInput:String, alert:UIAlertController) ->Bool {
+    func isValidPw(_ pwInput:String, alert:UIAlertController) ->Bool {
         
         //Check if New password equit to appUsername
         if pwInput == Cache_Inspector?.appUserName! {
             print("new password cant be the same as user login name!")
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let style = NSMutableParagraphStyle()
-                style.alignment = NSTextAlignment.Center
-                let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("Cant use login name as new password!"), attributes: [
-                    NSParagraphStyleAttributeName: style,
-                    NSFontAttributeName : UIFont.systemFontOfSize(15),
-                    NSForegroundColorAttributeName : UIColor.redColor()
-                    ])
+                style.alignment = NSTextAlignment.center
+                let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("Login Name Cannot Be Used As New Password"), attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                    ]))
                 alert.setValue(attributedString, forKey: "attributedMessage")
                 
             }
             
             return false
         }else if pwInput.characters.count < 8 || pwInput.characters.count > 15 {//Check if New password contains 8 to 15 charators
-            print("new password should be 8-15 charators")
-            
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let style = NSMutableParagraphStyle()
-                style.alignment = NSTextAlignment.Center
-                let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New password should be 8-15 charators!"), attributes: [
-                    NSParagraphStyleAttributeName: style,
-                    NSFontAttributeName : UIFont.systemFontOfSize(15),
-                    NSForegroundColorAttributeName : UIColor.redColor()
-                    ])
+                style.alignment = NSTextAlignment.center
+                let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New Password should be 8-15 Characters"), attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                    convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                    ]))
                 alert.setValue(attributedString, forKey: "attributedMessage")
                 
             }
@@ -639,20 +706,20 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         
         do{
             //Check if New password including Numbers
-            let tNumRegularExpression = try NSRegularExpression(pattern: "[0-9]", options: .CaseInsensitive)
-            let tNumMatchCount = tNumRegularExpression.numberOfMatchesInString(pwInput, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, pwInput.characters.count))
+            let tNumRegularExpression = try NSRegularExpression(pattern: "[0-9]", options: .caseInsensitive)
+            let tNumMatchCount = tNumRegularExpression.numberOfMatches(in: pwInput, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, pwInput.characters.count))
         
             if tNumMatchCount < 1 {
                 print("match Num count: \(tNumMatchCount)")
             
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     let style = NSMutableParagraphStyle()
-                    style.alignment = NSTextAlignment.Center
-                    let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New password need to include Numbers!"), attributes: [
-                        NSParagraphStyleAttributeName: style,
-                        NSFontAttributeName : UIFont.systemFontOfSize(15),
-                        NSForegroundColorAttributeName : UIColor.redColor()
-                        ])
+                    style.alignment = NSTextAlignment.center
+                    let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New Password need to include Numbers"), attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                        convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                        convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                        convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                        ]))
                     alert.setValue(attributedString, forKey: "attributedMessage")
                     
                 }
@@ -661,20 +728,20 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
             }
             
             //Check if New password including Letters
-            let tLetterRegularExpression = try NSRegularExpression(pattern: "[A-Za-z]", options: .CaseInsensitive)
-            let tLetterMatchCount = tLetterRegularExpression.numberOfMatchesInString(pwInput, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, pwInput.characters.count))
+            let tLetterRegularExpression = try NSRegularExpression(pattern: "[A-Za-z]", options: .caseInsensitive)
+            let tLetterMatchCount = tLetterRegularExpression.numberOfMatches(in: pwInput, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, pwInput.characters.count))
             
             if tLetterMatchCount < 1 {
                 print("match Letter count: \(tLetterMatchCount)")
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     let style = NSMutableParagraphStyle()
-                    style.alignment = NSTextAlignment.Center
-                    let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New password need to include Letters!"), attributes: [
-                        NSParagraphStyleAttributeName: style,
-                        NSFontAttributeName : UIFont.systemFontOfSize(15),
-                        NSForegroundColorAttributeName : UIColor.redColor()
-                        ])
+                    style.alignment = NSTextAlignment.center
+                    let attributedString = NSAttributedString(string: MylocalizedString.sharedLocalizeManager.getLocalizedString("New Password need to include Letters"), attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                        convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                        convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                        convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                        ]))
                     alert.setValue(attributedString, forKey: "attributedMessage")
                     
                 }
@@ -686,14 +753,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
             return false
         }
         
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let style = NSMutableParagraphStyle()
-            style.alignment = NSTextAlignment.Center
-            let attributedString = NSAttributedString(string: "", attributes: [
-                NSParagraphStyleAttributeName: style,
-                NSFontAttributeName : UIFont.systemFontOfSize(15),
-                NSForegroundColorAttributeName : UIColor.redColor()
-                ])
+            style.alignment = NSTextAlignment.center
+            let attributedString = NSAttributedString(string: "", attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style,
+                convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15),
+                convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.red
+                ]))
             alert.setValue(attributedString, forKey: "attributedMessage")
                 
         }
@@ -701,7 +768,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         return true
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if textField == self.newPwInput || textField == self.confirmPwInput {
             
@@ -713,44 +780,44 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         return true
     }
     
-    func configurationNewPwInputTextField(textField: UITextField!) {
+    func configurationNewPwInputTextField(_ textField: UITextField!) {
         print("configurat hire the TextField")
         
         self.newPwInput = textField!        //Save reference to the UITextField
         self.newPwInput.placeholder = MylocalizedString.sharedLocalizeManager.getLocalizedString("New Password")
-        self.newPwInput.secureTextEntry = true
+        self.newPwInput.isSecureTextEntry = true
         self.newPwInput.delegate = self
         
     }
     
-    func configurationConfirmPwInputTextField(textField: UITextField!) {
+    func configurationConfirmPwInputTextField(_ textField: UITextField!) {
         print("configurat hire the TextField")
         
         self.confirmPwInput = textField!        //Save reference to the UITextField
         self.confirmPwInput.placeholder = MylocalizedString.sharedLocalizeManager.getLocalizedString("Confirm Password")
-        self.confirmPwInput.secureTextEntry = true
+        self.confirmPwInput.isSecureTextEntry = true
         self.confirmPwInput.delegate = self
         
     }
     
-    func handleCancel(alertView: UIAlertAction!){
+    func handleCancel(_ alertView: UIAlertAction!){
         print("User click Cancel button")
         print(self.newPwInput.text)
     }
     
-    @IBAction func userClear(sender: UIButton) {
+    @IBAction func userClear(_ sender: UIButton) {
         NSLog("userClear")
         
         self.username.text = ""
         self.password.text = ""
     }
     
-    @IBAction func userForgetUsername(sender: UIButton) {
+    @IBAction func userForgetUsername(_ sender: UIButton) {
         NSLog("userForgetUsername")
         
     }
     
-    @IBAction func userForgetPassword(sender: UIButton) {
+    @IBAction func userForgetPassword(_ sender: UIButton) {
         NSLog("userForgetPassword")
        
     }
@@ -761,28 +828,28 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         self.usernameLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Username")
         self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Password")
         self.languageLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Language")
-        self.loginButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login"), forState: UIControlState.Normal)
-        self.clearButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear"), forState: UIControlState.Normal)
-        self.forgetUserNameButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Forget Username?"), forState: UIControlState.Normal)
-        self.forgetPasswordButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Forget Password?"), forState: UIControlState.Normal)
+        self.loginButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Login"), for: UIControl.State())
+        self.clearButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Clear"), for: UIControl.State())
+        self.forgetUserNameButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Forget Username?"), for: UIControl.State())
+        self.forgetPasswordButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Forget Password?"), for: UIControl.State())
         self.versionCode.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Version")+" \(_VERSION)"
     }
     
-    func isBackupDateOverNdays(N:Double = 3) ->Bool {
+    func isBackupDateOverNdays(_ N:Double = 3) ->Bool {
         
         let keyValueDataHelper = KeyValueDataHelper()
         let lastDownloadDateInString = keyValueDataHelper.getLastDownloadDatetimeByUserId(String((Cache_Inspector?.inspectorId)!))
         
         if lastDownloadDateInString != "" {
         
-            let now = NSDate.init()
+            let now = Date.init()
         
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
-            let lastDownloadDate = dateFormatter.dateFromString(lastDownloadDateInString)
-            let NDaysAgo = now.dateByAddingTimeInterval(-60*60*(24*N))
-            let timeBetween3Days = now.timeIntervalSinceDate(NDaysAgo)
-            let timeBetweenBacupDays = now.timeIntervalSinceDate(lastDownloadDate!)
+            let lastDownloadDate = dateFormatter.date(from: lastDownloadDateInString)
+            let NDaysAgo = now.addingTimeInterval(-60*60*(24*N))
+            let timeBetween3Days = now.timeIntervalSince(NDaysAgo)
+            let timeBetweenBacupDays = now.timeIntervalSince(lastDownloadDate!)
             
             if timeBetween3Days < timeBetweenBacupDays {
             
@@ -794,14 +861,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         
         if lastUploadDateInString != "" {
             
-            let now = NSDate.init()
+            let now = Date.init()
             
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
-            let lastUploadDate = dateFormatter.dateFromString(lastUploadDateInString)
-            let NDaysAgo = now.dateByAddingTimeInterval(-60*60*(24*N))
-            let timeBetween3Days = now.timeIntervalSinceDate(NDaysAgo)
-            let timeBetweenBacupDays = now.timeIntervalSinceDate(lastUploadDate!)
+            let lastUploadDate = dateFormatter.date(from: lastUploadDateInString)
+            let NDaysAgo = now.addingTimeInterval(-60*60*(24*N))
+            let timeBetween3Days = now.timeIntervalSince(NDaysAgo)
+            let timeBetweenBacupDays = now.timeIntervalSince(lastUploadDate!)
             
             if timeBetween3Days < timeBetweenBacupDays {
                 
@@ -812,17 +879,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         return false
     }
     
-    func calculateTimeDifferenceWithStartDate(startDate:NSDate, endDate:NSDate) ->NSDateComponents {
+    func calculateTimeDifferenceWithStartDate(_ startDate:Date, endDate:Date) ->DateComponents {
         
-        let calendar = NSCalendar.currentCalendar()
-        let unitFlags = NSCalendarUnit.Day
+        let calendar = Calendar.current
+        let unitFlags = NSCalendar.Unit.day
         
-        return calendar.components(unitFlags, fromDate: startDate, toDate: endDate, options: NSCalendarOptions.init(rawValue: 0))
+        return (calendar as NSCalendar).components(unitFlags, from: startDate, to: endDate, options: NSCalendar.Options.init(rawValue: 0))
     }
     
-    func copyAppInfoFile(needUpdate:Bool = false) {
+    func copyAppInfoFile(_ needUpdate:Bool = false) {
         //CPY App Info XML to Inspector Folder
-        let filemgr = NSFileManager.defaultManager()
+        let filemgr = FileManager.default
         do{
             /*
              if filemgr.fileExistsAtPath("\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo") {
@@ -833,18 +900,18 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
              }*/
             
             if needUpdate {
-                if filemgr.fileExistsAtPath("\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo") {
-                    try filemgr.removeItemAtPath("\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo")
+                if filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo") {
+                    try filemgr.removeItem(atPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo")
                 }
                 
-                if filemgr.fileExistsAtPath(self.view.getPreferencesFilePath()!) {
-                    try filemgr.copyItemAtPath(self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo")
+                if filemgr.fileExists(atPath: self.view.getPreferencesFilePath()!) {
+                    try filemgr.copyItem(atPath: self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo")
                 }
                 
-            }else if !filemgr.fileExistsAtPath("\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo") {
+            }else if !filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo") {
                 
-                if filemgr.fileExistsAtPath(self.view.getPreferencesFilePath()!) {
-                    try filemgr.copyItemAtPath(self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo")
+                if filemgr.fileExists(atPath: self.view.getPreferencesFilePath()!) {
+                    try filemgr.copyItem(atPath: self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo")
                 }
             }
             
@@ -854,3 +921,52 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+extension ViewController {
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        super.prepare(for: segue, sender: sender)
+        segue.destination.modalPresentationStyle = .overFullScreen// .fullScreen
+        if let vc = segue.destination as? ContainerViewController {
+            vc.resetLogonItems = {
+                self.initLoginStatus()
+            }
+        }
+    }
+}
+
+extension ViewController {
+    func setupView() {
+//        loginButton.titleLabel?.numberOfLines = 1
+//        loginButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        loginButton.titleLabel?.lineBreakMode = .byClipping
+//        
+//        clearButton.titleLabel?.numberOfLines = 1
+//        clearButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        clearButton.titleLabel?.lineBreakMode = .byClipping
+//        
+//        forgetPasswordButton.titleLabel?.numberOfLines = 1
+//        forgetPasswordButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        forgetPasswordButton.titleLabel?.lineBreakMode = .byClipping
+//        
+//        forgetUserNameButton.titleLabel?.numberOfLines = 1
+//        forgetUserNameButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        forgetUserNameButton.titleLabel?.lineBreakMode = .byClipping
+    }
+}

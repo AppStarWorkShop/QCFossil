@@ -15,7 +15,7 @@ class InputMode03View: InputModeSCMaster {
     @IBOutlet weak var addCellButton: UIButton!
     var inputCells = [InputMode03CellView]()
     let inputCellCount = 6
-    let cellWidth = 768
+    let cellWidth = Int(_DEVICE_WIDTH)
     let cellHeight = 140
     
     /*
@@ -26,14 +26,33 @@ class InputMode03View: InputModeSCMaster {
     }
     */
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func awakeFromNib() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    @objc func parentScrollEnable() {
+        scrollCellView.isScrollEnabled = true
+    }
+    
+    @objc func parentScrollDisable() {
+        scrollCellView.isScrollEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         guard let touch:UITouch = touches.first else
         {
             return;
         }
         
-        if touch.view!.isKindOfClass(UITextField().classForCoder) || String(touch.view!.classForCoder) == "UITableViewCellContentView" {
+        if touch.view!.isKind(of: UITextField().classForCoder) || String(describing: touch.view!.classForCoder) == "UITableViewCellContentView" {
             self.resignFirstResponderByTextField(self)
             
         }else {
@@ -49,12 +68,14 @@ class InputMode03View: InputModeSCMaster {
             return
         }
         
+        self.applyToAllButton.addTarget(self, action: #selector(applyRstToAll), for: UIControl.Event.touchUpInside)
+        
         var idx = 1
         let photoDataHelper = PhotoDataHelper()
         
         for taskInspDataRecord in (inspSection?.taskInspDataRecords)! {
             
-            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspCatInputText: _ENGLISH ? taskInspDataRecord.reqSectObj!.sectionNameEn : taskInspDataRecord.reqSectObj!.sectionNameCn,inspItemInputText: taskInspDataRecord.requestElementDesc,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId: taskInspDataRecord.postnObj!.positionId,taskInspDataRecordId:taskInspDataRecord.recordId!,requestSecId:taskInspDataRecord.requestSectionId,inspDetailInputText:taskInspDataRecord.inspectDetail!,inspRemarksInputText:taskInspDataRecord.inspectRemarks!,resultValueObj:taskInspDataRecord.resultObj!)
+            let inputCell = inputCellInit(idx, sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(idx),inspCatInputText: MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: taskInspDataRecord.reqSectObj!.sectionNameEn, .zh: taskInspDataRecord.reqSectObj!.sectionNameCn, .fr: taskInspDataRecord.reqSectObj!.sectionNameFr]),inspItemInputText: taskInspDataRecord.requestElementDesc,dismissBtnHidden: true, elementDbId: (taskInspDataRecord.elmtObj?.elementId)!, refRecordId: taskInspDataRecord.refRecordId!, inspElmId: (taskInspDataRecord.elmtObj?.elementId)!, inspPostId: taskInspDataRecord.postnObj!.positionId,taskInspDataRecordId:taskInspDataRecord.recordId!,requestSecId:taskInspDataRecord.requestSectionId,inspDetailInputText:taskInspDataRecord.inspectDetail!,inspRemarksInputText:taskInspDataRecord.inspectRemarks!,resultValueObj:taskInspDataRecord.resultObj!)
             
             inputCell.photoAdded = photoDataHelper.checkPhotoAddedByInspDataRecordId(taskInspDataRecord.recordId!)
             inputCell.updatePhotoNeededStatus((taskInspDataRecord.resultObj?.resultValueNameEn)!)
@@ -67,7 +88,7 @@ class InputMode03View: InputModeSCMaster {
 
             inputCells.append(inputCell)
             
-            idx++
+            idx += 1
         }
         
         if idx<2 {
@@ -76,9 +97,14 @@ class InputMode03View: InputModeSCMaster {
         
         self.updateContentView()
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.applyToAllButton)
+        
+        NSLayoutConstraint.activate([
+            scrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
     }
     
-    func applyRstToAll() {
+    @objc func applyRstToAll() {
         
         self.alertConfirmView("\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Apply to All"))?",parentVC:self.parentVC!, handlerFun: { (action:UIAlertAction!) in
             
@@ -122,17 +148,17 @@ class InputMode03View: InputModeSCMaster {
         
         self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 40, height: 40)
         self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: self.scrollCellView.frame.size.width, height: CGFloat(inputCells.count*cellHeight+600)))
+        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+600)))
     }
     
-    func resizeScrollView(size:CGSize) {
+    func resizeScrollView(_ size:CGSize) {
         self.scrollCellView.contentSize = size
     }
     
-    func inputCellInit(index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspCatInputText:String, inspItemInputText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, taskInspDataRecordId:Int=0,requestSecId:Int?=0,inspDetailInputText:String="",inspRemarksInputText:String="",resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "")) -> InputMode03CellView {
+    func inputCellInit(_ index:Int, sectionId:Int, sectionName:String, idxLabelText:String, inspCatInputText:String, inspItemInputText:String, dismissBtnHidden:Bool, elementDbId:Int, refRecordId:Int, inspElmId:Int, inspPostId:Int, taskInspDataRecordId:Int=0,requestSecId:Int?=0,inspDetailInputText:String="",inspRemarksInputText:String="",resultValueObj:ResultValueObj=ResultValueObj(resultValueId:0,resultValueNameEn: "",resultValueNameCn: "", resultValueNameFr: "")) -> InputMode03CellView {
         
         let inputCellViewObj = InputMode03CellView.loadFromNibNamed("InputMode03Cell")
-        
+        inputCellViewObj?.frame.size = CGSize(width: _DEVICE_WIDTH, height: 140)
         inputCellViewObj?.parentView = self
         inputCellViewObj?.cellIndexLabel.text = idxLabelText
         inputCellViewObj?.cellCatIdx = sectionId
@@ -144,7 +170,7 @@ class InputMode03View: InputModeSCMaster {
         inputCellViewObj?.iiInput.text = inspItemInputText
         inputCellViewObj?.idInput.text = inspDetailInputText
         inputCellViewObj?.cellRemarksInput.text = inspRemarksInputText
-        inputCellViewObj?.cellResultInput.text = _ENGLISH ? resultValueObj.resultValueNameEn : resultValueObj.resultValueNameCn
+        inputCellViewObj?.cellResultInput.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: resultValueObj.resultValueNameEn, .zh: resultValueObj.resultValueNameCn, .fr: resultValueObj.resultValueNameFr])
         inputCellViewObj?.resultValueId = resultValueObj.resultValueId
         inputCellViewObj?.idInput.text = inspDetailInputText
         
@@ -166,7 +192,7 @@ class InputMode03View: InputModeSCMaster {
         return inputCellViewObj!
     }
     
-    @IBAction func addCellBtnOnClick(sender: UIButton) {
+    @IBAction func addCellBtnOnClick(_ sender: UIButton) {
         NSLog("Add Cell")
         
         let inputCell = inputCellInit(inputCells.count+1,sectionId: categoryIdx, sectionName: categoryName, idxLabelText: String(inputCells.count+1),inspCatInputText: "",inspItemInputText: "",dismissBtnHidden: false, elementDbId: 0, refRecordId: 0, inspElmId: 0, inspPostId: 0)

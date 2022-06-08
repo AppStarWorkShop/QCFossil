@@ -29,12 +29,13 @@ class Inspector {
     var deleteUser:String?
     var deleteDate:String?
     var chgPwdReqDate:String?
+    var typeCode:String?
     
     //Last Login Date, For UI Display Only
     var lastLoginDate:String = ""
     var selectedInspType:String = ""
     
-    init(inspectorId:Int?, inspectorName:String?, prodTypeId:Int?, appUserName:String?, appPassword:String?, serviceToken:String?, reportPrefix:String?, reportRunningNo:String?, phoneNo:String?, emailAddr:String?) {
+    init(inspectorId:Int?, inspectorName:String?, prodTypeId:Int?, appUserName:String?, appPassword:String?, serviceToken:String?, reportPrefix:String?, reportRunningNo:String?, phoneNo:String?, emailAddr:String?, typeCode:String?) {
         
         self.inspectorId = inspectorId
         self.inspectorName = inspectorName
@@ -46,7 +47,7 @@ class Inspector {
         self.reportRunningNo = reportRunningNo
         self.phoneNo = phoneNo
         self.emailAddr = emailAddr
-        
+        self.typeCode = typeCode
     }
     
 }

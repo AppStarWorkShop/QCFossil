@@ -8,6 +8,41 @@
 
 import UIKit
 import AVFoundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, AVCaptureMetadataOutputObjectsDelegate {
 
@@ -28,56 +63,50 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if self.parentViewController?.parentViewController?.classForCoder == TabBarViewController.self {
-            let parentVC = self.parentViewController?.parentViewController as! TabBarViewController
+        if let parentVC = self.parent as? TabBarViewController {
             parentVC.photoAlbumViewController = self
         }
                 
-        self.navigationItem.leftBarButtonItem = editButtonItem()
-        self.editButtonItem().title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit")
+        self.navigationItem.leftBarButtonItem = editButtonItem
+        self.editButtonItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit")
         
         photoTableView.delegate = self
         photoTableView.dataSource = self
-        
+
         if pVC != nil {
-            self.addPhotoBtn.hidden = true
-            self.addPhotoFromCamera.hidden = true
+            self.addPhotoBtn.isHidden = true
+            self.addPhotoFromCamera.isHidden = true
         }
         
         updateLocalizeString()
-        loadPhotos()
     }
     
     func updateLocalizeString() {
-        self.addPhotoBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Add Photo"), forState: UIControlState.Normal)
-        self.addPhotoFromCamera.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("From Camera"), forState: UIControlState.Normal)
+        self.addPhotoBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Add Photo"), for: UIControl.State())
+        self.addPhotoFromCamera.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("From Camera"), for: UIControl.State())
         
         let segmentTitles = [MylocalizedString.sharedLocalizeManager.getLocalizedString("Filename"),MylocalizedString.sharedLocalizeManager.getLocalizedString("Inspect Category"),MylocalizedString.sharedLocalizeManager.getLocalizedString("Inspect Area"),MylocalizedString.sharedLocalizeManager.getLocalizedString("Inspect Item")]
         
         for idx in 0...self.sortingBar.numberOfSegments-1 {
-            self.sortingBar.setTitle(segmentTitles[idx], forSegmentAtIndex: idx)
+            self.sortingBar.setTitle(segmentTitles[idx], forSegmentAt: idx)
         }
     }
     
     func loadPhotos() {
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.view.showActivityIndicator()
             
-            //let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 1 * Int64(NSEC_PER_SEC))
-            //dispatch_after(time, dispatch_get_main_queue()) {
-            dispatch_async(dispatch_get_main_queue(), {
-                if self.pVC != nil {
-                    Cache_Task_On?.myPhotos = self.getImageNamesFromLocal(PhotoDataType(caseId: "INSPECT").rawValue)
-                    //self.photos = self.getImageNamesFromLocal(PhotoDataType(caseId: "INSPECT").rawValue)
-                }else{
-                    Cache_Task_On?.myPhotos = self.getImageNamesFromLocal()
-                    //self.photos = self.getImageNamesFromLocal()
-                }
-                
-                self.photoTableView.reloadData()
-                
-                self.view.removeActivityIndicator()
-            })
+            if self.pVC != nil {
+                Cache_Task_On?.myPhotos = self.getImageNamesFromLocal(PhotoDataType(caseId: "INSPECT").rawValue)
+                //self.photos = self.getImageNamesFromLocal(PhotoDataType(caseId: "INSPECT").rawValue)
+            }else{
+                Cache_Task_On?.myPhotos = self.getImageNamesFromLocal()
+                //self.photos = self.getImageNamesFromLocal()
+            }
+            
+            self.photoTableView.reloadData()
+            
+            self.view.removeActivityIndicator()
         })
     }
 
@@ -86,115 +115,141 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.view.disableAllFunsForView(self.view)
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.parentViewController?.parentViewController!.view.removeActivityIndicator()
+        DispatchQueue.main.async(execute: {
+            self.loadPhotos()
+            self.parent?.view.removeActivityIndicator()
         })
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.keyboardWillChange(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         if pVC != nil {
             Cache_Task_On?.myPhotos = self.getImageNamesFromLocal()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if self.editable == true {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.view.showActivityIndicator()
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.setEditing(false,animated: false)
                     self.view.removeActivityIndicator()
                 })
             })
         }
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: self.view.window)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: self.view.window)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: self.view.window)
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         self.photoTableView.frame.origin.y =  66
     }
     
-    func keyboardWillChange(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+    @objc func keyboardWillChange(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             keyboardHeight = keyboardSize.height
             
             //adjustTableViewPosition(66 - (keyboardSize.height - 45))
         }
     }
     
-    func adjustTableViewPosition(offset:CGFloat = 0) {
+    func adjustTableViewPosition(_ offset:CGFloat = 0) {
         self.photoTableView.frame.origin.y =  66
         self.photoTableView.frame.origin.y -= ((offset < 1 ? keyboardHeight : offset) - 45)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        let myParentTabVC = self.parentViewController?.parentViewController as! TabBarViewController
+    override func viewWillAppear(_ animated: Bool) {
+        if let myParentTabVC = self.parent as? TabBarViewController {
+            if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
+                if let mVC = myParentTabVC as? TabBarViewController {
+                    mVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
+                }
+            }else{
+                myParentTabVC.navigationItem.leftBarButtonItem = self.navigationItem.leftBarButtonItem
+            }
+            
+            myParentTabVC.navigationItem.rightBarButtonItem = nil
+            myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
         
-        if (Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Uploaded").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Reviewed").rawValue || Cache_Task_On?.taskStatus == GetTaskStatusId(caseId: "Refused").rawValue) {
-            myParentTabVC.setLeftBarItem(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Form"),actionName: "backToTaskDetailFromPADF")
-        }else{
-            myParentTabVC.navigationItem.leftBarButtonItem = self.navigationItem.leftBarButtonItem
-        }
-        
-        myParentTabVC.navigationItem.rightBarButtonItem = nil
-        myParentTabVC.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Photo Album")
-        self.view.setButtonCornerRadius(self.addPhotoBtn)
-        self.view.setButtonCornerRadius(self.addPhotoFromCamera)
-        
-        if self.pVC != nil {
+            self.view.setButtonCornerRadius(self.addPhotoBtn)
+            self.view.setButtonCornerRadius(self.addPhotoFromCamera)
+            
+            if self.pVC != nil {
+                self.photosSelected = [Photo]()
+                
+                let leftButton = UIBarButtonItem()
+                leftButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
+                leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+                leftButton.style = UIBarButtonItem.Style.plain
+                leftButton.target = self
+                leftButton.action = #selector(PhotoAlbumViewController.cancelSelectedPhotos)
+                myParentTabVC.navigationItem.leftBarButtonItem = leftButton
+                
+                let rightButton = UIBarButtonItem()
+                rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
+                rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
+                rightButton.style = UIBarButtonItem.Style.plain
+                rightButton.target = self
+                rightButton.action = #selector(PhotoAlbumViewController.didSelectedPhotos)
+                myParentTabVC.navigationItem.rightBarButtonItem = rightButton
+
+                self.photoTableView.allowsMultipleSelection = true
+            }else{
+                self.photoTableView.allowsSelection = false
+            }
+
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
+            
+        } else if let _ = self.pVC {
             self.photosSelected = [Photo]()
             
             let leftButton = UIBarButtonItem()
             leftButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel")
             leftButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-            leftButton.style = UIBarButtonItemStyle.Plain
+            leftButton.style = UIBarButtonItem.Style.plain
             leftButton.target = self
             leftButton.action = #selector(PhotoAlbumViewController.cancelSelectedPhotos)
-            myParentTabVC.navigationItem.leftBarButtonItem = leftButton
+            self.navigationItem.leftBarButtonItem = leftButton
             
             let rightButton = UIBarButtonItem()
             rightButton.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
             rightButton.tintColor = _DEFAULTBUTTONTEXTCOLOR
-            rightButton.style = UIBarButtonItemStyle.Plain
+            rightButton.style = UIBarButtonItem.Style.plain
             rightButton.target = self
             rightButton.action = #selector(PhotoAlbumViewController.didSelectedPhotos)
-            myParentTabVC.navigationItem.rightBarButtonItem = rightButton
-            
-            loadPhotos()
-            self.photoTableView.allowsMultipleSelection = true
-        }else{
-            self.photoTableView.allowsSelection = false
-        }
+            self.navigationItem.rightBarButtonItem = rightButton
 
-        NSNotificationCenter.defaultCenter().postNotificationName("setScrollable", object: nil,userInfo: ["canScroll":false])
+            self.photoTableView.allowsMultipleSelection = true
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
+        }
     }
     
-    func cancelSelectedPhotos() {
+    @objc func cancelSelectedPhotos() {
         print("Cancel Select Photos")
-        weak var maskView = self.parentViewController!.view.viewWithTag(_MASKVIEWTAG)
+        weak var maskView = self.parent?.view.viewWithTag(_MASKVIEWTAG)
         maskView?.removeFromSuperview()
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func didSelectedPhotos() {
+    @objc func didSelectedPhotos() {
         print("Did Selected Photos")
         
         if self.photosSelected.count < 1{
             self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("No Photo Selected, OK?"), parentVC:self, handlerFun: { (action:UIAlertAction!) in
-                weak var maskView = self.parentViewController!.view.viewWithTag(_MASKVIEWTAG)
+                weak var maskView = self.parent?.view.viewWithTag(_MASKVIEWTAG)
                 maskView?.removeFromSuperview()
                 
-                self.navigationController?.popViewControllerAnimated(true)
+                self.navigationController?.popViewController(animated: true)
             })
         }else{
         
@@ -217,7 +272,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             }
             
             if photosSelected.count > 0 {
-                pVC!.photoAdded = String(PhotoAddedStatus.init(caseId: "yes"))
+                pVC!.photoAdded = String(describing: PhotoAddedStatus.init(caseId: "yes"))
                 if pVC?.inputMode == _INPUTMODE04 {
                     
                     if pVC?.classForCoder == DefectListTableViewCell.classForCoder() {
@@ -240,13 +295,13 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                 }
             }
             
-            let maskView = self.parentViewController!.view.viewWithTag(_MASKVIEWTAG)
+            let maskView = self.parent?.view.viewWithTag(_MASKVIEWTAG)
             maskView?.removeFromSuperview()
         
             //Update Photo Album
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadAllPhotosFromDB", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil)
                        
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -260,79 +315,79 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
     }
     */
 
-    @IBAction func addPhoto(sender: CustomButton) {
+    @IBAction func addPhoto(_ sender: CustomButton) {
         
         let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .Popover
+        imagePicker.modalPresentationStyle = .popover
         
         let ppc = imagePicker.popoverPresentationController
         ppc?.sourceView = sender
         ppc?.sourceRect = sender.bounds
-        ppc?.permittedArrowDirections = .Any
+        ppc?.permittedArrowDirections = .any
         
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func addPhotoFromCamera(sender: UIButton) {
+    @IBAction func addPhotoFromCamera(_ sender: UIButton) {
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            imagePicker.sourceType = .Camera
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+            self.present(imagePicker, animated: true, completion: nil)
             
         }else{
-            imagePicker.modalPresentationStyle = .Popover
-            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.modalPresentationStyle = .popover
+            imagePicker.sourceType = .photoLibrary
             
             let ppc = imagePicker.popoverPresentationController
             ppc?.sourceView = sender
             ppc?.sourceRect = sender.bounds
-            ppc?.permittedArrowDirections = .Any
+            ppc?.permittedArrowDirections = .any
             
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
     
     func initPhotoTakerNotification() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.takePhotoFromICCell(_:)), name: "takePhotoFromICCell", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.reloadPhotos(_:)), name: "reloadPhotos", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.reloadAddPhotos(_:)), name: "reloadAddPhotos", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.reloadAllPhotosFromDB(_:)), name: "reloadAllPhotosFromDB", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoAlbumViewController.updatePhotoInfo(_:)), name: "updatePhotoInfo", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.takePhotoFromICCell(_:)), name: NSNotification.Name(rawValue: "takePhotoFromICCell"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.reloadPhotos(_:)), name: NSNotification.Name(rawValue: "reloadPhotos"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.reloadAddPhotos(_:)), name: NSNotification.Name(rawValue: "reloadAddPhotos"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.reloadAllPhotosFromDB(_:)), name: NSNotification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhotoAlbumViewController.updatePhotoInfo(_:)), name: NSNotification.Name(rawValue: "updatePhotoInfo"), object: nil)
     }
     
     func removeNotification() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "takePhotoFromICCell", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "takePhotoFromICCell", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadAddPhotos", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadAllPhotosFromDB", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "updatePhotoInfo", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "takePhotoFromICCell"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "takePhotoFromICCell"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reloadAddPhotos"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "updatePhotoInfo"), object: nil)
     }
     
-    func reloadPhotos(notification:NSNotification) {
+    @objc func reloadPhotos(_ notification:Notification) {
         let photoObj:Dictionary<String,Photo> = notification.userInfo as! Dictionary<String,Photo>
         Cache_Task_On!.myPhotos = Cache_Task_On!.myPhotos.filter({$0.photoId != photoObj["photoSelected"]?.photoId})
         
         self.photoTableView?.reloadData()
     }
     
-    func reloadAddPhotos(notification:NSNotification) {
+    @objc func reloadAddPhotos(_ notification:Notification) {
         let photoObj:Dictionary<String,Photo> = notification.userInfo as! Dictionary<String,Photo>
         Cache_Task_On!.myPhotos.append(photoObj["photoSelected"]!)
         
         self.photoTableView?.reloadData()
     }
     
-    func reloadAllPhotosFromDB(notification:NSNotification) {
+    @objc func reloadAllPhotosFromDB(_ notification:Notification) {
         loadPhotos()
     }
     
-    func takePhotoFromICCell(notification:NSNotification) {
+    @objc func takePhotoFromICCell(_ notification:Notification) {
         let inspElmt:Dictionary<String,InputModeICMaster> = notification.userInfo as! Dictionary<String,InputModeICMaster>
         self.inspElmt = inspElmt["inspElmt"]
         
@@ -341,15 +396,15 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         }
         dataType = PhotoDataType(caseId: "INSPECT").rawValue
         
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = .Camera
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            imagePicker.sourceType = .camera
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    func updatePhotoInfo(notification:NSNotification) {
+    @objc func updatePhotoInfo(_ notification:Notification) {
         let inspElmt:Dictionary<String,InputModeICMaster> = notification.userInfo as! Dictionary<String,InputModeICMaster>
         
         for photo in (Cache_Task_On?.myPhotos)! /*self.photos*/ {
@@ -369,38 +424,58 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         self.photoTableView?.reloadData()
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        //UIImagePickerControllerOriginalImage  原始影象
+        //UIImagePickerControllerEditedImage    編輯後的圖片(開啟編輯該物件才存在)
+        picker.dismiss(animated: true) {
         
-        if dataType == PhotoDataType(caseId: "INSPECT").rawValue {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                var photo:Photo?
+                if self.dataType == PhotoDataType(caseId: "INSPECT").rawValue {
+                    
+                    if self.inspElmt == nil {
+                        print("InspElmt is Nil, Return")
+                        return
+                    }
+                    
+                    photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: self.dataRecordId, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(), originFileName: "originFileName")
+                    
+                    photo?.inspCatName = self.inspElmt?.inspReqCatText
+                    photo?.inspAreaName = self.inspElmt?.inspAreaText
+                    photo?.inspItemName = self.inspElmt?.inspItemText
+                    photo?.inspElmt = self.inspElmt
+                    
+                    if let _photo = photo {
+                        self.inspElmt?.inspPhotos.append(_photo)
+                    }
+                    
+                    if let vc = self.inspElmt?.parentVC as? TaskDetailsViewController {
+                        vc.refreshCameraIcon()
+                    }
+                    
+                } else {
+                    photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: nil, dataType: self.dataType, currentDate: self.view.getCurrentDateTime(),originFileName: "originFileName")
+                }
+                
+                self.dataType = Int(PhotoDataType(caseId: "TASK").rawValue)
             
-            if self.inspElmt == nil {
-                print("InspElmt is Nil, Return")
-                return
+
+                if let _photo = photo {
+                    Cache_Task_On!.myPhotos.append(_photo)
+                }
+            
+                DispatchQueue.main.async(execute: {
+                    self.photoTableView.reloadData()
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        self.photoTableView.reloadData()
+//                    }
+                })
             }
-            
-            let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: dataRecordId, dataType: dataType, currentDate: self.view.getCurrentDateTime(), originFileName: "originFileName")
-            
-            photo.inspCatName = inspElmt?.inspReqCatText
-            photo.inspAreaName = inspElmt?.inspAreaText
-            photo.inspItemName = inspElmt?.inspItemText
-            photo.inspElmt = self.inspElmt
-            
-            inspElmt?.inspPhotos.append(photo)
-            Cache_Task_On!.myPhotos.append(photo)
-            
-        }else{
-            let photo = image.saveImageToLocal(image, savePath: Cache_Task_Path!, taskId: (Cache_Task_On?.taskId)!, bookingNo: (Cache_Task_On!.bookingNo!.isEmpty ? Cache_Task_On!.inspectionNo : Cache_Task_On!.bookingNo)!, inspectorName: (Cache_Inspector?.appUserName)!, dataRecordId: dataRecordId, dataType: dataType, currentDate: self.view.getCurrentDateTime(),originFileName: "originFileName")
-        
-            Cache_Task_On!.myPhotos.append(photo)
         }
-    
-        dataType = Int(PhotoDataType(caseId: "TASK").rawValue)
-        photoTableView.reloadData()
     }
     
-    func getImageNamesFromLocal(dataType:Int=2) ->[Photo] {
+    func getImageNamesFromLocal(_ dataType:Int=2) ->[Photo] {
         
         if (Cache_Task_Path == nil) {
             return [Photo]()
@@ -412,21 +487,21 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         return photoDBDatas!
     }
     
-    func getImagesFromLocal(dataType:Int=2) ->[Photo] {
-        let fileManager :NSFileManager = NSFileManager.defaultManager()
+    func getImagesFromLocal(_ dataType:Int=2) ->[Photo] {
+        let fileManager :FileManager = FileManager.default
         
         if (Cache_Task_Path == nil) {
             return [Photo]()
         }
         
-        let imageFileArray = fileManager.subpathsAtPath(Cache_Task_Path!)
+        let imageFileArray = fileManager.subpaths(atPath: Cache_Task_Path!)
         
         let photoDataHelper = PhotoDataHelper()
         let photoDBDatas = photoDataHelper.getPhotosByTaskId((Cache_Task_On?.taskId)!, dataType: dataType)
         var photoList = [Photo]()
         
         for imageFile in imageFileArray! {
-            if imageFile.containsString(".jpg") {
+            if imageFile.contains(".jpg") {
                 let photoDBFilter = photoDBDatas?.filter({$0.photoFile == imageFile})
                 
                 if photoDBFilter?.count>0 {
@@ -447,16 +522,17 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         return photoList
     }
     
-    func numberOfSectionsInTableView(photoTableView: UITableView) -> Int {
+    func numberOfSections(in photoTableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(photoTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ photoTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Cache_Task_On!.myPhotos.count//photos.count
     }
     
-    func tableView(photoTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = photoTableView.dequeueReusableCellWithIdentifier("PhotoCell", forIndexPath: indexPath) as! PhotoAlbumCellTableViewCell
+    func tableView(_ photoTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = photoTableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoAlbumCellTableViewCell
+        cell.tag = indexPath.row
         
         if indexPath.row < Cache_Task_On!.myPhotos.count {
         
@@ -464,7 +540,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         
             cell.photo.sizeToFit()
             cell.photo.layer.masksToBounds = true
-        
+            
             cell.photoFilename.text = photo.photoFilename
             cell.photoDescription.text = photo.photoDesc
         
@@ -473,19 +549,18 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             cell.inspItemInput.text = photo.inspItemName
         
             if editable {
-                cell.photoDescription.editable = true
-                cell.photoDescription.backgroundColor = UIColor.whiteColor()
+                cell.photoDescription.isEditable = true
+                cell.photoDescription.backgroundColor = UIColor.white
             }else{
-                cell.photoDescription.editable = false
+                cell.photoDescription.isEditable = false
                 cell.photoDescription.backgroundColor = _TABLECELL_BG_COLOR1
             }
-        
-            if photo.photoFile != "" {
             
-                let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photo.photoFile
+            if photo.photoFilename != "" {
+                let pathForImage = Cache_Task_Path! + "/" + _THUMBSPHYSICALNAME + "/" + photo.photoFilename
                 cell.photo.image = UIImage(contentsOfFile: pathForImage)
             }
-        
+            
             if indexPath.row % 2 == 0 {
                 cell.backgroundColor = _TABLECELL_BG_COLOR2
             }else{
@@ -496,7 +571,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         return cell
     }
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         NSLog("Did Select Row")
         
         let photoCount = self.pVC?.photoNameAtIndex.filter({ $0 != "" })
@@ -517,16 +592,16 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         }
     }
 
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let photoobj = Cache_Task_On!.myPhotos[indexPath.row]
         photosSelected = photosSelected.filter({$0.photoId != photoobj.photoId})
     }
     
-    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete");
     }
     
-    func tableView(photoTableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ photoTableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         /*if self.view.disableFuns(self.view) {
             
@@ -545,7 +620,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             return
         }
         
-        if editingStyle == .Delete {
+        if editingStyle == .delete {
             self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Photo From Photo Album?"), parentVC:self, handlerFun: { (action:UIAlertAction!) in
                 //Set Photo Added iCon Status for InspElmt
                 let photoSelected = Cache_Task_On!.myPhotos[indexPath.row] //self.photos[indexPath.row]
@@ -555,14 +630,14 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                     var idx = 0
                     for photo in (inspElmt?.inspPhotos)! {
                         if photo === photoSelected {
-                            inspElmt?.inspPhotos.removeAtIndex(idx)
+                            inspElmt?.inspPhotos.remove(at: idx)
                         }
                         idx += 1
                     }
                 }
                 
                 //Delete From UI
-                Cache_Task_On?.myPhotos.removeAtIndex(indexPath.row)
+                Cache_Task_On?.myPhotos.remove(at: indexPath.row)
                 //self.photos.removeAtIndex(indexPath.row)
                 self.photoTableView.reloadData()
                 
@@ -573,35 +648,35 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             })
 
             //self.photoTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
-    func tableView(photoTableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ photoTableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func setEditing(editing: Bool, animated: Bool) {
+    override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.photoTableView.setEditing(editing, animated: animated)
         
         if editing {
             print("Photo Album Editing")
-            self.editButtonItem().title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
+            self.editButtonItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
             
             self.editable = true
             
         }else{
             print("Photo Album Done")
-            self.editButtonItem().title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit")
+            self.editButtonItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Edit")
             
             if Cache_Task_On!.myPhotos.count > 0 {//if self.photos.count > 0 {
                 
                 for idx in 0...Cache_Task_On!.myPhotos.count-1 {
-                    let indexPath = NSIndexPath.init(forRow: idx, inSection: 0)
+                    let indexPath = IndexPath.init(row: idx, section: 0)
                     
-                    let cell = self.photoTableView.cellForRowAtIndexPath(indexPath) as? PhotoAlbumCellTableViewCell
+                    let cell = self.photoTableView.cellForRow(at: indexPath) as? PhotoAlbumCellTableViewCell
                     
                     if (cell != nil) {
                         
@@ -628,16 +703,16 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
         self.photoTableView.reloadData()
     }
     
-    @IBAction func PhotoAlbumSorting(sender: UISegmentedControl) {
+    @IBAction func PhotoAlbumSorting(_ sender: UISegmentedControl) {
         let selectedSegment = sender.selectedSegmentIndex
         
         switch selectedSegment {
-        case 0: Cache_Task_On!.myPhotos.sortInPlace(){$0.photoFile>$1.photoFile}; break
-        case 1: Cache_Task_On!.myPhotos.sortInPlace(){$0.inspCatName<$1.inspCatName}; break
-        case 2: Cache_Task_On!.myPhotos.sortInPlace(){$0.inspAreaName<$1.inspAreaName}; break
-        case 3: Cache_Task_On!.myPhotos.sortInPlace(){$0.inspItemName<$1.inspItemName}; break
+        case 0: Cache_Task_On!.myPhotos.sort(){$0.photoFile>$1.photoFile};
+        case 1: Cache_Task_On!.myPhotos.sort(){$0.inspCatName<$1.inspCatName};
+        case 2: Cache_Task_On!.myPhotos.sort(){$0.inspAreaName<$1.inspAreaName};
+        case 3: Cache_Task_On!.myPhotos.sort(){$0.inspItemName<$1.inspItemName};
             
-        default: Cache_Task_On!.myPhotos.sortInPlace(){$0.photoFile>$1.photoFile}; break
+        default: Cache_Task_On!.myPhotos.sort(){$0.photoFile>$1.photoFile};
         }
         
         self.photoTableView.reloadData()

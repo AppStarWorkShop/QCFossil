@@ -60,17 +60,17 @@ class CalenderPickerViewInput: UIView {
             }
         }
         
-        let date = NSDate()
+        let date = Date()
         //let date = getDate(1,month: 4,year: 2016)
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components([.day , .month , .year], from: date)
         
-        year =  components.year
+        year =  components.year!
         currYear = year
-        month = components.month
+        month = components.month!
         currMonth = month
         week = date.getWeekDateByDate(date.firstDateOfMonth())
-        day = components.day
+        day = components.day!
         currDay = day
         todayDate = String(year)+String(month)+String(day)
         
@@ -80,21 +80,21 @@ class CalenderPickerViewInput: UIView {
         
         
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(CalenderPickerViewInput.respondToSwipeGesture(_:)))
-        swipeLeftGesture.direction = UISwipeGestureRecognizerDirection.Left
+        swipeLeftGesture.direction = UISwipeGestureRecognizer.Direction.left
         self.addGestureRecognizer(swipeLeftGesture)
         
         
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(CalenderPickerViewInput.respondToSwipeGesture(_:)))
-        swipeRightGesture.direction = UISwipeGestureRecognizerDirection.Right
+        swipeRightGesture.direction = UISwipeGestureRecognizer.Direction.right
         self.addGestureRecognizer(swipeRightGesture)
         
         let swipeTopGesture = UISwipeGestureRecognizer(target: self, action: #selector(CalenderPickerViewInput.respondToSwipeGesture(_:)))
-        swipeTopGesture.direction = UISwipeGestureRecognizerDirection.Up
+        swipeTopGesture.direction = UISwipeGestureRecognizer.Direction.up
         self.addGestureRecognizer(swipeTopGesture)
         
         
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(CalenderPickerViewInput.respondToSwipeGesture(_:)))
-        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
+        swipeDownGesture.direction = UISwipeGestureRecognizer.Direction.down
         self.addGestureRecognizer(swipeDownGesture)
         /*
         let swipe2LeftGesture = UISwipeGestureRecognizer(target: self, action: Selector("respondTo2SwipeGesture:"))
@@ -104,31 +104,31 @@ class CalenderPickerViewInput: UIView {
         */
     }
     
-    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    @objc func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
         
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             self.subviews.forEach({ if $0.tag < 100 {$0.removeFromSuperview()} })
             
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.Right:
+            case UISwipeGestureRecognizer.Direction.right:
                 print("Swiped right")
                 month = month > 1 ? month-1:12
                 if month == 12 {
                     year = year-1
                 }
                 
-            case UISwipeGestureRecognizerDirection.Left:
+            case UISwipeGestureRecognizer.Direction.left:
                 print("Swiped left")
                 month = month < 12 ? month+1:1
                 if month == 1 {
                     year = year+1
                 }
                 
-            case UISwipeGestureRecognizerDirection.Up:
+            case UISwipeGestureRecognizer.Direction.up:
                 print("Swiped Up")
                 year = year + 1
                 
-            case UISwipeGestureRecognizerDirection.Down:
+            case UISwipeGestureRecognizer.Direction.down:
                 print("Swiped Down")
                 year = year-1
                 
@@ -150,51 +150,51 @@ class CalenderPickerViewInput: UIView {
         initDays(week, month: month, year: year)
     }
     
-    func getDate(day:Int, month:Int, year:Int) ->NSDate {
-        let c = NSDateComponents()
+    func getDate(_ day:Int, month:Int, year:Int) ->Date {
+        var c = DateComponents()
         c.year = year
         c.month = month
         c.day = day
         
-        let gregorian = NSCalendar(identifier:NSCalendarIdentifierGregorian)
-        let date = gregorian!.dateFromComponents(c)
+        let gregorian = Calendar(identifier:Calendar.Identifier.gregorian)
+        let date = gregorian.date(from: c)
         return date!
     }
     
-    func initYearLabel(year:String) {
+    func initYearLabel(_ year:String) {
         let weekdayLabel = UILabel.init()
-        weekdayLabel.frame = CGRectMake(CGFloat(marginX+32), CGFloat(marginX), CGFloat(3*offset), CGFloat(offset))
+        weekdayLabel.frame = CGRect(x: CGFloat(marginX+32), y: CGFloat(marginX), width: CGFloat(3*offset), height: CGFloat(offset))
         weekdayLabel.text = year
-        weekdayLabel.textColor = UIColor.redColor()
-        weekdayLabel.backgroundColor = UIColor.clearColor()
+        weekdayLabel.textColor = UIColor.red
+        weekdayLabel.backgroundColor = UIColor.clear
         weekdayLabel.layer.cornerRadius = cornerRadius
-        weekdayLabel.font = weekdayLabel.font.fontWithSize(40)
-        weekdayLabel.textAlignment = .Left
+        weekdayLabel.font = weekdayLabel.font.withSize(40)
+        weekdayLabel.textAlignment = .left
         
         self.addSubview(weekdayLabel)
         
         
-        let UpBtn   = UIButton(type: UIButtonType.System) as UIButton
-        UpBtn.frame = CGRectMake(0,10,30,30)
+        let UpBtn   = UIButton(type: UIButton.ButtonType.system) as UIButton
+        UpBtn.frame = CGRect(x: 0,y: 10,width: 30,height: 30)
         //UpBtn.backgroundColor = UIColor.redColor()
         //UpBtn.setTitle("-", forState: UIControlState.Normal)
         //UpBtn.setTitleColor(_FOSSILBLUECOLOR, forState: UIControlState.Normal)
-        UpBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionUp(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        UpBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionUp(_:)), for: UIControl.Event.touchUpInside)
         if let image = UIImage(named: "arrow_icon_up") {
-            UpBtn.setImage(image, forState: .Normal)
+            UpBtn.setImage(image, for: UIControl.State())
             UpBtn.tintColor = _FOSSILBLUECOLOR
         }
         
         self.addSubview(UpBtn)
         
-        let dnBtn   = UIButton(type: UIButtonType.System) as UIButton
-        dnBtn.frame = CGRectMake(130,10,30,30)
+        let dnBtn   = UIButton(type: UIButton.ButtonType.system) as UIButton
+        dnBtn.frame = CGRect(x: 130,y: 10,width: 30,height: 30)
         //dnBtn.backgroundColor = UIColor.redColor()
         //dnBtn.setTitle("+", forState: UIControlState.Normal)
         //dnBtn.setTitleColor(_FOSSILBLUECOLOR, forState: UIControlState.Normal)
-        dnBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionDown(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        dnBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionDown(_:)), for: UIControl.Event.touchUpInside)
         if let image = UIImage(named: "arrow_icon_down") {
-            dnBtn.setImage(image, forState: .Normal)
+            dnBtn.setImage(image, for: UIControl.State())
             dnBtn.tintColor = _FOSSILBLUECOLOR
         }
         
@@ -202,14 +202,14 @@ class CalenderPickerViewInput: UIView {
         
     }
     
-    func buttonActionUp(sender:UIButton!){
+    @objc func buttonActionUp(_ sender:UIButton!){
         self.subviews.forEach({ if $0.tag < 100 {$0.removeFromSuperview()} })        //-(IBAction)
         year = year + 1
         updateDatePicker()
         setParentTextFieldValue()
         
     }
-    func buttonActionDown(sender:UIButton!){
+    @objc func buttonActionDown(_ sender:UIButton!){
         self.subviews.forEach({ if $0.tag < 100 {$0.removeFromSuperview()} })
         year = year - 1
         updateDatePicker()
@@ -217,44 +217,44 @@ class CalenderPickerViewInput: UIView {
         
     }
     
-    func initMonthLabel(month:Int) {
+    func initMonthLabel(_ month:Int) {
         let weekdayLabel = UILabel.init()
-        weekdayLabel.frame = CGRectMake(CGFloat(320-3*offset+marginX), CGFloat(marginX), CGFloat(3*offset), CGFloat(offset))
+        weekdayLabel.frame = CGRect(x: CGFloat(320-3*offset+marginX), y: CGFloat(marginX), width: CGFloat(3*offset), height: CGFloat(offset))
         weekdayLabel.text = monthLabels[month-1]
         weekdayLabel.textColor = _FOSSILBLUECOLOR
-        weekdayLabel.backgroundColor = UIColor.clearColor()
+        weekdayLabel.backgroundColor = UIColor.clear
         weekdayLabel.layer.cornerRadius = cornerRadius
-        weekdayLabel.font = weekdayLabel.font.fontWithSize(40)
-        weekdayLabel.textAlignment = .Center
+        weekdayLabel.font = weekdayLabel.font.withSize(40)
+        weekdayLabel.textAlignment = .center
         
         
         self.addSubview(weekdayLabel)
         
-        let LeBtn   = UIButton(type: UIButtonType.System) as UIButton
-        LeBtn.frame = CGRectMake(190,10,30,30)
+        let LeBtn   = UIButton(type: UIButton.ButtonType.system) as UIButton
+        LeBtn.frame = CGRect(x: 190,y: 10,width: 30,height: 30)
         //LeBtn.backgroundColor = UIColor.redColor()
         //LeBtn.setTitle("L", forState: UIControlState.Normal)
-        LeBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionLeft(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        LeBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionLeft(_:)), for: UIControl.Event.touchUpInside)
         if let image = UIImage(named: "arrow_icon_left") {
-            LeBtn.setImage(image, forState: .Normal)
+            LeBtn.setImage(image, for: UIControl.State())
             LeBtn.tintColor = _FOSSILBLUECOLOR
         }
         
         self.addSubview(LeBtn)
         
-        let RtBtn   = UIButton(type: UIButtonType.System) as UIButton
-        RtBtn.frame = CGRectMake(290,10,30,30)
+        let RtBtn   = UIButton(type: UIButton.ButtonType.system) as UIButton
+        RtBtn.frame = CGRect(x: 290,y: 10,width: 30,height: 30)
         //RtBtn.backgroundColor = UIColor.redColor()
         //RtBtn.setTitle("R", forState: UIControlState.Normal)
-        RtBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionRight(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        RtBtn.addTarget(self, action: #selector(CalenderPickerViewInput.buttonActionRight(_:)), for: UIControl.Event.touchUpInside)
         if let image = UIImage(named: "arrow_icon_right") {
-            RtBtn.setImage(image, forState: .Normal)
+            RtBtn.setImage(image, for: UIControl.State())
             RtBtn.tintColor = _FOSSILBLUECOLOR
         }
         
         self.addSubview(RtBtn)
     }
-    func buttonActionRight(sender:UIButton!){
+    @objc func buttonActionRight(_ sender:UIButton!){
         self.subviews.forEach({ if $0.tag < 100 {$0.removeFromSuperview()} })        //-(IBAction)
         month = month < 12 ? month+1:1
         if month == 1 {
@@ -264,7 +264,7 @@ class CalenderPickerViewInput: UIView {
         setParentTextFieldValue()
         
     }
-    func buttonActionLeft(sender:UIButton!){
+    @objc func buttonActionLeft(_ sender:UIButton!){
         self.subviews.forEach({ if $0.tag < 100 {$0.removeFromSuperview()} })
         month = month > 1 ? month-1:12
         if month == 12 {
@@ -280,20 +280,20 @@ class CalenderPickerViewInput: UIView {
         
         for idx in 0...6 {
             let weekdayLabel = UILabel.init()
-            weekdayLabel.frame = CGRectMake(CGFloat(idx*offset+marginX), CGFloat(marginY), CGFloat(offset), CGFloat(offset))
+            weekdayLabel.frame = CGRect(x: CGFloat(idx*offset+marginX), y: CGFloat(marginY), width: CGFloat(offset), height: CGFloat(offset))
             weekdayLabel.text = weekdayLabels[idx]
-            weekdayLabel.textColor = idx<1 ? UIColor.redColor() : UIColor.blackColor()
-            weekdayLabel.backgroundColor = UIColor.clearColor()
+            weekdayLabel.textColor = idx<1 ? UIColor.red : UIColor.black
+            weekdayLabel.backgroundColor = UIColor.clear
             weekdayLabel.layer.cornerRadius = cornerRadius
             weekdayLabel.font = UIFont(name: "", size: 25)
             weekdayLabel.tag = 100
-            weekdayLabel.textAlignment = .Center
+            weekdayLabel.textAlignment = .center
             
             self.addSubview(weekdayLabel)
         }
     }
     
-    func initDays(week:Int,month:Int, year:Int) {
+    func initDays(_ week:Int,month:Int, year:Int) {
         //Set Dates for Current Month
         var currDateFrameIndex = week - 1
         
@@ -329,25 +329,25 @@ class CalenderPickerViewInput: UIView {
                 
                 let dateFrame = dateFrames[currDateFrameIndex]
                 
-                let dayBtn   = UIButton(type: UIButtonType.System) as UIButton
-                dayBtn.frame = CGRectMake(dateFrame.xPos,dateFrame.yPos,dateFrame.size,dateFrame.size)
+                let dayBtn   = UIButton(type: UIButton.ButtonType.system) as UIButton
+                dayBtn.frame = CGRect(x: dateFrame.xPos,y: dateFrame.yPos,width: dateFrame.size,height: dateFrame.size)
                 dayBtn.tag = idx
                 
                 if idx == currDay && year == currYear && month == currMonth {
-                    dayBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                    dayBtn.backgroundColor = UIColor.grayColor()//_FOSSILYELLOWCOLOR
+                    dayBtn.setTitleColor(UIColor.white, for: UIControl.State())
+                    dayBtn.backgroundColor = UIColor.gray//_FOSSILYELLOWCOLOR
                 }else if idx == day{
-                    dayBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                    dayBtn.setTitleColor(UIColor.white, for: UIControl.State())
                     dayBtn.backgroundColor = _FOSSILYELLOWCOLOR
                 }else{
-                    dayBtn.setTitleColor(_FOSSILBLUECOLOR, forState: UIControlState.Normal)
-                    dayBtn.backgroundColor = UIColor.clearColor() //_FOSSILBLUECOLOR
+                    dayBtn.setTitleColor(_FOSSILBLUECOLOR, for: UIControl.State())
+                    dayBtn.backgroundColor = UIColor.clear //_FOSSILBLUECOLOR
                 }
                 
-                dayBtn.setTitle(String(idx), forState: UIControlState.Normal)
+                dayBtn.setTitle(String(idx), for: UIControl.State())
                 dayBtn.layer.cornerRadius = cornerRadius
                 dayBtn.titleLabel!.font =  UIFont(name: "", size: 25)
-                dayBtn.addTarget(self, action: #selector(CalenderPickerViewInput.currentDateOnClick(_:)), forControlEvents: UIControlEvents.TouchDown)
+                dayBtn.addTarget(self, action: #selector(CalenderPickerViewInput.currentDateOnClick(_:)), for: UIControl.Event.touchDown)
                 
                 self.addSubview(dayBtn)
                 dayBtns.append(dayBtn)
@@ -362,7 +362,7 @@ class CalenderPickerViewInput: UIView {
         setParentTextFieldValue()
     }
     
-    func formatDate(value:Int) ->String {
+    func formatDate(_ value:Int) ->String {
         if value < 10 {
             return "0\(value)"
         }else{
@@ -373,10 +373,10 @@ class CalenderPickerViewInput: UIView {
     func setParentTextFieldValue() {
         if self.parentVC != nil {
             
-            let dateFormat = _DATEFORMATTER.lowercaseString
-            var currDate = dateFormat.stringByReplacingOccurrencesOfString("dd", withString: formatDate(day))
-            currDate = currDate.stringByReplacingOccurrencesOfString("mm", withString: formatDate(month))
-            currDate = currDate.stringByReplacingOccurrencesOfString("yyyy", withString: formatDate(year))
+            let dateFormat = _DATEFORMATTER.lowercased()
+            var currDate = dateFormat.replacingOccurrences(of: "dd", with: formatDate(day))
+            currDate = currDate.replacingOccurrences(of: "mm", with: formatDate(month))
+            currDate = currDate.replacingOccurrences(of: "yyyy", with: formatDate(year))
             
             let parentVC = self.parentVC as! PopoverViewController
             parentVC.selectedValue = (currDate)
@@ -403,48 +403,48 @@ class CalenderPickerViewInput: UIView {
         sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     }*/
     
-    func currentDateOnClick(sender: UIButton) {
+    @objc func currentDateOnClick(_ sender: UIButton) {
         day = Int((sender.titleLabel!.text)!)!
         setParentTextFieldValue()
         
         let dateOnClick = String(year)+String(month)+String(day)
         
         for dayBtn in dayBtns {
-            dayBtn.setTitleColor(_FOSSILBLUECOLOR, forState: UIControlState.Normal)
-            dayBtn.backgroundColor = UIColor.clearColor()//_FOSSILBLUECOLOR
+            dayBtn.setTitleColor(_FOSSILBLUECOLOR, for: UIControl.State())
+            dayBtn.backgroundColor = UIColor.clear//_FOSSILBLUECOLOR
             
             if isToday(String(year)+String(month)+String(dayBtn.titleLabel!.text!)) && !isToday(dateOnClick) {
-                dayBtn.backgroundColor = UIColor.grayColor()
-                dayBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                dayBtn.backgroundColor = UIColor.gray
+                dayBtn.setTitleColor(UIColor.white, for: UIControl.State())
             }
         }
         
         sender.backgroundColor = _FOSSILYELLOWCOLOR
-        sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        sender.setTitleColor(UIColor.white, for: UIControl.State())
     }
     
-    func getDaysInMonth(month: Int, year: Int) -> Int {
-        let calendar = NSCalendar.currentCalendar()
+    func getDaysInMonth(_ month: Int, year: Int) -> Int {
+        let calendar = Calendar.current
         
-        let startComps = NSDateComponents()
+        var startComps = DateComponents()
         startComps.day = 1
         startComps.month = month
         startComps.year = year
         
-        let endComps = NSDateComponents()
+        var endComps = DateComponents()
         endComps.day = 1
         endComps.month = month == 12 ? 1 : month + 1
         endComps.year = month == 12 ? year + 1 : year
         
-        let startDate = calendar.dateFromComponents(startComps)!
-        let endDate = calendar.dateFromComponents(endComps)!
+        let startDate = calendar.date(from: startComps)!
+        let endDate = calendar.date(from: endComps)!
         
-        let diff = calendar.components(NSCalendarUnit.Day, fromDate: startDate, toDate: endDate, options: NSCalendarOptions.MatchFirst)
+        let diff = (calendar as NSCalendar).components(NSCalendar.Unit.day, from: startDate, to: endDate, options: NSCalendar.Options.matchFirst)
         
-        return diff.day
+        return diff.day!
     }
     
-    func isToday(date:String) ->Bool {
+    func isToday(_ date:String) ->Bool {
         if date == todayDate {
             return true
         }else{
