@@ -288,4 +288,4 @@
 "Pick Photo" = "Pick Photo";
 "Pick Photos" = "Pick Photos";
 "Loading..." = "Loading...";
-"app program version check alert message" = "Your current version (v%@) is not up-to-date to proceed the action. Please install the latest version (v%@)";
+"app program version check alert message" = "Version expired, please upgrade to the latest version (v%@) before processing Data Sync.";

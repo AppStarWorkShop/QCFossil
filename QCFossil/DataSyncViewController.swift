@@ -1436,10 +1436,9 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                     makeDLPostRequest(_DS_MSTRDATA as AnyObject)
                 } else {
                     DispatchQueue.main.async {
-                        let currentVersion = jsonData["check_version"] as? String ?? ""
                         let expectedVersion = jsonData["expect_version"] as? String ?? ""
                         
-                        let alertMessage = String(format: MylocalizedString.sharedLocalizeManager.getLocalizedString("app program version check alert message"), currentVersion, expectedVersion)
+                        let alertMessage = String(format: MylocalizedString.sharedLocalizeManager.getLocalizedString("app program version check alert message"), expectedVersion)
                         self.view.alertView(alertMessage, handlerFun: { _ in
                             self.updateDLProcessLabel("Complete")
                             self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)

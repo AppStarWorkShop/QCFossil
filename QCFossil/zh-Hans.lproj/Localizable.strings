@@ -990,4 +990,4 @@
 
 "Please enter defect item for" = "請輸入不良项目";
 
-"app program version check alert message" = "您当前的版本 (v%@) 不是最新的，无法继续操作。请安装最新版本（v%@）";
+"app program version check alert message" = "版本已到期, 請更新至最新版本 (v%@), 才進行數據同步。";
