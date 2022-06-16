@@ -283,7 +283,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                         (pVC as! InspectionDefectTableViewCellMode4).updatePhotoAddedStatus("yes")
                     }
                     
-                }else if pVC?.inputMode == _INPUTMODE03 {
+                } else if pVC?.inputMode == _INPUTMODE03 {
                     
                     if pVC?.classForCoder == DefectListTableViewCellMode3.classForCoder() {
                         
@@ -291,6 +291,24 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                     }else{
                         
                         (pVC as! InspectionDefectTableViewCellMode3).updatePhotoAddedStatus("yes")
+                    }
+                } else if pVC?.inputMode == _INPUTMODE02 {
+                    
+                    if pVC?.classForCoder == DefectListTableViewCellMode2.classForCoder() {
+                        
+                        (pVC as! DefectListTableViewCellMode2).updatePhotoAddedStatus("yes")
+                    }else{
+                        
+                        (pVC as! InspectionDefectTableViewCellMode2).updatePhotoAddedStatus("yes")
+                    }
+                } else if pVC?.inputMode == _INPUTMODE01 {
+                    
+                    if pVC?.classForCoder == DefectListTableViewCellMode1.classForCoder() {
+                        
+                        (pVC as! DefectListTableViewCellMode1).updatePhotoAddedStatus("yes")
+                    }else{
+                        
+                        (pVC as! InspectionDefectTableViewCellMode1).updatePhotoAddedStatus("yes")
                     }
                 }
             }
@@ -302,6 +320,8 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil)
                        
             self.navigationController?.popViewController(animated: true)
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadTableview"), object: nil)
         }
     }
     
