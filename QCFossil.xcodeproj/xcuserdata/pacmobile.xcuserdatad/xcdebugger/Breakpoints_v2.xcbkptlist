@@ -211,23 +211,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "46EB008B-6A0F-4FCB-9006-3A879F36AF16"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QCFossil/TaskDataHelper.swift"
-            timestampString = "650971518.990226"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
-            landmarkName = "getTaskDetailByTask(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9AC71BDC-6FEB-4ECB-86F5-F390CAB09922"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -795,8 +778,8 @@
             timestampString = "650971518.9918801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2120"
-            endingLineNumber = "2120"
+            startingLineNumber = "2129"
+            endingLineNumber = "2129"
             landmarkName = "getAllTaskBrandNames(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -863,8 +846,8 @@
             timestampString = "650971518.991966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2143"
-            endingLineNumber = "2143"
+            startingLineNumber = "2152"
+            endingLineNumber = "2152"
             landmarkName = "getAllTaskBookingNo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -880,8 +863,8 @@
             timestampString = "650971518.9920059"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2143"
-            endingLineNumber = "2143"
+            startingLineNumber = "2152"
+            endingLineNumber = "2152"
             landmarkName = "getAllTaskBookingNo(_:)"
             landmarkType = "7">
          </BreakpointContent>

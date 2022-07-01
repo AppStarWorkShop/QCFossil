@@ -485,6 +485,14 @@ class TaskSearchViewController: PopoverMaster, UITableViewDelegate, UITableViewD
         print("Task Selected")
         
         Cache_Task_On = tasks[indexPath.row]
+        
+        // Clear pre save data
+        if let taskId = Cache_Task_On?.taskId {
+            let defectDataHelper = DefectDataHelper()
+            defectDataHelper.deletePreSavedItemsFromInspectDataRecords(taskId)
+            defectDataHelper.deletePreSavedItemsFromDefectDataRecords(taskId)
+        }
+        
         self.performSegue(withIdentifier: "TaskDetailAfterSearchSegue", sender:self)
     }
     

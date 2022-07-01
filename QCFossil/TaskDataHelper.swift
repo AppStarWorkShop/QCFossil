@@ -884,9 +884,9 @@ class TaskDataHelper:DataHelperMaster{
             db.beginTransaction()
             
             for inspDataRecord in inspDataRecords {
-                let sql = "INSERT OR REPLACE INTO task_inspect_data_record  ('record_id','task_id','ref_record_id','inspect_section_id','inspect_element_id','inspect_position_id','inspect_position_desc','inspect_detail','inspect_remarks','result_value_id','create_user','create_date','modify_user','modify_date','request_section_id','request_element_desc') VALUES ((SELECT record_id FROM task_inspect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                let sql = "INSERT OR REPLACE INTO task_inspect_data_record  ('record_id','task_id','ref_record_id','inspect_section_id','inspect_element_id','inspect_position_id','inspect_position_desc','inspect_detail','inspect_remarks','result_value_id','create_user','create_date','modify_user','modify_date','request_section_id','request_element_desc','is_pre_save') VALUES ((SELECT record_id FROM task_inspect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
                 
-                if db.executeUpdate(sql, withArgumentsIn: [notNilObject(inspDataRecord.recordId as AnyObject)!,inspDataRecord.taskId!,inspDataRecord.refRecordId!,inspDataRecord.inspectSectionId!,inspDataRecord.inspectElementId!,inspDataRecord.inspectPositionId!,inspDataRecord.inspectPositionDesc!,inspDataRecord.inspectDetail!,inspDataRecord.inspectRemarks!,inspDataRecord.resultValueId,inspDataRecord.createUser!,inspDataRecord.createDate!,inspDataRecord.modifyUser!,inspDataRecord.modifyDate!,notNilObject(inspDataRecord.requestSectionId as AnyObject)!,notNilObject(inspDataRecord.requestElementDesc as AnyObject)!]) {
+                if db.executeUpdate(sql, withArgumentsIn: [notNilObject(inspDataRecord.recordId as AnyObject)!,inspDataRecord.taskId!,inspDataRecord.refRecordId!,inspDataRecord.inspectSectionId!,inspDataRecord.inspectElementId!,inspDataRecord.inspectPositionId!,inspDataRecord.inspectPositionDesc!,inspDataRecord.inspectDetail!,inspDataRecord.inspectRemarks!,inspDataRecord.resultValueId,inspDataRecord.createUser!,inspDataRecord.createDate!,inspDataRecord.modifyUser!,inspDataRecord.modifyDate!,notNilObject(inspDataRecord.requestSectionId as AnyObject)!,notNilObject(inspDataRecord.requestElementDesc as AnyObject)!, inspDataRecord.isPreSave ?? "0"]) {
                 
                     inspDataRecord.recordId = Int(db.lastInsertRowId)
                 }else{
@@ -911,9 +911,9 @@ class TaskDataHelper:DataHelperMaster{
             db.beginTransaction()
             
             
-            let sql = "INSERT OR REPLACE INTO task_inspect_data_record  ('record_id','task_id','ref_record_id','inspect_section_id','inspect_element_id','inspect_position_id','inspect_position_desc','inspect_detail','inspect_remarks','result_value_id','create_user','create_date','modify_user','modify_date','request_section_id','request_element_desc', 'inspect_position_zone_value_id') VALUES ((SELECT record_id FROM task_inspect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql = "INSERT OR REPLACE INTO task_inspect_data_record  ('record_id','task_id','ref_record_id','inspect_section_id','inspect_element_id','inspect_position_id','inspect_position_desc','inspect_detail','inspect_remarks','result_value_id','create_user','create_date','modify_user','modify_date','request_section_id','request_element_desc', 'inspect_position_zone_value_id', 'is_pre_save') VALUES ((SELECT record_id FROM task_inspect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
                 
-            if db.executeUpdate(sql, withArgumentsIn: [notNilObject(inspDataRecord.recordId as AnyObject)!,inspDataRecord.taskId!,inspDataRecord.refRecordId!,inspDataRecord.inspectSectionId!,inspDataRecord.inspectElementId!,inspDataRecord.inspectPositionId!,inspDataRecord.inspectPositionDesc!,inspDataRecord.inspectDetail!,inspDataRecord.inspectRemarks!,inspDataRecord.resultValueId,inspDataRecord.createUser!,inspDataRecord.createDate!,inspDataRecord.modifyUser!,inspDataRecord.modifyDate!,notNilObject(inspDataRecord.requestSectionId as AnyObject)!,notNilObject(inspDataRecord.requestElementDesc as AnyObject)!, inspDataRecord.inspectPositionZoneValueId ?? 0]) {
+            if db.executeUpdate(sql, withArgumentsIn: [notNilObject(inspDataRecord.recordId as AnyObject)!,inspDataRecord.taskId!,inspDataRecord.refRecordId!,inspDataRecord.inspectSectionId!,inspDataRecord.inspectElementId!,inspDataRecord.inspectPositionId!,inspDataRecord.inspectPositionDesc!,inspDataRecord.inspectDetail!,inspDataRecord.inspectRemarks!,inspDataRecord.resultValueId,inspDataRecord.createUser!,inspDataRecord.createDate!,inspDataRecord.modifyUser!,inspDataRecord.modifyDate!,notNilObject(inspDataRecord.requestSectionId as AnyObject)!,notNilObject(inspDataRecord.requestElementDesc as AnyObject)!, inspDataRecord.inspectPositionZoneValueId ?? 0, inspDataRecord.isPreSave ?? "0"]) {
                     
                 inspDataRecord.recordId = Int(db.lastInsertRowId)
             }else{
@@ -1048,7 +1048,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTaskInspDataRecordByTaskId(_ taskId:Int, inspSecId:Int) ->[TaskInspDataRecord]? {
-        let sql = "SELECT * FROM task_inspect_data_record WHERE task_id = ? AND inspect_section_id = ? ORDER BY record_id ASC"
+        let sql = "SELECT * FROM task_inspect_data_record WHERE task_id = ? AND inspect_section_id = ? AND is_pre_save <> 1 ORDER BY record_id ASC"
         var taskInspDataRecs = [TaskInspDataRecord]()
         
         if db.open() {
@@ -1301,9 +1301,9 @@ class TaskDataHelper:DataHelperMaster{
             
             var lastInsertId = 0
             
-            let sql = "INSERT OR REPLACE INTO task_defect_data_record  ('record_id','task_id','inspect_record_id','ref_record_id','inspect_element_id','defect_desc','defect_qty_critical','defect_qty_major','defect_qty_minor','defect_qty_total','create_user','create_date','modify_user','modify_date','inspect_element_defect_value_id','inspect_element_case_value_id','defect_remarks_option_list','other_remarks') VALUES ((SELECT record_id FROM task_defect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql = "INSERT OR REPLACE INTO task_defect_data_record  ('record_id','task_id','inspect_record_id','ref_record_id','inspect_element_id','defect_desc','defect_qty_critical','defect_qty_major','defect_qty_minor','defect_qty_total','create_user','create_date','modify_user','modify_date','inspect_element_defect_value_id','inspect_element_case_value_id','defect_remarks_option_list','other_remarks','is_pre_save') VALUES ((SELECT record_id FROM task_defect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             
-            if db.executeUpdate(sql, withArgumentsIn:[notNilObject(taskInspDefectDataRecord.recordId as AnyObject)!,taskInspDefectDataRecord.taskId!,taskInspDefectDataRecord.inspectRecordId!,taskInspDefectDataRecord.refRecordId!,taskInspDefectDataRecord.inspectElementId!,taskInspDefectDataRecord.defectDesc!,taskInspDefectDataRecord.defectQtyCritical,taskInspDefectDataRecord.defectQtyMajor,taskInspDefectDataRecord.defectQtyMinor,taskInspDefectDataRecord.defectQtyTotal,taskInspDefectDataRecord.createUser!,taskInspDefectDataRecord.createDate!,taskInspDefectDataRecord.modifyUser!,taskInspDefectDataRecord.modifyDate!,taskInspDefectDataRecord.inspectElementDefectValueId ?? 0,taskInspDefectDataRecord.inspectElementCaseValueId ?? 0,taskInspDefectDataRecord.defectRemarksOptionList ?? "",taskInspDefectDataRecord.othersRemark ?? ""]){
+            if db.executeUpdate(sql, withArgumentsIn:[notNilObject(taskInspDefectDataRecord.recordId as AnyObject)!,taskInspDefectDataRecord.taskId!,taskInspDefectDataRecord.inspectRecordId!,taskInspDefectDataRecord.refRecordId!,taskInspDefectDataRecord.inspectElementId!,taskInspDefectDataRecord.defectDesc!,taskInspDefectDataRecord.defectQtyCritical,taskInspDefectDataRecord.defectQtyMajor,taskInspDefectDataRecord.defectQtyMinor,taskInspDefectDataRecord.defectQtyTotal,taskInspDefectDataRecord.createUser!,taskInspDefectDataRecord.createDate!,taskInspDefectDataRecord.modifyUser!,taskInspDefectDataRecord.modifyDate!,taskInspDefectDataRecord.inspectElementDefectValueId ?? 0,taskInspDefectDataRecord.inspectElementCaseValueId ?? 0,taskInspDefectDataRecord.defectRemarksOptionList ?? "",taskInspDefectDataRecord.othersRemark ?? "", taskInspDefectDataRecord.isPreSave ?? "0"]){
             
                 lastInsertId = Int(db.lastInsertRowId)
             }else{
@@ -1429,10 +1429,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTaskInspDataRecords(_ taskId:Int, inspectSecId:Int, inputMode:String) ->[TaskInspDataRecord]? {
-        var sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id WHERE tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag = 0) OR it.task_status > 3)"
+        var sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id WHERE tidr.is_pre_save <> 1 AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag = 0) OR it.task_status > 3)"
         
         if inputMode == _INPUTMODE02 {
-            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0) OR it.task_status > 3)"
+            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE tidr.is_pre_save <> 1  AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0) OR it.task_status > 3)"
+        } else if inputMode == _INPUTMODE03 {
+            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE tidr.is_pre_save <> 1 AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND (it.task_status < 4 OR it.task_status > 3)"
         }
         
         var taskInspDataRecords = [TaskInspDataRecord]()
@@ -1460,8 +1462,9 @@ class TaskDataHelper:DataHelperMaster{
                 let reqSecId = Int(rs.int(forColumn: "request_section_id"))
                 let reqElmtDesc = rs.string(forColumn: "request_element_desc")
                 let inspectPositionZoneValueId = Int(rs.int(forColumn: "inspect_position_zone_value_id"))
+                let isPreSave = rs.string(forColumn: "is_pre_save")
                 
-                let taskInspDataRecord = TaskInspDataRecord(recordId: recordId, taskId: taskId, refRecordId: refRecordId, inspectSectionId: inspSecId!, inspectElementId: inspElmtId!, inspectPositionId: inspPostnId, inspectPositionDesc: inspPostnDesc, inspectDetail: inspDetail, inspectRemarks: inspRemarks, resultValueId: resultValueId, requestSectionId: reqSecId, requestElementDesc: reqElmtDesc == nil ? "":reqElmtDesc!, inspectPositionZoneValueId: inspectPositionZoneValueId, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!)
+                let taskInspDataRecord = TaskInspDataRecord(recordId: recordId, taskId: taskId, refRecordId: refRecordId, inspectSectionId: inspSecId!, inspectElementId: inspElmtId!, inspectPositionId: inspPostnId, inspectPositionDesc: inspPostnDesc, inspectDetail: inspDetail, inspectRemarks: inspRemarks, resultValueId: resultValueId, requestSectionId: reqSecId, requestElementDesc: reqElmtDesc == nil ? "":reqElmtDesc!, inspectPositionZoneValueId: inspectPositionZoneValueId, createUser: createUser!, createDate: createDate!, modifyUser: modifyUser!, modifyDate: modifyDate!, isPreSave: isPreSave)
                 
                 taskInspDataRecords.append(taskInspDataRecord!)
             }
@@ -1537,7 +1540,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTaskDefectDataRecords(_ taskId:Int) ->[TaskInspDefectDataRecord]? {
-        let sql = "SELECT * FROM task_defect_data_record WHERE task_id = ?"
+        let sql = "SELECT * FROM task_defect_data_record WHERE task_id = ? AND is_pre_save <> 1"
         var taskDefectDataRecords = [TaskInspDefectDataRecord]()
         
         if db.open() {
@@ -1564,8 +1567,9 @@ class TaskDataHelper:DataHelperMaster{
                 let inspectElementCaseValueId = Int(rs.int(forColumn: "inspect_element_case_value_id"))
                 let defectRemarksOptionList = rs.string(forColumn: "defect_remarks_option_list")
                 let othersRemark = rs.string(forColumn: "other_remarks")
+                let isPreSave = rs.string(forColumn: "is_pre_save")
                 
-                let taskDefectDataRecord = TaskInspDefectDataRecord(recordId: recordId, taskId: taskId, inspectRecordId: inspRecordId, refRecordId: refRecordId, inspectElementId: inspElmtId, defectDesc: defectDesc, defectQtyCritical: defectQtyCritical, defectQtyMajor: defectQtyMajor, defectQtyMinor: defectQtyMinor, defectQtyTotal: defectQtyTotal, createUser: createUser, createDate: createDate, modifyUser: modifyUser, modifyDate: modifyDate, inspectElementDefectValueId: inspectElementDefectValueId, inspectElementCaseValueId: inspectElementCaseValueId, defectRemarksOptionList: defectRemarksOptionList, othersRemark: othersRemark)
+                let taskDefectDataRecord = TaskInspDefectDataRecord(recordId: recordId, taskId: taskId, inspectRecordId: inspRecordId, refRecordId: refRecordId, inspectElementId: inspElmtId, defectDesc: defectDesc, defectQtyCritical: defectQtyCritical, defectQtyMajor: defectQtyMajor, defectQtyMinor: defectQtyMinor, defectQtyTotal: defectQtyTotal, createUser: createUser, createDate: createDate, modifyUser: modifyUser, modifyDate: modifyDate, inspectElementDefectValueId: inspectElementDefectValueId, inspectElementCaseValueId: inspectElementCaseValueId, defectRemarksOptionList: defectRemarksOptionList, othersRemark: othersRemark, isPreSave: isPreSave)
                 
                 taskDefectDataRecords.append(taskDefectDataRecord!)
             }
@@ -1604,7 +1608,7 @@ class TaskDataHelper:DataHelperMaster{
         var sql = "SELECT inspect_position_id FROM inspect_position_element WHERE inspect_element_id = ?"
         
         if inputMode == _INPUTMODE02 {
-            sql = "SELECT ipe.inspect_position_id FROM inspect_position_element ipe INNER JOIN task_inspect_data_record tidr ON ipe.inspect_position_id = tidr.inspect_position_id INNER JOIN  task_defect_data_record tddr ON tddr.inspect_record_id = tidr.record_id WHERE tddr.inspect_record_id = ?"
+            sql = "SELECT ipe.inspect_position_id FROM inspect_position_element ipe INNER JOIN task_inspect_data_record tidr ON ipe.inspect_position_id = tidr.inspect_position_id INNER JOIN  task_defect_data_record tddr ON tddr.inspect_record_id = tidr.record_id WHERE tddr.inspect_element_id = ?"
         }
 
         var positionId = 0
@@ -1780,11 +1784,11 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func insertTaskInspDataRecord(_ taskInspDataRecord:TaskInspDataRecord) ->Int {
-        let sql = "INSERT OR REPLACE INTO task_inspect_data_record  ('record_id','task_id','ref_record_id','inspect_section_id','inspect_element_id','inspect_position_id','inspect_position_desc','inspect_detail','inspect_remarks','result_value_id','create_user','create_date','modify_user','modify_date','request_section_id','request_element_desc') VALUES ((SELECT record_id FROM task_inspect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        let sql = "INSERT OR REPLACE INTO task_inspect_data_record  ('record_id','task_id','ref_record_id','inspect_section_id','inspect_element_id','inspect_position_id','inspect_position_desc','inspect_detail','inspect_remarks','result_value_id','create_user','create_date','modify_user','modify_date','request_section_id','request_element_desc','is_pre_save') VALUES ((SELECT record_id FROM task_inspect_data_record WHERE record_id = ?),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         var taskInspDataRecordId = 0
         
         if db.open() {
-            db.executeUpdate(sql, withArgumentsIn: [taskInspDataRecord.recordId!,taskInspDataRecord.taskId!,taskInspDataRecord.refRecordId!,taskInspDataRecord.inspectSectionId!,taskInspDataRecord.inspectElementId!,taskInspDataRecord.inspectPositionId!,taskInspDataRecord.inspectPositionDesc!,taskInspDataRecord.inspectDetail!,taskInspDataRecord.inspectRemarks!,taskInspDataRecord.resultValueId,taskInspDataRecord.createUser!,taskInspDataRecord.createDate!,taskInspDataRecord.modifyUser!,taskInspDataRecord.modifyDate!,notNilObject(taskInspDataRecord.requestSectionId as AnyObject)!,notNilObject(taskInspDataRecord.requestElementDesc as AnyObject)!])
+            db.executeUpdate(sql, withArgumentsIn: [taskInspDataRecord.recordId!,taskInspDataRecord.taskId!,taskInspDataRecord.refRecordId!,taskInspDataRecord.inspectSectionId!,taskInspDataRecord.inspectElementId!,taskInspDataRecord.inspectPositionId!,taskInspDataRecord.inspectPositionDesc!,taskInspDataRecord.inspectDetail!,taskInspDataRecord.inspectRemarks!,taskInspDataRecord.resultValueId,taskInspDataRecord.createUser!,taskInspDataRecord.createDate!,taskInspDataRecord.modifyUser!,taskInspDataRecord.modifyDate!,notNilObject(taskInspDataRecord.requestSectionId as AnyObject)!,notNilObject(taskInspDataRecord.requestElementDesc as AnyObject)!, taskInspDataRecord.isPreSave])
         
             taskInspDataRecordId = Int(db.lastInsertRowId)
             
@@ -1831,8 +1835,13 @@ class TaskDataHelper:DataHelperMaster{
         return prodTypeId
     }
     
-    func getCatItemCountById(_ taskId:Int, sectionId:Int) ->Int {
-        let sql = "SELECT COUNT(tidr.record_id) AS record_cnt FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE it.task_id = ? AND tidr.inspect_section_id = ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag <> 1 AND ipm.rec_status = 0 AND ipm.deleted_flag <>1) OR it.task_status > 3)"
+    func getCatItemCountById(_ taskId: Int, sectionId: Int, inputModeCode: String) ->Int {
+        var sql = "SELECT COUNT(tidr.record_id) AS record_cnt FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE it.task_id = ? AND tidr.inspect_section_id = ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag <> 1 AND ipm.rec_status = 0 AND ipm.deleted_flag <>1) OR it.task_status > 3)"
+        
+        if inputModeCode == _INPUTMODE03 {
+            sql = "SELECT COUNT(tidr.record_id) AS record_cnt FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE it.task_id = ? AND tidr.inspect_section_id = ?"
+        }
+        
         var itemCount = 0
         
         if db.open() {

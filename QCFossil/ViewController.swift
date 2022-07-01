@@ -128,7 +128,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //self.password.text = "wE$6T+8a"
         
         let defaults = UserDefaults.standard
-        let releaseDate = "20220619"
+        let releaseDate = "20220630"
         _RELEASE = releaseDate as String
         defaults.set(releaseDate, forKey: "release_preference")
         
@@ -376,22 +376,22 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                             //add column for vdr_location_mstr table
                             let currDBVersion = keyValueDataHelper.getDBVersionNum()
                             
-                            if _VERSION < currDBVersion {
-                                self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(currDBVersion), But iPad App Version is \(_VERSION)"))
+                            if Int(_BUILDNUMBER) < Int(currDBVersion) {
+                                self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(currDBVersion), But iPad App Version is \(_BUILDNUMBER)"))
                                 return
                                 
-                            }else if _VERSION != currDBVersion {
+                            }else if _BUILDNUMBER != currDBVersion {
                             
                                 let appUpgradeDataHelper = AppUpgradeDataHelper()
-                                appUpgradeDataHelper.appUpgradeCode(_VERSION, parentView: self.view, completion: { (result) in
+                                appUpgradeDataHelper.appUpgradeCode(_BUILDNUMBER, parentView: self.view, completion: { (result) in
                                     
                                     if result {
-                                        keyValueDataHelper.updateDBVersionNum(_VERSION)
+                                        keyValueDataHelper.updateDBVersionNum(_BUILDNUMBER)
                                     }
                                 
                                     let DBVersion = keyValueDataHelper.getDBVersionNum()
-                                    if _VERSION != DBVersion {
-                                        self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(DBVersion), But iPad App Version is \(_VERSION)"))
+                                    if _BUILDNUMBER != DBVersion {
+                                        self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(DBVersion), But iPad App Version is \(_BUILDNUMBER)"))
                                         return
                                     }
                                     
@@ -457,23 +457,23 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
                                 //add column for vdr_location_mstr table
                                 let currDBVersion = keyValueDataHelper.getDBVersionNum()
                                 
-                                if _VERSION < currDBVersion {
-                                    self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(currDBVersion), But iPad App Version is \(_VERSION)"))
+                                if Int(_BUILDNUMBER) < Int(currDBVersion) {
+                                    self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(currDBVersion), But iPad App Version is \(_BUILDNUMBER)"))
                                     return
                                     
-                                }else if _VERSION != currDBVersion {
+                                }else if _BUILDNUMBER != currDBVersion {
                                     
                                     let appUpgradeDataHelper = AppUpgradeDataHelper()
-                                    appUpgradeDataHelper.appUpgradeCode(_VERSION, parentView: self.view, completion: { (result) in
+                                    appUpgradeDataHelper.appUpgradeCode(_BUILDNUMBER, parentView: self.view, completion: { (result) in
                                         
                                         let keyValueDataHelper = KeyValueDataHelper()
                                         if result {
-                                            keyValueDataHelper.updateDBVersionNum(_VERSION)
+                                            keyValueDataHelper.updateDBVersionNum(_BUILDNUMBER)
                                         }
                                     
                                         let DBVersion = keyValueDataHelper.getDBVersionNum()
-                                        if _VERSION != DBVersion {
-                                            self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(DBVersion), But iPad App Version is \(_VERSION)"))
+                                        if _BUILDNUMBER != DBVersion {
+                                            self.stopLoginStatus(MylocalizedString.sharedLocalizeManager.getLocalizedString("Database Version is \(DBVersion), But iPad App Version is \(_BUILDNUMBER)"))
                                             return
                                         }
                                         

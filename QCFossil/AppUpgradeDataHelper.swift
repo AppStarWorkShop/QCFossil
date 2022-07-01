@@ -1002,7 +1002,37 @@ class AppUpgradeDataHelper:DataHelperMaster {
                             result = false
                         }
                     }
+                    
+                    // Add new field to task_defect_data_record
+                    sql = "ALTER TABLE task_defect_data_record ADD COLUMN is_pre_save nvarchar(1)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(task_defect_data_record)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "is_pre_save" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
 
+                    // Add new field to task_inspect_data_record
+                    sql = "ALTER TABLE task_inspect_data_record ADD COLUMN is_pre_save nvarchar(1)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(task_inspect_data_record)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "is_pre_save" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
                     //----------------------------------------------------------------------------------
                     
                     if result {

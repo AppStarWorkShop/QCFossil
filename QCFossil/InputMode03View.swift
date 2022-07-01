@@ -17,6 +17,7 @@ class InputMode03View: InputModeSCMaster {
     let inputCellCount = 6
     let cellWidth = Int(_DEVICE_WIDTH)
     let cellHeight = 140
+    @IBOutlet weak var stackView: UIStackView!
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -27,7 +28,6 @@ class InputMode03View: InputModeSCMaster {
     */
     
     override func awakeFromNib() {
-        
         NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
     }
@@ -97,11 +97,6 @@ class InputMode03View: InputModeSCMaster {
         
         self.updateContentView()
         self.initSegmentControlView(self.InputMode,apyToAllBtn: self.applyToAllButton)
-        
-        NSLayoutConstraint.activate([
-            scrollCellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollCellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        ])
     }
     
     @objc func applyRstToAll() {
@@ -126,29 +121,51 @@ class InputMode03View: InputModeSCMaster {
     }
     
     func updateContentView() {
+        self.stackView.arrangedSubviews.forEach({
+            $0.removeFromSuperview()
+        })
+        
         if inputCells.count > 0 {
         
-        for index in 0...inputCells.count-1 {
-            let cell = inputCells[index]
-            cell.updateCellIndex(cell,index: index)
-            cell.cellIndexLabel.text = String(cell.cellIdx)
-            cell.frame = CGRect.init(x: 0, y: index * cellHeight, width: cellWidth, height: cellHeight)
-            
-            if index % 2 == 0 {
-                cell.backgroundColor = _TABLECELL_BG_COLOR1
-            }else{
-                cell.backgroundColor = _TABLECELL_BG_COLOR2
+            for index in 0...inputCells.count-1 {
+                let cell = inputCells[index]
+                cell.updateCellIndex(cell,index: index)
+                cell.cellIndexLabel.text = String(cell.cellIdx)
+
+                if index % 2 == 0 {
+                    cell.backgroundColor = _TABLECELL_BG_COLOR1
+                }else{
+                    cell.backgroundColor = _TABLECELL_BG_COLOR2
+                }
+                
+                if cell.cellPhysicalIdx < inputCells.count {
+                    let cellItem = inputCells[cell.cellPhysicalIdx]
+                    self.scrollCellView.addSubview(cellItem)
+                }
+                
+                stackView.addArrangedSubview(cell)
+                cell.translatesAutoresizingMaskIntoConstraints = false
+                cell.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+                cell.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+                cell.heightAnchor.constraint(equalToConstant: CGFloat(cellHeight)).isActive = true
             }
-            
-            if cell.cellPhysicalIdx < inputCells.count {
-                self.scrollCellView.addSubview(inputCells[cell.cellPhysicalIdx])
-            }
-        }
         }
         
-        self.addCellButton.frame = CGRect.init(x: 8, y: inputCells.count*cellHeight+10, width: 40, height: 40)
-        self.scrollCellView.addSubview(self.addCellButton)
-        resizeScrollView(CGSize.init(width: _DEVICE_WIDTH, height: CGFloat(inputCells.count*cellHeight+600)))
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separator)
+        separator.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+        stackView.addArrangedSubview(addCellButton)
+        addCellButton.translatesAutoresizingMaskIntoConstraints = false
+        addCellButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
+        addCellButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        addCellButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let separatorDown = UIView()
+        separatorDown.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(separatorDown)
+        separatorDown.heightAnchor.constraint(equalToConstant: 10).isActive = true
     }
     
     func resizeScrollView(_ size:CGSize) {

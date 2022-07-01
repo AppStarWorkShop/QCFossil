@@ -88,6 +88,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        if let buildnumber =  Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            _BUILDNUMBER = buildnumber
+        }
+        
         if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:)))) {
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [UIUserNotificationType.alert, UIUserNotificationType.badge], categories: nil))
         }

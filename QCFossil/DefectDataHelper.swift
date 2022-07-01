@@ -272,4 +272,70 @@ class DefectDataHelper:DataHelperMaster {
         
         return id
     }
+    
+    func deletePreSavedItemsFromInspectDataRecords(_ taskId: Int) {
+        if db.open() {
+            let sql = "SELECT * FROM task_inspect_data_record WHERE task_id = ? AND is_pre_save = ?"
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, "1"]) {
+                while rs.next() {
+                    let recordId = Int(rs.int(forColumn: "record_id"))
+                    deleteTaskInspDataRecordById(recordId)
+                }
+            }
+            db.close()
+        }
+    }
+    
+    @discardableResult
+    func deletePreSavedItemsFromDefectDataRecords(_ taskId: Int) {
+        if db.open() {
+            let sql = "SELECT * FROM task_defect_data_record WHERE task_id = ? AND is_pre_save = ?"
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, "1"]) {
+                while rs.next() {
+                    let recordId = Int(rs.int(forColumn: "record_id"))
+                    resetDefectPhotoToPhotoAlbumById(taskId, dataRecordId: recordId)
+                    deleteDefectItemById(recordId)
+                }
+            }
+            db.close()
+        }
+    }
+    
+    @discardableResult
+    func deleteTaskInspDataRecordById(_ taskInspDataRocordId:Int) ->Bool {
+        let sql = "DELETE FROM task_inspect_data_record WHERE record_id = ?"
+        
+        if db.open(){
+            
+            let rs = db.executeUpdate(sql, withArgumentsIn: [taskInspDataRocordId])
+            
+            db.close()
+            
+            if !rs {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    @discardableResult
+    func resetDefectPhotoToPhotoAlbumById(_ taskId:Int, dataRecordId:Int) -> Bool {
+        let sql = "UPDATE task_inspect_photo_file SET data_record_id =0, data_type = 0 WHERE task_id = ? AND data_record_id = ?"
+        var result = true
+        
+        if db.open() {
+            
+            if !db.executeUpdate(sql, withArgumentsIn: [taskId, dataRecordId]) {
+                result = false
+            }
+            
+            db.close()
+        }
+        
+        return result
+    }
+
 }
