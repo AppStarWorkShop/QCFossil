@@ -1048,7 +1048,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTaskInspDataRecordByTaskId(_ taskId:Int, inspSecId:Int) ->[TaskInspDataRecord]? {
-        let sql = "SELECT * FROM task_inspect_data_record WHERE task_id = ? AND inspect_section_id = ? AND is_pre_save <> 1 ORDER BY record_id ASC"
+        let sql = "SELECT * FROM task_inspect_data_record WHERE task_id = ? AND inspect_section_id = ? AND (is_pre_save IS NULL OR is_pre_save <> 1) ORDER BY record_id ASC"
         var taskInspDataRecs = [TaskInspDataRecord]()
         
         if db.open() {
@@ -1429,12 +1429,12 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTaskInspDataRecords(_ taskId:Int, inspectSecId:Int, inputMode:String) ->[TaskInspDataRecord]? {
-        var sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id WHERE tidr.is_pre_save <> 1 AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag = 0) OR it.task_status > 3)"
+        var sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id WHERE (tidr.is_pre_save IS NULL OR tidr.is_pre_save <> 1) AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag = 0) OR it.task_status > 3)"
         
         if inputMode == _INPUTMODE02 {
-            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE tidr.is_pre_save <> 1  AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0) OR it.task_status > 3)"
+            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE (tidr.is_pre_save IS NULL OR tidr.is_pre_save <> 1) AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND ((it.task_status < 4 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0) OR it.task_status > 3)"
         } else if inputMode == _INPUTMODE03 {
-            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE tidr.is_pre_save <> 1 AND tidr.task_id = ? AND tidr.inspect_section_id= ? AND (it.task_status < 4 OR it.task_status > 3)"
+            sql = "SELECT * FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE (tidr.is_pre_save IS NULL OR tidr.is_pre_save <> 1) AND tidr.task_id = ? AND tidr.inspect_section_id= ?"
         }
         
         var taskInspDataRecords = [TaskInspDataRecord]()
@@ -1527,7 +1527,7 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [sectionName,sectionName]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [sectionName, sectionName, sectionName]) {
             
                 if rs.next() {
                     reqSecId = Int(rs.int(forColumn: "section_id"))
@@ -1540,7 +1540,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getTaskDefectDataRecords(_ taskId:Int) ->[TaskInspDefectDataRecord]? {
-        let sql = "SELECT * FROM task_defect_data_record WHERE task_id = ? AND is_pre_save <> 1"
+        let sql = "SELECT * FROM task_defect_data_record WHERE task_id = ? AND (is_pre_save IS NULL OR is_pre_save <> 1)"
         var taskDefectDataRecords = [TaskInspDefectDataRecord]()
         
         if db.open() {
