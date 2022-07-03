@@ -607,18 +607,20 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         do {
             if try SSZipArchive.unzipFileAtPath(location.path, toDestination: self.filePath, overwrite: true, password: "", delegate: self) {
                 // Check DB version if low, then upgrade
-                let backupFile = self.selectedBackupFile
-                if (backupFile?.appVersion)! < _VERSION {
-                    let appUpgradeDataHelper = AppUpgradeDataHelper()
-                    appUpgradeDataHelper.appUpgradeCode(_VERSION, parentView: self.view, completion: { (result) in
-                        if result {
-                            self.keyValueDataHelper.updateDBVersionNum(_VERSION)
-                        }
-                    })
-                }
-                
-                //Remove Zip File Here
-                self.removeLocalBackupZipFile()
+                DispatchQueue.main.async(execute: {
+                    let currDBVersion = self.keyValueDataHelper.getDBVersionNum()
+                    if Int(currDBVersion) ?? 0 < Int(_BUILDNUMBER) ?? 0 {
+                        let appUpgradeDataHelper = AppUpgradeDataHelper()
+                        appUpgradeDataHelper.appUpgradeCode(_BUILDNUMBER, parentView: self.view, completion: { (result) in
+                            if result {
+                                self.keyValueDataHelper.updateDBVersionNum(_BUILDNUMBER)
+                            }
+                        })
+                    }
+                    
+                    //Remove Zip File Here
+                    self.removeLocalBackupZipFile()
+                })
             }
           
         } catch {
