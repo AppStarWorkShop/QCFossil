@@ -370,7 +370,7 @@ class TaskDataHelper:DataHelperMaster{
                 }
                 
                 //init Sections
-                let sectionId = getSectionIdByElementId(taskDefectDateRecord.inspectElementId!)
+                let sectionId = getSectionIdByRecordId(taskDefectDateRecord.recordId ?? 0)
                 let section = getInspSectionsById(sectionId)
                 
                 if section != nil {
@@ -1583,18 +1583,18 @@ class TaskDataHelper:DataHelperMaster{
         return nil
     }
     
-    func getSectionIdByElementId(_ elmId:Int) ->Int {
+    func getSectionIdByRecordId(_ recordId:Int) ->Int {
         //let sql = "SELECT section_id FROM inspect_section_mstr AS ism INNER JOIN inspect_element_mstr AS iem ON ism.section_id = iem.inspect_section_id WHERE iem.element_id = ?"
-        let sql = "SELECT inspect_section_id FROM inspect_section_element WHERE inspect_element_id = ?"
+        let sql = "SELECT section_id FROM inspect_section_mstr ism INNER JOIN task_inspect_data_record tidr ON ism.section_id = tidr.inspect_section_id INNER JOIN task_defect_data_record tddr ON tidr.record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"
         var sectionId = 0
         
         if db.open() {
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [elmId]) {
+            if let rs = db.executeQuery(sql, withArgumentsIn: [recordId]) {
             
                 if rs.next() {
                 
-                    sectionId = Int(rs.int(forColumn: "inspect_section_id"))
+                    sectionId = Int(rs.int(forColumn: "section_id"))
                 }
             }
             
