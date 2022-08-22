@@ -73,7 +73,7 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         self.dpInput.delegate = self
         self.cellDPPInput.delegate = self
         self.defectZoneInput.delegate = self
-        
+        self.cellDismissButton.isHidden = true
         updateLocalizedString()
     }
     

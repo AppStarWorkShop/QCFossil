@@ -58,6 +58,7 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         subResultInput.delegate = self
         inspectionAreaLabel.delegate = self
         inspectionItemLabel.delegate = self
+        dismissButton.isHidden = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)

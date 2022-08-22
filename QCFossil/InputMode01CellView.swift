@@ -87,6 +87,7 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate, UITextViewDel
     }
     
     override func awakeFromNib() {
+        cellDismissButton.isHidden = true
         cellResultInput.delegate = self
 //        inptItemInput.delegate = self
 //        inptDetailInput.delegate = self

@@ -68,6 +68,7 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         iiInput.delegate = self
         idInput.delegate = self
         cellRemarksInput.delegate = self
+        cellDismissButton.isHidden = true
         
         updateLocalizedString()
     }

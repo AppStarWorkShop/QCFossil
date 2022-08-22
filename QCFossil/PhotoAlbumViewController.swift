@@ -359,7 +359,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             imagePicker.sourceType = .camera
             self.present(imagePicker, animated: true, completion: nil)
             
-        }else{
+        } else {
             imagePicker.modalPresentationStyle = .popover
             imagePicker.sourceType = .photoLibrary
             
@@ -420,6 +420,18 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .camera
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            let imagePicker = UIImagePickerController()
+            imagePicker.modalPresentationStyle = .popover
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            
+            let ppc = imagePicker.popoverPresentationController
+            ppc?.sourceView = self.inspElmt
+            ppc?.sourceRect = self.inspElmt?.bounds ?? CGRect(x: 0, y: 0, width: 50, height: 50)
+            ppc?.permittedArrowDirections = .any
+            
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
