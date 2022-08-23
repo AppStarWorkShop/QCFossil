@@ -417,8 +417,6 @@ class InputMode02CellView: InputModeICMaster, UITextFieldDelegate {
         
         DispatchQueue.main.async(execute: {
             self.showActivityIndicator()
-            //Save self to DB to get the taskDataRecordId
-            self.saveMyselfToGetId()
             
             DispatchQueue.main.async(execute: {
                 

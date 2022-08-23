@@ -155,7 +155,7 @@ class InspectionDefectTableViewCellMode1: InputModeDFMaster2, UIImagePickerContr
             imagePicker.sourceType = .camera
             self.parentVC!.present(imagePicker, animated: true, completion: nil)
             
-        }else{
+        } else {
             let availableCount = self.photoNameAtIndex.filter({$0 == ""})
             
             let imagePicker = ELCImagePickerController(imagePicker: ())

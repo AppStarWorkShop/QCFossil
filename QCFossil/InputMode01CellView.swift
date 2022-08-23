@@ -423,9 +423,6 @@ class InputMode01CellView: InputModeICMaster, UITextFieldDelegate, UITextViewDel
         
         DispatchQueue.main.async(execute: {
             self.showActivityIndicator()
-            //Save self to DB to get the taskDataRecordId
-            self.saveMyselfToGetId()
-            
             DispatchQueue.main.async(execute: {
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "takePhotoFromICCell"), object: nil, userInfo: ["inspElmt":self])

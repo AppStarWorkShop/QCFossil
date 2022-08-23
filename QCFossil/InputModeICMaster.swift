@@ -125,8 +125,6 @@ class InputModeICMaster:UIView {
         
         if self.taskInspDataRecordId < 1 {
             self.taskInspDataRecordId = taskDataHelper.insertTaskInspDataRecord(taskInspDataRecord!)
-        }else{
-            taskDataHelper.updateInspDataRecord(taskInspDataRecord!)
         }
     }
     
