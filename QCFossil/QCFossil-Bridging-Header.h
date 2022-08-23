@@ -5,6 +5,5 @@
 #import "FMDB.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "Helper.h"
-#import "ZipArchive.h"
 #import "DownscalingAlassets.h"
 #import "ELCImagePickerHeader.h"

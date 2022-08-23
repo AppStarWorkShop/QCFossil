@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Zip
 
-class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDownloadDelegate, SSZipArchiveDelegate, UITableViewDelegate, UITableViewDataSource {
+class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDownloadDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var backupListTableView: UITableView!
     @IBOutlet weak var loginUserLabel: UILabel!
@@ -39,6 +40,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     typealias CompletionHandler = (_ obj:AnyObject?, _ success: Bool?) -> Void
     var filePath = NSHomeDirectory() + "/Documents"
     var zipPath5 = NSHomeDirectory() + "/task.zip"
+    let tmpPath = NSHomeDirectory() + "/tmp"
     var buffer:NSMutableData = NSMutableData()
     var expectedContentLength = 0
     var bgSession: Foundation.URLSession?
@@ -170,7 +172,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.lastLoginDateInput.text = Cache_Inspector?.lastLoginDate
         self.removeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Login User Data"), for: UIControl.State())
         
-//        let keyValueDataHelper = KeyValueDataHelper()
         self.lastUpdateInput.text = keyValueDataHelper.getLastBackupDatetimeByUserId(String(describing: Cache_Inspector?.inspectorId))
         self.lastDownloadInput.text = keyValueDataHelper.getLastRestoreDatetimeByUserId(String(describing: Cache_Inspector?.inspectorId))
         self.loginUserInput.text = Cache_Inspector?.appUserName!
@@ -208,40 +209,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.navigationItem.leftBarButtonItem?.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("App Menu")
         self.navigationItem.title = MylocalizedString.sharedLocalizeManager.getLocalizedString("Data Control")
         
-    }
-    
-    func zipArchiveProgressEvent(_ loaded: UInt64, total: UInt64) {
-        print("loaded: \(loaded) total: \(total)")
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            let percentageUploaded = Float(loaded) / Float(total)
-            
-            DispatchQueue.main.async(execute: {
-                
-                self.progressBar.progress = percentageUploaded
-                
-                if loaded == total {
-                //if lroundf(100*percentageUploaded) == 100 {
-                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Complete")
-                    
-//                    let keyValueDataHelper = KeyValueDataHelper()
-                    self.keyValueDataHelper.updateLastRestoreDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
-                    
-                    
-                    self.lastDownloadInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
-                    self.updateButtonsStatus(true)
-                    self.backupListTableView.isHidden = true
-                    self.backupHistoryLabel.isHidden = true
-                    self.restoreBtn.isHidden = true
-                    self.upperLine.isHidden = true
-                    self.downLine.isHidden = true
-                    
-                }else{
-                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Decompressing")) \(String(lroundf(100*percentageUploaded)))%"
-                    
-                }
-            })
-        }
     }
     
     //在Caches文件夹下随机创建一个文件夹，并返回路径
@@ -300,29 +267,48 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
                     //---------------------------- Backup Data First ------------------------------
                     //需要压缩的文件夹啊
-                    SSZipArchive.createZipFile(atPath: self.zipPath5, withContentsOfDirectory: self.filePath)
-                    //-----------------------------------------------------------------------------
-                    
-                    var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
-                    param["service_token"] = _DS_SERVICETOKEN
-                    param["db_filename"] = "task.zip"
-                    param["db_file"] = self.zipPath5
-                    param["backup_remarks"] = self.backupDesc.text
-                    param["app_version"] = String(_VERSION)
-                    param["app_release"] = _RELEASE
-                    
-                    let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
-                    if UIApplication.shared.applicationState == .active {
-                        
-                        // foreground
-                        self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
-                        self.sessionDownloadTask?.resume()
-                    } else {
-                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                        self.updateButtonsStatus(true)
-                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                        self.updateDataControlStatusDetailButton()
+                    do {
+                        if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
+                            try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: { (progress) -> () in
+
+                                DispatchQueue.main.async(execute: {
+                                    
+                                    self.progressBar.progress = Float(progress)
+                                    
+                                    if progress >= 1.0 {
+                                        var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
+                                        param["service_token"] = _DS_SERVICETOKEN
+                                        param["db_filename"] = "task.zip"
+                                        param["db_file"] = self.zipPath5
+                                        param["backup_remarks"] = self.backupDesc.text
+                                        param["app_version"] = String(_VERSION)
+                                        param["app_release"] = _RELEASE
+                                        
+                                        let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
+                                        if UIApplication.shared.applicationState == .active {
+                                            
+                                            // foreground
+                                            self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+                                            self.sessionDownloadTask?.resume()
+                                        } else {
+                                            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                                            self.updateButtonsStatus(true)
+                                            self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                                            self.updateDataControlStatusDetailButton()
+                                        }
+                                        
+                                    } else {
+                                        self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Compressing Data...")) \(String(lroundf(100*Float(progress))))%"
+                                    }
+                                })
+                                
+                            })
+                        }
                     }
+                    catch {
+                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+                    }
+                    //-----------------------------------------------------------------------------
                 })
             })
         })
@@ -572,7 +558,14 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         //dispatch_async(dispatch_get_main_queue(), {
         //---------------------------- Backup Data First ------------------------------
         //需要压缩的文件夹啊
-        SSZipArchive.createZipFile(atPath: self.zipPath5, withContentsOfDirectory: self.filePath)
+        do {
+            if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
+                try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
+            }
+        }
+        catch {
+            self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+        }
             
         //remove file before restortion
         let filemgr = FileManager.default
@@ -605,7 +598,45 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         
         //begin restore
         do {
-            if try SSZipArchive.unzipFileAtPath(location.path, toDestination: self.filePath, overwrite: true, password: "", delegate: self) {
+            if let zipFilePath = URL(string: location.path) {
+                Zip.addCustomFileExtension("tmp")
+                try Zip.unzipFile(zipFilePath, destination: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0], overwrite: true, password: nil, progress: { (progress) -> () in
+                    DispatchQueue.main.async(execute: {
+                        
+                        self.progressBar.progress = Float(progress)
+                        
+                        if progress >= 1.0 {
+                            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Complete")
+                            
+                            self.keyValueDataHelper.updateLastRestoreDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+                            
+                            self.lastDownloadInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
+                            self.updateButtonsStatus(true)
+                            self.backupListTableView.isHidden = true
+                            self.backupHistoryLabel.isHidden = true
+                            self.restoreBtn.isHidden = true
+                            self.upperLine.isHidden = true
+                            self.downLine.isHidden = true
+                            
+                            // remove all files under tmp folder
+                            do {
+                                let filemgr = FileManager.default
+                                if filemgr.fileExists(atPath: self.tmpPath) {
+                                    let fileNames = try filemgr.contentsOfDirectory(atPath: "\(self.tmpPath)")
+                                    for fileName in fileNames {
+                                        let filePathName = "\(self.tmpPath)/\(fileName)"
+                                        try filemgr.removeItem(atPath: filePathName)
+                                    }
+                                }
+                            } catch {
+                                let _error = error as NSError
+                                self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                            }
+                        } else {
+                            self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Decompressing")) \(String(lroundf(100*Float(progress))))%"
+                        }
+                    })
+                })
                 // Check DB version if low, then upgrade
                 DispatchQueue.main.async(execute: {
                     let currDBVersion = self.keyValueDataHelper.getDBVersionNum()
@@ -629,7 +660,9 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             self.updateDataControlStatusDetailButton()
             
             do{
-                try SSZipArchive.unzipFileAtPath(self.zipPath5, toDestination: self.filePath, overwrite: true, password: "", delegate: self)
+                if let zipFilePath = URL(string: self.zipPath5), let destinationPath = URL(string: self.filePath) {
+                    try Zip.unzipFile(zipFilePath, destination: destinationPath, overwrite: true, password: nil, progress: nil, fileOutputHandler: nil)
+                }
                 
                 //Remove Zip File Here
                 self.removeLocalBackupZipFile()
@@ -808,6 +841,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     print("responseString = \(responseString)")
                     self.errorMessage = "\(error.localizedDescription ?? "" )"
                     self.updateDataControlStatusDetailButton()
+                    self.updateButtonsStatus(true)
                 })
             }
             

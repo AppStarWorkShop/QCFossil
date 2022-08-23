@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Zip
 
-class DataControlView: UIView, URLSessionDelegate, URLSessionDownloadDelegate, SSZipArchiveDelegate, UITableViewDelegate, UITableViewDataSource {
+class DataControlView: UIView, URLSessionDelegate, URLSessionDownloadDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var loginUserLabel: UILabel!
     @IBOutlet weak var lastLoginDate: UILabel!
@@ -156,7 +157,14 @@ class DataControlView: UIView, URLSessionDelegate, URLSessionDownloadDelegate, S
                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
                     //---------------------------- Backup Data First ------------------------------
                     //需要压缩的文件夹啊
-                    SSZipArchive.createZipFile(atPath: self.zipPath5, withContentsOfDirectory: self.filePath)
+                    do {
+                        if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
+                            try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
+                        }
+                    }
+                    catch {
+                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+                    }
                     //-----------------------------------------------------------------------------
                    
                     var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
