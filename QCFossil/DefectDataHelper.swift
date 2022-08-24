@@ -280,6 +280,7 @@ class DefectDataHelper:DataHelperMaster {
             if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, "1"]) {
                 while rs.next() {
                     let recordId = Int(rs.int(forColumn: "record_id"))
+                    resetDefectPhotoToPhotoAlbumById(taskId, dataRecordId: recordId)
                     deleteTaskInspDataRecordById(recordId)
                 }
             }
