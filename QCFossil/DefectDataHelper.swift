@@ -273,70 +273,53 @@ class DefectDataHelper:DataHelperMaster {
         return id
     }
     
-    func deletePreSavedItemsFromInspectDataRecords(_ taskId: Int) {
-        if db.open() {
-            let sql = "SELECT * FROM task_inspect_data_record WHERE task_id = ? AND is_pre_save = ?"
-            
-            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, "1"]) {
-                while rs.next() {
-                    let recordId = Int(rs.int(forColumn: "record_id"))
-                    resetDefectPhotoToPhotoAlbumById(taskId, dataRecordId: recordId)
-                    deleteTaskInspDataRecordById(recordId)
-                }
-            }
-            db.close()
-        }
-    }
-    
     @discardableResult
-    func deletePreSavedItemsFromDefectDataRecords(_ taskId: Int) {
+    func deletePreSavedItemsFromInspectDataRecords(_ taskId: Int) -> Bool {
         if db.open() {
-            let sql = "SELECT * FROM task_defect_data_record WHERE task_id = ? AND is_pre_save = ?"
+            db.beginTransaction()
             
-            if let rs = db.executeQuery(sql, withArgumentsIn: [taskId, "1"]) {
-                while rs.next() {
-                    let recordId = Int(rs.int(forColumn: "record_id"))
-                    resetDefectPhotoToPhotoAlbumById(taskId, dataRecordId: recordId)
-                    deleteDefectItemById(recordId)
-                }
-            }
-            db.close()
-        }
-    }
-    
-    @discardableResult
-    func deleteTaskInspDataRecordById(_ taskInspDataRocordId:Int) ->Bool {
-        let sql = "DELETE FROM task_inspect_data_record WHERE record_id = ?"
-        
-        if db.open(){
-            
-            let rs = db.executeUpdate(sql, withArgumentsIn: [taskInspDataRocordId])
-            
-            db.close()
-            
-            if !rs {
+            // 1. reset all photo under this pre save inspect element.
+            if !db.executeUpdate("UPDATE task_inspect_photo_file SET data_record_id =0, data_type = 0 WHERE task_id = ? AND data_record_id IN (SELECT record_id FROM task_inspect_data_record WHERE task_id = ? AND is_pre_save = 1)", withArgumentsIn: [taskId, taskId]) {
+                db.rollback()
+                db.close()
                 return false
             }
+            
+            // 2. remove pre saved inspect elements.
+            if !db.executeUpdate("DELETE FROM task_inspect_data_record WHERE is_pre_save = 1 AND task_id = ?", withArgumentsIn: [taskId]) {
+                db.rollback()
+                db.close()
+                return false
+            }
+            
+            db.commit()
+            db.close()
         }
         
         return true
     }
     
     @discardableResult
-    func resetDefectPhotoToPhotoAlbumById(_ taskId:Int, dataRecordId:Int) -> Bool {
-        let sql = "UPDATE task_inspect_photo_file SET data_record_id =0, data_type = 0 WHERE task_id = ? AND data_record_id = ?"
-        var result = true
-        
+    func deletePreSavedItemsFromDefectDataRecords(_ taskId: Int) -> Bool {
         if db.open() {
+            db.beginTransaction()
             
-            if !db.executeUpdate(sql, withArgumentsIn: [taskId, dataRecordId]) {
-                result = false
+            if !db.executeUpdate("UPDATE task_inspect_photo_file SET data_record_id =0, data_type = 0 WHERE task_id = ? AND data_record_id IN (SELECT record_id FROM task_defect_data_record WHERE task_id = ? AND is_pre_save = 1)", withArgumentsIn: [taskId, taskId]) {
+                db.rollback()
+                db.close()
+                return false
             }
             
+            if !db.executeUpdate("DELETE FROM task_defect_data_record WHERE is_pre_save = 1 AND task_id = ?", withArgumentsIn: [taskId]) {
+                db.rollback()
+                db.close()
+                return false
+            }
+            
+            db.commit()
             db.close()
         }
         
-        return result
+        return true
     }
-
 }
