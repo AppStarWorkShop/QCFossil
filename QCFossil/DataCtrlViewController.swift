@@ -36,10 +36,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     @IBOutlet weak var upperLine: UILabel!
     @IBOutlet weak var downLine: UILabel!
     @IBOutlet weak var dataControlStatusDetailButton: UIButton!
+    @IBOutlet weak var backupTaskCountLabel: UILabel!
+    @IBOutlet weak var backupRetryButton: UIButton!
     
     typealias CompletionHandler = (_ obj:AnyObject?, _ success: Bool?) -> Void
     var filePath = NSHomeDirectory() + "/Documents"
-    var zipPath5 = NSHomeDirectory() + "/task.zip"
+    var zipPath5 = NSHomeDirectory() + "/\(dbBackupFileName)"
     let tmpPath = NSHomeDirectory() + "/tmp"
     var buffer:NSMutableData = NSMutableData()
     var expectedContentLength = 0
@@ -52,9 +54,14 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     let typeListBackupFiles = "L"
     let typeBackup = "B"
     let typeRestore = "R"
+    let typeTaskFolderBackup = "T"
     var typeNow = ""
     let keyValueDataHelper = KeyValueDataHelper()
     var errorMessage = ""
+    var taskFolders: [String]? = nil
+    var currentUploadTaskFolderName: String? = nil
+    var taskFolderCount: Int = 0
+    var serviceSession: String? = nil
     
     struct BackupFile {
         var appRealse:String
@@ -67,7 +74,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -181,10 +188,11 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.view.setButtonCornerRadius(self.restoreBtn)
         self.view.setButtonCornerRadius(self.clearBtn)
         self.view.setButtonCornerRadius(self.removeBtn)
+        self.view.setButtonCornerRadius(self.backupRetryButton)
         self.activityActor.isHidden = true
         
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        zipPath5 = path + "/task.zip"
+        zipPath5 = path + "/\(dbBackupFileName)"
         filePath = filePath + "/\((Cache_Inspector?.appUserName?.lowercased())!)"
         
         self.backupListTableView.delegate = self
@@ -198,6 +206,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         
         self.typeNow = self.typeListBackupFiles
         self.buffer.setData(NSMutableData() as Data)
+        self.backupTaskCountLabel.text = ""
+        self.backupTaskCountLabel.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -259,6 +269,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 self.activityActor.isHidden = false
                 self.activityActor.startAnimating()
                 self.updateButtonsStatus(false)
+                self.backupTaskCountLabel.isHidden = false
                 self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Compressing Data...")
                 
                 DispatchQueue.main.async(execute: {
@@ -273,11 +284,29 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                             
                             var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
                             param["service_token"] = _DS_SERVICETOKEN
-                            param["db_filename"] = "task.zip"
+                            param["db_filename"] = "\(dbBackupFileName)"
                             param["db_file"] = self.zipPath5
                             param["backup_remarks"] = self.backupDesc.text
                             param["app_version"] = String(_VERSION)
                             param["app_release"] = _RELEASE
+                            if let taskCount = DataControlHelper.getInspectorTaskFolderCount(inspectorName: Cache_Inspector?.appUserName?.lowercased() ?? "") {
+                                if let message = taskCount.1 {
+                                    DispatchQueue.main.async(execute: {
+                                        self.errorMessage = message
+                                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to get task folder count.")
+                                        self.updateDataControlStatusDetailButton()
+                                    })
+                                    return
+                                } else if let count = taskCount.0 {
+                                    param["task_count"] = "\(count)"
+                                }
+                            } else {
+                                DispatchQueue.main.async(execute: {
+                                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("No task folder found.")
+                                    self.updateDataControlStatusDetailButton()
+                                })
+                                return
+                            }
                             
                             let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
                             if UIApplication.shared.applicationState == .active {
@@ -335,7 +364,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 let mimetype = mimeTypeForPath(value)
                 
                 body.appendString("--\(boundary)\r\n")
-                body.appendString("Content-Disposition: form-data; name=\"\(key)\"; filename=\"task.zip\"\r\n")
+                body.appendString("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(dbBackupFileName)\"\r\n")
                 body.appendString("Content-Type: \(mimetype)\r\n\r\n")
                 body.append(data!)
                 body.appendString("\r\n")
@@ -458,6 +487,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     }
     
     @IBAction func restoreDataOnClick(_ sender: UIButton) {
+        backupTaskCountLabel.isHidden = true
         updateDataControlStatusDetailButton(true)
         self.typeNow = self.typeListBackupFiles
         
@@ -479,7 +509,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }else{
                     param += "\"\(key)\":\"\(value)\","
                 }
-                
             }
             param += "}"
             param = param.replacingOccurrences(of: ",}", with: "}")
@@ -744,7 +773,13 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             //Remove Zip File Here
             self.removeLocalBackupZipFile()
             
-        }else if self.typeNow == self.typeListBackupFiles {
+            if self.typeNow == self.typeTaskFolderBackup {
+                DispatchQueue.main.async(execute: {
+                    self.backupRetryButton.isHidden = false
+                })
+            }
+            
+        } else if self.typeNow == self.typeListBackupFiles {
             
             do {
                 if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
@@ -785,33 +820,33 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 })
             }
             buffer.setData(NSMutableData() as Data)
-        }else if self.typeNow == self.typeBackup {
+        } else if self.typeNow == self.typeBackup {
             
             do {
                 if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
                     
                     if responseDictionary.count > 0 {
                         
-                        if let result = responseDictionary["ul_result"] as? String {
+                        if let result = responseDictionary["ul_result"] as? String, let session = responseDictionary["service_session"] as? String {
+                            //Remove database Zip File Here
+                            self.removeLocalBackupZipFile()
+                            
+                            // Remove all remaining zip task folders
+                            DataControlHelper.removeAllRemainZipTaskFolders()
+                            
                             if result == "OK" {
-                                DispatchQueue.main.async(execute: {
-                                    let keyValueDataHelper = KeyValueDataHelper()
-                                    _ = keyValueDataHelper.updateLastBackupDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
-                                    self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
-                                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Complete")
-                                    self.progressBar.progress = 100
-                                    self.updateButtonsStatus(true)
-                                    self.backupDesc.text = ""
-                                    self.backupListTableView.isHidden = true
-                                    self.backupHistoryLabel.isHidden = true
-                                    self.upperLine.isHidden = true
-                                    
-                                    //Send local notification for Task Done.
-                                    self.presentLocalNotification("Data Backup Complete.")
-                                })
+                                self.serviceSession = session
+                                self.typeNow = typeTaskFolderBackup
+                                let taskFolders = DataControlHelper.getInspectorTaskFolders(inspectorName: Cache_Inspector?.appUserName?.lowercased() ?? "")
+                                self.taskFolderCount = taskFolders.count
                                 
-                                //Remove Zip File Here
-                                self.removeLocalBackupZipFile()
+                                let backupHelper = BackupHelper()
+                                if backupHelper.clearBackupLog() {
+                                    if DataControlHelper.setTaskFoldersToBackupLog(taskFolders: taskFolders) {
+                                        self.taskFolders = taskFolders.reversed()
+                                        uploadTaskFolder()
+                                    }
+                                }
                             }
                         }
                     }
@@ -833,7 +868,116 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             }
             
             buffer.setData(NSMutableData() as Data)
+            
+        } else if self.typeNow == self.typeTaskFolderBackup {
+            // Update UI
+            DispatchQueue.main.async(execute: {
+                if let taskFolders = self.taskFolders {
+                    self.backupTaskCountLabel.text = "(\(self.taskFolderCount - taskFolders.count)/\(self.taskFolderCount))"
+                }
+            })
+            
+            let inspectorName = Cache_Inspector?.appUserName?.lowercased() ?? ""
+            if let taskFolder = self.currentUploadTaskFolderName {
+                // Set upload date in backup log
+                let backupHelper = BackupHelper()
+                backupHelper.updateTaskFolderWithUploadDate(taskFolder: taskFolder)
+                
+                // remove local zip file
+                DataControlHelper.removeZipTaskFolderAfterUpload(inspectorName: inspectorName, zipFileName: taskFolder)
+                
+                // update backup log in database
+                backupHelper.updateTaskFolderWithDeletedDate(taskFolder: taskFolder)
+            }
+            
+            // Loop zip files to backup
+            uploadTaskFolder()
         }
+    }
+    
+    func uploadTaskFolder() {
+        if let taskFolder = taskFolders?.popLast() {
+            self.currentUploadTaskFolderName = taskFolder
+            uploadBackupTaskZipFolder(taskFolder: taskFolder)
+        } else {
+            // completed task folder backup
+            DispatchQueue.main.async(execute: {
+                let keyValueDataHelper = KeyValueDataHelper()
+                _ = keyValueDataHelper.updateLastBackupDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+                self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Complete")
+                self.progressBar.progress = 100
+                self.updateButtonsStatus(true)
+                self.backupDesc.text = ""
+                self.backupListTableView.isHidden = true
+                self.backupHistoryLabel.isHidden = true
+                self.upperLine.isHidden = true
+                self.taskFolders = nil
+                self.currentUploadTaskFolderName = nil
+                
+                //Send local notification for Task Done.
+                self.presentLocalNotification("Data Backup Complete.")
+            })
+        }
+    }
+    
+    func uploadZipTaskFolder(path: String) -> Bool {
+        DispatchQueue.main.async(execute: {
+            self.activityActor.isHidden = true
+            self.activityActor.stopAnimating()
+            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
+            //---------------------------- Backup Data First ------------------------------
+            //需要压缩的文件夹啊
+            do {
+                if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
+                    try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
+                    
+                    var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
+                    param["service_token"] = _DS_SERVICETOKEN
+                    param["db_filename"] = "\(dbBackupFileName)"
+                    param["db_file"] = self.zipPath5
+                    param["backup_remarks"] = self.backupDesc.text
+                    param["app_version"] = String(_VERSION)
+                    param["app_release"] = _RELEASE
+                    if let taskCount = DataControlHelper.getInspectorTaskFolderCount(inspectorName: Cache_Inspector?.appUserName?.lowercased() ?? "") {
+                        if let message = taskCount.1 {
+                            DispatchQueue.main.async(execute: {
+                                self.errorMessage = message
+                                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to get task folder count.")
+                                self.updateDataControlStatusDetailButton()
+                            })
+                            return
+                        } else if let count = taskCount.0 {
+                            param["task_count"] = "\(count)"
+                        }
+                    } else {
+                        DispatchQueue.main.async(execute: {
+                            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("No task folder found.")
+                            self.updateDataControlStatusDetailButton()
+                        })
+                        return
+                    }
+                    
+                    let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
+                    if UIApplication.shared.applicationState == .active {
+                        
+                        // foreground
+                        self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+                        self.sessionDownloadTask?.resume()
+                    } else {
+                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                        self.updateButtonsStatus(true)
+                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                        self.updateDataControlStatusDetailButton()
+                    }
+                }
+            }
+            catch {
+                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+            }
+            //-----------------------------------------------------------------------------
+        })
+        return true
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
@@ -907,7 +1051,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
 
         
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Data")+"?",parentVC:self, handlerFun: { (action:UIAlertAction!) in
-            
+            self.backupTaskCountLabel.isHidden = false
             let backupFile = self.selectedBackupFile
             
             var param = "{"
@@ -1002,5 +1146,45 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         popover?.sourceRect = sender.bounds
         
         sender.parentVC?.present(nav, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func backupRetryButtonDidPress(_ sender: UIButton) {
+        // Handle re-try after fail while backup
+        updateDataControlStatusDetailButton(true)
+        self.backupRetryButton.isHidden = true
+        if let taskFolder = self.currentUploadTaskFolderName {
+            uploadBackupTaskZipFolder(taskFolder: taskFolder)
+        }
+    }
+    
+    private func uploadBackupTaskZipFolder(taskFolder: String) {
+        let inspectorName = Cache_Inspector?.appUserName?.lowercased() ?? ""
+        let zipFilePath = "\(NSHomeDirectory())/Documents/\(inspectorName)/Tasks/\(taskFolder)"
+        if let result = DataControlHelper.zipTaskFolder(folderPath: zipFilePath) {
+            if let message = result.1 {
+                // handle error message
+                DispatchQueue.main.async(execute: {
+                    self.errorMessage = message
+                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zip file processing.")
+                    self.updateDataControlStatusDetailButton()
+                })
+            } else {
+                // proceed task folder upload
+                DispatchQueue.main.async(execute: {
+                    if UIApplication.shared.applicationState == .active, let request = DataControlHelper.getTaskFolderUploadURLRequest(serviceSession: self.serviceSession ?? "", taskFileName: "\(taskFolder).zip", taskFile: "\(taskFolder).zip", inspectorName: inspectorName) {
+                    
+                        // foreground
+                        self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+                        self.sessionDownloadTask?.resume()
+                    } else {
+                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                        self.updateButtonsStatus(true)
+                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                        self.updateDataControlStatusDetailButton()
+                    }
+                })
+            }
+        }
     }
 }

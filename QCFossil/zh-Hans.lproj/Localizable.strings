@@ -991,3 +991,9 @@
 "Please enter defect item for" = "請輸入不良项目";
 
 "app program version check alert message" = "版本已到期, 請更新至最新版本 (v%@), 才進行數據同步。";
+
+"Fail to get task folder count." = "Fail to get task folder count.";
+
+"No task folder found." = "No task folder found.";
+
+"Error in zip file processing." = "Error in zip file processing.";

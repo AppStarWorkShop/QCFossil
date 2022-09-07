@@ -1033,6 +1033,12 @@ class AppUpgradeDataHelper:DataHelperMaster {
                         }
                     }
                     
+                    // Add new table backup_task_upload_status
+                    sql = "CREATE TABLE IF NOT EXISTS backup_log_task_folder_upload_status (task_folder_name nvarchar(1000), upload_date datetime DEFAULT (null), local_zip_delete_date datetime DEFAULT (null));"
+                    if !self.db.executeStatements(sql) {
+                        result = false
+                    }
+                    
                     //----------------------------------------------------------------------------------
                     
                     if result {

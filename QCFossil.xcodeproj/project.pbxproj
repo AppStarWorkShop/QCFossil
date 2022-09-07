@@ -151,6 +151,8 @@
 		BDCC903E1C5620CB009A5AB7 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCC90371C5620CB009A5AB7 /* FMDatabaseQueue.m */; };
 		BDCC903F1C5620CB009A5AB7 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCC903A1C5620CB009A5AB7 /* FMResultSet.m */; };
 		BDCC90421C5624B7009A5AB7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BDCC90411C5624B7009A5AB7 /* libsqlite3.dylib */; };
+		BDCE916328C3B98600193579 /* DataControlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE916228C3B98600193579 /* DataControlHelper.swift */; };
+		BDCE916528C74FD600193579 /* BackupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE916428C74FD600193579 /* BackupHelper.swift */; };
 		BDCF87031C571B67000B0C38 /* fossil_qc_prd.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = BDCC90451C563D1D009A5AB7 /* fossil_qc_prd.sqlite */; };
 		BDCF87061C572021000B0C38 /* TaskDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCF87051C572021000B0C38 /* TaskDataHelper.swift */; };
 		BDCF87091C5734BD000B0C38 /* EnumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCF87081C5734BD000B0C38 /* EnumData.swift */; };
@@ -225,7 +227,7 @@
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
 		9C0848861C61E08500CAAD88 /* POCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POCellView.xib; sourceTree = "<group>"; };
 		9C0848881C61E0FA00CAAD88 /* POCellViewInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POCellViewInput.swift; sourceTree = "<group>"; };
-		9C0C36CB1C1E6F7800CF48ED /* QC220825P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC220825P.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0C36CB1C1E6F7800CF48ED /* QC220825T.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC220825T.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0C36D01C1E6F7800CF48ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C0C36D31C1E6F7800CF48ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -395,6 +397,8 @@
 		BDCC903A1C5620CB009A5AB7 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = db/FMResultSet.m; sourceTree = "<group>"; };
 		BDCC90411C5624B7009A5AB7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		BDCC90451C563D1D009A5AB7 /* fossil_qc_prd.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = fossil_qc_prd.sqlite; sourceTree = "<group>"; };
+		BDCE916228C3B98600193579 /* DataControlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataControlHelper.swift; sourceTree = "<group>"; };
+		BDCE916428C74FD600193579 /* BackupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupHelper.swift; sourceTree = "<group>"; };
 		BDCF87051C572021000B0C38 /* TaskDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDataHelper.swift; sourceTree = "<group>"; };
 		BDCF87081C5734BD000B0C38 /* EnumData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumData.swift; sourceTree = "<group>"; };
 		BDCF870A1C573892000B0C38 /* VendorDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VendorDataHelper.swift; sourceTree = "<group>"; };
@@ -485,7 +489,7 @@
 		9C0C36CC1C1E6F7800CF48ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0C36CB1C1E6F7800CF48ED /* QC220825P.app */,
+				9C0C36CB1C1E6F7800CF48ED /* QC220825T.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
 			);
@@ -498,6 +502,7 @@
 				9CDF8A621CC5ED03003C7997 /* Settings.bundle */,
 				9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */,
 				9CD2B4CD1C2175170003DE51 /* Models */,
+				BDCE916128C3B95D00193579 /* Helpers */,
 				9CD2B4CE1C21752C0003DE51 /* Controllers */,
 				9CD2B4CF1C2175530003DE51 /* Views */,
 				9CA56E1D1D5316D800DC8C87 /* Encrypt */,
@@ -909,6 +914,14 @@
 			name = FMDB;
 			sourceTree = "<group>";
 		};
+		BDCE916128C3B95D00193579 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BDCE916228C3B98600193579 /* DataControlHelper.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		BDCF87041C571EDE000B0C38 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -924,6 +937,7 @@
 				BDD96F411DC0B23A00806719 /* KeyValueDataHelper.swift */,
 				BDFEE24B1DFFA95A00523B04 /* AppUpgradeDataHelper.swift */,
 				BD73BEC0229A91EC001DE0CC /* ZoneDataHelper.swift */,
+				BDCE916428C74FD600193579 /* BackupHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -968,7 +982,7 @@
 			);
 			name = QCFossil;
 			productName = QCFossil;
-			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC220825P.app */;
+			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC220825T.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9C0C36DE1C1E6F7800CF48ED /* QCFossilTests */ = {
@@ -1136,6 +1150,7 @@
 				9CD8617B1C5B5D80005B66EC /* InspCatResult.swift in Sources */,
 				BDF2153D1DBE51CA0026DB39 /* DefectListTableViewCellMode3.swift in Sources */,
 				BD73BEC1229A91EC001DE0CC /* ZoneDataHelper.swift in Sources */,
+				BDCE916528C74FD600193579 /* BackupHelper.swift in Sources */,
 				BD5572C7231D3B66008E06A5 /* ELCOverlayImageView.m in Sources */,
 				9CED09D91CA013DE00ABEEEE /* CustomTableViewCell.swift in Sources */,
 				BDDB59EE1C3BD9170023D41C /* InputMode04CellView.swift in Sources */,
@@ -1171,6 +1186,7 @@
 				BDD6669D1C60BA9F00635981 /* InputModeICMaster.swift in Sources */,
 				BD5A0DAF1C44A9880056B077 /* POSearchView.swift in Sources */,
 				BD5572C9231D3B66008E06A5 /* ELCImagePickerController.m in Sources */,
+				BDCE916328C3B98600193579 /* DataControlHelper.swift in Sources */,
 				9CD2B4D41C2261670003DE51 /* TaskTableViewCell.swift in Sources */,
 				9C96E4551C4636380052C486 /* PopoverViewController.swift in Sources */,
 				BDD6669F1C610D1400635981 /* InputModeSCMaster.swift in Sources */,
@@ -1416,7 +1432,7 @@
 		};
 		9C0C36F41C1E6F7800CF48ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF87FCF27D6FE7500F4B0C2 /* productioncwbase.xcconfig */;
+			baseConfigurationReference = BD4EA8002801C28300A8F3B6 /* testcwbase.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1457,7 +1473,7 @@
 		};
 		9C0C36F51C1E6F7800CF48ED /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF87FCF27D6FE7500F4B0C2 /* productioncwbase.xcconfig */;
+			baseConfigurationReference = BD4EA8002801C28300A8F3B6 /* testcwbase.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -143,3 +143,6 @@ enum Languages: String {
     case zh = "zh-Hans"
     case fr = "fr-CH"
 }
+
+// data backup
+let dbBackupFileName = "database.zip"
