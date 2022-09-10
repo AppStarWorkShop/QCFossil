@@ -40,7 +40,10 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     @IBOutlet weak var backupRetryButton: UIButton!
     
     typealias CompletionHandler = (_ obj:AnyObject?, _ success: Bool?) -> Void
-    var filePath = NSHomeDirectory() + "/Documents"
+    var filePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/fossil_qc_prd_\(Cache_Inspector?.appUserName ?? "")"
+    var appInfofilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/AppInfo"
+    let backupFilePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")"
+    let backupFileSavePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "").zip"
     var zipPath5 = NSHomeDirectory() + "/\(dbBackupFileName)"
     let tmpPath = NSHomeDirectory() + "/tmp"
     var buffer:NSMutableData = NSMutableData()
@@ -55,6 +58,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     let typeBackup = "B"
     let typeRestore = "R"
     let typeTaskFolderBackup = "T"
+    let typeTaskFolderDownload = "TFD"
     var typeNow = ""
     let keyValueDataHelper = KeyValueDataHelper()
     var errorMessage = ""
@@ -62,14 +66,16 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     var currentUploadTaskFolderName: String? = nil
     var taskFolderCount: Int = 0
     var serviceSession: String? = nil
+    var taskZipFolderDownloadIndex = 1
     
     struct BackupFile {
-        var appRealse:String
-        var appVersion:String
-        var backupProcessDate:String
-        var backupRemarks:String
-        var backupSyncId:String
-        var deviceId:String
+        var appRealse: String
+        var appVersion: String
+        var backupProcessDate: String
+        var backupRemarks: String
+        var backupSyncId: String
+        var deviceId: String
+        var taskCount: String
     }
 
     override func viewDidLoad() {
@@ -193,8 +199,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         zipPath5 = path + "/\(dbBackupFileName)"
-        filePath = filePath + "/\((Cache_Inspector?.appUserName?.lowercased())!)"
-        
+
         self.backupListTableView.delegate = self
         self.backupListTableView.dataSource = self
         self.backupListTableView.rowHeight = 120
@@ -279,8 +284,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     //---------------------------- Backup Data First ------------------------------
                     //需要压缩的文件夹啊
                     do {
-                        if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
-                            try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
+                        if let filePath = URL(string: self.filePath), let appInfoFilePath = URL(string: self.appInfofilePath), let zipFilePath = URL(string: self.zipPath5) {
+                            try Zip.zipFiles(paths: [filePath, appInfoFilePath], zipFilePath: zipFilePath, password: nil, progress: nil)
                             
                             var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
                             param["service_token"] = _DS_SERVICETOKEN
@@ -576,25 +581,23 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             //---------------------------- Backup Data First ------------------------------
             //需要压缩的文件夹啊
             do {
-                if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
-                    try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
+                if let filePathToZip = URL(string: self.backupFilePathBeforeRestore), let zipFilePath = URL(string: self.backupFileSavePathBeforeRestore) {
+                    try Zip.zipFiles(paths: [filePathToZip], zipFilePath: zipFilePath, password: nil, progress: nil)
                 }
                 
                 //remove file before restortion
                 let filemgr = FileManager.default
-                let taskFilePath = self.filePath //+ "/Tasks/"
-                    
+                let filePathToClean = self.backupFilePathBeforeRestore
                 do {
-                    if filemgr.fileExists(atPath: taskFilePath) {
-                        let fileNames = try filemgr.contentsOfDirectory(atPath: "\(taskFilePath)")
-                        print("all files in folder: \(fileNames)")
+                    if filemgr.fileExists(atPath: filePathToClean) {
+                        let fileNames = try filemgr.contentsOfDirectory(atPath: "\(filePathToClean)")
                         for fileName in fileNames {
-                            let filePathName = "\(taskFilePath)/\(fileName)"
+                            let filePathName = "\(filePathToClean)/\(fileName)"
                             try filemgr.removeItem(atPath: filePathName)
                             
                         }
                         //delete folder
-                        try filemgr.removeItem(atPath: taskFilePath)
+                        try filemgr.removeItem(atPath: filePathToClean)
                     }
                         
                 } catch {
@@ -610,14 +613,17 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             
                 //begin restore
                 do {
-                    if let zipFilePath = URL(string: location.path) {
+                    if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")") {
                         Zip.addCustomFileExtension("tmp")
-                        try Zip.unzipFile(zipFilePath, destination: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0], overwrite: true, password: nil, progress: { (progress) -> () in
+                        try Zip.unzipFile(zipFilePath, destination: destinationPath, overwrite: true, password: nil, progress: { (progress) -> () in
                             DispatchQueue.main.async(execute: {
                                 
                                 self.progressBar.progress = Float(progress)
                                 
                                 if progress >= 1.0 {
+                                    
+                                    // Handle Task zip folders download one by one.
+                                    
                                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Complete")
                                     
                                     self.keyValueDataHelper.updateLastRestoreDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
@@ -629,6 +635,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                     self.restoreBtn.isHidden = true
                                     self.upperLine.isHidden = true
                                     self.downLine.isHidden = true
+                                    self.taskZipFolderDownloadIndex = 1
                                     
                                     // remove all files under tmp folder
                                     do {
@@ -662,7 +669,10 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                             }
                             
                             //Remove Zip File Here
-                            self.removeLocalBackupZipFile()
+                            self.removeLocalBackupZipFile(filePath: self.backupFileSavePathBeforeRestore)
+                            
+                            // Proceed Task Folders Download
+                            self.proceedTaskFoldersDownload()
                         })
                     }
                   
@@ -701,6 +711,89 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             }
             catch {
                 self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+            }
+        } else if self.typeNow == self.typeTaskFolderDownload {
+            print("Download task zip folder completed.")
+            do {
+                if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/Tasks") {
+                    Zip.addCustomFileExtension("tmp")
+                    try Zip.unzipFile(zipFilePath, destination: destinationPath, overwrite: true, password: nil, progress: { (progress) -> () in
+                        DispatchQueue.main.async(execute: {
+                            
+                            self.progressBar.progress = Float(progress)
+                            
+                            if progress >= 1.0 {
+                                
+                                // Handle Task zip folders download one by one.
+                                // Completed.
+                                if self.taskZipFolderDownloadIndex == Int(self.selectedBackupFile.taskCount) {
+                                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Complete")
+                                    
+                                    self.keyValueDataHelper.updateLastRestoreDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
+                                    
+                                    self.lastDownloadInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
+                                    self.updateButtonsStatus(true)
+                                    self.backupListTableView.isHidden = true
+                                    self.backupHistoryLabel.isHidden = true
+                                    self.restoreBtn.isHidden = true
+                                    self.upperLine.isHidden = true
+                                    self.downLine.isHidden = true
+                                    
+                                    // remove all files under tmp folder
+                                    do {
+                                        let filemgr = FileManager.default
+                                        if filemgr.fileExists(atPath: self.tmpPath) {
+                                            let fileNames = try filemgr.contentsOfDirectory(atPath: "\(self.tmpPath)")
+                                            for fileName in fileNames {
+                                                let filePathName = "\(self.tmpPath)/\(fileName)"
+                                                try filemgr.removeItem(atPath: filePathName)
+                                            }
+                                        }
+                                    } catch {
+                                        let _error = error as NSError
+                                        self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                                    }
+                                } else {
+                                    self.taskZipFolderDownloadIndex = self.taskZipFolderDownloadIndex + 1
+                                    self.proceedTaskFoldersDownload()
+                                }
+                            } else {
+                                self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Decompressing")) \(String(lroundf(100*Float(progress))))%"
+                            }
+                        })
+                    })
+                }
+            } catch {
+                let _error = error as NSError
+                self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                self.updateButtonsStatus(true)
+                self.updateDataControlStatusDetailButton()
+                self.taskZipFolderDownloadIndex = 1
+                DispatchQueue.main.async(execute: {
+                    self.passwordLabel.text = "\(error)"
+                })
+            }
+        }
+    }
+    
+    private func proceedTaskFoldersDownload() {
+        if let backupFile = self.selectedBackupFile {
+            print("self.taskZipFolderDownloadIndex: \(self.taskZipFolderDownloadIndex), backupFile.taskCount: \(backupFile.taskCount)")
+            if self.taskZipFolderDownloadIndex <= Int(backupFile.taskCount) ?? 0 {
+                self.typeNow = self.typeTaskFolderDownload
+                let request = self.createRequest(DataControlHelper.getZipTaskFolderDownloadSessionParamByIndex(backupSyncId: backupFile.backupSyncId, taskIndex: String(self.taskZipFolderDownloadIndex)), url: URL(string: _DS_DOWNLOAD_BACKUP_TASK_FOLDER["APINAME"] as! String)!)
+                print("task folder download request: \(request)")
+                if UIApplication.shared.applicationState == .active {
+                    // foreground
+                    self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+                    self.sessionDownloadTask!.resume()
+                } else {
+                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                    self.updateButtonsStatus(true)
+                    self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                    self.updateDataControlStatusDetailButton()
+                }
+                
             }
         }
     }
@@ -791,7 +884,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                         let appBackupList = responseDictionary["app_db_backup_list"] as! [[String : String]]
                         for info in appBackupList {
                             
-                            let backupFile = BackupFile(appRealse: info["app_release"]!, appVersion: info["app_version"]!, backupProcessDate: info["backup_process_date"]!, backupRemarks: info["backup_remarks"]!, backupSyncId: info["backup_sync_id"]!, deviceId: info["device_id"]!)
+                            let backupFile = BackupFile(appRealse: info["app_release"] ?? "", appVersion: info["app_version"] ?? "", backupProcessDate: info["backup_process_date"] ?? "", backupRemarks: info["backup_remarks"] ?? "", backupSyncId: info["backup_sync_id"] ?? "", deviceId: info["device_id"] ?? "", taskCount: info["task_count"] ?? "")
                             self.backupFileList.append(backupFile)
                         }
                         
@@ -1002,6 +1095,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         cell.backupProcessDateInput.text = backupFile.backupProcessDate
         cell.backupRemarksInput.text = backupFile.backupRemarks
         cell.loginUserNameInput.text = Cache_Inspector?.appUserName
+        cell.taskCountInput.text = backupFile.taskCount.isEmpty ? "0" : backupFile.taskCount
         
         if backupFile.backupProcessDate != "" {
             let dateFormatter:DateFormatter = DateFormatter()
@@ -1102,7 +1196,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.selectedBackupFile = self.backupFileList[indexPath.row]
     }
     
-    func removeLocalBackupZipFile() {
+    func removeLocalBackupZipFile(filePath: String? = nil) {
         //Remove Zip File Here
         let qualityOfServiceClass = DispatchQoS.QoSClass.background
         let backgroundQueue = DispatchQueue.global(qos: qualityOfServiceClass)
@@ -1111,8 +1205,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             let filemgr = FileManager.default
             do {
                 
-                if filemgr.fileExists(atPath: self.zipPath5) {
-                    try filemgr.removeItem(atPath: self.zipPath5)
+                if filemgr.fileExists(atPath: filePath ?? self.zipPath5) {
+                    try filemgr.removeItem(atPath: filePath ?? self.zipPath5)
                 }
                 
             } catch {

@@ -20,6 +20,8 @@ class BackupTableViewCell: UITableViewCell {
     @IBOutlet weak var backupRemarksInput: UITextView!
     @IBOutlet weak var loginUserLabel: UILabel!
     @IBOutlet weak var loginUserNameInput: UILabel!
+    @IBOutlet weak var taskCountLabel: UILabel!
+    @IBOutlet weak var taskCountInput: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +32,7 @@ class BackupTableViewCell: UITableViewCell {
         self.backupProcessDateLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Date")
         self.backupRemarksLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Remarks")
         self.loginUserLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Login User")
+        self.taskCountLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Count")
 
     }
 

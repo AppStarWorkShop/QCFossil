@@ -17,7 +17,8 @@ class DataControlHelper {
             
             if filemgr.fileExists(atPath: path) {
                 let folders = try filemgr.contentsOfDirectory(atPath: "\(path)")
-                return (folders.count, nil)
+                let taskFolders = folders.filter { !$0.contains(".DS_Store") }
+                return (taskFolders.count, nil)
             }
             return nil
         } catch {
@@ -32,7 +33,7 @@ class DataControlHelper {
             
             if filemgr.fileExists(atPath: path) {
                 let folders = try filemgr.contentsOfDirectory(atPath: "\(path)")
-                return folders.filter { $0 != ".DS_Store" && $0 != ".DS_Store.zip" }
+                return folders.filter { !$0.contains(".DS_Store") }
             }
             return []
         } catch {
@@ -131,5 +132,23 @@ class DataControlHelper {
         } catch {
             return false
         }
+    }
+    
+    static func getZipTaskFolderDownloadSessionParamByIndex(backupSyncId: String, taskIndex: String) -> String {
+        var param = "{"
+        for (key, value) in _DS_DOWNLOAD_BACKUP_TASK_FOLDER["APIPARA"] as! Dictionary<String,String> {
+            if key == "service_token" {
+                param += "\"\(key)\":\"\(_DS_SERVICETOKEN)\","
+            } else if key == "backup_sync_id" {
+                param += "\"\(key)\":\"\(backupSyncId)\","
+            } else if key == "task_index" {
+                param += "\"\(key)\":\"\(taskIndex)\","
+            } else {
+                param += "\"\(key)\":\"\(value)\","
+            }
+        }
+        param += "}"
+        
+        return param.replacingOccurrences(of: ",}", with: "}")
     }
 }
