@@ -704,6 +704,8 @@
 
 "Delete Suceess." = "删除成功";
 
+"DB restore complete, proceed task folders restore." = "数据库还原完成，将进行任务文件夹还原";
+
 "Restore Complete" = "还原完成";
 
 "List Backup History Complete" = "完成列出数据备份历史";
@@ -759,6 +761,8 @@
 "Photo Uploading..." = "相片上传中...";
 
 "Waiting for Response Data from Server, need few minutes..." = "等候服务器回应...需时几分钟";
+
+"Download completed, decompressing" = "下载完成，解压缩中";
 
 "Decompressing" = "解压缩中";
 

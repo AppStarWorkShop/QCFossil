@@ -44,6 +44,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     var appInfofilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/AppInfo"
     let backupFilePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")"
     let backupFileSavePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "").zip"
+    let rollbackFilePath = NSHomeDirectory() + "/Documents/rollback_\(Cache_Inspector?.appUserName ?? "")"
     var zipPath5 = NSHomeDirectory() + "/\(dbBackupFileName)"
     let tmpPath = NSHomeDirectory() + "/tmp"
     var buffer:NSMutableData = NSMutableData()
@@ -67,6 +68,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     var taskFolderCount: Int = 0
     var serviceSession: String? = nil
     var taskZipFolderDownloadIndex = 1
+    var taskFolderDownloadCount: Int = 0
     
     struct BackupFile {
         var appRealse: String
@@ -549,7 +551,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             let percentageUploaded = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
             
             DispatchQueue.main.async(execute: {
-                self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Uploading Backup File:")) \(String(lroundf(100*percentageUploaded)))%"
+                if self.typeNow == self.typeRestore {
+                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Downloading Backup File:")) \(String(lroundf(100*percentageUploaded)))%"
+                }else if self.typeNow == self.typeBackup {
+                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Uploading Backup File:")) \(String(lroundf(100*percentageUploaded)))%"
+                }
+                
                 self.progressBar.progress = percentageUploaded
             })
         }
@@ -580,28 +587,17 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             //dispatch_async(dispatch_get_main_queue(), {
             //---------------------------- Backup Data First ------------------------------
             //需要压缩的文件夹啊
-            do {
-                if let filePathToZip = URL(string: self.backupFilePathBeforeRestore), let zipFilePath = URL(string: self.backupFileSavePathBeforeRestore) {
-                    try Zip.zipFiles(paths: [filePathToZip], zipFilePath: zipFilePath, password: nil, progress: nil)
-                }
-                
-                //remove file before restortion
+            do {                
+                //rename folder before restortion
                 let filemgr = FileManager.default
-                let filePathToClean = self.backupFilePathBeforeRestore
+                let filePathToRanme = self.backupFilePathBeforeRestore
+                let filePathToRollback = self.rollbackFilePath
                 do {
-                    if filemgr.fileExists(atPath: filePathToClean) {
-                        let fileNames = try filemgr.contentsOfDirectory(atPath: "\(filePathToClean)")
-                        for fileName in fileNames {
-                            let filePathName = "\(filePathToClean)/\(fileName)"
-                            try filemgr.removeItem(atPath: filePathName)
-                            
-                        }
-                        //delete folder
-                        try filemgr.removeItem(atPath: filePathToClean)
+                    if filemgr.fileExists(atPath: filePathToRanme) {
+                        try filemgr.moveItem(atPath: filePathToRanme, toPath: filePathToRollback)
                     }
                         
                 } catch {
-                    print("Could not clear temp folder: \(error)")
                     let _error = error as NSError
                     self.errorMessage = "\(_error.localizedDescription ?? "" )"
                     self.updateDataControlStatusDetailButton()
@@ -624,7 +620,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                     
                                     // Handle Task zip folders download one by one.
                                     
-                                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore Complete")
+                                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("DB restore complete, proceed task folders restore.")
                                     
                                     self.keyValueDataHelper.updateLastRestoreDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
                                     
@@ -652,7 +648,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                         self.errorMessage = "\(_error.localizedDescription ?? "" )"
                                     }
                                 } else {
-                                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Decompressing")) \(String(lroundf(100*Float(progress))))%"
+                                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Download completed, decompressing")) \(String(lroundf(100*Float(progress))))%"
                                 }
                             })
                         })
@@ -668,10 +664,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                 })
                             }
                             
-                            //Remove Zip File Here
-                            self.removeLocalBackupZipFile(filePath: self.backupFileSavePathBeforeRestore)
-                            
                             // Proceed Task Folders Download
+                            self.backupTaskCountLabel.isHidden = false
                             self.proceedTaskFoldersDownload()
                         })
                     }
@@ -681,23 +675,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     self.errorMessage = "\(_error.localizedDescription ?? "" )"
                     self.updateDataControlStatusDetailButton()
                     
-                    do{
-                        if let zipFilePath = URL(string: self.zipPath5), let destinationPath = URL(string: self.filePath) {
-                            try Zip.unzipFile(zipFilePath, destination: destinationPath, overwrite: true, password: nil, progress: nil, fileOutputHandler: nil)
-                        }
-                        
-                        //Remove Zip File Here
-                        self.removeLocalBackupZipFile()
-                        
-                    }catch{
-                        print(error)
-                        let _error = error as NSError
-                        self.errorMessage = "\(_error.localizedDescription ?? "" )"
-                        self.updateDataControlStatusDetailButton()
-                        DispatchQueue.main.async(execute: {
-                            self.passwordLabel.text = "\(error)"
-                        })
-                    }
+                    // proceed rollback if restore fail rename folder to rollback
+                    rollbackIfHitErrorWhenRestore()
                     
                     print(error)
                     DispatchQueue.main.async(execute: {
@@ -739,6 +718,9 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                     self.upperLine.isHidden = true
                                     self.downLine.isHidden = true
                                     
+                                    //Remove Zip File Here
+                                    self.removeLocalBackupZipFile(filePath: self.rollbackFilePath)
+                                    
                                     // remove all files under tmp folder
                                     do {
                                         let filemgr = FileManager.default
@@ -758,12 +740,15 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                     self.proceedTaskFoldersDownload()
                                 }
                             } else {
-                                self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Decompressing")) \(String(lroundf(100*Float(progress))))%"
+                                self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Download completed, decompressing")) \(String(lroundf(100*Float(progress))))%"
                             }
                         })
                     })
                 }
             } catch {
+                // proceed rollback if restore fail rename folder to rollback
+                rollbackIfHitErrorWhenRestore()
+                
                 let _error = error as NSError
                 self.errorMessage = "\(_error.localizedDescription ?? "" )"
                 self.updateButtonsStatus(true)
@@ -778,7 +763,11 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     private func proceedTaskFoldersDownload() {
         if let backupFile = self.selectedBackupFile {
-            print("self.taskZipFolderDownloadIndex: \(self.taskZipFolderDownloadIndex), backupFile.taskCount: \(backupFile.taskCount)")
+            // Update UI
+            DispatchQueue.main.async(execute: {
+                self.backupTaskCountLabel.text = "(\(self.taskZipFolderDownloadIndex)/\(backupFile.taskCount))"
+            })
+            
             if self.taskZipFolderDownloadIndex <= Int(backupFile.taskCount) ?? 0 {
                 self.typeNow = self.typeTaskFolderDownload
                 let request = self.createRequest(DataControlHelper.getZipTaskFolderDownloadSessionParamByIndex(backupSyncId: backupFile.backupSyncId, taskIndex: String(self.taskZipFolderDownloadIndex)), url: URL(string: _DS_DOWNLOAD_BACKUP_TASK_FOLDER["APINAME"] as! String)!)
@@ -1249,6 +1238,28 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.backupRetryButton.isHidden = true
         if let taskFolder = self.currentUploadTaskFolderName {
             uploadBackupTaskZipFolder(taskFolder: taskFolder)
+        }
+    }
+    
+    private func rollbackIfHitErrorWhenRestore() {
+        let filemgr = FileManager.default
+        let filePath = self.backupFilePathBeforeRestore
+        let filePathToRollback = self.rollbackFilePath
+        do {
+            if filemgr.fileExists(atPath: filePath) {
+                try filemgr.removeItem(atPath: filePath)
+                if filemgr.fileExists(atPath: filePathToRollback) {
+                    try filemgr.moveItem(atPath: filePathToRollback, toPath: filePath)
+                }
+            }
+        } catch {
+            print(error)
+            let _error = error as NSError
+            self.errorMessage = "\(_error.localizedDescription ?? "" )"
+            self.updateDataControlStatusDetailButton()
+            DispatchQueue.main.async(execute: {
+                self.passwordLabel.text = "\(error)"
+            })
         }
     }
     
