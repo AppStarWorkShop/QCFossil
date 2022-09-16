@@ -111,3 +111,17 @@ class Task {
         self.additionalAdministrativeItems = additionalAdministrativeItems
     }
 }
+
+struct TaskReviewedWithoutAppReadyPurgeDate {
+    var taskId: String
+    var refTaskId: String
+    var inspectionNo: String
+    var inspectionDate: String
+    
+    init(taskId: String, refTaskId: String, inspectionNo: String, inspectionDate: String) {
+        self.taskId = taskId
+        self.refTaskId = refTaskId
+        self.inspectionNo = inspectionNo
+        self.inspectionDate = inspectionDate
+    }
+}

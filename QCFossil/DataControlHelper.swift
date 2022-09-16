@@ -18,7 +18,8 @@ class DataControlHelper {
             if filemgr.fileExists(atPath: path) {
                 let folders = try filemgr.contentsOfDirectory(atPath: "\(path)")
                 let taskFolders = folders.filter { !$0.contains(".DS_Store") }
-                return (taskFolders.count, nil)
+                let taskFoldersNonEmpty = taskFolders.filter { !isEmptyFolder(folderPath: "\(path)/\($0)") }
+                return (taskFoldersNonEmpty.count, nil)
             }
             return nil
         } catch {
@@ -33,7 +34,8 @@ class DataControlHelper {
             
             if filemgr.fileExists(atPath: path) {
                 let folders = try filemgr.contentsOfDirectory(atPath: "\(path)")
-                return folders.filter { !$0.contains(".DS_Store") }
+                let validFolders = folders.filter { !$0.contains(".DS_Store") }
+                return validFolders.filter { !isEmptyFolder(folderPath: "\(path)/\($0)") }
             }
             return []
         } catch {
@@ -41,9 +43,15 @@ class DataControlHelper {
         }
     }
     
-    static func zipTaskFolder(folderPath: String) -> (Bool, String?)? {
+    static func zipTaskFolder(folderPath: String, tempPath: String, tempFolder: String) -> (Bool, String?)? {
         do {
-            if let filePath = URL(string: "\(folderPath)"), let zipFilePath = URL(string: "\(folderPath).zip") {
+            // create temp folder if not exist
+            let filemgr = FileManager.default
+            if !filemgr.fileExists(atPath: tempFolder), let path = URL(string: tempFolder) {
+                try filemgr.createDirectory(atPath: path.path, withIntermediateDirectories: true, attributes: nil)
+            }
+            
+            if let filePath = URL(string: "\(folderPath)"), let zipFilePath = URL(string: "\(tempPath).zip") {
                 try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
                 return (true, nil)
             }
@@ -53,7 +61,7 @@ class DataControlHelper {
         }
     }
     
-    static func getTaskFolderUploadURLRequest(serviceSession: String, taskFileName: String, taskFile: String, inspectorName: String) -> URLRequest? {
+    static func getTaskFolderUploadURLRequest(serviceSession: String, taskFileName: String, taskFile: String, destinationPath: String, inspectorName: String) -> URLRequest? {
         guard let API = _DS_UPLOAD_BACKUP_TASK_FOLDER["APINAME"] as? String else { return nil }
         let boundary = "Boundary-\(UUID().uuidString)"
         let request = NSMutableURLRequest(url: URL(string: API)!)
@@ -67,13 +75,13 @@ class DataControlHelper {
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
-        let requestBody = createBackupBodyWithParameters(param, boundary: boundary, inspectorName: inspectorName)
+        let requestBody = createBackupBodyWithParameters(param, boundary: boundary, inspectorName: inspectorName, destinationPath: destinationPath)
         request.httpBody = requestBody
         
         return request as URLRequest
     }
     
-    static func createBackupBodyWithParameters(_ parameters: [String: String], boundary: String, inspectorName: String) -> Data {
+    static func createBackupBodyWithParameters(_ parameters: [String: String], boundary: String, inspectorName: String, destinationPath: String) -> Data {
         let body = NSMutableData()
         for (key, value) in parameters {
             if key != "task_file" {
@@ -82,7 +90,7 @@ class DataControlHelper {
                 body.appendString("\(value)\r\n")
             } else {
                 
-                let url = URL(fileURLWithPath: "\(NSHomeDirectory())/Documents/\(inspectorName)/Tasks/\(value)")
+                let url = URL(fileURLWithPath: "\(destinationPath)/\(value)")
                 let data = try? Data(contentsOf: url)
                  
                 body.appendString("--\(boundary)\r\n")
@@ -98,11 +106,11 @@ class DataControlHelper {
     }
     
     @discardableResult
-    static func removeZipTaskFolderAfterUpload(inspectorName: String, zipFileName: String) -> Bool {
+    static func removeZipTaskFolderAfterUpload(inspectorName: String, zipFilePath: String) -> Bool {
         do {
             let filemgr = FileManager.default
-            if filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\(inspectorName)/Tasks/\(zipFileName).zip") {
-                try filemgr.removeItem(atPath: "\(NSHomeDirectory())/Documents/\(inspectorName)/Tasks/\(zipFileName).zip")
+            if filemgr.fileExists(atPath: "\(zipFilePath).zip") {
+                try filemgr.removeItem(atPath: "\(zipFilePath).zip")
             }
             return true
         } catch {
@@ -150,5 +158,33 @@ class DataControlHelper {
         param += "}"
         
         return param.replacingOccurrences(of: ",}", with: "}")
+    }
+    
+    static func isEmptyFolder(folderPath: String) -> Bool {
+        do {
+            let fileManager = FileManager.default
+            let contents = try fileManager.contentsOfDirectory(atPath: folderPath)
+            let images = contents.filter { $0.lowercased().hasSuffix(".jpg") }
+            if images.count > 0 {
+                return false
+            }
+        } catch {}
+        return true
+    }
+    
+    static func clearTempZipFolders(tempZipFolderPath: String) {
+        do {
+            let filemgr = FileManager.default
+            if filemgr.fileExists(atPath: tempZipFolderPath) {
+                let fileNames = try filemgr.contentsOfDirectory(atPath: "\(tempZipFolderPath)")
+                for fileName in fileNames {
+                    let filePathName = "\(tempZipFolderPath)/\(fileName)"
+                    try filemgr.removeItem(atPath: filePathName)
+                }
+                
+                //delete folder
+                try filemgr.removeItem(atPath: tempZipFolderPath)
+            }
+        } catch {}
     }
 }

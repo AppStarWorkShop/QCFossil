@@ -47,6 +47,10 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     let rollbackFilePath = NSHomeDirectory() + "/Documents/rollback_\(Cache_Inspector?.appUserName ?? "")"
     var zipPath5 = NSHomeDirectory() + "/\(dbBackupFileName)"
     let tmpPath = NSHomeDirectory() + "/tmp"
+    let restoreDBFilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")"
+    let restoreFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/Tasks"
+    let backupFolderToZipPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/Tasks/%@"
+    let tempZipFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/TempZipFiles"
     var buffer:NSMutableData = NSMutableData()
     var expectedContentLength = 0
     var bgSession: Foundation.URLSession?
@@ -261,8 +265,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     @IBAction func backupDataClick(_ sender: UIButton) {
         updateDataControlStatusDetailButton(true)
+        self.passwordLabel.text = ""
         self.typeNow = self.typeBackup
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Data")+"?",parentVC:self, handlerFun: { (action:UIAlertAction!) in
+            
+            // clear temp zip folder before backup
+            DataControlHelper.clearTempZipFolders(tempZipFolderPath: self.tempZipFolderPath)
             
             if self.backupDesc.text == "" {
                 self.errorMsg.isHidden = false
@@ -609,7 +617,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             
                 //begin restore
                 do {
-                    if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")") {
+                    if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: self.restoreDBFilePath) {
                         Zip.addCustomFileExtension("tmp")
                         try Zip.unzipFile(zipFilePath, destination: destinationPath, overwrite: true, password: nil, progress: { (progress) -> () in
                             DispatchQueue.main.async(execute: {
@@ -694,7 +702,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         } else if self.typeNow == self.typeTaskFolderDownload {
             print("Download task zip folder completed.")
             do {
-                if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/Tasks") {
+                if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: self.restoreFolderPath) {
                     Zip.addCustomFileExtension("tmp")
                     try Zip.unzipFile(zipFilePath, destination: destinationPath, overwrite: true, password: nil, progress: { (progress) -> () in
                         DispatchQueue.main.async(execute: {
@@ -826,41 +834,42 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
         if(error != nil) {
-            
-            buffer.setData(NSMutableData() as Data)
-            var errorMsg = ""
-            
-            if error?._code == NSURLErrorTimedOut {
-                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue")
-                self.updateButtonsStatus(true)
-            }else if error?._code == NSURLErrorNotConnectedToInternet || error?._code == NSURLErrorCannotConnectToHost {
-                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("App is in Offline Mode and unable to proceed Data Download.")
-            }else{
-                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Network Request Failed with Unknown Reason!")
-            }
-            self.errorMessage = "\(error?.localizedDescription ?? "") with code: \(error?._code)"
-            
-            if UIApplication.shared.applicationState != .active {
-                errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-            }
-            
-            self.updateButtonsStatus(true)
-            updateDataControlStatusDetailButton()
             DispatchQueue.main.async(execute: {
-                self.progressBar.progress = 0
-                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg)
-            })
-            
-            //Remove Zip File Here
-            self.removeLocalBackupZipFile()
-            
-            if self.typeNow == self.typeTaskFolderBackup {
+                
+                self.buffer.setData(NSMutableData() as Data)
+                var errorMsg = ""
+                
+                if error?._code == NSURLErrorTimedOut {
+                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed due to Network Issue")
+                    self.updateButtonsStatus(true)
+                }else if error?._code == NSURLErrorNotConnectedToInternet || error?._code == NSURLErrorCannotConnectToHost {
+                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("App is in Offline Mode and unable to proceed Data Download.")
+                }else{
+                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Network Request Failed with Unknown Reason!")
+                }
+                self.errorMessage = "\(error?.localizedDescription ?? "") with code: \(String(describing: error?._code))"
+                
+                if UIApplication.shared.applicationState != .active {
+                    errorMsg = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
+                    self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
+                }
+                
+                self.updateButtonsStatus(true)
+                self.updateDataControlStatusDetailButton()
                 DispatchQueue.main.async(execute: {
-                    self.backupRetryButton.isHidden = false
+                    self.progressBar.progress = 0
+                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg)
                 })
-            }
-            
+                
+                //Remove Zip File Here
+                self.removeLocalBackupZipFile()
+                
+                if self.typeNow == self.typeTaskFolderBackup {
+                    DispatchQueue.main.async(execute: {
+                        self.backupRetryButton.isHidden = false
+                    })
+                }
+            })
         } else if self.typeNow == self.typeListBackupFiles {
             
             do {
@@ -935,14 +944,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }
             } catch {
                 DispatchQueue.main.async(execute: {
-                    print(error)
-                    
                     let error = error as NSError
                     self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Failed!"))\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
                     
                     self.removeLocalBackupZipFile()
                     let responseString = NSString(data: self.buffer as Data, encoding: String.Encoding.utf8.rawValue)
-                    print("responseString = \(responseString)")
+                    
                     self.errorMessage = "\(error.localizedDescription ?? "" )"
                     self.updateDataControlStatusDetailButton()
                     self.updateButtonsStatus(true)
@@ -966,7 +973,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 backupHelper.updateTaskFolderWithUploadDate(taskFolder: taskFolder)
                 
                 // remove local zip file
-                DataControlHelper.removeZipTaskFolderAfterUpload(inspectorName: inspectorName, zipFileName: taskFolder)
+                DataControlHelper.removeZipTaskFolderAfterUpload(inspectorName: inspectorName, zipFilePath: "\(self.tempZipFolderPath)/\(taskFolder)")
                 
                 // update backup log in database
                 backupHelper.updateTaskFolderWithDeletedDate(taskFolder: taskFolder)
@@ -996,70 +1003,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 self.upperLine.isHidden = true
                 self.taskFolders = nil
                 self.currentUploadTaskFolderName = nil
+                DataControlHelper.clearTempZipFolders(tempZipFolderPath: self.tempZipFolderPath)
                 
                 //Send local notification for Task Done.
                 self.presentLocalNotification("Data Backup Complete.")
             })
         }
-    }
-    
-    func uploadZipTaskFolder(path: String) -> Bool {
-        DispatchQueue.main.async(execute: {
-            self.activityActor.isHidden = true
-            self.activityActor.stopAnimating()
-            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Done")
-            //---------------------------- Backup Data First ------------------------------
-            //需要压缩的文件夹啊
-            do {
-                if let filePath = URL(string: self.filePath), let zipFilePath = URL(string: self.zipPath5) {
-                    try Zip.zipFiles(paths: [filePath], zipFilePath: zipFilePath, password: nil, progress: nil)
-                    
-                    var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
-                    param["service_token"] = _DS_SERVICETOKEN
-                    param["db_filename"] = "\(dbBackupFileName)"
-                    param["db_file"] = self.zipPath5
-                    param["backup_remarks"] = self.backupDesc.text
-                    param["app_version"] = String(_VERSION)
-                    param["app_release"] = _RELEASE
-                    if let taskCount = DataControlHelper.getInspectorTaskFolderCount(inspectorName: Cache_Inspector?.appUserName?.lowercased() ?? "") {
-                        if let message = taskCount.1 {
-                            DispatchQueue.main.async(execute: {
-                                self.errorMessage = message
-                                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to get task folder count.")
-                                self.updateDataControlStatusDetailButton()
-                            })
-                            return
-                        } else if let count = taskCount.0 {
-                            param["task_count"] = "\(count)"
-                        }
-                    } else {
-                        DispatchQueue.main.async(execute: {
-                            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("No task folder found.")
-                            self.updateDataControlStatusDetailButton()
-                        })
-                        return
-                    }
-                    
-                    let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
-                    if UIApplication.shared.applicationState == .active {
-                        
-                        // foreground
-                        self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
-                        self.sessionDownloadTask?.resume()
-                    } else {
-                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                        self.updateButtonsStatus(true)
-                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                        self.updateDataControlStatusDetailButton()
-                    }
-                }
-            }
-            catch {
-                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
-            }
-            //-----------------------------------------------------------------------------
-        })
-        return true
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
@@ -1234,8 +1183,14 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     @IBAction func backupRetryButtonDidPress(_ sender: UIButton) {
         // Handle re-try after fail while backup
+        self.passwordLabel.text = ""
         updateDataControlStatusDetailButton(true)
         self.backupRetryButton.isHidden = true
+        
+        // clear temp folder
+        DataControlHelper.clearTempZipFolders(tempZipFolderPath: self.tempZipFolderPath)
+        
+        // restart task
         if let taskFolder = self.currentUploadTaskFolderName {
             uploadBackupTaskZipFolder(taskFolder: taskFolder)
         }
@@ -1253,7 +1208,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }
             }
         } catch {
-            print(error)
             let _error = error as NSError
             self.errorMessage = "\(_error.localizedDescription ?? "" )"
             self.updateDataControlStatusDetailButton()
@@ -1265,19 +1219,28 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     private func uploadBackupTaskZipFolder(taskFolder: String) {
         let inspectorName = Cache_Inspector?.appUserName?.lowercased() ?? ""
-        let zipFilePath = "\(NSHomeDirectory())/Documents/\(inspectorName)/Tasks/\(taskFolder)"
-        if let result = DataControlHelper.zipTaskFolder(folderPath: zipFilePath) {
+        let zipFilePath = String(format: backupFolderToZipPath, taskFolder)
+        let tempZipFilePath = "\(tempZipFolderPath)/\(taskFolder)"
+        
+        // check if folder is empty, then skip
+        if DataControlHelper.isEmptyFolder(folderPath: zipFilePath) {
+            uploadTaskFolder()
+            return
+        }
+        
+        if let result = DataControlHelper.zipTaskFolder(folderPath: zipFilePath, tempPath: tempZipFilePath, tempFolder: tempZipFolderPath) {
             if let message = result.1 {
                 // handle error message
                 DispatchQueue.main.async(execute: {
                     self.errorMessage = message
                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zip file processing.")
                     self.updateDataControlStatusDetailButton()
+                    self.updateButtonsStatus(true)
                 })
             } else {
                 // proceed task folder upload
                 DispatchQueue.main.async(execute: {
-                    if UIApplication.shared.applicationState == .active, let request = DataControlHelper.getTaskFolderUploadURLRequest(serviceSession: self.serviceSession ?? "", taskFileName: "\(taskFolder).zip", taskFile: "\(taskFolder).zip", inspectorName: inspectorName) {
+                    if UIApplication.shared.applicationState == .active, let request = DataControlHelper.getTaskFolderUploadURLRequest(serviceSession: self.serviceSession ?? "", taskFileName: "\(taskFolder).zip", taskFile: "\(taskFolder).zip", destinationPath: self.tempZipFolderPath, inspectorName: inspectorName) {
                     
                         // foreground
                         self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)

@@ -1103,6 +1103,7 @@ let _DS_DL_TASK_STATUS = [
         "service_token" : _DS_SERVICETOKEN,
         "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "Task Status Data Download",
+        "inspect_task_list": "" //["task_id","ref_task_id","inspection_no", "inspection_date"]
     ],
     
     "ACTIONNAMES" : [

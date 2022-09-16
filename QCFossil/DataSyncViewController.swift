@@ -1119,9 +1119,19 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         for (key, value) in dsData["APIPARA"] as! Dictionary<String,String> {
             if key == "service_token" {
                 param += "\"\(key)\":\"\(_DS_SERVICETOKEN)\","
-            }else if key == "init_service_session" {
+            } else if key == "init_service_session" {
                 param += "\"\(key)\":\"\(self.ainit_service_session)\","
-            }else{
+            } else if key == "inspect_task_list" {
+                let dataSyncHelper = DataSyncDataHelper()
+                let taskItems = dataSyncHelper.getReviewedTasksWithoutAppReadyPurgeDate()
+                var paramInTaskItem = "["
+                for item in taskItems {
+                    paramInTaskItem += "{\"task_id\":\"\(item.taskId)\",\"ref_task_id\":\"\(item.refTaskId)\",\"inspection_no\":\"\(item.inspectionNo)\",\"inspection_date\":\"\(item.inspectionDate)\"},"
+                }
+                paramInTaskItem += "]"
+                paramInTaskItem = paramInTaskItem.replacingOccurrences(of: ",]", with: "]")
+                param += "\"\(key)\":\(paramInTaskItem),"
+            } else {
                 param += "\"\(key)\":\"\(value)\","
             }
         }
@@ -1742,74 +1752,71 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
             
         } else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Task Status Data Download Acknowledgement" {
             //buffer.setData(NSMutableData())
-            
-            do {
-                updateDLProcessLabel("Sending Task Status Data Download Acknowledgement...")
-                let dataJson = try Data(contentsOf: URL(fileURLWithPath: getDataJsonPath()), options: NSData.ReadingOptions.mappedIfSafe)
-                let jsonData = try JSONSerialization.jsonObject(with: dataJson, options: .allowFragments) as! NSDictionary
-                //buffer.setData(NSMutableData())
-                
-                _DS_SESSION = jsonData["service_session"] as? String ?? ""
-                var session_result = _DS_SESSION
-                if let result = jsonData["ack_result"] as? String {
-                    session_result += result
-                }
-                
-                //Send local notification for Task Done.
-                self.updateProgressBar(1)
-                
-                //Handel Tasks Delete Here
-                let dataSyncDataHelper = DataSyncDataHelper()
-                let taskIds = dataSyncDataHelper.selectTaskIdsCanDelete()
-                
-                self.cleanTaskCnt = 0
-                for taskId in taskIds {
-                    print("delete \(taskId)");
-                    self.view.deleteTask(taskId)
-                    self.cleanTaskCnt += 1
+            DispatchQueue.main.async(execute: {
+                do {
+                    self.updateDLProcessLabel("Sending Task Status Data Download Acknowledgement...")
+                    let dataJson = try Data(contentsOf: URL(fileURLWithPath: self.getDataJsonPath()), options: NSData.ReadingOptions.mappedIfSafe)
+                    let jsonData = try JSONSerialization.jsonObject(with: dataJson, options: .allowFragments) as! NSDictionary
+                    //buffer.setData(NSMutableData())
                     
-                    DispatchQueue.main.async(execute: {
+                    _DS_SESSION = jsonData["service_session"] as? String ?? ""
+                    var session_result = _DS_SESSION
+                    if let result = jsonData["ack_result"] as? String {
+                        session_result += result
+                    }
+                    
+                    //Send local notification for Task Done.
+                    self.updateProgressBar(1)
+                    
+                    //Handel Tasks Delete Here
+                    let dataSyncDataHelper = DataSyncDataHelper()
+                    let taskIds = dataSyncDataHelper.selectTaskIdsCanDelete()
+                    
+                    self.cleanTaskCnt = 0
+                    for taskId in taskIds {
+                        print("delete \(taskId)");
+                        self.view.deleteTask(taskId)
+                        self.cleanTaskCnt += 1
                         self.updateDLProcessLabel("Task Cleaning...")
-                        
+                            
                         self.cleanTaskStatus.text = "\(self.cleanTaskCnt)"
                         let percent = Float(self.cleanTaskCnt)/Float(taskIds.count)
-                        
+                            
                         self.cleanTaskProcessBar.progress = percent
-                    })
+                    }
+                    
+                    if self.cleanTaskCnt < 1 {
+                        DispatchQueue.main.async(execute: {
+                            self.cleanTaskStatus.text = "0"
+                            self.cleanTaskProcessBar.progress = 1.0
+                        })
+                    }
+                    
+                    //clear invalid tasks
+                    let taskDataHelper = TaskDataHelper()
+                    var invalidTaskIds = taskDataHelper.getAllInvalidTaskId()
+                    
+                    while let id = invalidTaskIds.popLast() {
+                        self.view.deleteTask(id)
+                    }
+                    
+                    let fileManager = FileManager.default
+                    if fileManager.fileExists(atPath: self.getDataJsonPath()) {
+                        try fileManager.removeItem(atPath: self.getDataJsonPath())
+                    }
+                    
+                    //Send local notification for Task Done.
+                    self.updateProgressBar(1)
+                    self.makeDLPostRequest(_DS_DL_STYLE_PHOTO as AnyObject)
                     
                 }
-                
-                if self.cleanTaskCnt < 1 {
-                    DispatchQueue.main.async(execute: {
-                        self.cleanTaskStatus.text = "0"
-                        self.cleanTaskProcessBar.progress = 1.0
-                    })
+                catch {
+                    #if DEBUG
+                        print("error serializing JSON: \(error)")
+                    #endif
+                    self.displayDetailErrorInfo(error as NSError, pathToFile: self.getDataJsonPath())
                 }
-                
-                //clear invalid tasks
-                let taskDataHelper = TaskDataHelper()
-                var invalidTaskIds = taskDataHelper.getAllInvalidTaskId()
-                
-                while let id = invalidTaskIds.popLast() {
-                    self.view.deleteTask(id)
-                }
-                
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: getDataJsonPath()) {
-                    try fileManager.removeItem(atPath: getDataJsonPath())
-                }
-                
-                //Send local notification for Task Done.
-                self.updateProgressBar(1)
-                self.makeDLPostRequest(_DS_DL_STYLE_PHOTO as AnyObject)
-                
-            }
-            catch {
-                #if DEBUG
-                    print("error serializing JSON: \(error)")
-                #endif
-                displayDetailErrorInfo(error as NSError, pathToFile: getDataJsonPath())
-            }
+            })
         }else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "Style Photo Download" {
             
             do {
