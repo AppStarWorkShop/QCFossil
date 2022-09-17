@@ -1400,11 +1400,32 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         }
     }
     
+    private func resetAfterFail(errorMessage: String? = nil) {
+        if self.actionType < 1 {
+            updateDLProcessLabel(errorMessage ?? errorMsg)
+            updateDownloadTaskStatusDetailButton()
+            updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
+        } else {
+            updateULProcessLabel(errorMessage ?? errorMsg)
+            updateUploadTaskStatusDetailButton()
+            updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
+            
+            if self.dsDataObj!["NAME"] as! String == DataSyncConstants.TaskPhotoDataUpload {
+                self.updateTaskStatusAfterPhotoUploaded()
+            }
+        }
+    }
+    
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         //use buffer here.Download is done
         //progress.progress = 1.0   // download 100% complete
-        
-        if(error != nil) {
+        if let httpResponse = task.response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+            
+            // handle http errors
+            self.errorMsg = "http response error with status code: \(httpResponse.statusCode)"
+            resetAfterFail(errorMessage: "Http gateway error, please click error info button for detail.")
+            
+        } else if(error != nil) {
             
             buffer.setData(NSMutableData() as Data)
             
@@ -1423,20 +1444,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                 self.errorMsg = "Please avoid to press home/power button or show up control center when data sync in progress."
                 updateDownloadTaskStatusDetailButton()
             }
-            
-            if self.actionType < 1 {
-                updateDLProcessLabel(errorMsg)
-                updateDownloadTaskStatusDetailButton()
-                updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
-            } else {
-                updateULProcessLabel(errorMsg)
-                updateUploadTaskStatusDetailButton()
-                updateButtonStatus("Enable",btn: self.uploadBtn, isRetry: true)
-                
-                if self.dsDataObj!["NAME"] as! String == DataSyncConstants.TaskPhotoDataUpload {
-                    self.updateTaskStatusAfterPhotoUploaded()
-                }
-            }
+            resetAfterFail()
+
         } else if self.dsDataObj != nil && self.dsDataObj!["NAME"] as! String == "App Program Version Check" {
             do {
                 let dataJson = try Data(contentsOf: URL(fileURLWithPath: getDataJsonPath()), options: NSData.ReadingOptions.mappedIfSafe)

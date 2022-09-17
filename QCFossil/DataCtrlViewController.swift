@@ -830,10 +830,32 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         }
     }
     
+    private func resetAfterFail(errorMsg: String) {
+        DispatchQueue.main.async(execute: {
+            self.updateButtonsStatus(true)
+            self.updateDataControlStatusDetailButton()
+            
+            self.progressBar.progress = 0
+            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg)
+            
+            //Remove Zip File Here
+            self.removeLocalBackupZipFile()
+            
+            if self.typeNow == self.typeTaskFolderBackup {
+                self.backupRetryButton.isHidden = false
+            }
+        })
+    }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
-        if(error != nil) {
+        if let httpResponse = task.response as? HTTPURLResponse, httpResponse.statusCode != 300 {
+            
+            // handle http errors
+            self.errorMessage = "http response error with status code: \(httpResponse.statusCode)"
+            resetAfterFail(errorMsg: "Http gateway error, please click error info button for detail.")
+            
+        } else if error != nil {
             DispatchQueue.main.async(execute: {
                 
                 self.buffer.setData(NSMutableData() as Data)
@@ -854,21 +876,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
                 }
                 
-                self.updateButtonsStatus(true)
-                self.updateDataControlStatusDetailButton()
-                DispatchQueue.main.async(execute: {
-                    self.progressBar.progress = 0
-                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString(errorMsg)
-                })
-                
-                //Remove Zip File Here
-                self.removeLocalBackupZipFile()
-                
-                if self.typeNow == self.typeTaskFolderBackup {
-                    DispatchQueue.main.async(execute: {
-                        self.backupRetryButton.isHidden = false
-                    })
-                }
+                self.resetAfterFail(errorMsg: errorMsg)
             })
         } else if self.typeNow == self.typeListBackupFiles {
             
