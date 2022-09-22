@@ -190,6 +190,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.restoreBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Restore"), for: UIControl.State())
         self.lastLoginDateInput.text = Cache_Inspector?.lastLoginDate
         self.removeBtn.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Login User Data"), for: UIControl.State())
+        self.backupRetryButton.setTitle(MylocalizedString.sharedLocalizeManager.getLocalizedString("Retry"), for: .normal)
         
         self.lastUpdateInput.text = keyValueDataHelper.getLastBackupDatetimeByUserId(String(describing: Cache_Inspector?.inspectorId))
         self.lastDownloadInput.text = keyValueDataHelper.getLastRestoreDatetimeByUserId(String(describing: Cache_Inspector?.inspectorId))
@@ -264,10 +265,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     }
     
     @IBAction func backupDataClick(_ sender: UIButton) {
-        updateDataControlStatusDetailButton(true)
-        self.passwordLabel.text = ""
-        self.typeNow = self.typeBackup
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Data")+"?",parentVC:self, handlerFun: { (action:UIAlertAction!) in
+            
+            self.updateDataControlStatusDetailButton(true)
+            self.backupRetryButton.isHidden = true
+            self.passwordLabel.text = ""
+            self.typeNow = self.typeBackup
             
             // clear temp zip folder before backup
             DataControlHelper.clearTempZipFolders(tempZipFolderPath: self.tempZipFolderPath)
@@ -338,7 +341,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                         }
                     }
                     catch {
-                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+                        self.errorMessage = "\(error.localizedDescription)"
+                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
                     }
                     //-----------------------------------------------------------------------------
                 })
@@ -468,10 +472,10 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                 self.view.removeActivityIndicator()
                                 self.view.alertView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Delete Suceess."), handlerFun: { action in
                                     self.dismiss(animated: true, completion: nil)
-                            
                                 })
                             } catch {
-                                print("Could not clear temp folder: \(error)")
+                                self.errorMessage = "Could not clear temp folder: \(error.localizedDescription)"
+                                self.passwordLabel.text = "Fail to clear temp folder"
                             }
                         })
                     })
@@ -606,8 +610,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     }
                         
                 } catch {
-                    let _error = error as NSError
-                    self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                    self.errorMessage = "\(error.localizedDescription)"
+                    self.passwordLabel.text = "Fail to rename original folder before restore"
                     self.updateDataControlStatusDetailButton()
                 }
                 
@@ -652,8 +656,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                             }
                                         }
                                     } catch {
-                                        let _error = error as NSError
-                                        self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                                        self.errorMessage = "\(error.localizedDescription)"
+                                        self.passwordLabel.text = "Fail to remove all files under download temp folder"
                                     }
                                 } else {
                                     self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Download completed, decompressing")) \(String(lroundf(100*Float(progress))))%"
@@ -679,8 +683,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     }
                   
                 } catch {
-                    let _error = error as NSError
-                    self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                    self.errorMessage = "\(error.localizedDescription)"
+                    self.passwordLabel.text = "Fail to unzip database file from server"
                     self.updateDataControlStatusDetailButton()
                     
                     // proceed rollback if restore fail rename folder to rollback
@@ -697,7 +701,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 self.presentLocalNotification("Data Restore Complete.")
             }
             catch {
-                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
+                self.errorMessage = "\(error.localizedDescription)"
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
             }
         } else if self.typeNow == self.typeTaskFolderDownload {
             print("Download task zip folder completed.")
@@ -740,8 +745,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                             }
                                         }
                                     } catch {
-                                        let _error = error as NSError
-                                        self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                                        self.errorMessage = "\(error.localizedDescription)"
+                                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("remove all files under tmp folder")
                                     }
                                 } else {
                                     self.taskZipFolderDownloadIndex = self.taskZipFolderDownloadIndex + 1
@@ -757,8 +762,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 // proceed rollback if restore fail rename folder to rollback
                 rollbackIfHitErrorWhenRestore()
                 
-                let _error = error as NSError
-                self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                self.errorMessage = "\(error.localizedDescription)"
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to unzip task zip file from server")
                 self.updateButtonsStatus(true)
                 self.updateDataControlStatusDetailButton()
                 self.taskZipFolderDownloadIndex = 1
@@ -849,7 +854,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         
-        if let httpResponse = task.response as? HTTPURLResponse, httpResponse.statusCode != 300 {
+        if let httpResponse = task.response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             
             // handle http errors
             self.errorMessage = "http response error with status code: \(httpResponse.statusCode)"
@@ -913,8 +918,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 DispatchQueue.main.async(execute: {
                     let error = error as NSError
                     self.updateButtonsStatus(true)
-                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
-                    self.errorMessage = "\(error.localizedDescription ?? "" )"
+                    self.errorMessage = "\(error.localizedDescription)"
+                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to parse json response from server")
                     self.updateDataControlStatusDetailButton()
                 })
             }
@@ -952,13 +957,13 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }
             } catch {
                 DispatchQueue.main.async(execute: {
-                    let error = error as NSError
+                    
+                    self.errorMessage = "\(error.localizedDescription)"
                     self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Failed!"))\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
                     
                     self.removeLocalBackupZipFile()
                     let responseString = NSString(data: self.buffer as Data, encoding: String.Encoding.utf8.rawValue)
                     
-                    self.errorMessage = "\(error.localizedDescription ?? "" )"
                     self.updateDataControlStatusDetailButton()
                     self.updateButtonsStatus(true)
                 })
@@ -1156,9 +1161,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }
                 
             } catch {
-                print("Could not clear Zip file: \(error)")
-                let _error = error as NSError
-                self.errorMessage = "\(_error.localizedDescription ?? "" )"
+                self.errorMessage = "\(error.localizedDescription)"
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to remove zip file after backup/restore")
                 self.updateDataControlStatusDetailButton()
             }
             
@@ -1216,11 +1220,10 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }
             }
         } catch {
-            let _error = error as NSError
-            self.errorMessage = "\(_error.localizedDescription ?? "" )"
-            self.updateDataControlStatusDetailButton()
             DispatchQueue.main.async(execute: {
-                self.passwordLabel.text = "\(error)"
+                self.errorMessage = "\(error.localizedDescription)"
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Fail to clear local files after rollback fail")
+                self.updateDataControlStatusDetailButton()
             })
         }
     }

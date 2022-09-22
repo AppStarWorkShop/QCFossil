@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9C0C36CA1C1E6F7800CF48ED"
-               BuildableName = "QC220913T13.app"
+               BuildableName = "QC220918T13.app"
                BlueprintName = "QCFossil"
                ReferencedContainer = "container:QCFossil.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0C36CA1C1E6F7800CF48ED"
-            BuildableName = "QC220913T13.app"
+            BuildableName = "QC220918T13.app"
             BlueprintName = "QCFossil"
             ReferencedContainer = "container:QCFossil.xcodeproj">
          </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0C36CA1C1E6F7800CF48ED"
-            BuildableName = "QC220913T13.app"
+            BuildableName = "QC220918T13.app"
             BlueprintName = "QCFossil"
             ReferencedContainer = "container:QCFossil.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0C36CA1C1E6F7800CF48ED"
-            BuildableName = "QC220913T13.app"
+            BuildableName = "QC220918T13.app"
             BlueprintName = "QCFossil"
             ReferencedContainer = "container:QCFossil.xcodeproj">
          </BuildableReference>
