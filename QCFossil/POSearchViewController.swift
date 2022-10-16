@@ -709,95 +709,96 @@ class POSearchViewController: PopoverMaster, UITableViewDelegate,  UITableViewDa
             self.view.showActivityIndicator("Searching")
             
             DispatchQueue.main.async(execute: {
-            let poDataHelper = PoDataHelper()
-            self.poItemSet = poDataHelper.getAllPoItems()!
+                
+                let vendor = self.vendors.first(where: { $0.displayName == self.vendorInput.text })
+
+                let poDataHelper = PoDataHelper()
+                self.poItemSet = poDataHelper.getAllPoItems(vendorId: vendor?.vdrId)!
+                
+                //Reset Items
+                self.poSelectedItems = [PoItem]()
             
-            //Reset Items
-            self.poSelectedItems = [PoItem]()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = _DATEFORMATTER
-                
-                var poItemsByFilter = self.poItemSet
-                
-                //for poItem in self.poSelectedItems {
-                if self.pVC?.classForCoder == CreateTaskViewController.classForCoder() {
-                    for poItem in (self.pVC as! CreateTaskViewController).poItems {
-                        poItemsByFilter = poItemsByFilter.filter({$0.itemId != poItem.itemId})
-                    }
-                }else if self.pVC?.classForCoder == TaskDetailsViewController.classForCoder() {
-                    let taskDetailViewInput = self.pVC?.view.viewWithTag(_TASKDETAILVIEWTAG) as! TaskDetailViewInput
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     
-                    for poItem in taskDetailViewInput.poItems {
-                        poItemsByFilter = poItemsByFilter.filter({$0.itemId != poItem.itemId})
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = _DATEFORMATTER
+                    
+                    var poItemsByFilter = self.poItemSet
+                    
+                    //for poItem in self.poSelectedItems {
+                    if self.pVC?.classForCoder == CreateTaskViewController.classForCoder() {
+                        for poItem in (self.pVC as! CreateTaskViewController).poItems {
+                            poItemsByFilter = poItemsByFilter.filter({$0.itemId != poItem.itemId})
+                        }
+                    }else if self.pVC?.classForCoder == TaskDetailsViewController.classForCoder() {
+                        let taskDetailViewInput = self.pVC?.view.viewWithTag(_TASKDETAILVIEWTAG) as! TaskDetailViewInput
+                        
+                        for poItem in taskDetailViewInput.poItems {
+                            poItemsByFilter = poItemsByFilter.filter({$0.itemId != poItem.itemId})
+                        }
                     }
+                    
+                    //Filter By Brand
+                    if self.brandInput.text != "" {
+                        poItemsByFilter = poItemsByFilter.filter({ ($0.brandName?.lowercased().contains((self.brandInput.text?.lowercased())!))! })
+                    }
+                    
+                    //Filter By Style
+                    if self.styleInput.text != "" {
+                        poItemsByFilter = poItemsByFilter.filter({ ($0.styleNo?.lowercased().contains((self.styleInput.text?.lowercased())!))! })
+                    }
+                    
+                    //Filter By PoNo.
+                    if self.poNoInput.text != "" {
+                        poItemsByFilter = poItemsByFilter.filter({ ($0.poNo?.lowercased().contains((self.poNoInput.text?.lowercased())!))! })
+                    }
+                    
+                    //Filter By Ship Win Date
+                    if self.shipWinFromInput.text != "" {
+                        let shipWinFromInput = dateFormatter.date(from: self.shipWinFromInput.text!)
+                        poItemsByFilter = poItemsByFilter.filter({ $0.shipWin == nil || ($0.shipWin != "" && (dateFormatter.date(from: $0.shipWin)!.equalToDate(shipWinFromInput!) || dateFormatter.date(from: $0.shipWin)!.isGreaterThanDate(shipWinFromInput!))) })
+                    }
+                    
+                    if self.shipWinToInput.text != "" {
+                        let shipWinToInput = dateFormatter.date(from: self.shipWinToInput.text!)
+                        poItemsByFilter = poItemsByFilter.filter({ $0.shipWin == nil || ($0.shipWin != "" && (dateFormatter.date(from: $0.shipWin)!.equalToDate(shipWinToInput!) || dateFormatter.date(from: $0.shipWin)!.isLessThanDate(shipWinToInput!))) })
+                    }
+                    
+                    // Filter By OPD/RSD Date
+                    if self.orFromInput.text != "" {
+                        let orFromInput = dateFormatter.date(from: self.orFromInput.text!)
+                        poItemsByFilter = poItemsByFilter.filter({ $0.opdRsd == nil || ($0.opdRsd != "" && (dateFormatter.date(from: $0.opdRsd)!.equalToDate(orFromInput!) || dateFormatter.date(from: $0.opdRsd)!.isGreaterThanDate(orFromInput!))) })
+                    }
+                    
+                    if self.orToInput.text != "" {
+                        let orToInput = dateFormatter.date(from: self.orToInput.text!)
+                        poItemsByFilter = poItemsByFilter.filter({ $0.opdRsd == nil || ($0.opdRsd != "" && (dateFormatter.date(from: $0.opdRsd)!.equalToDate(orToInput!) || dateFormatter.date(from: $0.opdRsd)!.isLessThanDate(orToInput!))) })
+                    }
+                    
+    //                //Filter By Vendor
+    //                if self.vendorInput.text != "" {
+    //                    poItemsByFilter = poItemsByFilter.filter({ $0.vdrDisplayName == self.vendorInput.text })
+    //                }
+    //
+    //                //Filter By VendorLocation
+    //                if self.vendorLocationInput.text != "" {
+    //                    poItemsByFilter = poItemsByFilter.filter({ $0.vdrLocationCode == self.vendorLocationInput.text })
+    //                }
+                    
+                    //Filter By TaskScheduledInput
+                    if self.taskScheduledInput.text != "" &&  self.taskScheduledInput.text != MylocalizedString.sharedLocalizeManager.getLocalizedString("All") {
+                        poItemsByFilter = poItemsByFilter.filter({ $0.taskSched == self.taskScheduledInput.text })
+                    }
+                    
+                    self.poItems = poItemsByFilter
+                    
+                    self.sortBySegment(self.PoSortingBar.selectedSegmentIndex)
+                    
+                    self.poTableView.reloadData()
+                    
+                    self.view.removeActivityIndicator()
                 }
-                
-                //Filter By Brand
-                if self.brandInput.text != "" {
-                    poItemsByFilter = poItemsByFilter.filter({ ($0.brandName?.lowercased().contains((self.brandInput.text?.lowercased())!))! })
-                }
-                
-                //Filter By Style
-                if self.styleInput.text != "" {
-                    poItemsByFilter = poItemsByFilter.filter({ ($0.styleNo?.lowercased().contains((self.styleInput.text?.lowercased())!))! })
-                }
-                
-                //Filter By PoNo.
-                if self.poNoInput.text != "" {
-                    poItemsByFilter = poItemsByFilter.filter({ ($0.poNo?.lowercased().contains((self.poNoInput.text?.lowercased())!))! })
-                }
-                
-                //Filter By Ship Win Date
-                if self.shipWinFromInput.text != "" {
-                    let shipWinFromInput = dateFormatter.date(from: self.shipWinFromInput.text!)
-                    poItemsByFilter = poItemsByFilter.filter({ $0.shipWin == nil || ($0.shipWin != "" && (dateFormatter.date(from: $0.shipWin)!.equalToDate(shipWinFromInput!) || dateFormatter.date(from: $0.shipWin)!.isGreaterThanDate(shipWinFromInput!))) })
-                }
-                
-                if self.shipWinToInput.text != "" {
-                    let shipWinToInput = dateFormatter.date(from: self.shipWinToInput.text!)
-                    poItemsByFilter = poItemsByFilter.filter({ $0.shipWin == nil || ($0.shipWin != "" && (dateFormatter.date(from: $0.shipWin)!.equalToDate(shipWinToInput!) || dateFormatter.date(from: $0.shipWin)!.isLessThanDate(shipWinToInput!))) })
-                }
-                
-                // Filter By OPD/RSD Date
-                if self.orFromInput.text != "" {
-                    let orFromInput = dateFormatter.date(from: self.orFromInput.text!)
-                    poItemsByFilter = poItemsByFilter.filter({ $0.opdRsd == nil || ($0.opdRsd != "" && (dateFormatter.date(from: $0.opdRsd)!.equalToDate(orFromInput!) || dateFormatter.date(from: $0.opdRsd)!.isGreaterThanDate(orFromInput!))) })
-                }
-                
-                if self.orToInput.text != "" {
-                    let orToInput = dateFormatter.date(from: self.orToInput.text!)
-                    poItemsByFilter = poItemsByFilter.filter({ $0.opdRsd == nil || ($0.opdRsd != "" && (dateFormatter.date(from: $0.opdRsd)!.equalToDate(orToInput!) || dateFormatter.date(from: $0.opdRsd)!.isLessThanDate(orToInput!))) })
-                }
-                
-                //Filter By Vendor
-                if self.vendorInput.text != "" {
-                    //poItemsByFilter = poItemsByFilter.filter({ ($0.vdrDisplayName?.lowercaseString.containsString((self.vendorInput.text?.lowercaseString)!))! })
-                    poItemsByFilter = poItemsByFilter.filter({ $0.vdrDisplayName == self.vendorInput.text })
-                }
-                
-                //Filter By VendorLocation
-                if self.vendorLocationInput.text != "" {
-                    //poItemsByFilter = poItemsByFilter.filter({ ($0.vdrLocationName?.lowercaseString.containsString((self.vendorLocationInput.text?.lowercaseString)!))! })
-                    poItemsByFilter = poItemsByFilter.filter({ $0.vdrLocationCode == self.vendorLocationInput.text })
-                }
-                
-                //Filter By TaskScheduledInput
-                if self.taskScheduledInput.text != "" &&  self.taskScheduledInput.text != MylocalizedString.sharedLocalizeManager.getLocalizedString("All") {
-                    poItemsByFilter = poItemsByFilter.filter({ $0.taskSched == self.taskScheduledInput.text })
-                }
-                
-                self.poItems = poItemsByFilter
-                
-                self.sortBySegment(self.PoSortingBar.selectedSegmentIndex)
-                
-                self.poTableView.reloadData()
-                
-                self.view.removeActivityIndicator()
-            }
-        })
+            })
         })
     }
     

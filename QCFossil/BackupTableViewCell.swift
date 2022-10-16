@@ -28,7 +28,7 @@ class BackupTableViewCell: UITableViewCell {
         // Initialization code
         
         self.appVersionLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("App Version")
-        self.appReleaseLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("App Release Date")
+        self.appReleaseLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Release number")
         self.backupProcessDateLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Date")
         self.backupRemarksLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Remarks")
         self.loginUserLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Login User")
