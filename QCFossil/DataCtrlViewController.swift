@@ -40,17 +40,17 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     @IBOutlet weak var backupRetryButton: UIButton!
     
     typealias CompletionHandler = (_ obj:AnyObject?, _ success: Bool?) -> Void
-    var filePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/fossil_qc_prd_\(Cache_Inspector?.appUserName ?? "")"
-    var appInfofilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/AppInfo"
-    let backupFilePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")"
-    let backupFileSavePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "").zip"
-    let rollbackFilePath = NSHomeDirectory() + "/Documents/rollback_\(Cache_Inspector?.appUserName ?? "")"
+    var filePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/fossil_qc_prd_\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
+    var appInfofilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/AppInfo"
+    let backupFilePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
+    let backupFileSavePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "").zip"
+    let rollbackFilePath = NSHomeDirectory() + "/Documents/rollback_\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
     var zipPath5 = NSHomeDirectory() + "/\(dbBackupFileName)"
     let tmpPath = NSHomeDirectory() + "/tmp"
-    let restoreDBFilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")"
-    let restoreFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/Tasks"
-    let backupFolderToZipPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/Tasks/%@"
-    let tempZipFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName ?? "")/TempZipFiles"
+    let restoreDBFilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
+    let restoreFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/Tasks"
+    let backupFolderToZipPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/Tasks/%@"
+    let tempZipFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/TempZipFiles"
     var buffer:NSMutableData = NSMutableData()
     var expectedContentLength = 0
     var bgSession: Foundation.URLSession?
@@ -298,7 +298,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     do {
                         if let filePath = URL(string: self.filePath), let appInfoFilePath = URL(string: self.appInfofilePath), let zipFilePath = URL(string: self.zipPath5) {
                             try Zip.zipFiles(paths: [filePath, appInfoFilePath], zipFilePath: zipFilePath, password: nil, progress: nil)
-                            
+
                             var param = _DS_UPLOADDBBACKUP["APIPARA"] as! [String:String]
                             param["service_token"] = _DS_SERVICETOKEN
                             param["db_filename"] = "\(dbBackupFileName)"
@@ -343,6 +343,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                         self.errorMessage = "\(error.localizedDescription)"
                         self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Error in zipping files.")
                         self.updateDataControlStatusDetailButton()
+                        self.updateButtonsStatus(true)
                     }
                     //-----------------------------------------------------------------------------
                 })
