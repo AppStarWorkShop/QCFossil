@@ -128,7 +128,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //self.password.text = "wE$6T+8a"
         
         let defaults = UserDefaults.standard
-        let releaseDate = "20221016"
+        let releaseDate = "20221020"
         _RELEASE = releaseDate as String
         defaults.set(releaseDate, forKey: "release_preference")
         
@@ -891,27 +891,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //CPY App Info XML to Inspector Folder
         let filemgr = FileManager.default
         do{
-            /*
-             if filemgr.fileExistsAtPath("\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo") {
-             try filemgr.removeItemAtPath("\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo")
-             try filemgr.copyItemAtPath(self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo")
-             }else{
-             try filemgr.copyItemAtPath(self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercaseString)!)/AppInfo")
-             }*/
-            
             if needUpdate {
-                if filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo") {
-                    try filemgr.removeItem(atPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo")
+                if filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/AppInfo") {
+                    try filemgr.removeItem(atPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/AppInfo")
                 }
                 
                 if filemgr.fileExists(atPath: self.view.getPreferencesFilePath()!) {
-                    try filemgr.copyItem(atPath: self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo")
+                    try filemgr.copyItem(atPath: self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/AppInfo")
                 }
                 
-            }else if !filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo") {
+            } else if !filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/AppInfo") {
                 
                 if filemgr.fileExists(atPath: self.view.getPreferencesFilePath()!) {
-                    try filemgr.copyItem(atPath: self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\((Cache_Inspector?.appUserName?.lowercased())!)/AppInfo")
+                    try filemgr.copyItem(atPath: self.view.getPreferencesFilePath()!, toPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/AppInfo")
                 }
             }
             

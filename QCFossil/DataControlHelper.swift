@@ -132,8 +132,8 @@ class DataControlHelper {
             
             for taskFolder in taskFolders {
                 let filemgr = FileManager.default
-                if filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/Tasks/\(taskFolder).zip") {
-                    try filemgr.removeItem(atPath: "\(NSHomeDirectory())/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/Tasks/\(taskFolder).zip")
+                if filemgr.fileExists(atPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/Tasks/\(taskFolder).zip") {
+                    try filemgr.removeItem(atPath: "\(NSHomeDirectory())/Documents/\(DataControlHelper.getUserFolderName())/Tasks/\(taskFolder).zip")
                 }
             }
             return true
@@ -186,5 +186,9 @@ class DataControlHelper {
                 try filemgr.removeItem(atPath: tempZipFolderPath)
             }
         } catch {}
+    }
+    
+    static func getUserFolderName() -> String {
+        return (Cache_Inspector?.appUserName?.lowercased())!
     }
 }

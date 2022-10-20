@@ -40,25 +40,25 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     @IBOutlet weak var backupRetryButton: UIButton!
     
     typealias CompletionHandler = (_ obj:AnyObject?, _ success: Bool?) -> Void
-    var filePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/fossil_qc_prd_\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
-    var appInfofilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/AppInfo"
-    let backupFilePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
-    let backupFileSavePathBeforeRestore = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "").zip"
-    let rollbackFilePath = NSHomeDirectory() + "/Documents/rollback_\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
+    var filePath = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())/fossil_qc_prd_\(DataControlHelper.getUserFolderName())"
+    var appInfofilePath = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())/AppInfo"
+    let backupFilePathBeforeRestore = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())"
+    let backupFileSavePathBeforeRestore = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName()).zip"
+    let rollbackFilePath = NSHomeDirectory() + "/Documents/rollback_\(DataControlHelper.getUserFolderName())"
     var zipPath5 = NSHomeDirectory() + "/\(dbBackupFileName)"
     let tmpPath = NSHomeDirectory() + "/tmp"
-    let restoreDBFilePath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")"
-    let restoreFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/Tasks"
-    let backupFolderToZipPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/Tasks/%@"
-    let tempZipFolderPath = NSHomeDirectory() + "/Documents/\(Cache_Inspector?.appUserName?.lowercased() ?? "")/TempZipFiles"
-    var buffer:NSMutableData = NSMutableData()
+    let restoreDBFilePath = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())"
+    let restoreFolderPath = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())/Tasks"
+    let backupFolderToZipPath = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())/Tasks/%@"
+    let tempZipFolderPath = NSHomeDirectory() + "/Documents/\(DataControlHelper.getUserFolderName())/TempZipFiles"
+    var buffer: NSMutableData = NSMutableData()
     var expectedContentLength = 0
     var bgSession: Foundation.URLSession?
     var fgSession: Foundation.URLSession?
     var sessionDownloadTask: URLSessionDownloadTask?
     var backupFileList = [BackupFile]()
-    var selectedBackupFile:BackupFile!
-    var pWInput:UITextField!
+    var selectedBackupFile: BackupFile!
+    var pWInput: UITextField!
     let typeListBackupFiles = "L"
     let typeBackup = "B"
     let typeRestore = "R"
@@ -306,7 +306,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                             param["backup_remarks"] = self.backupDesc.text
                             param["app_version"] = String(_VERSION)
                             param["app_release"] = _RELEASE
-                            if let taskCount = DataControlHelper.getInspectorTaskFolderCount(inspectorName: Cache_Inspector?.appUserName?.lowercased() ?? "") {
+                            if let taskCount = DataControlHelper.getInspectorTaskFolderCount(inspectorName: DataControlHelper.getUserFolderName()) {
                                 if let message = taskCount.1 {
                                     DispatchQueue.main.async(execute: {
                                         self.errorMessage = message
@@ -938,7 +938,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                             if result == "OK" {
                                 self.serviceSession = session
                                 self.typeNow = typeTaskFolderBackup
-                                let taskFolders = DataControlHelper.getInspectorTaskFolders(inspectorName: Cache_Inspector?.appUserName?.lowercased() ?? "")
+                                let taskFolders = DataControlHelper.getInspectorTaskFolders(inspectorName: DataControlHelper.getUserFolderName())
                                 self.taskFolderCount = taskFolders.count
                                 
                                 let backupHelper = BackupHelper()
@@ -976,7 +976,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 }
             })
             
-            let inspectorName = Cache_Inspector?.appUserName?.lowercased() ?? ""
+            let inspectorName = DataControlHelper.getUserFolderName()
             if let taskFolder = self.currentUploadTaskFolderName {
                 // Set upload date in backup log
                 let backupHelper = BackupHelper()
@@ -1209,7 +1209,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     }
     
     private func uploadBackupTaskZipFolder(taskFolder: String) {
-        let inspectorName = Cache_Inspector?.appUserName?.lowercased() ?? ""
+        let inspectorName = DataControlHelper.getUserFolderName()
         let zipFilePath = String(format: backupFolderToZipPath, taskFolder)
         let tempZipFilePath = "\(tempZipFolderPath)/\(taskFolder)"
         

@@ -18,12 +18,12 @@ class AppUpgradeDataHelper:DataHelperMaster {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 var result = true
-                var database = "\(_DBNAME_USING)_\((Cache_Inspector?.appUserName?.lowercased())!)"
+                var database = "\(_DBNAME_USING)_\(DataControlHelper.getUserFolderName())"
                 let filemgr = FileManager.default
                 let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 let dbDir = dirPaths[0] as String
-                let databasePath = dbDir + "/\((Cache_Inspector?.appUserName?.lowercased())!)\(database)"
-                let databasePathBakup = dbDir + "/\((Cache_Inspector?.appUserName?.lowercased())!)\(database)_bakup"
+                let databasePath = dbDir + "/\(DataControlHelper.getUserFolderName())\(database)"
+                let databasePathBakup = dbDir + "/\(DataControlHelper.getUserFolderName())\(database)_bakup"
                 
                 //If Backup File Exist, Restore First...
                 if filemgr.fileExists(atPath: databasePathBakup) {
@@ -44,8 +44,8 @@ class AppUpgradeDataHelper:DataHelperMaster {
                 parentView.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("DB Backup"))
                 
                 if Cache_Inspector?.appUserName != "" {
-                    database = _DBNAME_USING + "_" + (Cache_Inspector?.appUserName?.lowercased())!
-                    _TASKSPHYSICALPATH = "\(_TASKSPHYSICALPATHPREFIX + (Cache_Inspector?.appUserName?.lowercased())! + "/\(_TASKSPHYSICALFOLDERNAME)")/"
+                    database = _DBNAME_USING + "_" + DataControlHelper.getUserFolderName()
+                    _TASKSPHYSICALPATH = "\(_TASKSPHYSICALPATHPREFIX + DataControlHelper.getUserFolderName() + "/\(_TASKSPHYSICALFOLDERNAME)")/"
                     
                 }
                 

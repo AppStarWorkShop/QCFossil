@@ -1010,8 +1010,8 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
         
         let dbDir = dirPaths[0] as String
         
-        let photoFile = dbDir + ("/\((Cache_Inspector?.appUserName?.lowercased())!)/Tasks/"+photo.taskBookingNo!+"/"+photo.photoFile)
-        let thumbFile = dbDir + ("/\((Cache_Inspector?.appUserName?.lowercased())!)/Tasks/"+photo.taskBookingNo!+"/Thumbs/"+photo.photoFile)
+        let photoFile = dbDir + ("/\(DataControlHelper.getUserFolderName())/Tasks/"+photo.taskBookingNo!+"/"+photo.photoFile)
+        let thumbFile = dbDir + ("/\(DataControlHelper.getUserFolderName())/Tasks/"+photo.taskBookingNo!+"/Thumbs/"+photo.photoFile)
         
         let filemgr = FileManager.default
         if !filemgr.fileExists(atPath: photoFile) || !filemgr.fileExists(atPath: thumbFile) {
