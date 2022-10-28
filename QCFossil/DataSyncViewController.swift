@@ -2112,10 +2112,6 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         tasksWithPhotosUploadFail.append(dataObj["task_id"] ?? "")
                     }
                     
-                } else{
-                    var result = jsonData["ul_result"] as? String ?? ""
-                    result += jsonData["ul_result"] as? String ?? ""
-                    
                 }
                 
                 if self.currULPhotoIndex == self.totalULPhotos {

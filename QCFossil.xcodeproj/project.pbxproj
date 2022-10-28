@@ -227,7 +227,7 @@
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
 		9C0848861C61E08500CAAD88 /* POCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POCellView.xib; sourceTree = "<group>"; };
 		9C0848881C61E0FA00CAAD88 /* POCellViewInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POCellViewInput.swift; sourceTree = "<group>"; };
-		9C0C36CB1C1E6F7800CF48ED /* QC221020P13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC221020P13.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0C36CB1C1E6F7800CF48ED /* QC221028T.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QC221028T.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0C36D01C1E6F7800CF48ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C0C36D31C1E6F7800CF48ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -406,6 +406,8 @@
 		BDCF870E1C576D0F000B0C38 /* PoDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoDataHelper.swift; sourceTree = "<group>"; };
 		BDCF87101C57886D000B0C38 /* InspSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSection.swift; sourceTree = "<group>"; };
 		BDCFCCE01DB4835D00414027 /* InputModeDFMaster2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputModeDFMaster2.swift; sourceTree = "<group>"; };
+		BDD019A6290BBF3000F883A6 /* fr-CH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CH"; path = "fr-CH.lproj/Main.strings"; sourceTree = "<group>"; };
+		BDD019A7290BBF8500F883A6 /* fr-CH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CH"; path = "fr-CH.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BDD2E0C11C45048C00CB0C40 /* TaskTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTypeViewController.swift; sourceTree = "<group>"; };
 		BDD51C4E1C3E442000A6E656 /* InputMode04DefectCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04DefectCellView.swift; sourceTree = "<group>"; };
 		BDD51C501C3E443C00A6E656 /* InputMode04DefectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04DefectCell.xib; sourceTree = "<group>"; };
@@ -423,9 +425,6 @@
 		BDDAA71E1C2A9561006A5D40 /* PhotoAlbumCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCellTableViewCell.swift; sourceTree = "<group>"; };
 		BDDB59EB1C3BD7000023D41C /* InputMode04Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputMode04Cell.xib; sourceTree = "<group>"; };
 		BDDB59ED1C3BD9170023D41C /* InputMode04CellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputMode04CellView.swift; sourceTree = "<group>"; };
-		BDDFD75F278A846A006AF70B /* fr-CH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CH"; path = "fr-CH.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		BDDFD760278A846D006AF70B /* fr-CH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CH"; path = "fr-CH.lproj/Main.strings"; sourceTree = "<group>"; };
-		BDDFD761278A8480006AF70B /* fr-CH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CH"; path = "fr-CH.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BDE238B91C27AF8C00325740 /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuViewController.swift; sourceTree = "<group>"; };
 		BDE651171C58708D007BA478 /* InspSectionElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspSectionElement.swift; sourceTree = "<group>"; };
 		BDF11FD01DCE3386003C43DA /* InspectionDefectTableViewCellMode4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionDefectTableViewCellMode4.swift; sourceTree = "<group>"; };
@@ -489,7 +488,7 @@
 		9C0C36CC1C1E6F7800CF48ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0C36CB1C1E6F7800CF48ED /* QC221020P13.app */,
+				9C0C36CB1C1E6F7800CF48ED /* QC221028T.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
 			);
@@ -982,7 +981,7 @@
 			);
 			name = QCFossil;
 			productName = QCFossil;
-			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC221020P13.app */;
+			productReference = 9C0C36CB1C1E6F7800CF48ED /* QC221028T.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9C0C36DE1C1E6F7800CF48ED /* QCFossilTests */ = {
@@ -1317,7 +1316,7 @@
 			children = (
 				9C0C36D31C1E6F7800CF48ED /* Base */,
 				9C0C37071C1EAA9000CF48ED /* zh-Hans */,
-				BDDFD760278A846D006AF70B /* fr-CH */,
+				BDD019A6290BBF3000F883A6 /* fr-CH */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1327,7 +1326,6 @@
 			children = (
 				9C0C36D81C1E6F7800CF48ED /* Base */,
 				9C0C37081C1EAA9000CF48ED /* zh-Hans */,
-				BDDFD75F278A846A006AF70B /* fr-CH */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1337,7 +1335,7 @@
 			children = (
 				9C0C37031C1EA71100CF48ED /* en */,
 				9C0C37091C1EAA9100CF48ED /* zh-Hans */,
-				BDDFD761278A8480006AF70B /* fr-CH */,
+				BDD019A7290BBF8500F883A6 /* fr-CH */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1432,7 +1430,7 @@
 		};
 		9C0C36F41C1E6F7800CF48ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF87FCF27D6FE7500F4B0C2 /* productioncwbase.xcconfig */;
+			baseConfigurationReference = BD4EA8002801C28300A8F3B6 /* testcwbase.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1473,7 +1471,7 @@
 		};
 		9C0C36F51C1E6F7800CF48ED /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF87FCF27D6FE7500F4B0C2 /* productioncwbase.xcconfig */;
+			baseConfigurationReference = BDF87FD127D6FEBB00F4B0C2 /* productionalpha.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

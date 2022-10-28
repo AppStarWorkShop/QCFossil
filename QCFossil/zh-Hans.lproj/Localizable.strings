@@ -1003,3 +1003,9 @@
 "Error in zip file processing." = "Error in zip file processing.";
 
 "Task Count" = "任务数量";
+
+"Server side return fail." = "服务器返回失败";
+
+"No backup files." = "没有备份文档";
+
+"Task Folder Backup Failed!" = "任务文件夹备份失败";

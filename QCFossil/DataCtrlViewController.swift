@@ -692,7 +692,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                         // proceed rollback if restore fail rename folder to rollback
                         self.rollbackIfHitErrorWhenRestore()
                     
-                        print(error)
                         self.passwordLabel.text = "\(error)"
                     })
                 }
@@ -702,7 +701,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 self.presentLocalNotification("Data Restore Complete.")
             }
         } else if self.typeNow == self.typeTaskFolderDownload {
-            print("Download task zip folder completed.")
             do {
                 if let zipFilePath = URL(string: location.path), let destinationPath = URL(string: self.restoreFolderPath) {
                     Zip.addCustomFileExtension("tmp")
@@ -781,7 +779,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             if self.taskZipFolderDownloadIndex <= Int(backupFile.taskCount) ?? 0 {
                 self.typeNow = self.typeTaskFolderDownload
                 let request = self.createRequest(DataControlHelper.getZipTaskFolderDownloadSessionParamByIndex(backupSyncId: backupFile.backupSyncId, taskIndex: String(self.taskZipFolderDownloadIndex)), url: URL(string: _DS_DOWNLOAD_BACKUP_TASK_FOLDER["APINAME"] as! String)!)
-                print("task folder download request: \(request)")
+                
                 if UIApplication.shared.applicationState == .active {
                     // foreground
                     self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
@@ -883,32 +881,40 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         } else if self.typeNow == self.typeListBackupFiles {
             
             do {
-                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
-                    print("success == \(responseDictionary)")
+                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary, responseDictionary.count > 0 {
                     
-                    if responseDictionary.count > 0 {
-                        print("Name: \(responseDictionary["app_db_backup_list"])")
-                        self.backupFileList = [BackupFile]()
-                        let appBackupList = responseDictionary["app_db_backup_list"] as! [[String : String]]
+                    self.backupFileList = [BackupFile]()
+                    if let appBackupList = responseDictionary["app_db_backup_list"] as? [[String : String]], appBackupList.count > 0 {
                         for info in appBackupList {
                             
                             let backupFile = BackupFile(appRealse: info["app_release"] ?? "", appVersion: info["app_version"] ?? "", backupProcessDate: info["backup_process_date"] ?? "", backupRemarks: info["backup_remarks"] ?? "", backupSyncId: info["backup_sync_id"] ?? "", deviceId: info["device_id"] ?? "", taskCount: info["task_count"] ?? "")
                             self.backupFileList.append(backupFile)
-                        }
                         
+                            DispatchQueue.main.async(execute: {
+                                self.updateButtonsStatus(true)
+                                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("List Backup History Complete")
+                                self.progressBar.progress = 100
+                                self.backupListTableView.reloadData()
+                                self.backupListTableView.isHidden = false
+                                self.backupHistoryLabel.isHidden = false
+                                self.restoreBtn.isHidden = false
+                                self.upperLine.isHidden = false
+                                self.downLine.isHidden = false
+                                
+                            })
+                        }
+                    } else {
                         DispatchQueue.main.async(execute: {
                             self.updateButtonsStatus(true)
-                            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("List Backup History Complete")
-                            self.progressBar.progress = 100
-                            self.backupListTableView.reloadData()
-                            self.backupListTableView.isHidden = false
-                            self.backupHistoryLabel.isHidden = false
-                            self.restoreBtn.isHidden = false
-                            self.upperLine.isHidden = false
-                            self.downLine.isHidden = false
-                            
+                            self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("No backup files.")
                         })
                     }
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        self.updateButtonsStatus(true)
+                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Server side return fail.")
+                        self.updateDataControlStatusDetailButton()
+                    })
                 }
                 
             } catch {
@@ -924,33 +930,36 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         } else if self.typeNow == self.typeBackup {
             
             do {
-                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
+                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary, let result = responseDictionary["ul_result"] as? String, result == "OK", let session = responseDictionary["service_session"] as? String {
+                                            
+                    //Remove database Zip File Here
+                    self.removeLocalBackupZipFile()
                     
-                    if responseDictionary.count > 0 {
-                        
-                        if let result = responseDictionary["ul_result"] as? String, let session = responseDictionary["service_session"] as? String {
-                            //Remove database Zip File Here
-                            self.removeLocalBackupZipFile()
-                            
-                            // Remove all remaining zip task folders
-                            DataControlHelper.removeAllRemainZipTaskFolders()
-                            
-                            if result == "OK" {
-                                self.serviceSession = session
-                                self.typeNow = typeTaskFolderBackup
-                                let taskFolders = DataControlHelper.getInspectorTaskFolders(inspectorName: DataControlHelper.getUserFolderName())
-                                self.taskFolderCount = taskFolders.count
-                                
-                                let backupHelper = BackupHelper()
-                                if backupHelper.clearBackupLog() {
-                                    if DataControlHelper.setTaskFoldersToBackupLog(taskFolders: taskFolders) {
-                                        self.taskFolders = taskFolders.reversed()
-                                        uploadTaskFolder()
-                                    }
-                                }
-                            }
+                    // Remove all remaining zip task folders
+                    DataControlHelper.removeAllRemainZipTaskFolders()
+                                                
+                    self.serviceSession = session
+                    self.typeNow = typeTaskFolderBackup
+                    let taskFolders = DataControlHelper.getInspectorTaskFolders(inspectorName: DataControlHelper.getUserFolderName())
+                    self.taskFolderCount = taskFolders.count
+                    
+                    let backupHelper = BackupHelper()
+                    if backupHelper.clearBackupLog() {
+                        if DataControlHelper.setTaskFoldersToBackupLog(taskFolders: taskFolders) {
+                            self.taskFolders = taskFolders.reversed()
+                            uploadTaskFolder()
                         }
                     }
+                } else {
+                    if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
+                        self.errorMessage = "Server Response: \n \(responseDictionary)"
+                    }
+                    DispatchQueue.main.async(execute: {
+                        self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Server side return fail."))"
+                        self.removeLocalBackupZipFile()
+                        self.updateDataControlStatusDetailButton()
+                        self.updateButtonsStatus(true)
+                    })
                 }
             } catch {
                 DispatchQueue.main.async(execute: {
@@ -959,8 +968,6 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                     self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Failed!"))\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
                     
                     self.removeLocalBackupZipFile()
-                    let responseString = NSString(data: self.buffer as Data, encoding: String.Encoding.utf8.rawValue)
-                    
                     self.updateDataControlStatusDetailButton()
                     self.updateButtonsStatus(true)
                 })
@@ -969,28 +976,52 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             buffer.setData(NSMutableData() as Data)
             
         } else if self.typeNow == self.typeTaskFolderBackup {
-            // Update UI
-            DispatchQueue.main.async(execute: {
-                if let taskFolders = self.taskFolders {
-                    self.backupTaskCountLabel.text = "(\(self.taskFolderCount - taskFolders.count)/\(self.taskFolderCount))"
+            
+            do {
+                if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary, let result = responseDictionary["ul_result"] as? String, result == "OK" {
+                    
+                    // Update UI
+                    DispatchQueue.main.async(execute: {
+                        if let taskFolders = self.taskFolders {
+                            self.backupTaskCountLabel.text = "(\(self.taskFolderCount - taskFolders.count)/\(self.taskFolderCount))"
+                        }
+                    })
+                    
+                    let inspectorName = DataControlHelper.getUserFolderName()
+                    if let taskFolder = self.currentUploadTaskFolderName {
+                        // Set upload date in backup log
+                        let backupHelper = BackupHelper()
+                        backupHelper.updateTaskFolderWithUploadDate(taskFolder: taskFolder)
+                        
+                        // remove local zip file
+                        DataControlHelper.removeZipTaskFolderAfterUpload(inspectorName: inspectorName, zipFilePath: "\(self.tempZipFolderPath)/\(taskFolder)")
+                        
+                        // update backup log in database
+                        backupHelper.updateTaskFolderWithDeletedDate(taskFolder: taskFolder)
+                    }
+                    
+                    // Loop zip files to backup
+                    uploadTaskFolder()
+                } else {
+                    if let responseDictionary = try JSONSerialization.jsonObject(with: buffer as Data, options: []) as? NSDictionary {
+                        self.errorMessage = "Server Response: \n \(responseDictionary)"
+                    }
+                    DispatchQueue.main.async(execute: {
+                        self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Server side return fail."))"
+                        self.updateDataControlStatusDetailButton()
+                        self.updateButtonsStatus(true)
+                    })
                 }
-            })
-            
-            let inspectorName = DataControlHelper.getUserFolderName()
-            if let taskFolder = self.currentUploadTaskFolderName {
-                // Set upload date in backup log
-                let backupHelper = BackupHelper()
-                backupHelper.updateTaskFolderWithUploadDate(taskFolder: taskFolder)
-                
-                // remove local zip file
-                DataControlHelper.removeZipTaskFolderAfterUpload(inspectorName: inspectorName, zipFilePath: "\(self.tempZipFolderPath)/\(taskFolder)")
-                
-                // update backup log in database
-                backupHelper.updateTaskFolderWithDeletedDate(taskFolder: taskFolder)
+            } catch {
+                DispatchQueue.main.async(execute: {
+                    self.errorMessage = "\(error.localizedDescription)"
+                    self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Folder Backup Failed!"))\(MylocalizedString.sharedLocalizeManager.getLocalizedString(error.localizedDescription))"
+                    
+                    self.removeLocalBackupZipFile()
+                    self.updateDataControlStatusDetailButton()
+                    self.updateButtonsStatus(true)
+                })
             }
-            
-            // Loop zip files to backup
-            uploadTaskFolder()
         }
     }
     

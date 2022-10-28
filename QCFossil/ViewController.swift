@@ -128,7 +128,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //self.password.text = "wE$6T+8a"
         
         let defaults = UserDefaults.standard
-        let releaseDate = "20221020"
+        let releaseDate = "20221028"
         _RELEASE = releaseDate as String
         defaults.set(releaseDate, forKey: "release_preference")
         
