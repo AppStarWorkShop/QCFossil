@@ -127,27 +127,29 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UITextField
         //self.username.text = "jy01"
         //self.password.text = "wE$6T+8a"
         
-        let defaults = UserDefaults.standard
-        let releaseDate = "20221028"
-        _RELEASE = releaseDate as String
-        defaults.set(releaseDate, forKey: "release_preference")
-        
-        var releaseCode = ""
-        #if UAT
+        if let releaseDate = Bundle.main.infoDictionary?["ReleaseDate"] as? String {
+            let defaults = UserDefaults.standard
+            let releaseDate = releaseDate
+            _RELEASE = releaseDate as String
+            defaults.set(releaseDate, forKey: "release_preference")
+            
+            var releaseCode = ""
+#if UAT
             releaseCode = "UAT " + releaseDate
             defaults.set("UAT", forKey: "serverEnv_preference")
             defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")
-        #elseif TESTENV
+#elseif TESTENV
             releaseCode = "TEST " + releaseDate
             defaults.set("TEST", forKey: "serverEnv_preference")
             defaults.set(dataSyncUatServer, forKey: "webServiceUrl_preference")
-        #else
+#else
             releaseCode = "PRD " + releaseDate
             defaults.set("PRD", forKey: "serverEnv_preference")
             defaults.set(dataSyncPrdServer, forKey: "webServiceUrl_preference")
-        #endif
-        _RELEASECODE = releaseCode
-        self.databaseUsingCode.text = releaseCode
+#endif
+            _RELEASECODE = releaseCode
+            self.databaseUsingCode.text = releaseCode
+        }
         
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)

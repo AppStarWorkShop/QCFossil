@@ -1,10 +1,16 @@
-//
-//  Config.xcconfig
-//  QCFossil
-//
-//  Created by Daniel H YIN on 12/4/2023.
-//  Copyright © 2023 kira. All rights reserved.
-//
+#include "common.xcconfig"
 
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
+DEVELOPMENT_TEAM = 3XCK33884W
+CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Distribution: CWBASE LIMITED (3XCK33884W)
+
+PROVISIONING_PROFILE_SPECIFIER = Fossil QC Distribution Profile
+MAIN_BUNDLE_IDENTIFIER = com.cwbase.fossilqc.prdapp
+PRODUCT_NAME = $(APP_NAME)
+
+MARKETING_VERSION = $(APP_STORE_VERSION)
+MARKETING_BUILD_VERSION = $(BUILD_VERSION)
+
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) PRODUCTION
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) PRODUCTION
+
+APPICON_NAME = AppIcon

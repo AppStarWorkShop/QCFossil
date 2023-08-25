@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/BSImagePicker-Swift.h</key>
 		<data>
-		kHhu9KZVUECf2Vzam/l2/a8RzRc=
+		GdMeGGLwRmM0SLwDg9pM5lh8spg=
 		</data>
 		<key>Headers/BSImagePicker.h</key>
 		<data>
@@ -14,35 +14,27 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		0ha2UYPFhnN70sDI0c00OY+CrI0=
+		NqF0l9pajIIIV0lhE5YBz7wmvW0=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		P7igeDG9aQJTzKbTFY2cHaUzNKg=
+		tn2Ae0gkto1qlXnc7JfmJIgIIFs=
 		</data>
-		<key>Modules/BSImagePicker.swiftmodule/Project/x86_64.swiftsourceinfo</key>
+		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		P7igeDG9aQJTzKbTFY2cHaUzNKg=
+		FSPnLbho3G+LL9smI3XgVOqBIQ4=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		MZDru7R5qH+78ocAxNlBMA4M0X8=
+		8nSPN18an2xFxvUwI2sKk67++8c=
 		</data>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		C+EqbeH8is2vaybgwFMnHgKQmxc=
-		</data>
-		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftdoc</key>
-		<data>
-		MZDru7R5qH+78ocAxNlBMA4M0X8=
-		</data>
-		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftmodule</key>
-		<data>
-		C+EqbeH8is2vaybgwFMnHgKQmxc=
+		wvXSFrMTWlieU0qTmxdlnSr0iBo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		A4DX+7WwNb2k2vzyRb1l4lwoNJc=
+		f2XPQB2HsK5wc4zfktGPa2VEtV0=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -51,11 +43,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			kHhu9KZVUECf2Vzam/l2/a8RzRc=
+			GdMeGGLwRmM0SLwDg9pM5lh8spg=
 			</data>
 			<key>hash2</key>
 			<data>
-			qFEZkHpb32F9tb1L4EYwv4t/n3SOhpaO4GVHcfpmJkc=
+			7iEsZWN4n1NXbY8tD0mDu8J9NxosS5JGNtOqdgN1+48=
 			</data>
 		</dict>
 		<key>Headers/BSImagePicker.h</key>
@@ -73,77 +65,55 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			P7igeDG9aQJTzKbTFY2cHaUzNKg=
+			tn2Ae0gkto1qlXnc7JfmJIgIIFs=
 			</data>
 			<key>hash2</key>
 			<data>
-			opgSTE/YZi8Gxw6IsvPI7mGrHysOGt8iWR00kDJ+R1w=
+			gnVKXs4bkQrAczoHJYxpiUHi+JUCz6ScF7ne73rcNDE=
 			</data>
 		</dict>
-		<key>Modules/BSImagePicker.swiftmodule/Project/x86_64.swiftsourceinfo</key>
+		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			P7igeDG9aQJTzKbTFY2cHaUzNKg=
+			FSPnLbho3G+LL9smI3XgVOqBIQ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			opgSTE/YZi8Gxw6IsvPI7mGrHysOGt8iWR00kDJ+R1w=
+			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
 			</data>
 		</dict>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MZDru7R5qH+78ocAxNlBMA4M0X8=
+			8nSPN18an2xFxvUwI2sKk67++8c=
 			</data>
 			<key>hash2</key>
 			<data>
-			kOBhjIFnzdiJtc0469l7Nwgh4QqM+Hch+gcFAAF0+vQ=
+			Kkxpz89IDJTZxNQSx0YOmSuA5duXS/xJyTzq4BRCAFI=
 			</data>
 		</dict>
 		<key>Modules/BSImagePicker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			C+EqbeH8is2vaybgwFMnHgKQmxc=
+			wvXSFrMTWlieU0qTmxdlnSr0iBo=
 			</data>
 			<key>hash2</key>
 			<data>
-			SwgKBlHOL3iPccyD9E7n1Xcs4nMJZSC+/VDIqxWShYk=
-			</data>
-		</dict>
-		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftdoc</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MZDru7R5qH+78ocAxNlBMA4M0X8=
-			</data>
-			<key>hash2</key>
-			<data>
-			kOBhjIFnzdiJtc0469l7Nwgh4QqM+Hch+gcFAAF0+vQ=
-			</data>
-		</dict>
-		<key>Modules/BSImagePicker.swiftmodule/x86_64.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			C+EqbeH8is2vaybgwFMnHgKQmxc=
-			</data>
-			<key>hash2</key>
-			<data>
-			SwgKBlHOL3iPccyD9E7n1Xcs4nMJZSC+/VDIqxWShYk=
+			v3O6j5MhIhz/haqVNTl6psw4KQrBeqnTcNABmp36N5U=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			A4DX+7WwNb2k2vzyRb1l4lwoNJc=
+			f2XPQB2HsK5wc4zfktGPa2VEtV0=
 			</data>
 			<key>hash2</key>
 			<data>
-			zP5SJLj+hOzDxcO5qr7/zMP+hsXADCeErNeO6+MQVZc=
+			zM8fHRiu4ctz2GS6uwyyvMGHT1FJQuMfU2cPxAtr9TI=
 			</data>
 		</dict>
 	</dict>

@@ -155,12 +155,14 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             self.removeBtn.isEnabled = status
             self.restoreBtn.isEnabled = status
             self.restoreDataBtn.isEnabled = status
+            self.backupRetryButton.isEnabled = status
             
             if status {
                 self.backupBtn.backgroundColor = _FOSSILBLUECOLOR
                 self.removeBtn.backgroundColor = _FOSSILBLUECOLOR
                 self.restoreBtn.backgroundColor = _FOSSILBLUECOLOR
                 self.restoreDataBtn.backgroundColor = _FOSSILBLUECOLOR
+                self.backupRetryButton.backgroundColor = _FOSSILBLUECOLOR
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":true])
             }else{
@@ -168,6 +170,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 self.removeBtn.backgroundColor = UIColor.gray
                 self.restoreBtn.backgroundColor = UIColor.gray
                 self.restoreDataBtn.backgroundColor = UIColor.gray
+                self.backupRetryButton.backgroundColor = UIColor.gray
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "setScrollable"), object: nil,userInfo: ["canScroll":false])
             }
@@ -268,8 +271,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         self.view.alertConfirmView(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Data")+"?",parentVC:self, handlerFun: { (action:UIAlertAction!) in
             
             self.updateDataControlStatusDetailButton(true)
-            self.backupRetryButton.isHidden = true
             self.passwordLabel.text = ""
+            self.backupTaskCountLabel.text = ""
             self.typeNow = self.typeBackup
             
             // clear temp zip folder before backup
@@ -280,6 +283,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 return
                 
             }else{
+                self.backupRetryButton.isHidden = false
+                self.backupRetryButton.isEnabled = false
                 self.errorMsg.isHidden = true
             }
             
@@ -326,17 +331,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                             }
                             
                             let request = self.createBackupRequest(param, url: URL(string: _DS_UPLOADDBBACKUP["APINAME"] as! String)!)
-                            if UIApplication.shared.applicationState == .active {
-                                
-                                // foreground
-                                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
-                                self.sessionDownloadTask?.resume()
-                            } else {
-                                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                                self.updateButtonsStatus(true)
-                                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                                self.updateDataControlStatusDetailButton()
-                            }
+                            self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+                            self.sessionDownloadTask?.resume()
                         }
                     }
                     catch {
@@ -508,6 +504,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     @IBAction func restoreDataOnClick(_ sender: UIButton) {
         backupTaskCountLabel.isHidden = true
+        backupRetryButton.isHidden = true
         updateDataControlStatusDetailButton(true)
         self.typeNow = self.typeListBackupFiles
         
@@ -535,17 +532,8 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             self.updateButtonsStatus(false)
         
             let request = self.createRequest(param, url: URL(string: _DS_LISTDBBACKUP["APINAME"] as! String)!)
-            if UIApplication.shared.applicationState == .active {
-            
-                // foreground
-                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
-                self.sessionDownloadTask?.resume()
-            } else {
-                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                self.updateButtonsStatus(true)
-                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                self.updateDataControlStatusDetailButton()
-            }
+            self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+            self.sessionDownloadTask?.resume()
     }
 
     //------------------------------------- Delegate Funcs --------------------------------------------------------
@@ -780,17 +768,9 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 self.typeNow = self.typeTaskFolderDownload
                 let request = self.createRequest(DataControlHelper.getZipTaskFolderDownloadSessionParamByIndex(backupSyncId: backupFile.backupSyncId, taskIndex: String(self.taskZipFolderDownloadIndex)), url: URL(string: _DS_DOWNLOAD_BACKUP_TASK_FOLDER["APINAME"] as! String)!)
                 
-                if UIApplication.shared.applicationState == .active {
-                    // foreground
-                    self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
-                    self.sessionDownloadTask!.resume()
-                } else {
-                    self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                    self.updateButtonsStatus(true)
-                    self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                    self.updateDataControlStatusDetailButton()
-                }
-                
+                // foreground
+                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+                self.sessionDownloadTask!.resume()
             }
         }
     }
@@ -841,9 +821,9 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             //Remove Zip File Here
             self.removeLocalBackupZipFile()
             
-            if self.typeNow == self.typeTaskFolderBackup {
-                self.backupRetryButton.isHidden = false
-            }
+//            if self.typeNow == self.typeTaskFolderBackup {
+//                self.backupRetryButton.isHidden = false
+//            }
         })
     }
     
@@ -1036,11 +1016,14 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                 _ = keyValueDataHelper.updateLastBackupDatetime(String(describing: Cache_Inspector?.inspectorId), datetime: self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm"))
                 self.lastUpdateInput.text = self.view.getCurrentDateTime("\(_DATEFORMATTER) HH:mm")
                 self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Complete")
+                self.backupTaskCountLabel.text = ""
                 self.progressBar.progress = 100
                 self.updateButtonsStatus(true)
+                self.backupRetryButton.isHidden = true
                 self.backupDesc.text = ""
                 self.backupListTableView.isHidden = true
                 self.backupHistoryLabel.isHidden = true
+                self.restoreBtn.isHidden = true
                 self.upperLine.isHidden = true
                 self.taskFolders = nil
                 self.currentUploadTaskFolderName = nil
@@ -1131,20 +1114,10 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             
             self.updateButtonsStatus(false)
             let request = self.createRequest(param, url: URL(string: _DS_DBBACKUPDOWNLOAD["APINAME"] as! String)!)
-            if UIApplication.shared.applicationState == .active {
-                
-                // foreground
-                self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
-                self.sessionDownloadTask!.resume()
-            } else {
-                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                self.updateButtonsStatus(true)
-                self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                self.updateDataControlStatusDetailButton()
-            }
             
-            //self.sessionDownloadTask = self.session?.downloadTaskWithRequest(request)
-            //self.sessionDownloadTask?.resume()
+            // foreground
+            self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
+            self.sessionDownloadTask!.resume()
         })
     }
     
@@ -1206,9 +1179,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
     
     @IBAction func backupRetryButtonDidPress(_ sender: UIButton) {
         // Handle re-try after fail while backup
-        self.passwordLabel.text = ""
+        updateButtonsStatus(false)
+        
+        self.passwordLabel.text = "\(MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup In Progress..."))"
         updateDataControlStatusDetailButton(true)
-        self.backupRetryButton.isHidden = true
+//        self.backupRetryButton.isHidden = false
+        self.backupRetryButton.isEnabled = false
         
         // clear temp folder
         DataControlHelper.clearTempZipFolders(tempZipFolderPath: self.tempZipFolderPath)
@@ -1262,16 +1238,11 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
             } else {
                 // proceed task folder upload
                 DispatchQueue.main.async(execute: {
-                    if UIApplication.shared.applicationState == .active, let request = DataControlHelper.getTaskFolderUploadURLRequest(serviceSession: self.serviceSession ?? "", taskFileName: "\(taskFolder).zip", taskFile: "\(taskFolder).zip", destinationPath: self.tempZipFolderPath, inspectorName: inspectorName) {
+                    if let request = DataControlHelper.getTaskFolderUploadURLRequest(serviceSession: self.serviceSession ?? "", taskFileName: "\(taskFolder).zip", taskFile: "\(taskFolder).zip", destinationPath: self.tempZipFolderPath, inspectorName: inspectorName) {
                     
                         // foreground
                         self.sessionDownloadTask = self.fgSession?.downloadTask(with: request)
                         self.sessionDownloadTask?.resume()
-                    } else {
-                        self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Sync Failed when iPad in Sleep Mode")
-                        self.updateButtonsStatus(true)
-                        self.errorMessage = MylocalizedString.sharedLocalizeManager.getLocalizedString("Please avoid to press home/power button or show up control center when data sync in progress.")
-                        self.updateDataControlStatusDetailButton()
                     }
                 })
             }
