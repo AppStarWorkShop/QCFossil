@@ -11,7 +11,7 @@ import Foundation
 class ZoneDataHelper:DataHelperMaster {
 
     func getZoneValuesByPositionId(_ Id:Int) ->[DropdownValue] {
-        let sql = "SELECT distinct zvm.value_id, zvm.value_name_en, zvm.value_name_cn, zvm.value_name_fr from inspect_position_mstr ipm INNER JOIN zone_set_mstr zem ON ipm.position_zone_set_id = zem.set_id INNER JOIN zone_set_value zsv ON zem.set_id = zsv.set_id INNER JOIN zone_value_mstr zvm ON zsv.value_id = zvm.value_id WHERE ipm.position_id = \(Id)"
+        let sql = "SELECT distinct zvm.value_id, zvm.value_name_en, zvm.value_name_cn, zvm.value_name_fr from inspect_position_mstr ipm INNER JOIN zone_set_mstr zem ON ipm.position_zone_set_id = zem.set_id INNER JOIN zone_set_value zsv ON zem.set_id = zsv.set_id INNER JOIN zone_value_mstr zvm ON zsv.value_id = zvm.value_id WHERE ipm.position_id = \(Id) AND ipm.rec_status = 0 AND ipm.deleted_flag = 0 AND zem.rec_status = 0 AND zem.deleted_flag = 0 AND zvm.rec_status = 0 AND zvm.deleted_flag = 0"
         var zoneValues = [DropdownValue]()
         
         if db.open() {
@@ -36,7 +36,7 @@ class ZoneDataHelper:DataHelperMaster {
     }
     
     func getZoneValueNameById(_ Id:Int) -> String {
-        let sql = "SELECT value_name_en, value_name_cn, value_name_fr value_name_fr FROM zone_value_mstr WHERE value_id = \(Id)"
+        let sql = "SELECT value_name_en, value_name_cn, value_name_fr value_name_fr FROM zone_value_mstr WHERE value_id = \(Id) AND rec_status = 0 AND deleted_flag = 0"
         var zoneValueName: String?
         
         if db.open() {
@@ -55,7 +55,7 @@ class ZoneDataHelper:DataHelperMaster {
     }
     
     func getDefectValuesByElementId(_ Id:Int) ->[DropdownValue] {
-        let sql = "SELECT distinct dvm.value_id, dvm.value_name_en, dvm.value_name_cn, dvm.value_name_fr  FROM defect_set_mstr dsm INNER JOIN inspect_element_mstr iem ON dsm.set_id = iem.inspect_defect_set_id INNER JOIN defect_set_value dsv ON dsm.set_id = dsv.set_id INNER JOIN defect_value_mstr dvm ON dsv.value_id = dvm.value_id WHERE iem.element_id = \(Id)"
+        let sql = "SELECT distinct dvm.value_id, dvm.value_name_en, dvm.value_name_cn, dvm.value_name_fr  FROM defect_set_mstr dsm INNER JOIN inspect_element_mstr iem ON dsm.set_id = iem.inspect_defect_set_id INNER JOIN defect_set_value dsv ON dsm.set_id = dsv.set_id INNER JOIN defect_value_mstr dvm ON dsv.value_id = dvm.value_id WHERE iem.element_id = \(Id) AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND dsm.rec_status = 0 AND dsm.deleted_flag = 0 AND dvm.rec_status = 0 AND dvm.deleted_flag = 0"
         var defectValues = [DropdownValue]()
         
         if db.open() {
@@ -80,7 +80,7 @@ class ZoneDataHelper:DataHelperMaster {
     }
     
     func getCaseValuesByElementId(_ Id:Int) ->[DropdownValue] {
-        let sql = "SELECT distinct cvm.value_id, cvm.value_name_en, cvm.value_name_cn, cvm.value_name_fr FROM case_set_mstr csm INNER JOIN inspect_element_mstr iem ON csm.set_id = iem.inspect_case_set_id INNER JOIN case_set_value csv ON csm.set_id = csv.set_id INNER JOIN case_value_mstr cvm ON csv.value_id = cvm.value_id WHERE element_id = \(Id)"
+        let sql = "SELECT distinct cvm.value_id, cvm.value_name_en, cvm.value_name_cn, cvm.value_name_fr FROM case_set_mstr csm INNER JOIN inspect_element_mstr iem ON csm.set_id = iem.inspect_case_set_id INNER JOIN case_set_value csv ON csm.set_id = csv.set_id INNER JOIN case_value_mstr cvm ON csv.value_id = cvm.value_id WHERE element_id = \(Id) AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND csm.rec_status = 0 AND csm.deleted_flag = 0 AND cvm.rec_status = 0 AND cvm.deleted_flag = 0"
         var values = [DropdownValue]()
         
         if db.open() {
@@ -105,7 +105,7 @@ class ZoneDataHelper:DataHelperMaster {
     }
     
     func getDefectDescValueNameById(_ Id:Int) -> String {
-        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM defect_value_mstr WHERE value_id = \(Id)"
+        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM defect_value_mstr WHERE value_id = \(Id) AND rec_status = 0 AND deleted_flag = 0"
         var valueName: String?
         
         if db.open() {
@@ -124,7 +124,7 @@ class ZoneDataHelper:DataHelperMaster {
     }
     
     func getCaseValueNameById(_ Id:Int) -> String {
-        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM case_value_mstr WHERE value_id = \(Id)"
+        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM case_value_mstr WHERE value_id = \(Id) AND rec_status = 0 AND deleted_flag = 0"
         var valueName: String?
         
         if db.open() {

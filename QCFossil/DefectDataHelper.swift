@@ -12,7 +12,7 @@ import UIKit
 class DefectDataHelper:DataHelperMaster {
 
     func getDefectTypeByTaskDefectDataRecordId(_ Id:Int) ->[String] {
-        let sql = "SELECT distinct iem.element_name_en, iem.element_name_cn, iem.element_name_fr FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN task_inspect_position_point tipp ON ipe.inspect_position_id = tipp.inspect_position_id INNER JOIN task_defect_data_record tddr ON tipp.inspect_record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"
+        let sql = "SELECT distinct iem.element_name_en, iem.element_name_cn, iem.element_name_fr FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN task_inspect_position_point tipp ON ipe.inspect_position_id = tipp.inspect_position_id INNER JOIN task_defect_data_record tddr ON tipp.inspect_record_id = tddr.inspect_record_id WHERE tddr.record_id = ? AND iem.rec_status = 0 AND iem.deleted_flag = 0"
         var defectTypeElms = [String]()
         
         if db.open() {
@@ -35,7 +35,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getDefectTypeByTaskInspectDataRecordId(_ Id:Int) ->[PositPointObj] {
-        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN task_inspect_position_point tipp ON ipm.position_id = tipp.inspect_position_id WHERE tipp.inspect_record_id = ?"
+        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN task_inspect_position_point tipp ON ipm.position_id = tipp.inspect_position_id WHERE tipp.inspect_record_id = ? AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var defectTypeElms = [PositPointObj]()
         
         if db.open() {
@@ -61,7 +61,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getDefectTypeElms(_ positionIds:[String]) ->[String] {
-        var sql = "SELECT distinct iem.element_name_en, iem.element_name_cn, iem.element_name_fr FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id WHERE iem.element_type = 2 AND ipe.inspect_position_id IN "
+        var sql = "SELECT distinct iem.element_name_en, iem.element_name_cn, iem.element_name_fr FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id WHERE iem.element_type = 2 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipe.inspect_position_id IN "
         var defectTypeElms = [String]()
         
         let positions = positionIds.joined(separator: ",")
@@ -105,7 +105,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getInspElementIdByName(_ name:String, elementType:Int = 2) ->Int {
-        let sql = "SELECT element_id FROM inspect_element_mstr WHERE (element_name_fr = ? OR element_name_en = ? OR element_name_cn = ?) AND element_type = ?"
+        let sql = "SELECT element_id FROM inspect_element_mstr WHERE (element_name_fr = ? OR element_name_en = ? OR element_name_cn = ?) AND rec_status = 0 AND deleted_flag = 0 AND element_type = ?"
         var id = 0
         
         if db.open() {
@@ -141,7 +141,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getInspElementValueById(_ id:Int) ->DropdownValue {
-        let sql = "SELECT element_id, element_name_en, element_name_cn, element_name_fr FROM inspect_element_mstr WHERE element_id = ? AND element_type = 2"
+        let sql = "SELECT element_id, element_name_en, element_name_cn, element_name_fr FROM inspect_element_mstr WHERE element_id = ? AND rec_status = 0 AND deleted_flag = 0 AND element_type = 2"
         var value = DropdownValue(valueId: 0, valueNameEn: "", valueNameCn: "", valueNameFr: "")
         
         if db.open() {
@@ -164,7 +164,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getInspPositionNameById(_ id:Int) ->String {
-        let sql = "SELECT * FROM inspect_position_mstr WHERE position_id = ? AND position_type = 1"
+        let sql = "SELECT * FROM inspect_position_mstr WHERE position_id = ? AND position_type = 1 AND rec_status = 0 AND deleted_flag = 0"
         var name = ""
         
         if db.open() {
@@ -183,7 +183,7 @@ class DefectDataHelper:DataHelperMaster {
     
     
     func getDefectTypesByPositionId(_ positionId:Int) ->[String] {
-        let sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON ipe.inspect_element_id = iem.element_id WHERE ipe.inspect_position_id = ? AND iem.element_type = 2"
+        let sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON ipe.inspect_element_id = iem.element_id WHERE ipe.inspect_position_id = ? AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND iem.element_type = 2"
         var defectTypes = [String]()
         
         if db.open() {
@@ -201,7 +201,7 @@ class DefectDataHelper:DataHelperMaster {
     }
 
     func getDefectObjectsByPositionId(_ positionId:Int) ->[DropdownValue] {
-        let sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON ipe.inspect_element_id = iem.element_id WHERE ipe.inspect_position_id = ? AND iem.element_type = 2"
+        let sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON ipe.inspect_element_id = iem.element_id WHERE ipe.inspect_position_id = ? AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND iem.element_type = 2"
         var defectTypes = [DropdownValue]()
         
         if db.open() {
@@ -256,7 +256,7 @@ class DefectDataHelper:DataHelperMaster {
     }
     
     func getPositionIdByElementId(_ elementId:Int) ->Int {
-        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_element_mstr iem ON ipe.inspect_element_id = iem.element_id where iem.element_id = ? AND ipm.position_type = 3"
+        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_element_mstr iem ON ipe.inspect_element_id = iem.element_id where iem.element_id = ? AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.position_type = 3 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var id = 0
         
         if db.open() {

@@ -150,7 +150,7 @@ class PhotoDataHelper:DataHelperMaster {
             return
         }
         
-        var sql = "SELECT ism.input_mode_code FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id WHERE tipf.photo_id = ?"
+        var sql = "SELECT ism.input_mode_code FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id WHERE tipf.photo_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0"
         
         if db.open() {
             
@@ -163,7 +163,7 @@ class PhotoDataHelper:DataHelperMaster {
                     
                     switch inputMode ?? "" {
                         case _INPUTMODE01:
-                            sql = "SELECT ism.section_name_en,ism.section_name_cn,ism.section_name_fr,iem.element_name_en,iem.element_name_cn,iem.element_name_fr FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id INNER JOIN inspect_element_mstr AS iem ON tidr.inspect_element_id = iem.element_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT ism.section_name_en,ism.section_name_cn,ism.section_name_fr,iem.element_name_en,iem.element_name_cn,iem.element_name_fr FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id INNER JOIN inspect_element_mstr AS iem ON tidr.inspect_element_id = iem.element_id WHERE tipf.photo_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0 AND iem.rec_status = 0 AND iem.deleted_flag = 0"
                         
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
@@ -173,7 +173,7 @@ class PhotoDataHelper:DataHelperMaster {
                             }
                         
                         case _INPUTMODE02:
-                            sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr,ism.section_name_en,ism.section_name_cn,ism.section_name_fr FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_position_mstr AS ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr,ism.section_name_en,ism.section_name_cn,ism.section_name_fr FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_position_mstr AS ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr AS ism ON tidr.inspect_section_id = ism.section_id WHERE tipf.photo_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
                             
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
@@ -193,7 +193,7 @@ class PhotoDataHelper:DataHelperMaster {
                             }
                         
                         case _INPUTMODE03:
-                            sql = "SELECT ism.section_name_en,ism.section_name_cn,ism.section_name_fr,tidr.request_element_desc FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.request_section_id = ism.section_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT ism.section_name_en,ism.section_name_cn,ism.section_name_fr,tidr.request_element_desc FROM task_inspect_photo_file AS tipf INNER JOIN task_inspect_data_record AS tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_section_mstr AS ism ON tidr.request_section_id = ism.section_id WHERE tipf.photo_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0"
                         
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {
@@ -203,7 +203,7 @@ class PhotoDataHelper:DataHelperMaster {
                             }
                         
                         case _INPUTMODE04:
-                            sql = "SELECT iem.element_name_en,iem.element_name_cn,iem.element_name_fr,ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr,ism.section_name_en,ism.section_name_cn,ism.section_name_fr FROM task_inspect_photo_file tipf INNER JOIN task_inspect_data_record tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr ism ON ism.section_id = tidr.inspect_section_id WHERE tipf.photo_id = ?"
+                            sql = "SELECT iem.element_name_en,iem.element_name_cn,iem.element_name_fr,ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr,ism.section_name_en,ism.section_name_cn,ism.section_name_fr FROM task_inspect_photo_file tipf INNER JOIN task_inspect_data_record tidr ON tidr.record_id = tipf.data_record_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id INNER JOIN inspect_section_mstr ism ON ism.section_id = tidr.inspect_section_id WHERE tipf.photo_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
                             
                             if let rs = db.executeQuery(sql, withArgumentsIn: [photo.photoId!]) {
                                 if rs.next() {

@@ -639,7 +639,7 @@ class TaskDataHelper:DataHelperMaster{
         let prodTypeId = getProdTypeIdByTaskId(taskId)
         let inspTypeId = getInspTypeIdByTaskId(taskId)
         */
-        let sql = "SELECT * FROM inspect_task_tmpl_mstr ittm INNER JOIN inspect_task it ON ittm.tmpl_id = it.tmpl_id INNER JOIN inspect_task_tmpl_section itts ON ittm.tmpl_id = itts.tmpl_id INNER JOIN inspect_section_mstr ism ON itts.inspect_section_id = ism.section_id WHERE it.task_id = ? AND ittm.rec_status = 0 AND ittm.deleted_flag = 0 ORDER BY ism.display_order ASC"
+        let sql = "SELECT * FROM inspect_task_tmpl_mstr ittm INNER JOIN inspect_task it ON ittm.tmpl_id = it.tmpl_id INNER JOIN inspect_task_tmpl_section itts ON ittm.tmpl_id = itts.tmpl_id INNER JOIN inspect_section_mstr ism ON itts.inspect_section_id = ism.section_id WHERE it.task_id = ? AND ittm.rec_status = 0 AND ittm.deleted_flag = 0 AND ism.rec_status = 0 AND ism.deleted_flag = 0 ORDER BY ism.display_order ASC"
         var inspSections = [InspSection]()
         
         if db.open() {
@@ -684,16 +684,16 @@ class TaskDataHelper:DataHelperMaster{
     
     func getInspSecElementsByPTIdITId(_ inspSectionId:Int, inputMode:String = _INPUTMODE04, optionEnableFlag:Int = 1) ->[InspSectionElement]? {
         
-        var sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.required_element_flag = 1 AND iem.element_type = 1 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
+        var sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.required_element_flag = 1 AND iem.element_type = 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
         
         if optionEnableFlag < 1 {
-            sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
+            sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
         }
         
         if inputMode == _INPUTMODE01 {
-            sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.required_element_flag = 1 AND iem.element_type = 1 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
+            sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.required_element_flag = 1 AND iem.element_type = 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
             if optionEnableFlag < 1 {
-                sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
+                sql = "SELECT * FROM inspect_element_mstr iem INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id INNER JOIN inspect_position_element ipe ON iem.element_id = ipe.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0 ORDER BY iem.display_order ASC"
             }
         }else if inputMode == _INPUTMODE02 {
             return [InspSectionElement]()
@@ -933,7 +933,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func checkAllInspDataRecordDone() ->Bool {
-        let sql = "SELECT 1 FROM task_inspect_data_record tidr INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE tidr.task_id = ? AND tidr.result_value_id < 1 AND iem.rec_status = 0 AND iem.deleted_flag <>1 AND ipm.rec_status = 0 AND ipm.deleted_flag <>1"
+        let sql = "SELECT 1 FROM task_inspect_data_record tidr INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE tidr.task_id = ? AND tidr.result_value_id < 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         //"SELECT 1 FROM task_inspect_data_record WHERE task_id = ? AND result_value_id < 1"
         var result = true
         
@@ -1004,7 +1004,7 @@ class TaskDataHelper:DataHelperMaster{
     
     func getOptInspSecPositionByIds(_ prodTypeId:Int, inspTypeId:Int, sectionId:Int) ->[InspSectionPosition]? {
         //let sql = "SELECT DISTINCT ipm.* FROM inspect_element_mstr as iem INNER JOIN inspect_position_mstr as ipm ON iem.inspect_position_id=ipm.position_id WHERE iem.prod_type_id = ? AND iem.inspect_type_id = ? AND iem.inspect_section_id = ? AND iem.required_element_flag = 0 ORDER BY ipm.position_name_en ASC"
-        let sql = "SELECT DISTINCT ipm.* FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_section_element ise ON ipe.inspect_element_id = ise.inspect_element_id INNER JOIN inspect_element_mstr iem ON ise.inspect_element_id = iem.element_id WHERE ise.inspect_section_id = ? AND iem.required_element_flag = 0 AND (ipm.rec_status = 0 AND ipm.deleted_flag = 0) ORDER BY ipm.position_name_en ASC"
+        let sql = "SELECT DISTINCT ipm.* FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_section_element ise ON ipe.inspect_element_id = ise.inspect_element_id INNER JOIN inspect_element_mstr iem ON ise.inspect_element_id = iem.element_id WHERE ise.inspect_section_id = ? AND iem.required_element_flag = 0 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND (ipm.rec_status = 0 AND ipm.deleted_flag = 0) ORDER BY ipm.position_name_en ASC"
         var inspSecPostns = [InspSectionPosition]()
         
         if db.open() {
@@ -1090,7 +1090,7 @@ class TaskDataHelper:DataHelperMaster{
     
     
     func getInspSecPositionById(_ inspPostId:Int) ->InspSectionPosition? {
-        let sql = "SELECT * FROM inspect_position_mstr WHERE position_id = ?"
+        let sql = "SELECT * FROM inspect_position_mstr WHERE position_id = ? AND rec_status = 0 AND deleted_flag = 0"
         var inspSecPost:InspSectionPosition?
         
         if db.open() {
@@ -1133,7 +1133,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getInspSecElementById(_ inspElmId:Int) ->InspSectionElement? {
-        let sql = "SELECT * FROM inspect_element_mstr WHERE element_id = ?"
+        let sql = "SELECT * FROM inspect_element_mstr WHERE element_id = ? AND rec_status = 0 AND deleted_flag = 0"
         var inspSecElm:InspSectionElement?
         
         if db.open() {
@@ -1277,7 +1277,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getResultSetValuesBySectionId(_ sectionId:Int) ->[String] {
-        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM result_set_value AS rsv INNER JOIN result_value_mstr AS rvm ON rsv.value_id = rvm.value_id WHERE set_id = (SELECT rsm.set_id FROM inspect_section_mstr AS ism INNER JOIN result_set_mstr AS rsm ON ism.result_set_id = rsm.set_id WHERE ism.section_id = ?) ORDER BY rvm.display_order ASC"
+        let sql = "SELECT value_name_en, value_name_cn, value_name_fr FROM result_set_value AS rsv INNER JOIN result_value_mstr AS rvm ON rsv.value_id = rvm.value_id WHERE set_id = (SELECT rsm.set_id FROM inspect_section_mstr AS ism INNER JOIN result_set_mstr AS rsm ON ism.result_set_id = rsm.set_id WHERE ism.section_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0 AND rsm.rec_status = 0 AND rsm.deleted_flag = 0) AND rvm.rec_status = 0 AND rvm.deleted_flag = 0 ORDER BY rvm.display_order ASC"
         var resultSetValues = [String]()
         
         if db.open() {
@@ -1630,7 +1630,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getInputModeCodeByTaskDefectDataId(_ recordId:Int) ->String? {
-        var sql = "SELECT input_mode_code FROM inspect_section_mstr AS ism INNER JOIN task_inspect_data_record AS tidr ON ism.section_id = tidr.inspect_section_id INNER JOIN task_defect_data_record AS tddr ON tidr.record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"//"SELECT input_mode_code FROM inspect_section_mstr AS ism INNER JOIN inspect_element_mstr AS iem ON ism.section_id = iem.inspect_section_id INNER JOIN task_inspect_data_record AS tidr ON iem.element_id = tidr.inspect_element_id INNER JOIN task_defect_data_record AS tddr ON tidr.record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"
+        var sql = "SELECT input_mode_code FROM inspect_section_mstr AS ism INNER JOIN task_inspect_data_record AS tidr ON ism.section_id = tidr.inspect_section_id INNER JOIN task_defect_data_record AS tddr ON tidr.record_id = tddr.inspect_record_id WHERE tddr.record_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0"//"SELECT input_mode_code FROM inspect_section_mstr AS ism INNER JOIN inspect_element_mstr AS iem ON ism.section_id = iem.inspect_section_id INNER JOIN task_inspect_data_record AS tidr ON iem.element_id = tidr.inspect_element_id INNER JOIN task_defect_data_record AS tddr ON tidr.record_id = tddr.inspect_record_id WHERE tddr.record_id = ?"
         var inputMode = ""
         
         if db.open() {
@@ -1663,7 +1663,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getSectionByTaskInspDataId(_ dataRecordId:Int) ->InspSection? {
-        let sql = "SELECT * FROM inspect_section_mstr AS ism INNER JOIN task_inspect_data_record AS tidr ON ism.section_id = tidr.inspect_section_id WHERE tidr.record_id = ?"
+        let sql = "SELECT * FROM inspect_section_mstr AS ism INNER JOIN task_inspect_data_record AS tidr ON ism.section_id = tidr.inspect_section_id WHERE tidr.record_id = ? AND ism.rec_status = 0 AND ism.deleted_flag = 0"
         var inspSection:InspSection?
         
         if db.open() {
@@ -1836,7 +1836,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getCatItemCountById(_ taskId: Int, sectionId: Int, inputModeCode: String) ->Int {
-        var sql = "SELECT COUNT(tidr.record_id) AS record_cnt FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE it.task_id = ? AND tidr.inspect_section_id = ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag <> 1 AND ipm.rec_status = 0 AND ipm.deleted_flag <>1) OR it.task_status > 3)"
+        var sql = "SELECT COUNT(tidr.record_id) AS record_cnt FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id INNER JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id INNER JOIN inspect_position_mstr ipm ON tidr.inspect_position_id = ipm.position_id WHERE it.task_id = ? AND tidr.inspect_section_id = ? AND ((it.task_status < 4 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0) OR it.task_status > 3)"
         
         if inputModeCode == _INPUTMODE03 {
             sql = "SELECT COUNT(tidr.record_id) AS record_cnt FROM task_inspect_data_record tidr INNER JOIN inspect_task it ON tidr.task_id = it.task_id WHERE it.task_id = ? AND tidr.inspect_section_id = ?"
@@ -2209,7 +2209,7 @@ class TaskDataHelper:DataHelperMaster{
         
         if db.open() {
             
-            sql = "SELECT iem.required_element_flag FROM task_inspect_data_record tidr LEFT JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id WHERE tidr.task_id = ?"
+            sql = "SELECT iem.required_element_flag FROM task_inspect_data_record tidr LEFT JOIN inspect_element_mstr iem ON tidr.inspect_element_id = iem.element_id WHERE tidr.task_id = ? AND iem.rec_status = 0 AND iem.deleted_flag = 0"
             if let rs = db.executeQuery(sql, withArgumentsIn: [taskId]) {
                 
                 while rs.next() {
@@ -2481,7 +2481,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func getValueCodeByResultId(_ valueId:String) ->String {
-        let sql = "SELECT value_code FROM result_value_mstr WHERE value_id = ?"
+        let sql = "SELECT value_code FROM result_value_mstr WHERE value_id = ? AND rec_status = 0 AND deleted_flag = 0 "
         var valueCode = ""
         
         if db.open() {
@@ -2530,7 +2530,7 @@ class TaskDataHelper:DataHelperMaster{
     
     func getRemarksOptionValueById(_ Ids:[String]) ->String {
         
-        var sql = "SELECT option_text_en, option_text_zh, option_text_fr FROM task_selection_option_mstr WHERE option_id IN ("
+        var sql = "SELECT option_text_en, option_text_zh, option_text_fr FROM task_selection_option_mstr WHERE rec_status = 0 AND deleted_flag = 0 AND option_id IN ("
         var textValue = ""
         sql += Ids.joined(separator: ",") + ")"
         
@@ -2569,7 +2569,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func isNeedCompleteDefectPoint(_ resultValueId:Int) -> Bool {
-        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_id = ?"
+        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_id = ? AND rec_status = 0 AND deleted_flag = 0 "
         var result = false
         if db.open() {
             if let rs = db.executeQuery(sql, withArgumentsIn: [resultValueId]) {
@@ -2581,7 +2581,7 @@ class TaskDataHelper:DataHelperMaster{
     }
     
     func isNeedAddPhotoForInspectItem(_ resultValue:String) -> Bool {
-        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_name_fr = ? OR value_name_cn = ? OR value_name_en = ?"
+        let sql = "SELECT defect_gen_flag FROM result_value_mstr WHERE value_name_fr = ? OR value_name_cn = ? OR value_name_en = ? AND rec_status = 0 AND deleted_flag = 0 "
         var result = false
         if db.open() {
             if let rs = db.executeQuery(sql, withArgumentsIn: [resultValue, resultValue, resultValue]) {
