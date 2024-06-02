@@ -14,7 +14,7 @@ class DPDataHelper:DataHelperMaster {
     func getDefectPositions(/*prodTypeId:Int=1, inspTypeId:Int=3, currLevel:Int=1, parentPosId:Int=0*/_ sectionId:Int) ->[PositObj] {
         //let sql = "SELECT * FROM inspect_position_mstr WHERE prod_type_id = ? AND inspect_type_id = ? AND current_level = ? AND parent_position_id = ?"
         //let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_task_tmpl_position ittp ON ipm.position_id = ittp.inspect_position_id INNER JOIN inspect_task_tmpl_mstr ittm ON ittp.tmpl_id = ittm.tmpl_id WHERE ittm.prod_type_id = ? AND ittm.inspect_type_id = ? AND ipm.current_level = ? AND ipm.parent_position_id = ?"
-        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_section_element ise ON ipe.inspect_element_id = ise.inspect_element_id INNER JOIN inspect_element_mstr iem ON ise.inspect_element_id = iem.element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND ipm.deleted_flag <> 1"
+        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_section_element ise ON ipe.inspect_element_id = ise.inspect_element_id INNER JOIN inspect_element_mstr iem ON ise.inspect_element_id = iem.element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var defectPosits = [PositObj]()
         
         if db.open() {
@@ -38,7 +38,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getAllDefectPositPoints() ->[PositPointObj] {
-        let sql = "SELECT * FROM inspect_position_mstr WHERE current_level = 2 AND deleted_flag <> 1"
+        let sql = "SELECT * FROM inspect_position_mstr WHERE current_level = 2 AND rec_status = 0 AND deleted_flag = 0"
         var defectPositPoints = [PositPointObj]()
         
         if db.open() {
@@ -64,7 +64,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getDefectPositPoints(_ parentPositId:Int=0) ->[PositObj] {
-        let sql = "SELECT * FROM inspect_position_mstr WHERE parent_position_id = ?"
+        let sql = "SELECT * FROM inspect_position_mstr WHERE parent_position_id = ? AND rec_status = 0 AND deleted_flag = 0"
         var defectPositPoints = [PositObj]()
         
         if db.open() {
@@ -159,7 +159,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getDefectPositionPointsByRecordId(_ recordId:Int) -> String {
-        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
+        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=? AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var defectPositPoints = ""
         
         if db.open() {
@@ -182,7 +182,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getDefectPositionPointsByDFRecordId(_ recordId:Int) -> String {
-        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=?"
+        let sql = "SELECT ipm.position_name_en,ipm.position_name_cn,ipm.position_name_fr FROM task_inspect_position_point AS tipp INNER JOIN inspect_position_mstr AS ipm ON tipp.inspect_position_id = ipm.position_id WHERE tipp.inspect_record_id=? AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var defectPositPoints = ""
         
         if db.open() {
@@ -216,7 +216,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getElementIdBySectionIdForINPUT02(_ sectionId:Int) ->Int {
-        let sql = "SELECT iem.element_id FROM inspect_element_mstr iem INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1"
+        let sql = "SELECT iem.element_id FROM inspect_element_mstr iem INNER JOIN inspect_section_element ise ON iem.element_id = ise.inspect_element_id WHERE ise.inspect_section_id = ? AND iem.element_type = 1 AND iem.rec_status = 0 AND iem.deleted_flag = 0"
         var result = 0
         
         if db.open() {
@@ -252,7 +252,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getPositionItemByElementId(_ elementId:Int) ->String {
-        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_element_mstr iem ON ipe.inspect_element_id = iem.element_id WHERE iem.element_id = ? AND ipm.position_type = 3"
+        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_element_mstr iem ON ipe.inspect_element_id = iem.element_id WHERE iem.element_id = ? AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.position_type = 3 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var positionString = ""
         
         if db.open() {
@@ -270,7 +270,7 @@ class DPDataHelper:DataHelperMaster {
     }
     
     func getPositionIdByElementId(_ elementId:Int) ->Int {
-        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_element_mstr iem ON ipe.inspect_element_id = iem.element_id WHERE iem.element_id = ? AND ipm.position_type = 3"
+        let sql = "SELECT * FROM inspect_position_mstr ipm INNER JOIN inspect_position_element ipe ON ipm.position_id = ipe.inspect_position_id INNER JOIN inspect_element_mstr iem ON ipe.inspect_element_id = iem.element_id WHERE iem.element_id = ? AND ipm.position_type = 3 AND iem.rec_status = 0 AND iem.deleted_flag = 0 AND ipm.rec_status = 0 AND ipm.deleted_flag = 0"
         var positionId = 0
         
         if db.open() {
