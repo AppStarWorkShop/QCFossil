@@ -1469,10 +1469,24 @@ class DataSyncViewController: PopoverMaster, URLSessionDelegate, URLSessionTaskD
                         let expectedVersion = jsonData["expect_version"] as? String ?? ""
                         
                         let alertMessage = String(format: MylocalizedString.sharedLocalizeManager.getLocalizedString("app program version check alert message"), expectedVersion)
-                        self.view.alertView(alertMessage, handlerFun: { _ in
+                        let alertController = UIAlertController(title: "", message: alertMessage, preferredStyle: UIAlertController.Style.alert)
+                        let okButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Renew"), style: UIAlertAction.Style.default, handler: { _ in
+                            if let url = URL(string: "https://apps.apple.com/us/app/fossil-east-qc/id6447573412") {
+                                UIApplication.shared.open(url, completionHandler: { [weak self] _ in
+                                    guard let strongSelf = self else { return }
+                                    strongSelf.updateDLProcessLabel("Complete")
+                                    strongSelf.updateButtonStatus("Enable",btn: strongSelf.downloadBtn, isRetry: true)
+                                })
+                            }
+                        })
+                        let cancelButton = UIAlertAction(title: MylocalizedString.sharedLocalizeManager.getLocalizedString("Cancel"), style: .cancel, handler: { _ in
                             self.updateDLProcessLabel("Complete")
                             self.updateButtonStatus("Enable",btn: self.downloadBtn, isRetry: true)
                         })
+                        alertController.addAction(cancelButton)
+                        alertController.addAction(okButton)
+                        
+                        self.present(alertController, animated: true, completion: nil)
                     }
                 }
                 

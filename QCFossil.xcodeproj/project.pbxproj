@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -230,7 +230,7 @@
 		9C0848841C61B06B00CAAD88 /* PoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoItem.swift; sourceTree = "<group>"; };
 		9C0848861C61E08500CAAD88 /* POCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POCellView.xib; sourceTree = "<group>"; };
 		9C0848881C61E0FA00CAAD88 /* POCellViewInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POCellViewInput.swift; sourceTree = "<group>"; };
-		9C0C36CB1C1E6F7800CF48ED /* FE QCT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FE QCT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0C36CB1C1E6F7800CF48ED /* UAT FE QC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UAT FE QC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0C36CE1C1E6F7800CF48ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0C36D01C1E6F7800CF48ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C0C36D31C1E6F7800CF48ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -492,7 +492,7 @@
 		9C0C36CC1C1E6F7800CF48ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0C36CB1C1E6F7800CF48ED /* FE QCT.app */,
+				9C0C36CB1C1E6F7800CF48ED /* UAT FE QC.app */,
 				9C0C36DF1C1E6F7800CF48ED /* QCFossilTests.xctest */,
 				9C0C36EA1C1E6F7800CF48ED /* QCFossilUITests.xctest */,
 			);
@@ -987,7 +987,7 @@
 			);
 			name = QCFossil;
 			productName = QCFossil;
-			productReference = 9C0C36CB1C1E6F7800CF48ED /* FE QCT.app */;
+			productReference = 9C0C36CB1C1E6F7800CF48ED /* UAT FE QC.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9C0C36DE1C1E6F7800CF48ED /* QCFossilTests */ = {
@@ -1436,7 +1436,7 @@
 		};
 		9C0C36F41C1E6F7800CF48ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD4EA8002801C28300A8F3B6 /* testcwbase.xcconfig */;
+			baseConfigurationReference = 20C304C42A02B43500961CE8 /* testFlight.xcconfig */;
 			buildSettings = {
 				APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APPICON_NAME)";
@@ -1481,7 +1481,7 @@
 		};
 		9C0C36F51C1E6F7800CF48ED /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20C8745929E6FC56003E9CFD /* appStore.xcconfig */;
+			baseConfigurationReference = 20C304C42A02B43500961CE8 /* testFlight.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APPICON_NAME)";
 				CLANG_ENABLE_MODULES = YES;
@@ -1509,7 +1509,7 @@
 				PRODUCT_NAME = "${PRODUCT_NAME}";
 				PROVISIONING_PROFILE = "9d44bf1e-e44e-477b-b67c-1abe44bd8a2f";
 				PROVISIONING_PROFILE_SPECIFIER = "${PROVISIONING_PROFILE_SPECIFIER}";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Fossil QC Distribution Profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Fossil QC TestFlight Profile";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

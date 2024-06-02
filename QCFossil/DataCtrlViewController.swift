@@ -326,6 +326,7 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
                                 DispatchQueue.main.async(execute: {
                                     self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("No task folder found.")
                                     self.updateDataControlStatusDetailButton()
+                                    self.updateButtonsStatus(true)
                                 })
                                 return
                             }
@@ -1192,6 +1193,12 @@ class DataCtrlViewController: UIViewController, URLSessionDelegate, URLSessionTa
         // restart task
         if let taskFolder = self.currentUploadTaskFolderName {
             uploadBackupTaskZipFolder(taskFolder: taskFolder)
+        } else {
+            DispatchQueue.main.async(execute: {
+                self.passwordLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("No task folder found.")
+                self.updateDataControlStatusDetailButton()
+                self.updateButtonsStatus(true)
+            })
         }
     }
     

@@ -503,3 +503,4 @@
 "Server side return fail." = "Échec du retour côté serveur";
 "No backup files." = "Aucun fichier de sauvegarde.";
 "Task Folder Backup Failed!" = "La sauvegarde du dossier de tâches a échoué !";
+"Renew" = "Renouveler";
