@@ -74,14 +74,18 @@ class EmbedContainerController: UIViewController {
         //self.view.subviews.forEach({ $0.removeFromSuperview() })
         
         let destVC = segue.destination as! UINavigationController
-        let destVCChildVC = destVC.children[0]
+        guard let destVCChildVC = destVC.children.first else { return }
         
         var added = false
         for childVC in self.children {
-            let childChildVC = childVC.children[0]
+            if let childChildVC = childVC.children.first {
                 
-            if childChildVC.classForCoder == destVCChildVC.classForCoder {
-                added = true
+                if let vc = childChildVC as? DataCtrlViewController, vc.classForCoder == destVCChildVC.classForCoder {
+                    childVC.removeFromParent()
+                    added = false
+                } else if childChildVC.classForCoder == destVCChildVC.classForCoder {
+                    added = true
+                }
             }
         }
         
@@ -101,12 +105,12 @@ class EmbedContainerController: UIViewController {
                 
                 segue.destination.didMove(toParent: self)
             }
-        }else{
+        } else {
             for childVC in self.children {
                 let childChildVC = childVC.children[0]
                 
                 if childChildVC.classForCoder == destVCChildVC.classForCoder {
-                    self.view.addSubview(childVC.view)
+                    self.view.bringSubviewToFront(childVC.view)
                     
                     if childChildVC.classForCoder == TaskSearchViewController.classForCoder() {
                         let taskSearchVC = childChildVC as! TaskSearchViewController
@@ -142,12 +146,12 @@ class EmbedContainerController: UIViewController {
     }
     
     func switchSegue(_ segueIdentifier:String) {
-        //NSLog("Switch Segue: %@",segueIdentifier)
         DispatchQueue.main.async(execute: {
             self.view.showActivityIndicator("Loading")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.currentSegueIdentifier = segueIdentifier
+                print("segueIdentifier: \(segueIdentifier)")
                 self.performSegue(withIdentifier: self.currentSegueIdentifier, sender: nil)
             }
         })

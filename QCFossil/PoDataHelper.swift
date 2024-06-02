@@ -170,8 +170,11 @@ class PoDataHelper:DataHelperMaster {
         return poItems
     }
     
-    func getAllPoItems() ->[PoItem]? {
+    func getAllPoItems(vendorId: String? = nil) ->[PoItem]? {
         var sql = "SELECT * FROM fgpo_line_item WHERE item_id IN (SELECT po_item_id FROM inspect_task_item) AND outstand_qty > 0 AND line_status <> 5 AND deleted_flag = 0"
+        if let vId = vendorId {
+            sql.append(" AND ref_vdr_id = \(vId)")
+        }
         
         var poItems = [PoItem]()
         
@@ -276,7 +279,10 @@ class PoDataHelper:DataHelperMaster {
             
             //Not Sched Po Items
             sql = "SELECT * FROM fgpo_line_item WHERE item_id NOT IN (SELECT po_item_id FROM inspect_task_item) AND outstand_qty > 0 AND line_status <> 5 AND deleted_flag = 0"
-
+            if let vId = vendorId {
+                sql.append(" AND ref_vdr_id = \(vId)")
+            }
+            
             if let rs = db.executeQuery(sql, withArgumentsIn: []) {
                 
                 while rs.next() {

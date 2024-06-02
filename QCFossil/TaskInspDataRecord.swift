@@ -26,6 +26,7 @@ class TaskInspDataRecord {
     var createDate:String?
     var modifyUser:String?
     var modifyDate:String?
+    var isPreSave: String?
     
     //Element Display Using 
     var sectObj:SectObj?
@@ -34,7 +35,7 @@ class TaskInspDataRecord {
     var postnObj:PositObj?
     var resultObj:ResultValueObj?
     
-    init?(recordId:Int?=0, taskId:Int, refRecordId:Int?, inspectSectionId:Int, inspectElementId:Int, inspectPositionId:Int, inspectPositionDesc:String?, inspectDetail:String?, inspectRemarks:String?, resultValueId:Int, requestSectionId:Int, requestElementDesc:String, inspectPositionZoneValueId:Int?=nil, createUser:String="", createDate:String="", modifyUser:String="", modifyDate:String="") {
+    init?(recordId:Int?=0, taskId:Int, refRecordId:Int?, inspectSectionId:Int, inspectElementId:Int, inspectPositionId:Int, inspectPositionDesc:String?, inspectDetail:String?, inspectRemarks:String?, resultValueId:Int, requestSectionId:Int, requestElementDesc:String, inspectPositionZoneValueId:Int?=nil, createUser:String="", createDate:String="", modifyUser:String="", modifyDate:String="", isPreSave: String? = nil) {
         
         self.recordId = recordId
         self.taskId = taskId
@@ -53,6 +54,6 @@ class TaskInspDataRecord {
         self.createDate = createDate
         self.modifyUser = modifyUser
         self.modifyDate = modifyDate
-        
+        self.isPreSave = isPreSave
     }
 }

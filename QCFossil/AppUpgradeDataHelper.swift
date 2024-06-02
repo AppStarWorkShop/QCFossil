@@ -18,12 +18,12 @@ class AppUpgradeDataHelper:DataHelperMaster {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 var result = true
-                var database = "\(_DBNAME_USING)_\((Cache_Inspector?.appUserName?.lowercased())!)"
+                var database = "\(_DBNAME_USING)_\(DataControlHelper.getUserFolderName())"
                 let filemgr = FileManager.default
                 let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 let dbDir = dirPaths[0] as String
-                let databasePath = dbDir + "/\((Cache_Inspector?.appUserName?.lowercased())!)\(database)"
-                let databasePathBakup = dbDir + "/\((Cache_Inspector?.appUserName?.lowercased())!)\(database)_bakup"
+                let databasePath = dbDir + "/\(DataControlHelper.getUserFolderName())\(database)"
+                let databasePathBakup = dbDir + "/\(DataControlHelper.getUserFolderName())\(database)_bakup"
                 
                 //If Backup File Exist, Restore First...
                 if filemgr.fileExists(atPath: databasePathBakup) {
@@ -44,8 +44,8 @@ class AppUpgradeDataHelper:DataHelperMaster {
                 parentView.showActivityIndicator(MylocalizedString.sharedLocalizeManager.getLocalizedString("DB Backup"))
                 
                 if Cache_Inspector?.appUserName != "" {
-                    database = _DBNAME_USING + "_" + (Cache_Inspector?.appUserName?.lowercased())!
-                    _TASKSPHYSICALPATH = "\(_TASKSPHYSICALPATHPREFIX + (Cache_Inspector?.appUserName?.lowercased())! + "/\(_TASKSPHYSICALFOLDERNAME)")/"
+                    database = _DBNAME_USING + "_" + DataControlHelper.getUserFolderName()
+                    _TASKSPHYSICALPATH = "\(_TASKSPHYSICALPATHPREFIX + DataControlHelper.getUserFolderName() + "/\(_TASKSPHYSICALFOLDERNAME)")/"
                     
                 }
                 
@@ -1002,7 +1002,43 @@ class AppUpgradeDataHelper:DataHelperMaster {
                             result = false
                         }
                     }
+                    
+                    // Add new field to task_defect_data_record
+                    sql = "ALTER TABLE task_defect_data_record ADD COLUMN is_pre_save nvarchar(1)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(task_defect_data_record)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "is_pre_save" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
 
+                    // Add new field to task_inspect_data_record
+                    sql = "ALTER TABLE task_inspect_data_record ADD COLUMN is_pre_save nvarchar(1)"
+                    if let tableInfo = self.db.executeQuery("PRAGMA table_info(task_inspect_data_record)", withArgumentsIn: []) {
+                        var noNeedUpdate = false
+                        while tableInfo.next() {
+                            if tableInfo.string(forColumn: "name") == "is_pre_save" {
+                                noNeedUpdate = true
+                            }
+                        }
+                        
+                        if !noNeedUpdate && !self.db.executeUpdate(sql, withArgumentsIn: []) {
+                            result = false
+                        }
+                    }
+                    
+                    // Add new table backup_task_upload_status
+                    sql = "CREATE TABLE IF NOT EXISTS backup_log_task_folder_upload_status (task_folder_name nvarchar(1000), upload_date datetime DEFAULT (null), local_zip_delete_date datetime DEFAULT (null));"
+                    if !self.db.executeStatements(sql) {
+                        result = false
+                    }
+                    
                     //----------------------------------------------------------------------------------
                     
                     if result {

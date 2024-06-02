@@ -73,8 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+        if let version = Bundle.main.infoDictionary?["AppVersion"] as? String {
             _VERSION = version
             let defaults = UserDefaults.standard
             
@@ -86,6 +85,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //Do any update here...
                 _NEEDDATAUPDATE = true
             }
+        }
+        
+        if let buildnumber =  Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            _BUILDNUMBER = buildnumber
         }
         
         if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:)))) {

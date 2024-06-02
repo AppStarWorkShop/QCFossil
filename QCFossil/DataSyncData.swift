@@ -1103,6 +1103,7 @@ let _DS_DL_TASK_STATUS = [
         "service_token" : _DS_SERVICETOKEN,
         "device_id": UIDevice.current.identifierForVendor!.uuidString,
         "service_type": "Task Status Data Download",
+        "inspect_task_list": "" //["task_id","ref_task_id","inspection_no", "inspection_date"]
     ],
     
     "ACTIONNAMES" : [
@@ -1222,7 +1223,8 @@ let _DS_UPLOADDBBACKUP = [
         "db_file" : "fossil_qc_prd.sqlite",
         "backup_remarks" : "",
         "app_version" : "",
-        "app_release" : ""
+        "app_release" : "",
+        "task_count" : ""
     ],
     "ACTIONNAMES" : [
         "novalue"
@@ -1263,7 +1265,8 @@ let _DS_LISTDBBACKUP = [
             "backup_process_date",
             "backup_remarks",
             "app_version",
-            "app_release"
+            "app_release",
+            "task_count" //if NULL, zip file contains task folders
         ]
     ]
 ] as [String : Any]
@@ -1502,6 +1505,54 @@ let _DS_ULTASKPHOTO = [
         "thumb_file": "thumb_file",
         "thumb_file_data": "thumb_file",
         "ref_task_id": "ref_task_id"
+    ],
+    "ACTIONNAMES" : [
+        "novalue"
+    ],
+    "ACTIONTABLES" : [
+        "novalue"
+    ],
+    "ACTIONFIELDS" : [
+        "nokey" : [
+            "novalue"
+        ]
+    ]
+] as [String : Any]
+
+//Backup Task Folder Upload
+let _DS_UPLOAD_BACKUP_TASK_FOLDER = [
+    "NAME" : "Backup Task Folder Upload",
+    "APINAME" : "\(dataSyncServerUsing)ul_task_backup.aspx",
+    "APIPARA" : [
+        "service_token": _DS_SERVICETOKEN,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
+        "service_session": _DS_SESSION,
+        "task_filename": "task_filename",
+        "task_file" : "task_file"
+    ],
+    "ACTIONNAMES" : [
+        "novalue"
+    ],
+    "ACTIONTABLES" : [
+        "novalue"
+    ],
+    "ACTIONFIELDS" : [
+        "nokey" : [
+            "novalue"
+        ]
+    ]
+] as [String : Any]
+
+//Backup Task Folder Download
+let _DS_DOWNLOAD_BACKUP_TASK_FOLDER = [
+    "NAME" : "Backup Task Folder Download",
+    "APINAME" : "\(dataSyncServerUsing)dl_task_backup.aspx",
+    "APIPARA" : [
+        "service_token": _DS_SERVICETOKEN,
+        "device_id": UIDevice.current.identifierForVendor!.uuidString,
+        "service_type": "Task Folder Backup Download",
+        "backup_sync_id": "backup_sync_id", //backup_sync_id from App Database Backup History
+        "task_index" : "task_index" //1 / 2 / 3 / 4 / 5 would be the value If task_count = 5
     ],
     "ACTIONNAMES" : [
         "novalue"

@@ -68,6 +68,7 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         iiInput.delegate = self
         idInput.delegate = self
         cellRemarksInput.delegate = self
+        cellDismissButton.isHidden = true
         
         updateLocalizedString()
     }
@@ -197,7 +198,7 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         //add defect cell
         if !isDefectItemAdded(defectListVC!) {
             
-            let newDfItem = TaskInspDefectDataRecord(taskId: (Cache_Task_On?.taskId)!, inspectRecordId: self.taskInspDataRecordId, refRecordId: 0, inspectElementId: self.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.getCurrentDateTime())
+            let newDfItem = TaskInspDefectDataRecord(taskId: (Cache_Task_On?.taskId)!, inspectRecordId: self.taskInspDataRecordId, refRecordId: 0, inspectElementId: self.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.getCurrentDateTime(), isPreSave: "1")
         
             newDfItem?.inputMode = _INPUTMODE03
             newDfItem?.inspElmt = self
@@ -289,8 +290,6 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         
         DispatchQueue.main.async(execute: {
             self.showActivityIndicator()
-            //Save self to DB to get the taskDataRecordId
-            self.saveMyselfToGetId()
             
             DispatchQueue.main.async(execute: {
                 
@@ -306,7 +305,7 @@ class InputMode03CellView: InputModeICMaster, UITextFieldDelegate {
         //Save self to DB to get the taskDataRecordId
         if self.taskInspDataRecordId < 1 {
             let taskDataHelper = TaskDataHelper()
-            let taskInspDataRecord = TaskInspDataRecord.init(recordId: self.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: self.refRecordId!, inspectSectionId: self.cellCatIdx, inspectElementId: self.inspElmId!, inspectPositionId: self.inspPostId!, inspectPositionDesc: self.idInput.text!, inspectDetail: self.idInput.text, inspectRemarks: self.cellRemarksInput.text, resultValueId: self.resultValueId, requestSectionId: self.requestSectionId!, requestElementDesc: self.iiInput.text!, createUser: (Cache_Inspector?.appUserName)!, createDate: self.getCurrentDateTime(), modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: self.getCurrentDateTime())
+            let taskInspDataRecord = TaskInspDataRecord.init(recordId: self.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: self.refRecordId!, inspectSectionId: self.cellCatIdx, inspectElementId: self.inspElmId!, inspectPositionId: self.inspPostId!, inspectPositionDesc: self.idInput.text!, inspectDetail: self.idInput.text, inspectRemarks: self.cellRemarksInput.text, resultValueId: self.resultValueId, requestSectionId: self.requestSectionId!, requestElementDesc: self.iiInput.text!, createUser: (Cache_Inspector?.appUserName)!, createDate: self.getCurrentDateTime(), modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: self.getCurrentDateTime(), isPreSave: "1")
             
             self.taskInspDataRecordId = taskDataHelper.insertTaskInspDataRecord(taskInspDataRecord!)
             

@@ -20,16 +20,19 @@ class BackupTableViewCell: UITableViewCell {
     @IBOutlet weak var backupRemarksInput: UITextView!
     @IBOutlet weak var loginUserLabel: UILabel!
     @IBOutlet weak var loginUserNameInput: UILabel!
+    @IBOutlet weak var taskCountLabel: UILabel!
+    @IBOutlet weak var taskCountInput: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         self.appVersionLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("App Version")
-        self.appReleaseLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("App Release Date")
+        self.appReleaseLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Release number")
         self.backupProcessDateLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Date")
         self.backupRemarksLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Backup Remarks")
         self.loginUserLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Login User")
+        self.taskCountLabel.text = MylocalizedString.sharedLocalizeManager.getLocalizedString("Task Count")
 
     }
 

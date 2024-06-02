@@ -573,4 +573,25 @@ class DataSyncDataHelper:DataHelperMaster {
         
         return result
     }
+    
+    func getReviewedTasksWithoutAppReadyPurgeDate() -> [TaskReviewedWithoutAppReadyPurgeDate] {
+        let sql = "SELECT task_id, ref_task_id, inspection_no, inspection_date FROM inspect_task WHERE task_status = ? AND (app_ready_purge_date IS NULL OR app_ready_purge_date == '')"
+        var result = [TaskReviewedWithoutAppReadyPurgeDate]()
+        
+        if db.open() {
+            
+            if let rs = db.executeQuery(sql, withArgumentsIn: [GetTaskStatusId(caseId: "Reviewed").rawValue]) {
+                
+                while rs.next() {
+                    if let taskId = rs.string(forColumn: "task_id"), let refTaskId = rs.string(forColumn: "ref_task_id"), let inspectionNo = rs.string(forColumn: "inspection_no"), let inspectionDate = rs.string(forColumn: "inspection_date") {
+                        result.append(TaskReviewedWithoutAppReadyPurgeDate(taskId: taskId, refTaskId: refTaskId, inspectionNo: inspectionNo, inspectionDate: inspectionDate))
+                    }
+                }
+            }
+            
+            db.close()
+        }
+        
+        return result
+    }
 }

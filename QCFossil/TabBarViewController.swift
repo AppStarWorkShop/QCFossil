@@ -186,7 +186,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         //if icElm.inptItemInput.text != "" && icElm.resultValueId > 0 {
-                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInputTextView.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: icElm.inptDetailInputTextView.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate, isPreSave: "0")
                         
                             icItemDatas.append(icItemData!)
                         
@@ -213,7 +213,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         //if icElm.dpInput.text != "" && icElm.cellDPPInput.text != "" && icElm.resultValueId > 0 {
-                        var icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.dpDescInput.text, inspectDetail: "", inspectRemarks: "", resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", inspectPositionZoneValueId: icElm.inspectZoneValueId, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                        var icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.dpDescInput.text, inspectDetail: "", inspectRemarks: "", resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", inspectPositionZoneValueId: icElm.inspectZoneValueId, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate, isPreSave: "0")
                             
                             //Save To DB
                             icItemData = taskDataHelper.updateInspDataRecord(icItemData!)
@@ -252,7 +252,7 @@ class TabBarViewController: UITabBarController {
                         }
                         
                         //if icElm.requestSectionId>0 && icElm.iiInput.text != "" {
-                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.idInput.text!, inspectDetail: icElm.idInput.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: icElm.requestSectionId!, requestElementDesc: icElm.iiInput.text!, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: icElm.idInput.text!, inspectDetail: icElm.idInput.text, inspectRemarks: icElm.cellRemarksInput.text, resultValueId: icElm.resultValueId, requestSectionId: icElm.requestSectionId!, requestElementDesc: icElm.iiInput.text!, createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate, isPreSave: "0")
                             
                             icItemDatas.append(icItemData!)
                         
@@ -277,7 +277,7 @@ class TabBarViewController: UITabBarController {
                         
                         //if icElm.inspectionAreaLabel.text != "" && icElm.inspectionItemLabel.text != "" && icElm.resultValueId > 0 {
                         
-                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: "", inspectRemarks: "", resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate)
+                            let icItemData = TaskInspDataRecord.init(recordId: icElm.taskInspDataRecordId,taskId: (Cache_Task_On?.taskId)!, refRecordId: icElm.refRecordId!, inspectSectionId: icElm.cellCatIdx, inspectElementId: icElm.inspElmId!, inspectPositionId: icElm.inspPostId!, inspectPositionDesc: "", inspectDetail: "", inspectRemarks: "", resultValueId: icElm.resultValueId, requestSectionId: 0, requestElementDesc: "", createUser: (Cache_Inspector?.appUserName)!, createDate: currentDate, modifyUser: (Cache_Inspector?.appUserName)!, modifyDate: currentDate, isPreSave: "0")
                         
                             icItemDatas.append(icItemData!)
                         
@@ -360,6 +360,7 @@ class TabBarViewController: UITabBarController {
             
             defect.modifyDate = self.view.getCurrentDateTime()
             defect.modifyUser = Cache_Inspector?.appUserName
+            defect.isPreSave = "0"
             
             if needValidate {
                 if defect.defectQtyCritical < 1 && defect.defectQtyMajor < 1 && defect.defectQtyMinor < 1 && defect.defectQtyTotal < 1 {

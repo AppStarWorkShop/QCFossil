@@ -283,7 +283,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                         (pVC as! InspectionDefectTableViewCellMode4).updatePhotoAddedStatus("yes")
                     }
                     
-                }else if pVC?.inputMode == _INPUTMODE03 {
+                } else if pVC?.inputMode == _INPUTMODE03 {
                     
                     if pVC?.classForCoder == DefectListTableViewCellMode3.classForCoder() {
                         
@@ -291,6 +291,24 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
                     }else{
                         
                         (pVC as! InspectionDefectTableViewCellMode3).updatePhotoAddedStatus("yes")
+                    }
+                } else if pVC?.inputMode == _INPUTMODE02 {
+                    
+                    if pVC?.classForCoder == DefectListTableViewCellMode2.classForCoder() {
+                        
+                        (pVC as! DefectListTableViewCellMode2).updatePhotoAddedStatus("yes")
+                    }else{
+                        
+                        (pVC as! InspectionDefectTableViewCellMode2).updatePhotoAddedStatus("yes")
+                    }
+                } else if pVC?.inputMode == _INPUTMODE01 {
+                    
+                    if pVC?.classForCoder == DefectListTableViewCellMode1.classForCoder() {
+                        
+                        (pVC as! DefectListTableViewCellMode1).updatePhotoAddedStatus("yes")
+                    }else{
+                        
+                        (pVC as! InspectionDefectTableViewCellMode1).updatePhotoAddedStatus("yes")
                     }
                 }
             }
@@ -302,6 +320,8 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadAllPhotosFromDB"), object: nil)
                        
             self.navigationController?.popViewController(animated: true)
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadTableview"), object: nil)
         }
     }
     
@@ -339,7 +359,7 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             imagePicker.sourceType = .camera
             self.present(imagePicker, animated: true, completion: nil)
             
-        }else{
+        } else {
             imagePicker.modalPresentationStyle = .popover
             imagePicker.sourceType = .photoLibrary
             
@@ -400,6 +420,18 @@ class PhotoAlbumViewController: UIViewController, UINavigationControllerDelegate
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .camera
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            let imagePicker = UIImagePickerController()
+            imagePicker.modalPresentationStyle = .popover
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            
+            let ppc = imagePicker.popoverPresentationController
+            ppc?.sourceView = self.inspElmt
+            ppc?.sourceRect = self.inspElmt?.bounds ?? CGRect(x: 0, y: 0, width: 50, height: 50)
+            ppc?.permittedArrowDirections = .any
+            
             self.present(imagePicker, animated: true, completion: nil)
         }
     }

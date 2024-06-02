@@ -14,6 +14,7 @@ let _DEBUG_MODE = false
 
 //Version
 var _VERSION = "1.0"
+var _BUILDNUMBER = "1"
 var _RELEASE = ""
 var _VERSIONCODE = ""
 var _RELEASECODE = ""
@@ -142,3 +143,6 @@ enum Languages: String {
     case zh = "zh-Hans"
     case fr = "fr-CH"
 }
+
+// data backup
+let dbBackupFileName = "database.zip"

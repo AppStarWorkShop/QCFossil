@@ -39,6 +39,7 @@ class TaskInspDefectDataRecord {
     var defectType:String?
     var defectRemarksOptionList:String?
     var othersRemark:String?
+    var isPreSave: String?
     
     //Element Display Using
     var sectObj:SectObj = SectObj(sectionId:0, sectionNameEn: "", sectionNameCn: "", sectionNameFr: "", inputMode: "")
@@ -54,7 +55,7 @@ class TaskInspDefectDataRecord {
     var cellIdx:Int = 0
     var sortNum:Int = 0
     
-    init?(recordId:Int?=0,taskId:Int, inspectRecordId:Int?, refRecordId:Int?, inspectElementId:Int?, defectDesc:String?, defectQtyCritical:Int=0, defectQtyMajor:Int=0, defectQtyMinor:Int=0, defectQtyTotal:Int=0, createUser:String?="", createDate:String?="", modifyUser:String?="", modifyDate:String?="", inspectElementDefectValueId:Int?=0, inspectElementCaseValueId:Int?=0, defectRemarksOptionList:String?="", othersRemark:String?="") {
+    init?(recordId:Int?=0,taskId:Int, inspectRecordId:Int?, refRecordId:Int?, inspectElementId:Int?, defectDesc:String?, defectQtyCritical:Int=0, defectQtyMajor:Int=0, defectQtyMinor:Int=0, defectQtyTotal:Int=0, createUser:String?="", createDate:String?="", modifyUser:String?="", modifyDate:String?="", inspectElementDefectValueId:Int?=0, inspectElementCaseValueId:Int?=0, defectRemarksOptionList:String?="", othersRemark:String?="", isPreSave: String? = nil) {
         
         self.recordId = recordId
         self.taskId = taskId
@@ -74,6 +75,7 @@ class TaskInspDefectDataRecord {
         self.inspectElementCaseValueId = inspectElementCaseValueId
         self.defectRemarksOptionList = defectRemarksOptionList
         self.othersRemark = othersRemark
+        self.isPreSave = isPreSave
     }
     
 }

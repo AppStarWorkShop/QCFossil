@@ -1,0 +1,2284 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Minizip",
+        "printedName": "Minizip",
+        "declKind": "Import",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "ImplementationOnly"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ZipError",
+        "printedName": "ZipError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "fileNotFound",
+            "printedName": "fileNotFound",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipError.Type) -> Zip.ZipError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipError",
+                    "printedName": "Zip.ZipError",
+                    "usr": "s:3Zip0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipError",
+                        "printedName": "Zip.ZipError",
+                        "usr": "s:3Zip0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A5ErrorO12fileNotFoundyA2CmF",
+            "mangledName": "$s3Zip0A5ErrorO12fileNotFoundyA2CmF",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unzipFail",
+            "printedName": "unzipFail",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipError.Type) -> Zip.ZipError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipError",
+                    "printedName": "Zip.ZipError",
+                    "usr": "s:3Zip0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipError",
+                        "printedName": "Zip.ZipError",
+                        "usr": "s:3Zip0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A5ErrorO9unzipFailyA2CmF",
+            "mangledName": "$s3Zip0A5ErrorO9unzipFailyA2CmF",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "zipFail",
+            "printedName": "zipFail",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipError.Type) -> Zip.ZipError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipError",
+                    "printedName": "Zip.ZipError",
+                    "usr": "s:3Zip0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipError",
+                        "printedName": "Zip.ZipError",
+                        "usr": "s:3Zip0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A5ErrorO7zipFailyA2CmF",
+            "mangledName": "$s3Zip0A5ErrorO7zipFailyA2CmF",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip0A5ErrorO11descriptionSSvp",
+            "mangledName": "$s3Zip0A5ErrorO11descriptionSSvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip0A5ErrorO11descriptionSSvg",
+                "mangledName": "$s3Zip0A5ErrorO11descriptionSSvg",
+                "moduleName": "Zip",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ZipError",
+                "printedName": "Zip.ZipError",
+                "usr": "s:3Zip0A5ErrorO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ZipError",
+                "printedName": "Zip.ZipError",
+                "usr": "s:3Zip0A5ErrorO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3Zip0A5ErrorO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s3Zip0A5ErrorO2eeoiySbAC_ACtFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip0A5ErrorO9hashValueSivp",
+            "mangledName": "$s3Zip0A5ErrorO9hashValueSivp",
+            "moduleName": "Zip",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip0A5ErrorO9hashValueSivg",
+                "mangledName": "$s3Zip0A5ErrorO9hashValueSivg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3Zip0A5ErrorO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s3Zip0A5ErrorO4hash4intoys6HasherVz_tF",
+            "moduleName": "Zip",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:3Zip0A5ErrorO",
+        "mangledName": "$s3Zip0A5ErrorO",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ZipCompression",
+        "printedName": "ZipCompression",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "NoCompression",
+            "printedName": "NoCompression",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipCompression.Type) -> Zip.ZipCompression",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipCompression",
+                    "printedName": "Zip.ZipCompression",
+                    "usr": "s:3Zip0A11CompressionO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipCompression.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipCompression",
+                        "printedName": "Zip.ZipCompression",
+                        "usr": "s:3Zip0A11CompressionO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A11CompressionO02NoB0yA2CmF",
+            "mangledName": "$s3Zip0A11CompressionO02NoB0yA2CmF",
+            "moduleName": "Zip"
+          },
+          {
+            "kind": "Var",
+            "name": "BestSpeed",
+            "printedName": "BestSpeed",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipCompression.Type) -> Zip.ZipCompression",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipCompression",
+                    "printedName": "Zip.ZipCompression",
+                    "usr": "s:3Zip0A11CompressionO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipCompression.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipCompression",
+                        "printedName": "Zip.ZipCompression",
+                        "usr": "s:3Zip0A11CompressionO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A11CompressionO9BestSpeedyA2CmF",
+            "mangledName": "$s3Zip0A11CompressionO9BestSpeedyA2CmF",
+            "moduleName": "Zip"
+          },
+          {
+            "kind": "Var",
+            "name": "DefaultCompression",
+            "printedName": "DefaultCompression",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipCompression.Type) -> Zip.ZipCompression",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipCompression",
+                    "printedName": "Zip.ZipCompression",
+                    "usr": "s:3Zip0A11CompressionO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipCompression.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipCompression",
+                        "printedName": "Zip.ZipCompression",
+                        "usr": "s:3Zip0A11CompressionO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A11CompressionO07DefaultB0yA2CmF",
+            "mangledName": "$s3Zip0A11CompressionO07DefaultB0yA2CmF",
+            "moduleName": "Zip"
+          },
+          {
+            "kind": "Var",
+            "name": "BestCompression",
+            "printedName": "BestCompression",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Zip.ZipCompression.Type) -> Zip.ZipCompression",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipCompression",
+                    "printedName": "Zip.ZipCompression",
+                    "usr": "s:3Zip0A11CompressionO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Zip.ZipCompression.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ZipCompression",
+                        "printedName": "Zip.ZipCompression",
+                        "usr": "s:3Zip0A11CompressionO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:3Zip0A11CompressionO04BestB0yA2CmF",
+            "mangledName": "$s3Zip0A11CompressionO04BestB0yA2CmF",
+            "moduleName": "Zip"
+          },
+          {
+            "kind": "Var",
+            "name": "minizipCompression",
+            "printedName": "minizipCompression",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int32",
+                "printedName": "Swift.Int32",
+                "usr": "s:s5Int32V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip0A11CompressionO07minizipB0s5Int32Vvp",
+            "mangledName": "$s3Zip0A11CompressionO07minizipB0s5Int32Vvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int32",
+                    "printedName": "Swift.Int32",
+                    "usr": "s:s5Int32V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip0A11CompressionO07minizipB0s5Int32Vvg",
+                "mangledName": "$s3Zip0A11CompressionO07minizipB0s5Int32Vvg",
+                "moduleName": "Zip",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(rawValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Zip.ZipCompression?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ZipCompression",
+                    "printedName": "Zip.ZipCompression",
+                    "usr": "s:3Zip0A11CompressionO"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:3Zip0A11CompressionO8rawValueACSgSi_tcfc",
+            "mangledName": "$s3Zip0A11CompressionO8rawValueACSgSi_tcfc",
+            "moduleName": "Zip",
+            "implicit": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "rawValue",
+            "printedName": "rawValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip0A11CompressionO8rawValueSivp",
+            "mangledName": "$s3Zip0A11CompressionO8rawValueSivp",
+            "moduleName": "Zip",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip0A11CompressionO8rawValueSivg",
+                "mangledName": "$s3Zip0A11CompressionO8rawValueSivg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:3Zip0A11CompressionO",
+        "mangledName": "$s3Zip0A11CompressionO",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "enumRawTypeName": "Int",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ArchiveFile",
+        "printedName": "ArchiveFile",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "filename",
+            "printedName": "filename",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip11ArchiveFileV8filenameSSvp",
+            "mangledName": "$s3Zip11ArchiveFileV8filenameSSvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV8filenameSSvg",
+                "mangledName": "$s3Zip11ArchiveFileV8filenameSSvg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV8filenameSSvs",
+                "mangledName": "$s3Zip11ArchiveFileV8filenameSSvs",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV8filenameSSvM",
+                "mangledName": "$s3Zip11ArchiveFileV8filenameSSvM",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "data",
+            "printedName": "data",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSData",
+                "printedName": "Foundation.NSData",
+                "usr": "c:objc(cs)NSData"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip11ArchiveFileV4dataSo6NSDataCvp",
+            "mangledName": "$s3Zip11ArchiveFileV4dataSo6NSDataCvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSData",
+                    "printedName": "Foundation.NSData",
+                    "usr": "c:objc(cs)NSData"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV4dataSo6NSDataCvg",
+                "mangledName": "$s3Zip11ArchiveFileV4dataSo6NSDataCvg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSData",
+                    "printedName": "Foundation.NSData",
+                    "usr": "c:objc(cs)NSData"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV4dataSo6NSDataCvs",
+                "mangledName": "$s3Zip11ArchiveFileV4dataSo6NSDataCvs",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV4dataSo6NSDataCvM",
+                "mangledName": "$s3Zip11ArchiveFileV4dataSo6NSDataCvM",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "modifiedTime",
+            "printedName": "modifiedTime",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Date?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Date",
+                    "printedName": "Foundation.Date",
+                    "usr": "s:10Foundation4DateV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvp",
+            "mangledName": "$s3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.Date?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Date",
+                        "printedName": "Foundation.Date",
+                        "usr": "s:10Foundation4DateV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvg",
+                "mangledName": "$s3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Foundation.Date?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Date",
+                        "printedName": "Foundation.Date",
+                        "usr": "s:10Foundation4DateV"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvs",
+                "mangledName": "$s3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvs",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvM",
+                "mangledName": "$s3Zip11ArchiveFileV12modifiedTime10Foundation4DateVSgvM",
+                "moduleName": "Zip",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(filename:data:modifiedTime:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ArchiveFile",
+                "printedName": "Zip.ArchiveFile",
+                "usr": "s:3Zip11ArchiveFileV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NSData",
+                "printedName": "Foundation.NSData",
+                "usr": "c:objc(cs)NSData"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Date?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Date",
+                    "printedName": "Foundation.Date",
+                    "usr": "s:10Foundation4DateV"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:3Zip11ArchiveFileV8filename4data12modifiedTimeACSS_So6NSDataC10Foundation4DateVSgtcfc",
+            "mangledName": "$s3Zip11ArchiveFileV8filename4data12modifiedTimeACSS_So6NSDataC10Foundation4DateVSgtcfc",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:3Zip11ArchiveFileV",
+        "mangledName": "$s3Zip11ArchiveFileV",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Zip",
+        "printedName": "Zip",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "customFileExtensions",
+            "printedName": "customFileExtensions",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Set",
+                "printedName": "Swift.Set<Swift.String>",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sh"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3ZipAAC20customFileExtensionsShySSGvpZ",
+            "mangledName": "$s3ZipAAC20customFileExtensionsShySSGvpZ",
+            "moduleName": "Zip",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Set",
+                    "printedName": "Swift.Set<Swift.String>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sh"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3ZipAAC20customFileExtensionsShySSGvgZ",
+                "mangledName": "$s3ZipAAC20customFileExtensionsShySSGvgZ",
+                "moduleName": "Zip",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Transparent",
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Set",
+                    "printedName": "Swift.Set<Swift.String>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sh"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3ZipAAC20customFileExtensionsShySSGvsZ",
+                "mangledName": "$s3ZipAAC20customFileExtensionsShySSGvsZ",
+                "moduleName": "Zip",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Transparent",
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3ZipAAC20customFileExtensionsShySSGvMZ",
+                "mangledName": "$s3ZipAAC20customFileExtensionsShySSGvMZ",
+                "moduleName": "Zip",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Transparent",
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Zip",
+                "printedName": "Zip.Zip",
+                "usr": "s:3ZipAAC"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:3ZipAACABycfc",
+            "mangledName": "$s3ZipAACABycfc",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "unzipFile",
+            "printedName": "unzipFile(_:destination:overwrite:password:progress:fileOutputHandler:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.Double) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Double) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Double",
+                        "printedName": "Swift.Double",
+                        "usr": "s:Sd"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Foundation.URL) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation.URL) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "URL",
+                        "printedName": "Foundation.URL",
+                        "usr": "s:10Foundation3URLV"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC9unzipFile_11destination9overwrite8password8progress17fileOutputHandlery10Foundation3URLV_AKSbSSSgySdcSgyAKcSgtKFZ",
+            "mangledName": "$s3ZipAAC9unzipFile_11destination9overwrite8password8progress17fileOutputHandlery10Foundation3URLV_AKSbSSSgySdcSgyAKcSgtKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "zipFiles",
+            "printedName": "zipFiles(paths:zipFilePath:password:compression:progress:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Foundation.URL]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ZipCompression",
+                "printedName": "Zip.ZipCompression",
+                "hasDefaultArg": true,
+                "usr": "s:3Zip0A11CompressionO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.Double) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Double) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Double",
+                        "printedName": "Swift.Double",
+                        "usr": "s:Sd"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC8zipFiles5paths0B8FilePath8password11compression8progressySay10Foundation3URLVG_AKSSSgAA0A11CompressionOySdcSgtKFZ",
+            "mangledName": "$s3ZipAAC8zipFiles5paths0B8FilePath8password11compression8progressySay10Foundation3URLVG_AKSSSgAA0A11CompressionOySdcSgtKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "zipData",
+            "printedName": "zipData(archiveFiles:zipFilePath:password:compression:progress:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Zip.ArchiveFile]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ArchiveFile",
+                    "printedName": "Zip.ArchiveFile",
+                    "usr": "s:3Zip11ArchiveFileV"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ZipCompression",
+                "printedName": "Zip.ZipCompression",
+                "hasDefaultArg": true,
+                "usr": "s:3Zip0A11CompressionO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.Double) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Double) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Double",
+                        "printedName": "Swift.Double",
+                        "usr": "s:Sd"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC7zipData12archiveFiles0B8FilePath8password11compression8progressySayAA07ArchiveF0VG_10Foundation3URLVSSSgAA0A11CompressionOySdcSgtKFZ",
+            "mangledName": "$s3ZipAAC7zipData12archiveFiles0B8FilePath8password11compression8progressySayAA07ArchiveF0VG_10Foundation3URLVSSSgAA0A11CompressionOySdcSgtKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "fileExtensionIsInvalid",
+            "printedName": "fileExtensionIsInvalid(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC22fileExtensionIsInvalidySbSSSgFZ",
+            "mangledName": "$s3ZipAAC22fileExtensionIsInvalidySbSSSgFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "addCustomFileExtension",
+            "printedName": "addCustomFileExtension(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC22addCustomFileExtensionyySSFZ",
+            "mangledName": "$s3ZipAAC22addCustomFileExtensionyySSFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "removeCustomFileExtension",
+            "printedName": "removeCustomFileExtension(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC25removeCustomFileExtensionyySSFZ",
+            "mangledName": "$s3ZipAAC25removeCustomFileExtensionyySSFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isValidFileExtension",
+            "printedName": "isValidFileExtension(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC20isValidFileExtensionySbSSFZ",
+            "mangledName": "$s3ZipAAC20isValidFileExtensionySbSSFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "quickUnzipFile",
+            "printedName": "quickUnzipFile(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC14quickUnzipFiley10Foundation3URLVAFKFZ",
+            "mangledName": "$s3ZipAAC14quickUnzipFiley10Foundation3URLVAFKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "quickUnzipFile",
+            "printedName": "quickUnzipFile(_:progress:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.Double) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Double) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Double",
+                        "printedName": "Swift.Double",
+                        "usr": "s:Sd"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC14quickUnzipFile_8progress10Foundation3URLVAG_ySdcSgtKFZ",
+            "mangledName": "$s3ZipAAC14quickUnzipFile_8progress10Foundation3URLVAG_ySdcSgtKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "quickZipFiles",
+            "printedName": "quickZipFiles(_:fileName:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Foundation.URL]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC05quickA5Files_8fileName10Foundation3URLVSayAGG_SStKFZ",
+            "mangledName": "$s3ZipAAC05quickA5Files_8fileName10Foundation3URLVSayAGG_SStKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "quickZipFiles",
+            "printedName": "quickZipFiles(_:fileName:progress:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Foundation.URL]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.Double) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Double) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Double",
+                        "printedName": "Swift.Double",
+                        "usr": "s:Sd"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3ZipAAC05quickA5Files_8fileName8progress10Foundation3URLVSayAHG_SSySdcSgtKFZ",
+            "mangledName": "$s3ZipAAC05quickA5Files_8fileName8progress10Foundation3URLVSayAHG_SSySdcSgtKFZ",
+            "moduleName": "Zip",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:3ZipAAC",
+        "mangledName": "$s3ZipAAC",
+        "moduleName": "Zip",
+        "isOpen": true,
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Zip",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ZipUtilities",
+        "printedName": "ZipUtilities",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "includeRootDirectory",
+            "printedName": "includeRootDirectory",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip0A9UtilitiesC20includeRootDirectorySbvp",
+            "mangledName": "$s3Zip0A9UtilitiesC20includeRootDirectorySbvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "fixedbinaryorder": 0,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip0A9UtilitiesC20includeRootDirectorySbvg",
+                "mangledName": "$s3Zip0A9UtilitiesC20includeRootDirectorySbvg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "declAttributes": [
+                  "Transparent",
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "fileManager",
+            "printedName": "fileManager",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FileManager",
+                "printedName": "Foundation.FileManager",
+                "usr": "c:objc(cs)NSFileManager"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:3Zip0A9UtilitiesC11fileManagerSo06NSFileD0Cvp",
+            "mangledName": "$s3Zip0A9UtilitiesC11fileManagerSo06NSFileD0Cvp",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "fixedbinaryorder": 1,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "FileManager",
+                    "printedName": "Foundation.FileManager",
+                    "usr": "c:objc(cs)NSFileManager"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3Zip0A9UtilitiesC11fileManagerSo06NSFileD0Cvg",
+                "mangledName": "$s3Zip0A9UtilitiesC11fileManagerSo06NSFileD0Cvg",
+                "moduleName": "Zip",
+                "implicit": true,
+                "declAttributes": [
+                  "Transparent",
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "ProcessedFilePath",
+            "printedName": "ProcessedFilePath",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "filePathURL",
+                "printedName": "filePathURL",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV04fileE3URL10Foundation0G0Vvp",
+                "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV04fileE3URL10Foundation0G0Vvp",
+                "moduleName": "Zip",
+                "declAttributes": [
+                  "HasStorage"
+                ],
+                "fixedbinaryorder": 0,
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "URL",
+                        "printedName": "Foundation.URL",
+                        "usr": "s:10Foundation3URLV"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV04fileE3URL10Foundation0G0Vvg",
+                    "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV04fileE3URL10Foundation0G0Vvg",
+                    "moduleName": "Zip",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Transparent"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
+                "name": "fileName",
+                "printedName": "fileName",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV8fileNameSSSgvp",
+                "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV8fileNameSSSgvp",
+                "moduleName": "Zip",
+                "declAttributes": [
+                  "HasStorage"
+                ],
+                "fixedbinaryorder": 1,
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Swift.String?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV8fileNameSSSgvg",
+                    "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV8fileNameSSSgvg",
+                    "moduleName": "Zip",
+                    "implicit": true,
+                    "declAttributes": [
+                      "Transparent"
+                    ],
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Function",
+                "name": "filePath",
+                "printedName": "filePath()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV04fileE0SSyF",
+                "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV04fileE0SSyF",
+                "moduleName": "Zip",
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(filePathURL:fileName:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProcessedFilePath",
+                    "printedName": "Zip.ZipUtilities.ProcessedFilePath",
+                    "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV04fileE3URL0F4NameAE10Foundation0G0V_SSSgtcfc",
+                "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV04fileE3URL0F4NameAE10Foundation0G0V_SSSgtcfc",
+                "moduleName": "Zip",
+                "implicit": true,
+                "init_kind": "Designated"
+              }
+            ],
+            "declKind": "Struct",
+            "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV",
+            "mangledName": "$s3Zip0A9UtilitiesC17ProcessedFilePathV",
+            "moduleName": "Zip",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Sendable",
+                "printedName": "Sendable",
+                "usr": "s:s8SendableP",
+                "mangledName": "$ss8SendableP"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "processZipPaths",
+            "printedName": "processZipPaths(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Zip.ZipUtilities.ProcessedFilePath]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProcessedFilePath",
+                    "printedName": "Zip.ZipUtilities.ProcessedFilePath",
+                    "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Foundation.URL]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3Zip0A9UtilitiesC07processA5PathsySayAC17ProcessedFilePathVGSay10Foundation3URLVGF",
+            "mangledName": "$s3Zip0A9UtilitiesC07processA5PathsySayAC17ProcessedFilePathVGSay10Foundation3URLVGF",
+            "moduleName": "Zip",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "expandDirectoryFilePath",
+            "printedName": "expandDirectoryFilePath(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Zip.ZipUtilities.ProcessedFilePath]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProcessedFilePath",
+                    "printedName": "Zip.ZipUtilities.ProcessedFilePath",
+                    "usr": "s:3Zip0A9UtilitiesC17ProcessedFilePathV"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:3Zip0A9UtilitiesC23expandDirectoryFilePathySayAC09ProcessedeF0VG10Foundation3URLVF",
+            "mangledName": "$s3Zip0A9UtilitiesC23expandDirectoryFilePathySayAC09ProcessedeF0VG10Foundation3URLVF",
+            "moduleName": "Zip",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ZipUtilities",
+                "printedName": "Zip.ZipUtilities",
+                "usr": "s:3Zip0A9UtilitiesC"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:3Zip0A9UtilitiesCACycfc",
+            "mangledName": "$s3Zip0A9UtilitiesCACycfc",
+            "moduleName": "Zip",
+            "implicit": true,
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:3Zip0A9UtilitiesC",
+        "mangledName": "$s3Zip0A9UtilitiesC",
+        "moduleName": "Zip",
+        "isOpen": true,
+        "declAttributes": [
+          "AccessControl"
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 799,
+      "length": 9,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 818,
+      "length": 18,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 846,
+      "length": 15,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 799,
+      "length": 9,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 818,
+      "length": 18,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 846,
+      "length": 15,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 799,
+      "length": 9,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 818,
+      "length": 18,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "IntegerLiteral",
+      "offset": 846,
+      "length": 15,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/Zip.swift",
+      "kind": "Array",
+      "offset": 1692,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/huangyin\/Documents\/Pacmobile\/Zip-master\/Zip\/ZipUtilities.swift",
+      "kind": "BooleanLiteral",
+      "offset": 597,
+      "length": 4,
+      "value": "true"
+    }
+  ]
+}

@@ -272,4 +272,54 @@ class DefectDataHelper:DataHelperMaster {
         
         return id
     }
+    
+    @discardableResult
+    func deletePreSavedItemsFromInspectDataRecords(_ taskId: Int) -> Bool {
+        if db.open() {
+            db.beginTransaction()
+            
+            // 1. reset all photo under this pre save inspect element.
+            if !db.executeUpdate("UPDATE task_inspect_photo_file SET data_record_id =0, data_type = 0 WHERE task_id = ? AND data_record_id IN (SELECT record_id FROM task_inspect_data_record WHERE task_id = ? AND is_pre_save = 1)", withArgumentsIn: [taskId, taskId]) {
+                db.rollback()
+                db.close()
+                return false
+            }
+            
+            // 2. remove pre saved inspect elements.
+            if !db.executeUpdate("DELETE FROM task_inspect_data_record WHERE is_pre_save = 1 AND task_id = ?", withArgumentsIn: [taskId]) {
+                db.rollback()
+                db.close()
+                return false
+            }
+            
+            db.commit()
+            db.close()
+        }
+        
+        return true
+    }
+    
+    @discardableResult
+    func deletePreSavedItemsFromDefectDataRecords(_ taskId: Int) -> Bool {
+        if db.open() {
+            db.beginTransaction()
+            
+            if !db.executeUpdate("UPDATE task_inspect_photo_file SET data_record_id =0, data_type = 0 WHERE task_id = ? AND data_record_id IN (SELECT record_id FROM task_defect_data_record WHERE task_id = ? AND is_pre_save = 1)", withArgumentsIn: [taskId, taskId]) {
+                db.rollback()
+                db.close()
+                return false
+            }
+            
+            if !db.executeUpdate("DELETE FROM task_defect_data_record WHERE is_pre_save = 1 AND task_id = ?", withArgumentsIn: [taskId]) {
+                db.rollback()
+                db.close()
+                return false
+            }
+            
+            db.commit()
+            db.close()
+        }
+        
+        return true
+    }
 }

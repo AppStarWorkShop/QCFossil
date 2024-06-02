@@ -58,6 +58,7 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         subResultInput.delegate = self
         inspectionAreaLabel.delegate = self
         inspectionItemLabel.delegate = self
+        dismissButton.isHidden = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -214,7 +215,7 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         
         //add defect cell
         if !isDefectItemAdded(defectListVC!) {
-            let newDfItem = TaskInspDefectDataRecord(taskId: (Cache_Task_On?.taskId)!, inspectRecordId: self.taskInspDataRecordId, refRecordId: 0, inspectElementId: self.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.getCurrentDateTime())
+            let newDfItem = TaskInspDefectDataRecord(taskId: (Cache_Task_On?.taskId)!, inspectRecordId: self.taskInspDataRecordId, refRecordId: 0, inspectElementId: self.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.getCurrentDateTime(), isPreSave: "1")
             
             newDfItem?.inputMode = _INPUTMODE04
             newDfItem?.inspElmt = self
@@ -330,8 +331,6 @@ class InputMode04CellView: InputModeICMaster, UITextFieldDelegate {
         
         DispatchQueue.main.async(execute: {
             self.showActivityIndicator()
-            //Save self to DB to get the taskDataRecordId
-            self.saveMyselfToGetId()
             
             DispatchQueue.main.async(execute: {
     

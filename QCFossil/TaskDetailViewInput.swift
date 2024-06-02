@@ -254,7 +254,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             inputInptCatViewObj?.inptCatButton.tag = idx
             
             let section = Cache_Task_On?.inspSections[idx]
-            let itemCount = taskDataHelper.getCatItemCountById((Cache_Task_On?.taskId)!,sectionId: (section?.sectionId)!)
+            let itemCount = taskDataHelper.getCatItemCountById((Cache_Task_On?.taskId)!, sectionId: (section?.sectionId)!, inputModeCode: section?.inputModeCode ?? "")
             
             let catBtnTitle = MylocalizedString.sharedLocalizeManager.getLocalizedString(stringDic: [.en: section?.sectionNameEn, .zh: section?.sectionNameCn, .fr: section?.sectionNameFr]) + "(\(itemCount))"
             inputInptCatViewObj?.inptCatButton.setTitle(catBtnTitle, for: UIControl.State())
@@ -273,13 +273,7 @@ class TaskDetailViewInput: UIView, UITextFieldDelegate, UITextViewDelegate {
             self.inptCatWrapperView.addSubview(inputInptCatViewObj!)
             self.pVC!.categories.append(inputInptCatViewObj!)
         }
-        
-//        self.inptCatWrapperView.addSubview(stackView)
-//        stackView.leadingAnchor.constraint(equalTo: self.inptCatWrapperView.leadingAnchor).isActive = true
-//        stackView.trailingAnchor.constraint(equalTo: self.inptCatWrapperView.trailingAnchor).isActive = true
-//        stackView.topAnchor.constraint(equalTo: self.inptCatWrapperView.topAnchor, constant: 20).isActive = true
-//        stackView.heightAnchor.constraint(equalToConstant: CGFloat(cellHeight * categoryCount)).isActive = true
-//
+
         self.commentWarpperView.frame = CGRect(x: 0, y: self.inptCatWrapperView.frame.origin.y+self.inptCatWrapperView.frame.size.height+CGFloat(cellHeight), width: _DEVICE_WIDTH, height: self.commentWarpperView.frame.size.height)
         self.addSubview(self.commentWarpperView)
         

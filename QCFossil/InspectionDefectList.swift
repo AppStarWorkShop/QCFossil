@@ -108,6 +108,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         
         NotificationCenter.default.addObserver(self, selector: #selector(parentScrollEnable), name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(parentScrollDisable), name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableview), name: NSNotification.Name(rawValue: "reloadTableview"), object: nil)
         
         updateContentView()
     }
@@ -120,9 +121,14 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
         inspectDefectTableview.isScrollEnabled = false
     }
     
+    @objc func reloadTableview() {
+        self.inspectDefectTableview.reloadData()
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollEnable"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "parentScrollDisable"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reloadTableview"), object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -338,7 +344,7 @@ class InspectionDefectList: PopoverMaster, UITextFieldDelegate, UITableViewDeleg
     }
     
     @IBAction func addDefectCell(_ sender: UIButton) {
-        let newDfItem = TaskInspDefectDataRecord(taskId: (Cache_Task_On?.taskId)!, inspectRecordId: inspItem!.taskInspDataRecordId, refRecordId: 0, inspectElementId: inspItem!.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.view.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.view.getCurrentDateTime())
+        let newDfItem = TaskInspDefectDataRecord(taskId: (Cache_Task_On?.taskId)!, inspectRecordId: inspItem!.taskInspDataRecordId, refRecordId: 0, inspectElementId: inspItem!.elementDbId, defectDesc: "", defectQtyCritical: 0, defectQtyMajor: 0, defectQtyMinor: 0, defectQtyTotal: 0, createUser: Cache_Inspector?.appUserName, createDate: self.view.getCurrentDateTime(), modifyUser: Cache_Inspector?.appUserName, modifyDate: self.view.getCurrentDateTime(), isPreSave: "1")
         
         newDfItem?.inputMode = inspItem?.parentView?.InputMode
         newDfItem?.inspElmt = inspItem!

@@ -65,12 +65,6 @@ class QCInfoViewController: PopoverMaster, UIScrollViewDelegate {
         var bookedQty = 0
         
         if let poItems = Cache_Task_On?.poItems {
-            /*let stackView = UIStackView()
-            stackView.axis = .Vertical
-            stackView.alignment = .Fill
-            stackView.distribution = .Fill
-            stackView.spacing = 0
-            */
             var index = 0
             for poItem in poItems {
                 let poInfoView = POInfoView.loadFromNibNamed("POInfoView")!
@@ -105,32 +99,11 @@ class QCInfoViewController: PopoverMaster, UIScrollViewDelegate {
                     }
                 }
                 
-//                if let styleNo = poItem.styleNo {
-//                    poInfoView.styleSizeLabelText = MylocalizedString.sharedLocalizeManager.getLocalizedString("Style")
-//                    poInfoView.styleSizeDisplay.text = "\(styleNo)"
-//                }
-//                
-//                if let dimen1 = poItem.dimen1, let styleNo = poItem.styleNo {
-//                    if dimen1 != "" {
-//                        poInfoView.styleSizeLabelText = MylocalizedString.sharedLocalizeManager.getLocalizedString("Style, Size")
-//                        poInfoView.styleSizeDisplay.text = "\(styleNo), \(dimen1)"
-//                    }
-//                }
-                
                 poInfoView.frame = CGRect(x: 0, y: CGFloat(105 * index), width: self.view.frame.size.width, height: 105)
                 taskQCInfoView.poView.addSubview(poInfoView)
                 
                 index += 1
-                
-                /*
-                stackView.addArrangedSubview(poInfoView)
-                poInfoView.leadingAnchor.constraintEqualToAnchor(stackView.leadingAnchor).active = true
-                poInfoView.trailingAnchor.constraintEqualToAnchor(stackView.trailingAnchor).active = true
-                poInfoView.heightAnchor.constraintEqualToConstant(105).active = true
-                 */
             }
-            //taskQCInfoView.poView.addSubview(stackView)
-
         }
         
         let newHeight:CGFloat = CGFloat(105 * (Cache_Task_On?.poItems.count ?? 0))
@@ -433,12 +406,16 @@ class QCInfoViewController: PopoverMaster, UIScrollViewDelegate {
     {
         if (start < 0 || start > text.characters.count)
         {
+            #if UAT || TEST
             print("start index \(start) out of bounds")
+            #endif
             return ""
         }
         else if end < 0 || end > text.characters.count
         {
+            #if UAT || TEST
             print("end index \(end) out of bounds")
+            #endif
             return ""
         }
         let range = (text.characters.index(text.startIndex, offsetBy: start) ..< text.characters.index(text.startIndex, offsetBy: end))
